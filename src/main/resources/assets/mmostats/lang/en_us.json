@@ -1,0 +1,8 @@
+{ 
+//key bindings for mmostats
+
+//keybinding for gui
+	"key.category.mmostatsmod.mmostats": "Mmo Stats Mod",
+	"key.mmostats.open_upgrade_gui": "Open Gui",
+	"key.mmostats.go_fast": "Go Fast"
+}
