@@ -1,4 +1,4 @@
-package com.daltoncash.mmostats.mana;
+package com.daltoncash.mmostats.capabilities.mining;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -12,23 +12,23 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
-public class PlayerManaProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
-    public static Capability<PlayerMana> PLAYER_MANA = CapabilityManager.get(new CapabilityToken<PlayerMana>() { });
+public class PlayerMiningLevelProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
+    public static Capability<PlayerMiningLevel> PLAYER_MINING_LEVEL = CapabilityManager.get(new CapabilityToken<PlayerMiningLevel>() { });
 
-    private PlayerMana thirst = null;
-    private final LazyOptional<PlayerMana> optional = LazyOptional.of(this::createPlayerMana);
+    private PlayerMiningLevel miningLevel = null;
+    private final LazyOptional<PlayerMiningLevel> optional = LazyOptional.of(this::createPlayerMiningLevel);
 
-    private PlayerMana createPlayerMana() {
-        if(this.thirst == null) {
-            this.thirst = new PlayerMana();
+    private PlayerMiningLevel createPlayerMiningLevel() {
+        if(this.miningLevel == null) {
+            this.miningLevel = new PlayerMiningLevel();
         }
 
-        return this.thirst;
+        return this.miningLevel;
     }
 
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if(cap == PLAYER_MANA) {
+        if(cap == PLAYER_MINING_LEVEL) {
             return optional.cast();
         }
 
@@ -38,12 +38,12 @@ public class PlayerManaProvider implements ICapabilityProvider, INBTSerializable
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag nbt = new CompoundTag();
-        createPlayerMana().saveNBTData(nbt);
+        createPlayerMiningLevel().saveNBTData(nbt);
         return nbt;
     }
 
     @Override
     public void deserializeNBT(CompoundTag nbt) {
-        createPlayerMana().loadNBTData(nbt);
+        createPlayerMiningLevel().loadNBTData(nbt);
     }
 }

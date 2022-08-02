@@ -1,6 +1,7 @@
 package com.daltoncash.mmostats.gui;
 
 import com.daltoncash.mmostats.MmoStatsMod;
+import com.daltoncash.mmostats.capabilities.ClientCapabilityData;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.gui.GuiComponent;
@@ -28,7 +29,7 @@ public class ManaOverlay {
 
 	        RenderSystem.setShaderTexture(0, FILLED_MANA);
 	        for(int i = 0; i < 10; i++) {
-	            if(ClientManaData.getPlayerMana() > i) {
+	            if(ClientCapabilityData.getPlayerMana() > i) {
 	                GuiComponent.blit(poseStack,x - 94 + (i * 9),y - 54,0,0,12,12,
 	                        12,12);
 	            } else {

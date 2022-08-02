@@ -1,14 +1,17 @@
-package com.daltoncash.mmostats.mana;
+package com.daltoncash.mmostats.capabilities.mana;
 
 import net.minecraft.nbt.CompoundTag;
 
 public class PlayerMana {
 	 private int mana;
 	    private final int MIN_MANA = 0;
-	    private final int MAX_MANA = 100;
+	    private final static int MAX_MANA = 10;
 
 	    public int getMana() {
 	        return mana;
+	    }
+	    public static int getMaxMana() {
+	    	return MAX_MANA;
 	    }
 
 	    public void addMana(int add) {

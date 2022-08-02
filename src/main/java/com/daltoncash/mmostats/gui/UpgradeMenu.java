@@ -1,47 +1,44 @@
 package com.daltoncash.mmostats.gui;
 
 import com.daltoncash.mmostats.MmoStatsMod;
-import com.daltoncash.mmostats.capabilities.MyCapabilityImplementation;
+import com.daltoncash.mmostats.capabilities.ClientCapabilityData;
+import com.daltoncash.mmostats.networking.ModMessages;
+import com.daltoncash.mmostats.networking.packets.c2s.UseManaC2SPacket;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 public class UpgradeMenu extends Screen{
-	static MyCapabilityImplementation cap = new MyCapabilityImplementation();
-	private final ResourceLocation texture1 = new ResourceLocation(MmoStatsMod.MODID, "textures/gui/test_image.png");
+	
+	//private final ResourceLocation texture1 = new ResourceLocation(MmoStatsMod.MODID, "textures/gui/test_image.png");
 	private final ResourceLocation bgtexture = new ResourceLocation(MmoStatsMod.MODID, "textures/gui/bgimage-1.png");
 
-	static int clickCounter = 0;
+	public static int clickCounter = 0;
 	
 	public UpgradeMenu(Component p_96550_) {super(p_96550_);}
 	
 	 
 	public final void hello() {
-		
 	}
 	@Override
 	public final void init() {
 		
-		addRenderableWidget(new Button(10,10,10,10, Component.literal("tst"), UpgradeMenu::onPress));
-		addRenderableWidget(new ImageButton(0, 0, 256, 256, 0, 0, 0, texture1, 100, 100, UpgradeMenu::onPress));
+		addRenderableWidget(new Button(10,10,100,100, Component.literal("" + ClientCapabilityData.getPlayerMiningExp()), UpgradeMenu::onPress));
+		addRenderableWidget(new Button(200,200,100,100, Component.literal("" + ClientCapabilityData.getPlayerMana()), UpgradeMenu::onPress));
+		//addRenderableWidget(new ImageButton(0, 0, 256, 256, 0, 0, 0, texture1, 100, 100, UpgradeMenu::onPress));
 		
 	}
 	
-	
-
 	@SuppressWarnings("resource")
 	private static void onPress(Button button) {
-		clickCounter++;
-		clickCounter++;
-		cap.setHLT(cap.getHLT() + 1);
-		Minecraft.getInstance().player.sendSystemMessage(Component.literal( "" + cap.getHLT()));
+		clickCounter+=100;
+		ModMessages.sendToServer(new UseManaC2SPacket());
 		Minecraft.getInstance().player.sendSystemMessage(Component.literal("you have clicked " + clickCounter + " times!"));
 		
 	}
@@ -61,13 +58,4 @@ public class UpgradeMenu extends Screen{
 	public boolean isPauseScreen() {
 		return true;
 	}
-	      /*
-	@Override
-    public void render(PoseStack poseStack, int mouseX, int mouseY, float delta) {
-        renderBackground(poseStack);
-        super.render(poseStack, mouseX, mouseY, delta);
-    }
-	*/
-	
-	
 }

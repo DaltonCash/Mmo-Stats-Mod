@@ -1,7 +1,11 @@
 package com.daltoncash.mmostats.networking;
 
 import com.daltoncash.mmostats.MmoStatsMod;
-import com.daltoncash.mmostats.networking.packets.ManaDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.GainMiningExpC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.UseManaC2SPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.ManaDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.MiningExpDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.MiningLevelDataSyncS2CPacket;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -27,24 +31,34 @@ public class ModMessages {
                 .simpleChannel();
 
         INSTANCE = net;
-/*
-        net.messageBuilder(ExampleC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-                .decoder(ExampleC2SPacket::new)
-                .encoder(ExampleC2SPacket::toBytes)
-                .consumerMainThread(ExampleC2SPacket::handle)
-                .add();
 
-        net.messageBuilder(DrinkWaterC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-                .decoder(DrinkWaterC2SPacket::new)
-                .encoder(DrinkWaterC2SPacket::toBytes)
-                .consumerMainThread(DrinkWaterC2SPacket::handle)
+        net.messageBuilder(GainMiningExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+        		.decoder(GainMiningExpC2SPacket::new)
+        		.encoder(GainMiningExpC2SPacket::toBytes)
+        		.consumerMainThread(GainMiningExpC2SPacket::handle)
+        		.add();
+        
+        net.messageBuilder(UseManaC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(UseManaC2SPacket::new)
+                .encoder(UseManaC2SPacket::toBytes)
+                .consumerMainThread(UseManaC2SPacket::handle)
                 .add();
-*/
+//------------------------------------------------------------------
         net.messageBuilder(ManaDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(ManaDataSyncS2CPacket::new)
                 .encoder(ManaDataSyncS2CPacket::toBytes)
                 .consumerMainThread(ManaDataSyncS2CPacket::handle)
                 .add();
+        net.messageBuilder(MiningLevelDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+        		.decoder(MiningLevelDataSyncS2CPacket::new)
+        		.encoder(MiningLevelDataSyncS2CPacket::toBytes)
+        		.consumerMainThread(MiningLevelDataSyncS2CPacket::handle)
+        		.add();
+        net.messageBuilder(MiningExpDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+        		.decoder(MiningExpDataSyncS2CPacket::new)
+        		.encoder(MiningExpDataSyncS2CPacket::toBytes)
+        		.consumerMainThread(MiningExpDataSyncS2CPacket::handle)
+        		.add();
     }
 
     public static <MSG> void sendToServer(MSG message) {

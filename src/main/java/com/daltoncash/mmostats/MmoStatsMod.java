@@ -81,34 +81,4 @@ public class MmoStatsMod
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
         }
     }
-    /*
-    @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-    public static class Level{
-    	private static void levelUp(Player p){
-        	Minecraft mc = Minecraft.getInstance(); 
-        	ExtendedPlayer props = ExtendedPlayer.get(p);
-        	GuiIngame g = mc.ingameGUI;
-        	int h = sc.getScaledHeight();
-        	int w = sc.getScaledWidth();
-        	int h1 = h - Config.levelHeight;
-        	int w1 = w - Config.levelWidth;
-        	int maxLevel = DataHelper.getMaxLevel();
-        	int level = props.getLevel();
-        	if(maxLevel > 0){
-        		g.drawTexturedModalRect(w1, h1, 0, 0, 256, 19);
-
-        		if(level > 0){
-        			g.drawTexturedModalRect(w1 + 5, h1 + 5, 5, 24, level, 33);
-        		}
-        	}
-        	if(level >= maxLevel){
-        		mc.fontRenderer.drawString(DovakiinAPI.GOLD + "Lv: " + level + " (Max)", w1 + 100, h1 + 6, 0, false);
-        	}else{
-        		mc.fontRenderer.drawString(DovakiinAPI.GOLD + "Lv: " + level, w1 + 118, h1 + 6, 0, false);
-        	}
-        	String s = "Coins: " + props.getCoins(p);
-        	mc.fontRenderer.drawString(DovakiinAPI.GOLD + s, w1 + 110, h1 + 20, 0, false);
-        }
-    }
-    */
 }
