@@ -2,6 +2,9 @@ package com.daltoncash.mmostats.networking;
 
 import com.daltoncash.mmostats.MmoStatsMod;
 import com.daltoncash.mmostats.networking.packets.c2s.GainMiningExpC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.GainMiningLevelC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.ResetCapabilityDataC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.ResetMiningExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.UseManaC2SPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.ManaDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.MiningExpDataSyncS2CPacket;
@@ -31,7 +34,25 @@ public class ModMessages {
                 .simpleChannel();
 
         INSTANCE = net;
-
+        
+        net.messageBuilder(ResetMiningExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+				.decoder(ResetMiningExpC2SPacket::new)
+				.encoder(ResetMiningExpC2SPacket::toBytes)
+				.consumerMainThread(ResetMiningExpC2SPacket::handle)
+				.add();
+        
+        net.messageBuilder(ResetCapabilityDataC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+				.decoder(ResetCapabilityDataC2SPacket::new)
+				.encoder(ResetCapabilityDataC2SPacket::toBytes)
+				.consumerMainThread(ResetCapabilityDataC2SPacket::handle)
+				.add();
+        
+        net.messageBuilder(GainMiningLevelC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+				.decoder(GainMiningLevelC2SPacket::new)
+				.encoder(GainMiningLevelC2SPacket::toBytes)
+				.consumerMainThread(GainMiningLevelC2SPacket::handle)
+				.add();
+        	
         net.messageBuilder(GainMiningExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
         		.decoder(GainMiningExpC2SPacket::new)
         		.encoder(GainMiningExpC2SPacket::toBytes)

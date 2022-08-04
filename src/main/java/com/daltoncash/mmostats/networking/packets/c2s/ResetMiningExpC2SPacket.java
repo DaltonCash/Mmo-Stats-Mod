@@ -11,13 +11,13 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 
-public class GainMiningExpC2SPacket {
+public class ResetMiningExpC2SPacket {
 	
-	 public GainMiningExpC2SPacket() {
+	public ResetMiningExpC2SPacket() {
 		 
 	 }
 
-	 public GainMiningExpC2SPacket(FriendlyByteBuf buf) {
+	 public ResetMiningExpC2SPacket(FriendlyByteBuf buf) {
 
 	 }
 
@@ -30,7 +30,7 @@ public class GainMiningExpC2SPacket {
 	     context.enqueueWork(() -> {
 	         ServerPlayer player = context.getSender();
 	             player.getCapability(PlayerMiningExpProvider.PLAYER_MINING_EXP).ifPresent(miningExp -> {
-	                 miningExp.addMiningExp(ClientForgeEvents.expToAdd);
+	                 miningExp.subMiningExp(ClientForgeEvents.expToSub);
 	                 ModMessages.sendToPlayer(new MiningExpDataSyncS2CPacket(miningExp.getMiningExp()), player);
 	             });
 	     });
