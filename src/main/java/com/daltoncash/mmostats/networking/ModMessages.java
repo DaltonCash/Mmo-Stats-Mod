@@ -1,6 +1,7 @@
 package com.daltoncash.mmostats.networking;
 
 import com.daltoncash.mmostats.MmoStatsMod;
+import com.daltoncash.mmostats.networking.packets.c2s.AdditionalFortuneProcC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainMiningExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainMiningLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.ResetCapabilityDataC2SPacket;
@@ -34,6 +35,12 @@ public class ModMessages {
                 .simpleChannel();
 
         INSTANCE = net;
+        
+        net.messageBuilder(AdditionalFortuneProcC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+				.decoder(AdditionalFortuneProcC2SPacket::new)
+				.encoder(AdditionalFortuneProcC2SPacket::toBytes)
+				.consumerMainThread(AdditionalFortuneProcC2SPacket::handle)
+				.add();
         
         net.messageBuilder(ResetMiningExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
 				.decoder(ResetMiningExpC2SPacket::new)

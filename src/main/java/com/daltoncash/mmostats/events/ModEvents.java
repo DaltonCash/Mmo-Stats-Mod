@@ -1,4 +1,5 @@
 package com.daltoncash.mmostats.events;
+
 import com.daltoncash.mmostats.MmoStatsMod;
 import com.daltoncash.mmostats.capabilities.mana.PlayerMana;
 import com.daltoncash.mmostats.capabilities.mana.PlayerManaProvider;
@@ -26,7 +27,7 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = MmoStatsMod.MODID)
 public class ModEvents {
-	
+
     @SubscribeEvent
     public static void onAttachCapabilitiesPlayer(AttachCapabilitiesEvent<Entity> event) {
         if(event.getObject() instanceof Player) {

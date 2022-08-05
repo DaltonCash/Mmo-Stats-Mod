@@ -6,6 +6,7 @@ import com.daltoncash.mmostats.capabilities.ClientCapabilityData;
 import com.daltoncash.mmostats.gui.ManaOverlay;
 import com.daltoncash.mmostats.gui.UpgradeMenu;
 import com.daltoncash.mmostats.networking.ModMessages;
+import com.daltoncash.mmostats.networking.packets.c2s.AdditionalFortuneProcC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainMiningExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainMiningLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.ResetMiningExpC2SPacket;
@@ -27,12 +28,18 @@ import net.minecraftforge.fml.common.Mod;
 public class ClientEvents {
 	@Mod.EventBusSubscriber(modid = MmoStatsMod.MODID, value = Dist.CLIENT)
 	public static class ClientForgeEvents {
+		public static BlockEvent.BreakEvent blockevent = null;
 		public static int expToSub = 0;
 		public static int expToAdd = 0;
 		public static int manaToSub = 0;
+		
+		//public static void ye(HarvestCheck event) {
+		//	event.getTargetBlock()event.
+		//}
+		
 		@SubscribeEvent
 		public static void onBreakBlock(BreakSpeed event) {
-			event.setNewSpeed((float) (event.getOriginalSpeed() * (ClientCapabilityData.getPlayerMiningLevel() * 0.002) + 1));
+			event.setNewSpeed((float) (event.getOriginalSpeed() * ((ClientCapabilityData.getPlayerMiningLevel() * 2) + 1)));
 		}
 		
 		@SuppressWarnings("resource")
@@ -41,13 +48,20 @@ public class ClientEvents {
 			int miningExp = ClientCapabilityData.getPlayerMiningExp();
 			int miningLevel = ClientCapabilityData.getPlayerMiningLevel();
 			expToSub = 0; expToAdd = 0;
+			blockevent = event;
+			if(event.toString().equals("Wip, make random number compared to mining level for double drop chance")) {
+				ModMessages.sendToServer(new AdditionalFortuneProcC2SPacket());
+			}
+			
+			//level up if player has sufficient miningExp
 			if(miningExp > (miningLevel*50) + 1000) {
 				expToSub = (miningLevel*50) + 1000;
 				ModMessages.sendToServer(new GainMiningLevelC2SPacket());
 				ModMessages.sendToServer(new ResetMiningExpC2SPacket());
 				Minecraft.getInstance().player.sendSystemMessage(Component.literal("your mining Level: " + ClientCapabilityData.getPlayerMiningLevel()));
 			}
-			//if(event.getState().
+			
+			//Mining stone gives exp according to this table:
 			if(event.getState().getBlock().equals(Blocks.COBBLESTONE)) {expToAdd = 2;}
 			else if(event.getState().getBlock().equals(Blocks.STONE)) {expToAdd = 4;}
 			else if(event.getState().getBlock().equals(Blocks.DIORITE)) {expToAdd = 4;}
