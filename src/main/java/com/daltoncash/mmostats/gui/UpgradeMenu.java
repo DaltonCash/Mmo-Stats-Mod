@@ -19,7 +19,7 @@ public class UpgradeMenu extends Screen{
 	
 	//private final ResourceLocation texture1 = new ResourceLocation(MmoStatsMod.MODID, "textures/gui/test_image.png");
 	private final ResourceLocation bgtexture = new ResourceLocation(MmoStatsMod.MODID, "textures/gui/bgimage-1.png");
-	private final ResourceLocation MINING_TEXTURE = new ResourceLocation(MmoStatsMod.MODID, "textures/gui/mining_image.png");
+	private final ResourceLocation MINING_TEXTURE = new ResourceLocation(MmoStatsMod.MODID, "textures/gui/test_mining_image_3.png");
 	public static int clickCounter = 0;
 	
 	public UpgradeMenu(Component p_96550_) {super(p_96550_);}

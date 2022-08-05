@@ -15,6 +15,7 @@ import com.daltoncash.mmostats.util.KeyBinding;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
@@ -33,10 +34,6 @@ public class ClientEvents {
 		public static int expToAdd = 0;
 		public static int manaToSub = 0;
 		
-		//public static void ye(HarvestCheck event) {
-		//	event.getTargetBlock()event.
-		//}
-		
 		@SubscribeEvent
 		public static void onBreakBlock(BreakSpeed event) {
 			event.setNewSpeed((float) (event.getOriginalSpeed() * ((ClientCapabilityData.getPlayerMiningLevel() * 2) + 1)));
@@ -47,57 +44,61 @@ public class ClientEvents {
 		public static void onBreakBlock(BlockEvent.BreakEvent event) {
 			int miningExp = ClientCapabilityData.getPlayerMiningExp();
 			int miningLevel = ClientCapabilityData.getPlayerMiningLevel();
-			expToSub = 0; expToAdd = 0;
-			blockevent = event;
-			if(event.toString().equals("Wip, make random number compared to mining level for double drop chance")) {
-				ModMessages.sendToServer(new AdditionalFortuneProcC2SPacket());
+			Block block = event.getState().getBlock();
+			expToSub = 0; expToAdd = 0; blockevent = event;
+			
+			if(ListOfMiningBlocks.getBlocks().contains(block)) {
+			
+				//Check for Passive Ability Double Drops
+				if(miningLevel/10.0 > Math.random()) {
+					ModMessages.sendToServer(new AdditionalFortuneProcC2SPacket());
+				}
+				//Mining ore gives exp according to this table:
+				if(event.getState().getBlock().equals(Blocks.STONE)) {expToAdd = 4;}
+				else if(event.getState().getBlock().equals(Blocks.DIORITE)) {expToAdd = 4;}
+				else if(event.getState().getBlock().equals(Blocks.ANDESITE)) {expToAdd = 4;}
+				else if(event.getState().getBlock().equals(Blocks.GRANITE)) {expToAdd = 4;}
+				else if(event.getState().getBlock().equals(Blocks.DEEPSLATE)) {expToAdd = 4;}
+				
+				else if(event.getState().getBlock().equals(Blocks.COAL_ORE)) {expToAdd = 10;}
+				else if(event.getState().getBlock().equals(Blocks.DEEPSLATE_COAL_ORE)) {expToAdd = 10;}
+				else if(event.getState().getBlock().equals(Blocks.COPPER_ORE)) {expToAdd = 50;}
+				else if(event.getState().getBlock().equals(Blocks.DEEPSLATE_COPPER_ORE)) {expToAdd = 50;}
+				else if(event.getState().getBlock().equals(Blocks.IRON_ORE)) {expToAdd = 50;}
+				else if(event.getState().getBlock().equals(Blocks.DEEPSLATE_IRON_ORE)) {expToAdd = 50;}
+				else if(event.getState().getBlock().equals(Blocks.GOLD_ORE)) {expToAdd = 200;}
+				else if(event.getState().getBlock().equals(Blocks.DEEPSLATE_GOLD_ORE)) {expToAdd = 200;}
+				else if(event.getState().getBlock().equals(Blocks.REDSTONE_ORE)) {expToAdd = 20;}
+				else if(event.getState().getBlock().equals(Blocks.DEEPSLATE_REDSTONE_ORE)) {expToAdd = 20;}
+				else if(event.getState().getBlock().equals(Blocks.LAPIS_ORE)) {expToAdd = 100;}
+				else if(event.getState().getBlock().equals(Blocks.DEEPSLATE_LAPIS_ORE)) {expToAdd = 100;}
+				else if(event.getState().getBlock().equals(Blocks.EMERALD_ORE)) {expToAdd = 500;}
+				else if(event.getState().getBlock().equals(Blocks.DEEPSLATE_EMERALD_ORE)) {expToAdd = 500;}
+				else if(event.getState().getBlock().equals(Blocks.DIAMOND_ORE)) {expToAdd = 400;}
+				else if(event.getState().getBlock().equals(Blocks.DEEPSLATE_DIAMOND_ORE)) {expToAdd = 400;}
+				else if(event.getState().getBlock().equals(Blocks.ANCIENT_DEBRIS)) {expToAdd = 2800;}
+				
+				else if(event.getState().getBlock().equals(Blocks.OBSIDIAN)) {expToAdd = 20;}
+				else if(event.getState().getBlock().equals(Blocks.CRYING_OBSIDIAN)) {expToAdd = 20;}
+				else if(event.getState().getBlock().equals(Blocks.END_STONE)) {expToAdd = 4;}
+				else if(event.getState().getBlock().equals(Blocks.END_STONE_BRICKS)) {expToAdd = 5;}
+				
+				else if(event.getState().getBlock().equals(Blocks.NETHER_GOLD_ORE)) {expToAdd = 100;}
+				else if(event.getState().getBlock().equals(Blocks.NETHER_QUARTZ_ORE)) {expToAdd = 25;}
+				else if(event.getState().getBlock().equals(Blocks.NETHERRACK)) {expToAdd = 1;}
+				else if(event.getState().getBlock().equals(Blocks.NETHER_BRICKS)) {expToAdd = 4;}
+				
+				ModMessages.sendToServer(new GainMiningExpC2SPacket());
+				Minecraft.getInstance().player.sendSystemMessage(Component.literal("your mining Exp: " + ClientCapabilityData.getPlayerMiningExp()));
+				
+				//level up if player has sufficient miningExp
+				if(miningExp > (miningLevel*40) + 400) {
+					expToSub = (miningLevel*40) + 400;
+					ModMessages.sendToServer(new GainMiningLevelC2SPacket());
+					ModMessages.sendToServer(new ResetMiningExpC2SPacket());
+					Minecraft.getInstance().player.sendSystemMessage(Component.literal("your mining Level: " + ClientCapabilityData.getPlayerMiningLevel()));
+				}
 			}
-			
-			//level up if player has sufficient miningExp
-			if(miningExp > (miningLevel*50) + 1000) {
-				expToSub = (miningLevel*50) + 1000;
-				ModMessages.sendToServer(new GainMiningLevelC2SPacket());
-				ModMessages.sendToServer(new ResetMiningExpC2SPacket());
-				Minecraft.getInstance().player.sendSystemMessage(Component.literal("your mining Level: " + ClientCapabilityData.getPlayerMiningLevel()));
-			}
-			
-			//Mining stone gives exp according to this table:
-			if(event.getState().getBlock().equals(Blocks.COBBLESTONE)) {expToAdd = 2;}
-			else if(event.getState().getBlock().equals(Blocks.STONE)) {expToAdd = 4;}
-			else if(event.getState().getBlock().equals(Blocks.DIORITE)) {expToAdd = 4;}
-			else if(event.getState().getBlock().equals(Blocks.ANDESITE)) {expToAdd = 4;}
-			else if(event.getState().getBlock().equals(Blocks.GRANITE)) {expToAdd = 4;}
-			else if(event.getState().getBlock().equals(Blocks.DEEPSLATE)) {expToAdd = 4;}
-			
-			else if(event.getState().getBlock().equals(Blocks.COAL_ORE)) {expToAdd = 10;}
-			else if(event.getState().getBlock().equals(Blocks.DEEPSLATE_COAL_ORE)) {expToAdd = 10;}
-			else if(event.getState().getBlock().equals(Blocks.COPPER_ORE)) {expToAdd = 50;}
-			else if(event.getState().getBlock().equals(Blocks.DEEPSLATE_COPPER_ORE)) {expToAdd = 50;}
-			else if(event.getState().getBlock().equals(Blocks.IRON_ORE)) {expToAdd = 50;}
-			else if(event.getState().getBlock().equals(Blocks.DEEPSLATE_IRON_ORE)) {expToAdd = 50;}
-			else if(event.getState().getBlock().equals(Blocks.GOLD_ORE)) {expToAdd = 200;}
-			else if(event.getState().getBlock().equals(Blocks.DEEPSLATE_GOLD_ORE)) {expToAdd = 200;}
-			else if(event.getState().getBlock().equals(Blocks.REDSTONE_ORE)) {expToAdd = 20;}
-			else if(event.getState().getBlock().equals(Blocks.DEEPSLATE_REDSTONE_ORE)) {expToAdd = 20;}
-			else if(event.getState().getBlock().equals(Blocks.LAPIS_ORE)) {expToAdd = 100;}
-			else if(event.getState().getBlock().equals(Blocks.DEEPSLATE_LAPIS_ORE)) {expToAdd = 100;}
-			else if(event.getState().getBlock().equals(Blocks.EMERALD_ORE)) {expToAdd = 500;}
-			else if(event.getState().getBlock().equals(Blocks.DEEPSLATE_EMERALD_ORE)) {expToAdd = 500;}
-			else if(event.getState().getBlock().equals(Blocks.DIAMOND_ORE)) {expToAdd = 400;}
-			else if(event.getState().getBlock().equals(Blocks.DEEPSLATE_DIAMOND_ORE)) {expToAdd = 400;}
-			else if(event.getState().getBlock().equals(Blocks.ANCIENT_DEBRIS)) {expToAdd = 2800;}
-			
-			else if(event.getState().getBlock().equals(Blocks.OBSIDIAN)) {expToAdd = 20;}
-			else if(event.getState().getBlock().equals(Blocks.CRYING_OBSIDIAN)) {expToAdd = 20;}
-			else if(event.getState().getBlock().equals(Blocks.END_STONE)) {expToAdd = 4;}
-			else if(event.getState().getBlock().equals(Blocks.END_STONE_BRICKS)) {expToAdd = 5;}
-			
-			else if(event.getState().getBlock().equals(Blocks.NETHER_GOLD_ORE)) {expToAdd = 100;}
-			else if(event.getState().getBlock().equals(Blocks.NETHER_QUARTZ_ORE)) {expToAdd = 25;}
-			else if(event.getState().getBlock().equals(Blocks.NETHERRACK)) {expToAdd = 1;}
-			else if(event.getState().getBlock().equals(Blocks.NETHER_BRICKS)) {expToAdd = 4;}
-			ModMessages.sendToServer(new GainMiningExpC2SPacket());
-			Minecraft.getInstance().player.sendSystemMessage(Component.literal("your mining Exp: " + ClientCapabilityData.getPlayerMiningExp()));
 		}
 		
 		@SuppressWarnings("resource")
