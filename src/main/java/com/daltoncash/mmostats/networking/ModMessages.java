@@ -6,7 +6,7 @@ import com.daltoncash.mmostats.networking.packets.c2s.GainMiningExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainMiningLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.ResetCapabilityDataC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.ResetMiningExpC2SPacket;
-import com.daltoncash.mmostats.networking.packets.c2s.UseManaC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.GainNightVisionC2SPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.ManaDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.MiningExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.MiningLevelDataSyncS2CPacket;
@@ -66,10 +66,10 @@ public class ModMessages {
         		.consumerMainThread(GainMiningExpC2SPacket::handle)
         		.add();
         
-        net.messageBuilder(UseManaC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-                .decoder(UseManaC2SPacket::new)
-                .encoder(UseManaC2SPacket::toBytes)
-                .consumerMainThread(UseManaC2SPacket::handle)
+        net.messageBuilder(GainNightVisionC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(GainNightVisionC2SPacket::new)
+                .encoder(GainNightVisionC2SPacket::toBytes)
+                .consumerMainThread(GainNightVisionC2SPacket::handle)
                 .add();
 //------------------------------------------------------------------
         net.messageBuilder(ManaDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)

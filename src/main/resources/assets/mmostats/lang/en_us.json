@@ -4,5 +4,5 @@
 //keybinding for gui
 	"key.category.mmostatsmod.mmostats": "Mmo Stats Mod",
 	"key.mmostats.open_upgrade_gui": "Open Gui",
-	"key.mmostats.go_fast": "Go Fast"
+	"key.mmostats.night_vision": "Use Night Vision(if upgraded)"
 }
