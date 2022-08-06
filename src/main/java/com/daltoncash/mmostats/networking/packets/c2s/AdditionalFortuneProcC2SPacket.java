@@ -18,95 +18,95 @@ import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.network.NetworkEvent;
 
 public class AdditionalFortuneProcC2SPacket {
-	
+
 	public AdditionalFortuneProcC2SPacket() {
 
-    }
+	}
 
-    public AdditionalFortuneProcC2SPacket(FriendlyByteBuf buf) {
+	public AdditionalFortuneProcC2SPacket(FriendlyByteBuf buf) {
 
-    }
+	}
 
-    public void toBytes(FriendlyByteBuf buf) {
+	public void toBytes(FriendlyByteBuf buf) {
 
-    }
+	}
 
-    
-    public boolean handle(Supplier<NetworkEvent.Context> supplier) {
-        NetworkEvent.Context context = supplier.get();
-        context.enqueueWork(() -> {
-            // HERE WE ARE ON THE SERVER!
-            ServerPlayer player = context.getSender();
-            ServerLevel level = player.getLevel();
-            BlockEvent event = ClientForgeEvents.blockevent;
-            Map<Enchantment, Integer> map = player.getItemInHand(InteractionHand.MAIN_HAND).getAllEnchantments();
-            List<ItemStack> drops = Block.getDrops(event.getState(), level, event.getPos(), null);
-            
-            //Takes the player's item's enchants and finds if it has fortune.
-            //It then applies Minecraft's fortune equation to find correct drops to add to player's inventory.
-            if(map.containsKey(Enchantments.BLOCK_FORTUNE)) {
-            	double rand = Math.random();
-            	
-            	if(map.get(Enchantments.BLOCK_FORTUNE).equals(1)) {
-            		if(rand <= (double) 1/3) {
-            			for(ItemStack item : drops) {
-            				item.setCount(item.getCount() * 2);
-            				player.addItem(item);
-            			}
-            		}else {
-            			for(ItemStack item : drops) {
-            				item.setCount(item.getCount() * 1);
-            				player.addItem(item);
-            			}
-            		}
-            	}else if(map.get(Enchantments.BLOCK_FORTUNE).equals(2)) {
-            		if(rand <= .25 ) {
-            			for(ItemStack item : drops) {
-            				item.setCount(item.getCount() * 2);
-            				player.addItem(item);
-            			}
-            		}else if(rand <= .50 && rand > .25) {
-            			for(ItemStack item : drops) {
-            				item.setCount(item.getCount() * 3);
-            				player.addItem(item);
-            			}
-            		}else {
-            			for(ItemStack item : drops) {
-            				item.setCount(item.getCount() * 1);
-            				player.addItem(item);
-            			}
-            		}
-            	}else if(map.get(Enchantments.BLOCK_FORTUNE).equals(3)) {
-            		if(rand <= .20) {
-            			for(ItemStack item : drops) {
-            				item.setCount(item.getCount() * 2);
-            				player.addItem(item);
-            			}
-            		}else if(rand <= .40 && rand > .20) {
-            			for(ItemStack item : drops) {
-            				item.setCount(item.getCount() * 3);
-            				player.addItem(item);
-            			}
-            		}else if(rand <= .60 && rand > .40) {
-            			for(ItemStack item : drops) {
-            				item.setCount(item.getCount() * 4);
-            				player.addItem(item);
-            			}
-            		}else {
-            			for(ItemStack item : drops) {
-            				item.setCount(item.getCount() * 1);
-            				player.addItem(item);
-            			}
-            		}
-            	}
-            	//Applies when player has no fortune.
-            }else {
-            	for(ItemStack item : drops) {
-    				item.setCount(item.getCount() * 1);
-    				player.addItem(item);
-            	}
-            }
-        });
-        return true;
-    }
+	public boolean handle(Supplier<NetworkEvent.Context> supplier) {
+		NetworkEvent.Context context = supplier.get();
+		context.enqueueWork(() -> {
+			// HERE WE ARE ON THE SERVER!
+			ServerPlayer player = context.getSender();
+			ServerLevel level = player.getLevel();
+			BlockEvent event = ClientForgeEvents.blockevent;
+			Map<Enchantment, Integer> map = player.getItemInHand(InteractionHand.MAIN_HAND).getAllEnchantments();
+			List<ItemStack> drops = Block.getDrops(event.getState(), level, event.getPos(), null);
+
+			// Takes the player's item's enchants and finds if it has fortune.
+			// It then applies Minecraft's fortune equation to find correct drops to add to
+			// player's inventory.
+			if (map.containsKey(Enchantments.BLOCK_FORTUNE)) {
+				double rand = Math.random();
+
+				if (map.get(Enchantments.BLOCK_FORTUNE).equals(1)) {
+					if (rand <= (double) 1 / 3) {
+						for (ItemStack item : drops) {
+							item.setCount(item.getCount() * 2);
+							player.addItem(item);
+						}
+					} else {
+						for (ItemStack item : drops) {
+							item.setCount(item.getCount() * 1);
+							player.addItem(item);
+						}
+					}
+				} else if (map.get(Enchantments.BLOCK_FORTUNE).equals(2)) {
+					if (rand <= .25) {
+						for (ItemStack item : drops) {
+							item.setCount(item.getCount() * 2);
+							player.addItem(item);
+						}
+					} else if (rand <= .50 && rand > .25) {
+						for (ItemStack item : drops) {
+							item.setCount(item.getCount() * 3);
+							player.addItem(item);
+						}
+					} else {
+						for (ItemStack item : drops) {
+							item.setCount(item.getCount() * 1);
+							player.addItem(item);
+						}
+					}
+				} else if (map.get(Enchantments.BLOCK_FORTUNE).equals(3)) {
+					if (rand <= .20) {
+						for (ItemStack item : drops) {
+							item.setCount(item.getCount() * 2);
+							player.addItem(item);
+						}
+					} else if (rand <= .40 && rand > .20) {
+						for (ItemStack item : drops) {
+							item.setCount(item.getCount() * 3);
+							player.addItem(item);
+						}
+					} else if (rand <= .60 && rand > .40) {
+						for (ItemStack item : drops) {
+							item.setCount(item.getCount() * 4);
+							player.addItem(item);
+						}
+					} else {
+						for (ItemStack item : drops) {
+							item.setCount(item.getCount() * 1);
+							player.addItem(item);
+						}
+					}
+				}
+				// Applies when player has no fortune.
+			} else {
+				for (ItemStack item : drops) {
+					item.setCount(item.getCount() * 1);
+					player.addItem(item);
+				}
+			}
+		});
+		return true;
+	}
 }

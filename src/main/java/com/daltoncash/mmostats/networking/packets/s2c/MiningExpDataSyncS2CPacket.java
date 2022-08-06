@@ -10,23 +10,23 @@ import net.minecraftforge.network.NetworkEvent;
 public class MiningExpDataSyncS2CPacket {
 	private final int miningExp;
 
-    public MiningExpDataSyncS2CPacket(int miningExp) {
-        this.miningExp = miningExp;
-    }
+	public MiningExpDataSyncS2CPacket(int miningExp) {
+		this.miningExp = miningExp;
+	}
 
-    public MiningExpDataSyncS2CPacket(FriendlyByteBuf buf) {
-        this.miningExp = buf.readInt();
-    }
+	public MiningExpDataSyncS2CPacket(FriendlyByteBuf buf) {
+		this.miningExp = buf.readInt();
+	}
 
-    public void toBytes(FriendlyByteBuf buf) {
-        buf.writeInt(miningExp);
-    }
+	public void toBytes(FriendlyByteBuf buf) {
+		buf.writeInt(miningExp);
+	}
 
-    public boolean handle(Supplier<NetworkEvent.Context> supplier) {
-        NetworkEvent.Context context = supplier.get();
-        context.enqueueWork(() -> {
-            ClientCapabilityData.setPlayerMiningExp(miningExp);
-        });
-        return true;
-    }
+	public boolean handle(Supplier<NetworkEvent.Context> supplier) {
+		NetworkEvent.Context context = supplier.get();
+		context.enqueueWork(() -> {
+			ClientCapabilityData.setPlayerMiningExp(miningExp);
+		});
+		return true;
+	}
 }

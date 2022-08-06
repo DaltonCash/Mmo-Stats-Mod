@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
 public class ListOfMiningBlocks {
-	public static List<Block> getBlocks(){
+	public static List<Block> getBlocks() {
 		List<Block> list = new ArrayList<>();
 		list.add(Blocks.STONE);
 		list.add(Blocks.DIORITE);

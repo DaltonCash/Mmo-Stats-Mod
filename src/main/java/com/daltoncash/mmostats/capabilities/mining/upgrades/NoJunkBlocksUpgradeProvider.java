@@ -1,4 +1,4 @@
-package com.daltoncash.mmostats.capabilities.mining;
+package com.daltoncash.mmostats.capabilities.mining.upgrades;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -12,40 +12,39 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
-public class PlayerMiningExpProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
-	public static Capability<PlayerMiningExp> PLAYER_MINING_EXP = CapabilityManager
-			.get(new CapabilityToken<PlayerMiningExp>() {
+public class NoJunkBlocksUpgradeProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
+	public static Capability<NoJunkBlocksUpgrade> NO_JUNK_BLOCKS = CapabilityManager
+			.get(new CapabilityToken<NoJunkBlocksUpgrade>() {
 			});
 
-	private PlayerMiningExp miningExp = null;
-	private final LazyOptional<PlayerMiningExp> optional = LazyOptional.of(this::createPlayerMiningExp);
+	private NoJunkBlocksUpgrade isUpgraded = null;
+	private final LazyOptional<NoJunkBlocksUpgrade> optional = LazyOptional.of(this::createNoJunkBlocksUpgrade);
 
-	private PlayerMiningExp createPlayerMiningExp() {
-		if (this.miningExp == null) {
-			this.miningExp = new PlayerMiningExp();
+	private NoJunkBlocksUpgrade createNoJunkBlocksUpgrade() {
+		if (this.isUpgraded == null) {
+			this.isUpgraded = new NoJunkBlocksUpgrade();
 		}
-
-		return this.miningExp;
+		return this.isUpgraded;
 	}
 
 	@Override
 	public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-		if (cap == PLAYER_MINING_EXP) {
+		if (cap == NO_JUNK_BLOCKS) {
 			return optional.cast();
 		}
-
 		return LazyOptional.empty();
 	}
 
 	@Override
 	public CompoundTag serializeNBT() {
 		CompoundTag nbt = new CompoundTag();
-		createPlayerMiningExp().saveNBTData(nbt);
+		createNoJunkBlocksUpgrade().saveNBTData(nbt);
 		return nbt;
 	}
 
 	@Override
 	public void deserializeNBT(CompoundTag nbt) {
-		createPlayerMiningExp().loadNBTData(nbt);
+		createNoJunkBlocksUpgrade().loadNBTData(nbt);
 	}
+
 }

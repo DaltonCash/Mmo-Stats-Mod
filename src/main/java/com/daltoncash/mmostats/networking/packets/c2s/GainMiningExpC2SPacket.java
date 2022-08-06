@@ -12,28 +12,28 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 
 public class GainMiningExpC2SPacket {
-	
-	 public GainMiningExpC2SPacket() {
-		 
-	 }
 
-	 public GainMiningExpC2SPacket(FriendlyByteBuf buf) {
+	public GainMiningExpC2SPacket() {
 
-	 }
+	}
 
-	 public void toBytes(FriendlyByteBuf buf) {
+	public GainMiningExpC2SPacket(FriendlyByteBuf buf) {
 
-	 }
+	}
 
-	 public boolean handle(Supplier<NetworkEvent.Context> supplier) {
-	     NetworkEvent.Context context = supplier.get();
-	     context.enqueueWork(() -> {
-	         ServerPlayer player = context.getSender();
-	             player.getCapability(PlayerMiningExpProvider.PLAYER_MINING_EXP).ifPresent(miningExp -> {
-	                 miningExp.addMiningExp(ClientForgeEvents.expToAdd);
-	                 ModMessages.sendToPlayer(new MiningExpDataSyncS2CPacket(miningExp.getMiningExp()), player);
-	             });
-	     });
-	     return true;
-	 }	
+	public void toBytes(FriendlyByteBuf buf) {
+
+	}
+
+	public boolean handle(Supplier<NetworkEvent.Context> supplier) {
+		NetworkEvent.Context context = supplier.get();
+		context.enqueueWork(() -> {
+			ServerPlayer player = context.getSender();
+			player.getCapability(PlayerMiningExpProvider.PLAYER_MINING_EXP).ifPresent(miningExp -> {
+				miningExp.addMiningExp(ClientForgeEvents.expToAdd);
+				ModMessages.sendToPlayer(new MiningExpDataSyncS2CPacket(miningExp.getMiningExp()), player);
+			});
+		});
+		return true;
+	}
 }

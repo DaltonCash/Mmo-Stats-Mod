@@ -1,4 +1,4 @@
-package com.daltoncash.mmostats.capabilities.mining;
+package com.daltoncash.mmostats.capabilities.mining.upgrades;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -12,40 +12,38 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
-public class PlayerMiningExpProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
-	public static Capability<PlayerMiningExp> PLAYER_MINING_EXP = CapabilityManager
-			.get(new CapabilityToken<PlayerMiningExp>() {
-			});
+public class JunkBlocksDropExpUpgradeProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
+	public static Capability<JunkBlocksDropExpUpgrade> JUNK_BLOCKS_DROP_EXP = CapabilityManager
+			.get(new CapabilityToken<JunkBlocksDropExpUpgrade>() {});
 
-	private PlayerMiningExp miningExp = null;
-	private final LazyOptional<PlayerMiningExp> optional = LazyOptional.of(this::createPlayerMiningExp);
+	private JunkBlocksDropExpUpgrade isUpgraded = null;
+	private final LazyOptional<JunkBlocksDropExpUpgrade> optional = LazyOptional
+			.of(this::createJunkBlocksDropExpUpgrade);
 
-	private PlayerMiningExp createPlayerMiningExp() {
-		if (this.miningExp == null) {
-			this.miningExp = new PlayerMiningExp();
+	private JunkBlocksDropExpUpgrade createJunkBlocksDropExpUpgrade() {
+		if (this.isUpgraded == null) {
+			this.isUpgraded = new JunkBlocksDropExpUpgrade();
 		}
-
-		return this.miningExp;
+		return this.isUpgraded;
 	}
 
 	@Override
 	public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-		if (cap == PLAYER_MINING_EXP) {
+		if (cap == JUNK_BLOCKS_DROP_EXP) {
 			return optional.cast();
 		}
-
 		return LazyOptional.empty();
 	}
 
 	@Override
 	public CompoundTag serializeNBT() {
 		CompoundTag nbt = new CompoundTag();
-		createPlayerMiningExp().saveNBTData(nbt);
+		createJunkBlocksDropExpUpgrade().saveNBTData(nbt);
 		return nbt;
 	}
 
 	@Override
 	public void deserializeNBT(CompoundTag nbt) {
-		createPlayerMiningExp().loadNBTData(nbt);
+		createJunkBlocksDropExpUpgrade().loadNBTData(nbt);
 	}
 }

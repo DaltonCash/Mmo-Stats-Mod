@@ -11,22 +11,22 @@ public class ManaDataSyncS2CPacket {
 	private final int mana;
 
 	public ManaDataSyncS2CPacket(int mana) {
-	    this.mana = mana;
+		this.mana = mana;
 	}
 
 	public ManaDataSyncS2CPacket(FriendlyByteBuf buf) {
-	    this.mana = buf.readInt();
+		this.mana = buf.readInt();
 	}
 
 	public void toBytes(FriendlyByteBuf buf) {
-	    buf.writeInt(mana);
+		buf.writeInt(mana);
 	}
 
 	public boolean handle(Supplier<NetworkEvent.Context> supplier) {
-	    NetworkEvent.Context context = supplier.get();
-	    context.enqueueWork(() -> {
-	        ClientCapabilityData.setPlayerMana(mana);
-	    });
-	    return true;
+		NetworkEvent.Context context = supplier.get();
+		context.enqueueWork(() -> {
+			ClientCapabilityData.setPlayerMana(mana);
+		});
+		return true;
 	}
 }

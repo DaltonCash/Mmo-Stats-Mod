@@ -12,28 +12,28 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 
 public class ResetMiningExpC2SPacket {
-	
+
 	public ResetMiningExpC2SPacket() {
-		 
-	 }
 
-	 public ResetMiningExpC2SPacket(FriendlyByteBuf buf) {
+	}
 
-	 }
+	public ResetMiningExpC2SPacket(FriendlyByteBuf buf) {
 
-	 public void toBytes(FriendlyByteBuf buf) {
+	}
 
-	 }
+	public void toBytes(FriendlyByteBuf buf) {
 
-	 public boolean handle(Supplier<NetworkEvent.Context> supplier) {
-	     NetworkEvent.Context context = supplier.get();
-	     context.enqueueWork(() -> {
-	         ServerPlayer player = context.getSender();
-	             player.getCapability(PlayerMiningExpProvider.PLAYER_MINING_EXP).ifPresent(miningExp -> {
-	                 miningExp.subMiningExp(ClientForgeEvents.expToSub);
-	                 ModMessages.sendToPlayer(new MiningExpDataSyncS2CPacket(miningExp.getMiningExp()), player);
-	             });
-	     });
-	     return true;
-	 }	
+	}
+
+	public boolean handle(Supplier<NetworkEvent.Context> supplier) {
+		NetworkEvent.Context context = supplier.get();
+		context.enqueueWork(() -> {
+			ServerPlayer player = context.getSender();
+			player.getCapability(PlayerMiningExpProvider.PLAYER_MINING_EXP).ifPresent(miningExp -> {
+				miningExp.subMiningExp(ClientForgeEvents.expToSub);
+				ModMessages.sendToPlayer(new MiningExpDataSyncS2CPacket(miningExp.getMiningExp()), player);
+			});
+		});
+		return true;
+	}
 }

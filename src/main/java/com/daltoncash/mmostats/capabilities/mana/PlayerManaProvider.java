@@ -13,37 +13,38 @@ import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
 public class PlayerManaProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
-    public static Capability<PlayerMana> PLAYER_MANA = CapabilityManager.get(new CapabilityToken<PlayerMana>() { });
+	public static Capability<PlayerMana> PLAYER_MANA = CapabilityManager.get(new CapabilityToken<PlayerMana>() {
+	});
 
-    private PlayerMana mana = null;
-    private final LazyOptional<PlayerMana> optional = LazyOptional.of(this::createPlayerMana);
+	private PlayerMana mana = null;
+	private final LazyOptional<PlayerMana> optional = LazyOptional.of(this::createPlayerMana);
 
-    private PlayerMana createPlayerMana() {
-        if(this.mana == null) {
-            this.mana = new PlayerMana();
-        }
+	private PlayerMana createPlayerMana() {
+		if (this.mana == null) {
+			this.mana = new PlayerMana();
+		}
 
-        return this.mana;
-    }
+		return this.mana;
+	}
 
-    @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if(cap == PLAYER_MANA) {
-            return optional.cast();
-        }
+	@Override
+	public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
+		if (cap == PLAYER_MANA) {
+			return optional.cast();
+		}
 
-        return LazyOptional.empty();
-    }
+		return LazyOptional.empty();
+	}
 
-    @Override
-    public CompoundTag serializeNBT() {
-        CompoundTag nbt = new CompoundTag();
-        createPlayerMana().saveNBTData(nbt);
-        return nbt;
-    }
+	@Override
+	public CompoundTag serializeNBT() {
+		CompoundTag nbt = new CompoundTag();
+		createPlayerMana().saveNBTData(nbt);
+		return nbt;
+	}
 
-    @Override
-    public void deserializeNBT(CompoundTag nbt) {
-        createPlayerMana().loadNBTData(nbt);
-    }
+	@Override
+	public void deserializeNBT(CompoundTag nbt) {
+		createPlayerMana().loadNBTData(nbt);
+	}
 }
