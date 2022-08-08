@@ -9,11 +9,14 @@ import com.daltoncash.mmostats.networking.packets.c2s.AdditionalFortuneProcC2SPa
 import com.daltoncash.mmostats.networking.packets.c2s.GainMiningExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainMiningLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.ResetMiningExpC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.UpgradeJunkBlocksDropExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainNightVisionC2SPacket;
 import com.daltoncash.mmostats.util.KeyBinding;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.sounds.BeeSoundInstance;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.block.Block;
@@ -22,6 +25,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraftforge.client.event.sound.SoundEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.entity.player.PlayerEvent.HarvestCheck;
 import net.minecraftforge.event.level.BlockEvent;
@@ -37,21 +41,28 @@ public class ClientEvents {
 
 		@SubscribeEvent
 		public static void onHarvest(HarvestCheck event) {
-			if (event.getTargetBlock().getBlock().equals(Blocks.STONE)
-					|| event.getTargetBlock().getBlock().equals(Blocks.DIORITE)
-					|| event.getTargetBlock().getBlock().equals(Blocks.ANDESITE)
-					|| event.getTargetBlock().getBlock().equals(Blocks.GRANITE)
-					|| event.getTargetBlock().getBlock().equals(Blocks.DEEPSLATE)) {
-				event.setCanHarvest(false);
+			if(ClientCapabilityData.isUpgradedNoJunkBlocks()) {
+				if (event.getTargetBlock().getBlock().equals(Blocks.STONE)
+						|| event.getTargetBlock().getBlock().equals(Blocks.COBBLESTONE)
+						|| event.getTargetBlock().getBlock().equals(Blocks.DIORITE)
+						|| event.getTargetBlock().getBlock().equals(Blocks.ANDESITE)
+						|| event.getTargetBlock().getBlock().equals(Blocks.GRANITE)
+						|| event.getTargetBlock().getBlock().equals(Blocks.DEEPSLATE)
+						|| event.getTargetBlock().getBlock().equals(Blocks.COBBLED_DEEPSLATE)) {
+					event.setCanHarvest(false);
+				}
 			}
 		}
 
 		@SubscribeEvent
 		public static void onBreaking(BreakSpeed event) {
-			if (event.getState().getBlock().equals(Blocks.OBSIDIAN)
-					|| event.getState().getBlock().equals(Blocks.CRYING_OBSIDIAN)) {
-				event.setNewSpeed((float) (event.getOriginalSpeed() * 2));
-			} else if (event.getState().getBlock().equals(Blocks.DEEPSLATE)) {
+			if(ClientCapabilityData.isUpgradedObsidianBreaker()) {
+				if (event.getState().getBlock().equals(Blocks.OBSIDIAN)
+						|| event.getState().getBlock().equals(Blocks.CRYING_OBSIDIAN)) {
+					event.setNewSpeed((float) (event.getOriginalSpeed() * 2));
+				}
+			}
+			if (event.getState().getBlock().equals(Blocks.DEEPSLATE)) {
 				event.setNewSpeed((float) (event.getOriginalSpeed() * 2));
 			}
 
@@ -72,7 +83,6 @@ public class ClientEvents {
 			System.out.println(ClientCapabilityData.isUpgradedNoJunkBlocks());
 			System.out.println(ClientCapabilityData.isUpgradedObsidianBreaker());
 			
-			
 			// Checks if the block being destroyed is part of the accepted list
 			if (ListOfMiningBlocks.getBlocks().contains(block)) {
 
@@ -87,9 +97,10 @@ public class ClientEvents {
 						|| event.getState().getBlock().equals(Blocks.ANDESITE)
 						|| event.getState().getBlock().equals(Blocks.GRANITE)
 						|| event.getState().getBlock().equals(Blocks.DEEPSLATE)) {
+					if(ClientCapabilityData.isUpgradedJunkBlocksDropExp()) {
+						event.setExpToDrop(event.getExpToDrop() + 1);
+					}
 					expToAdd = 4;
-					event.setExpToDrop(event.getExpToDrop() + 1);
-					event.getState().getBlock().destroy(event.getLevel(), event.getPos(), event.getState());
 				}
 
 				// overworld ores
@@ -168,12 +179,9 @@ public class ClientEvents {
 		@SubscribeEvent
 		public static void onKeyInput(InputEvent.Key event) {
 			if (KeyBinding.NIGHT_VISION_KEY.consumeClick()) {
-				if (ClientCapabilityData.getPlayerMana() >= 10) {
+				if (ClientCapabilityData.isUpgradedNightVision() && ClientCapabilityData.getPlayerMana() >= 10) {
 					Minecraft.getInstance().player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 1200));
 					ModMessages.sendToServer(new GainNightVisionC2SPacket());
-				} else {
-					Minecraft.getInstance().player
-							.sendSystemMessage(Component.literal("your mana: " + ClientCapabilityData.getPlayerMana()));
 				}
 			}
 			if (KeyBinding.OPEN_UPGRADE_GUI_KEY.consumeClick()) {
