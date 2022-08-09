@@ -1,5 +1,6 @@
 package com.daltoncash.mmostats.gui;
 
+
 import com.daltoncash.mmostats.MmoStatsMod;
 import com.daltoncash.mmostats.capabilities.ClientCapabilityData;
 import com.daltoncash.mmostats.networking.ModMessages;
@@ -10,6 +11,7 @@ import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.UpgradeObsi
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Widget;
@@ -19,6 +21,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
 public class MiningMenu extends Screen {
+	public Widget ancientDebris;
+	//private OptionsList list;
+	//protected final Options options;
 	private final ResourceLocation bgtexture = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/new_test_mining_bg.png");
 	private final ResourceLocation upgradeTexture1 = new ResourceLocation(MmoStatsMod.MODID,
@@ -33,10 +38,14 @@ public class MiningMenu extends Screen {
 	public MiningMenu(Component p_96550_) {
 		super(p_96550_);
 	}
-
+	
 	@Override
 	public final void init() {
-
+		//this.list = new OptionsList(this.minecraft, this.width, this.height, 32, this.height - 32, 25);
+		
+		//this.list.addBig(optioninstance);
+	     // this.list.addBig(this.options.biomeBlendRadius());
+	     // this.list.addSmall(options(this.options));
 		addRenderableWidget(new ImageButton((this.width / 6) * 1, (this.height / 6) * 2, 100, 100, 0, 0, 0,
 				upgradeTexture1, 100, 100, MiningMenu::onPressUpgradeJunk));
 		addRenderableWidget(new ImageButton((this.width / 6) * 3, (this.height / 6) * 2, 100, 100, 0, 0, 0,
@@ -47,7 +56,7 @@ public class MiningMenu extends Screen {
 				upgradeTexture4, 100, 100, MiningMenu::onPressUpgradeObsidianBreaker));
 		
 		//----------blocks mined buttons---------------
-		addRenderableWidget(new Button(0, this.height / 16 * 1, 100, 20, 
+		ancientDebris = addRenderableWidget(new Button(0, this.height / 16 * 1, 100, 20, 
 				Component.literal(ClientCapabilityData.getAncientDebrisMined() + " Ancient Debris"), 
 				MiningMenu::onPressDoNothing));
 		addRenderableWidget(new Button(0, this.height / 16 * 2, 100, 20, 
@@ -84,7 +93,6 @@ public class MiningMenu extends Screen {
 				Component.literal(ClientCapabilityData.getRedstoneMined() + " Redstone"), 
 				MiningMenu::onPressDoNothing));
 	}
-
 	private static void onPressDoNothing(Button button) {
 		
 	}
@@ -103,7 +111,13 @@ public class MiningMenu extends Screen {
 	private static void onPressUpgradeObsidianBreaker(Button button) {
 		ModMessages.sendToServer(new UpgradeObsidianBreakerC2SPacket());
 	}
-
+//-------------------------------------------------------------------------
+	/*
+	public static List<FormattedCharSequence> tooltipAt(OptionsList p_96288_, int p_96289_, int p_96290_) {
+	      Optional<AbstractWidget> optional = p_96288_.getMouseOver((double)p_96289_, (double)p_96290_);
+	      return (List<FormattedCharSequence>)(optional.isPresent() && optional.get() instanceof TooltipAccessor ? ((TooltipAccessor)optional.get()).getTooltip() : ImmutableList.of());
+	   }
+	*/
 	protected void renderBackground(PoseStack poseStack, float pPartialTick, int mouseX, int mouseY) {
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
@@ -117,9 +131,11 @@ public class MiningMenu extends Screen {
 			widget.render(p_96562_, p_96563_, p_96564_, p_96565_);
 		}
 	}
-
 	@Override
 	public boolean isPauseScreen() {
 		return true;
 	}
+	 public void onClose() {
+		 Minecraft.getInstance().setScreen(new UpgradeMenu(Component.literal("mining")));
+	   }
 }

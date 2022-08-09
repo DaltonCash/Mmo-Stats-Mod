@@ -6,6 +6,7 @@ import com.daltoncash.mmostats.networking.packets.c2s.GainMiningExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainMiningLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.ResetCapabilityDataC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.ResetMiningExpC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.SpawnTntC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.UpgradeJunkBlocksDropExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.UpgradeNightVisionC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.UpgradeNoJunkBlocksC2SPacket;
@@ -139,6 +140,11 @@ public class ModMessages {
 				.decoder(UpgradeObsidianBreakerC2SPacket::new)
 				.encoder(UpgradeObsidianBreakerC2SPacket::toBytes)
 				.consumerMainThread(UpgradeObsidianBreakerC2SPacket::handle)
+				.add();
+        net.messageBuilder(SpawnTntC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+				.decoder(SpawnTntC2SPacket::new)
+				.encoder(SpawnTntC2SPacket::toBytes)
+				.consumerMainThread(SpawnTntC2SPacket::handle)
 				.add();
 //-------------Upgrades---S2C--------------------------------------------
         net.messageBuilder(JunkBlocksDropExpDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)

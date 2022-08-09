@@ -1,5 +1,6 @@
 package com.daltoncash.mmostats.events;
 
+
 import com.daltoncash.mmostats.MmoStatsMod;
 import com.daltoncash.mmostats.capabilities.ClientCapabilityData;
 import com.daltoncash.mmostats.gui.ManaOverlay;
@@ -9,6 +10,7 @@ import com.daltoncash.mmostats.networking.packets.c2s.AdditionalFortuneProcC2SPa
 import com.daltoncash.mmostats.networking.packets.c2s.GainMiningExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainMiningLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.ResetMiningExpC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.SpawnTntC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.AncientDebrisMinedC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.CoalMinedC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.CopperMinedC2SPacket;
@@ -84,11 +86,6 @@ public class ClientEvents {
 			expToSub = 0;
 			expToAdd = 0;
 			blockevent = event;
-
-			System.out.println(ClientCapabilityData.isUpgradedJunkBlocksDropExp());
-			System.out.println(ClientCapabilityData.isUpgradedNightVision());
-			System.out.println(ClientCapabilityData.isUpgradedNoJunkBlocks());
-			System.out.println(ClientCapabilityData.isUpgradedObsidianBreaker());
 			
 			// Checks if the block being destroyed is part of the accepted list
 			if (ListOfMiningBlocks.getBlocks().contains(block)) {
@@ -109,7 +106,7 @@ public class ClientEvents {
 					}
 					expToAdd = 4;
 				}
-
+				
 				// overworld ores
 				else if (event.getState().getBlock().equals(Blocks.COAL_ORE)) {
 					expToAdd = 10;
@@ -201,6 +198,8 @@ public class ClientEvents {
 					Minecraft.getInstance().player.sendSystemMessage(
 							Component.literal("your mining Level: " + 1 + ClientCapabilityData.getPlayerMiningLevel()));
 				}
+				event.setExpToDrop((int)(event.getExpToDrop() * 
+						((Math.log10(ClientCapabilityData.getLapisMined()) + 2) / 2)));
 			}
 		}
 
@@ -215,9 +214,11 @@ public class ClientEvents {
 			}
 			if (KeyBinding.OPEN_UPGRADE_GUI_KEY.consumeClick()) {
 				Minecraft.getInstance().setScreen(new UpgradeMenu(Component.literal("Test from events!")));
-			} else {
-
 			}
+			if(KeyBinding.X_PLOSIVE_MINER_KEY.consumeClick()) {
+				ModMessages.sendToServer(new SpawnTntC2SPacket());
+			}
+			
 		}
 
 		@Mod.EventBusSubscriber(modid = MmoStatsMod.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -227,6 +228,7 @@ public class ClientEvents {
 			public static void onKeyRegister(RegisterKeyMappingsEvent event) {
 				event.register(KeyBinding.NIGHT_VISION_KEY);
 				event.register(KeyBinding.OPEN_UPGRADE_GUI_KEY);
+				event.register(KeyBinding.X_PLOSIVE_MINER_KEY);
 			}
 
 			@SubscribeEvent

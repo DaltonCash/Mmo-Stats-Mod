@@ -39,6 +39,7 @@ public class ListOfMiningBlocks {
 		list.add(Blocks.NETHER_QUARTZ_ORE);
 		list.add(Blocks.NETHERRACK);
 		list.add(Blocks.NETHER_BRICKS);
+		list.add(Blocks.GLOWSTONE);
 		return list;
 	}
 }
