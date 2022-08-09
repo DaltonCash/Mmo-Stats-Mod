@@ -9,14 +9,23 @@ import com.daltoncash.mmostats.networking.packets.c2s.AdditionalFortuneProcC2SPa
 import com.daltoncash.mmostats.networking.packets.c2s.GainMiningExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainMiningLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.ResetMiningExpC2SPacket;
-import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.UpgradeJunkBlocksDropExpC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.AncientDebrisMinedC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.CoalMinedC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.CopperMinedC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.DiamondMinedC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.EmeraldMinedC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.GlowstoneMinedC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.GoldMinedC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.IronMinedC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.LapisMinedC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.NetherGoldMinedC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.QuartzMinedC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.RedstoneMinedC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainNightVisionC2SPacket;
 import com.daltoncash.mmostats.util.KeyBinding;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.sounds.BeeSoundInstance;
 import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.block.Block;
@@ -25,7 +34,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
-import net.minecraftforge.client.event.sound.SoundEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.entity.player.PlayerEvent.HarvestCheck;
 import net.minecraftforge.event.level.BlockEvent;
@@ -65,7 +73,6 @@ public class ClientEvents {
 			if (event.getState().getBlock().equals(Blocks.DEEPSLATE)) {
 				event.setNewSpeed((float) (event.getOriginalSpeed() * 2));
 			}
-
 		}
 
 		@SuppressWarnings("resource")
@@ -106,38 +113,55 @@ public class ClientEvents {
 				// overworld ores
 				else if (event.getState().getBlock().equals(Blocks.COAL_ORE)) {
 					expToAdd = 10;
+					ModMessages.sendToServer(new CoalMinedC2SPacket());
 				} else if (event.getState().getBlock().equals(Blocks.DEEPSLATE_COAL_ORE)) {
 					expToAdd = 10;
+					ModMessages.sendToServer(new CoalMinedC2SPacket());
 				} else if (event.getState().getBlock().equals(Blocks.COPPER_ORE)) {
 					expToAdd = 50;
+					ModMessages.sendToServer(new CopperMinedC2SPacket());
 				} else if (event.getState().getBlock().equals(Blocks.DEEPSLATE_COPPER_ORE)) {
 					expToAdd = 50;
+					ModMessages.sendToServer(new CopperMinedC2SPacket());
 				} else if (event.getState().getBlock().equals(Blocks.IRON_ORE)) {
 					expToAdd = 50;
+					ModMessages.sendToServer(new IronMinedC2SPacket());
 				} else if (event.getState().getBlock().equals(Blocks.DEEPSLATE_IRON_ORE)) {
 					expToAdd = 50;
+					ModMessages.sendToServer(new IronMinedC2SPacket());
 				} else if (event.getState().getBlock().equals(Blocks.GOLD_ORE)) {
 					expToAdd = 200;
+					ModMessages.sendToServer(new GoldMinedC2SPacket());
 				} else if (event.getState().getBlock().equals(Blocks.DEEPSLATE_GOLD_ORE)) {
 					expToAdd = 200;
+					ModMessages.sendToServer(new GoldMinedC2SPacket());
 				} else if (event.getState().getBlock().equals(Blocks.REDSTONE_ORE)) {
 					expToAdd = 20;
+					ModMessages.sendToServer(new RedstoneMinedC2SPacket());
 				} else if (event.getState().getBlock().equals(Blocks.DEEPSLATE_REDSTONE_ORE)) {
 					expToAdd = 20;
+					ModMessages.sendToServer(new RedstoneMinedC2SPacket());
 				} else if (event.getState().getBlock().equals(Blocks.LAPIS_ORE)) {
 					expToAdd = 100;
+					ModMessages.sendToServer(new LapisMinedC2SPacket());
 				} else if (event.getState().getBlock().equals(Blocks.DEEPSLATE_LAPIS_ORE)) {
 					expToAdd = 100;
+					ModMessages.sendToServer(new LapisMinedC2SPacket());
 				} else if (event.getState().getBlock().equals(Blocks.EMERALD_ORE)) {
 					expToAdd = 500;
+					ModMessages.sendToServer(new EmeraldMinedC2SPacket());
 				} else if (event.getState().getBlock().equals(Blocks.DEEPSLATE_EMERALD_ORE)) {
 					expToAdd = 500;
+					ModMessages.sendToServer(new EmeraldMinedC2SPacket());
 				} else if (event.getState().getBlock().equals(Blocks.DIAMOND_ORE)) {
 					expToAdd = 400;
+					ModMessages.sendToServer(new DiamondMinedC2SPacket());
 				} else if (event.getState().getBlock().equals(Blocks.DEEPSLATE_DIAMOND_ORE)) {
 					expToAdd = 400;
+					ModMessages.sendToServer(new DiamondMinedC2SPacket());
 				} else if (event.getState().getBlock().equals(Blocks.ANCIENT_DEBRIS)) {
 					expToAdd = 2800;
+					ModMessages.sendToServer(new AncientDebrisMinedC2SPacket());
 				}
 				// end ores/stones
 				else if (event.getState().getBlock().equals(Blocks.OBSIDIAN)) {
@@ -152,12 +176,17 @@ public class ClientEvents {
 				// nether ores/stones
 				else if (event.getState().getBlock().equals(Blocks.NETHER_GOLD_ORE)) {
 					expToAdd = 100;
+					ModMessages.sendToServer(new NetherGoldMinedC2SPacket());
 				} else if (event.getState().getBlock().equals(Blocks.NETHER_QUARTZ_ORE)) {
 					expToAdd = 25;
+					ModMessages.sendToServer(new QuartzMinedC2SPacket());
 				} else if (event.getState().getBlock().equals(Blocks.NETHERRACK)) {
 					expToAdd = 1;
 				} else if (event.getState().getBlock().equals(Blocks.NETHER_BRICKS)) {
 					expToAdd = 4;
+				} else if (event.getState().getBlock().equals(Blocks.GLOWSTONE)) {
+					expToAdd = 10;
+					ModMessages.sendToServer(new GlowstoneMinedC2SPacket());
 				}
 
 				ModMessages.sendToServer(new GainMiningExpC2SPacket());

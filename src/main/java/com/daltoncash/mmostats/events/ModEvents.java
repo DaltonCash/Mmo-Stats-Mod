@@ -15,6 +15,30 @@ import com.daltoncash.mmostats.capabilities.mining.upgrades.NoJunkBlocksUpgrade;
 import com.daltoncash.mmostats.capabilities.mining.upgrades.NoJunkBlocksUpgradeProvider;
 import com.daltoncash.mmostats.capabilities.mining.upgrades.ObsidianBreakerUpgrade;
 import com.daltoncash.mmostats.capabilities.mining.upgrades.ObsidianBreakerUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.AncientDebrisMined;
+import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.AncientDebrisMinedProvider;
+import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.CoalMined;
+import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.CoalMinedProvider;
+import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.CopperMined;
+import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.CopperMinedProvider;
+import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.DiamondMined;
+import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.DiamondMinedProvider;
+import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.EmeraldMined;
+import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.EmeraldMinedProvider;
+import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.GlowstoneMined;
+import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.GlowstoneMinedProvider;
+import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.GoldMined;
+import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.GoldMinedProvider;
+import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.IronMined;
+import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.IronMinedProvider;
+import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.LapisMined;
+import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.LapisMinedProvider;
+import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.NetherGoldMined;
+import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.NetherGoldMinedProvider;
+import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.QuartzMined;
+import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.QuartzMinedProvider;
+import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.RedstoneMined;
+import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.RedstoneMinedProvider;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.s2c.ManaDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.MiningExpDataSyncS2CPacket;
@@ -23,6 +47,18 @@ import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.JunkBlocksD
 import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.NightVisionDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.NoJunkBlocksDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.ObsidianBreakerDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.AncientDebrisMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.CoalMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.CopperMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.DiamondMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.EmeraldMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.GlowstoneMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.GoldMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.IronMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.LapisMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.NetherGoldMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.QuartzMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.RedstoneMinedDataSyncS2CPacket;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -57,6 +93,7 @@ public class ModEvents {
 	@SubscribeEvent
 	public static void onAttachCapabilitiesPlayer(AttachCapabilitiesEvent<Entity> event) {
 		if (event.getObject() instanceof Player) {
+			//core skills
 			if (!event.getObject().getCapability(PlayerManaProvider.PLAYER_MANA).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "manaproperties"),
 						new PlayerManaProvider());
@@ -69,6 +106,7 @@ public class ModEvents {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "miningexpproperties"),
 						new PlayerMiningExpProvider());
 			}
+			//mining upgrades
 			if (!event.getObject().getCapability(JunkBlocksDropExpUpgradeProvider.JUNK_BLOCKS_DROP_EXP).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "junkblocksupgradeproperties"),
 						new JunkBlocksDropExpUpgradeProvider());
@@ -78,12 +116,61 @@ public class ModEvents {
 						new NightVisionUpgradeProvider());
 			}
 			if (!event.getObject().getCapability(NoJunkBlocksUpgradeProvider.NO_JUNK_BLOCKS).isPresent()) {
-				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "nojunkblocksproperties"),
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "nojunkblocksupgradeproperties"),
 						new NoJunkBlocksUpgradeProvider());
 			}
 			if (!event.getObject().getCapability(ObsidianBreakerUpgradeProvider.OBSIDIAN_BREAKER).isPresent()) {
-				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "obsidianbreakerupgraeproperties"),
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "obsidianbreakerupgradeproperties"),
 						new ObsidianBreakerUpgradeProvider());
+			}
+			//blocks mined
+			if (!event.getObject().getCapability(AncientDebrisMinedProvider.ANCIENT_DEBRIS_MINED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "ancientdebrismined"),
+						new AncientDebrisMinedProvider());
+			}
+			if (!event.getObject().getCapability(CoalMinedProvider.COAL_MINED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "coalmined"),
+						new CoalMinedProvider());
+			}
+			if (!event.getObject().getCapability(CopperMinedProvider.COPPER_MINED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "coppermined"),
+						new CopperMinedProvider());
+			}
+			if (!event.getObject().getCapability(DiamondMinedProvider.DIAMOND_MINED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "diamondmined"),
+						new DiamondMinedProvider());
+			}
+			if (!event.getObject().getCapability(EmeraldMinedProvider.EMERALD_MINED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "emeraldmined"),
+						new EmeraldMinedProvider());
+			}
+			if (!event.getObject().getCapability(GlowstoneMinedProvider.GLOWSTONE_MINED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "glowstonemined"),
+						new GlowstoneMinedProvider());
+			}
+			if (!event.getObject().getCapability(GoldMinedProvider.GOLD_MINED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "goldmined"),
+						new GoldMinedProvider());
+			}
+			if (!event.getObject().getCapability(IronMinedProvider.IRON_MINED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "ironmined"),
+						new IronMinedProvider());
+			}
+			if (!event.getObject().getCapability(LapisMinedProvider.LAPIS_MINED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "lapismined"),
+						new LapisMinedProvider());
+			}
+			if (!event.getObject().getCapability(NetherGoldMinedProvider.NETHER_GOLD_MINED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "nethergoldmined"),
+						new NetherGoldMinedProvider());
+			}
+			if (!event.getObject().getCapability(QuartzMinedProvider.QUARTZ_MINED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "quartzmined"),
+						new QuartzMinedProvider());
+			}
+			if (!event.getObject().getCapability(RedstoneMinedProvider.REDSTONE_MINED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "redstonemined"),
+						new RedstoneMinedProvider());
 			}
 		}
 	}
@@ -128,6 +215,66 @@ public class ModEvents {
 					newStore.copyFrom(oldStore);
 				});
 			});
+			event.getOriginal().getCapability(AncientDebrisMinedProvider.ANCIENT_DEBRIS_MINED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(AncientDebrisMinedProvider.ANCIENT_DEBRIS_MINED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(CoalMinedProvider.COAL_MINED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(CoalMinedProvider.COAL_MINED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(CopperMinedProvider.COPPER_MINED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(CopperMinedProvider.COPPER_MINED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(DiamondMinedProvider.DIAMOND_MINED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(DiamondMinedProvider.DIAMOND_MINED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(EmeraldMinedProvider.EMERALD_MINED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(EmeraldMinedProvider.EMERALD_MINED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(GlowstoneMinedProvider.GLOWSTONE_MINED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(GlowstoneMinedProvider.GLOWSTONE_MINED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(GoldMinedProvider.GOLD_MINED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(GoldMinedProvider.GOLD_MINED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(IronMinedProvider.IRON_MINED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(IronMinedProvider.IRON_MINED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(LapisMinedProvider.LAPIS_MINED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(LapisMinedProvider.LAPIS_MINED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(NetherGoldMinedProvider.NETHER_GOLD_MINED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(NetherGoldMinedProvider.NETHER_GOLD_MINED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(QuartzMinedProvider.QUARTZ_MINED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(QuartzMinedProvider.QUARTZ_MINED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(RedstoneMinedProvider.REDSTONE_MINED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(RedstoneMinedProvider.REDSTONE_MINED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
 		}
 	}
 
@@ -137,10 +284,24 @@ public class ModEvents {
 		event.register(PlayerMana.class);
 		event.register(PlayerMiningLevel.class);
 		event.register(PlayerMiningExp.class);
+		
 		event.register(JunkBlocksDropExpUpgrade.class);
 		event.register(NightVisionUpgrade.class);
 		event.register(NoJunkBlocksUpgrade.class);
 		event.register(ObsidianBreakerUpgrade.class);
+		
+		event.register(AncientDebrisMined.class);
+		event.register(CoalMined.class);
+		event.register(CopperMined.class);
+		event.register(DiamondMined.class);
+		event.register(EmeraldMined.class);
+		event.register(GlowstoneMined.class);
+		event.register(GoldMined.class);
+		event.register(IronMined.class);
+		event.register(LapisMined.class);
+		event.register(NetherGoldMined.class);
+		event.register(QuartzMined.class);
+		event.register(RedstoneMined.class);
 	}
 
 	// Applies Capabilities to the player on joining the world.
@@ -168,6 +329,42 @@ public class ModEvents {
 				});
 				player.getCapability(ObsidianBreakerUpgradeProvider.OBSIDIAN_BREAKER).ifPresent(isUpgraded -> {
 					ModMessages.sendToPlayer(new ObsidianBreakerDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				});
+				player.getCapability(AncientDebrisMinedProvider.ANCIENT_DEBRIS_MINED).ifPresent(total -> {
+					ModMessages.sendToPlayer(new AncientDebrisMinedDataSyncS2CPacket(total.getBlocksMined()), player);
+				});
+				player.getCapability(CoalMinedProvider.COAL_MINED).ifPresent(total -> {
+					ModMessages.sendToPlayer(new CoalMinedDataSyncS2CPacket(total.getBlocksMined()), player);
+				});
+				player.getCapability(CopperMinedProvider.COPPER_MINED).ifPresent(total -> {
+					ModMessages.sendToPlayer(new CopperMinedDataSyncS2CPacket(total.getBlocksMined()), player);
+				});
+				player.getCapability(DiamondMinedProvider.DIAMOND_MINED).ifPresent(total -> {
+					ModMessages.sendToPlayer(new DiamondMinedDataSyncS2CPacket(total.getBlocksMined()), player);
+				});
+				player.getCapability(EmeraldMinedProvider.EMERALD_MINED).ifPresent(total -> {
+					ModMessages.sendToPlayer(new EmeraldMinedDataSyncS2CPacket(total.getBlocksMined()), player);
+				});
+				player.getCapability(GlowstoneMinedProvider.GLOWSTONE_MINED).ifPresent(total -> {
+					ModMessages.sendToPlayer(new GlowstoneMinedDataSyncS2CPacket(total.getBlocksMined()), player);
+				});
+				player.getCapability(GoldMinedProvider.GOLD_MINED).ifPresent(total -> {
+					ModMessages.sendToPlayer(new GoldMinedDataSyncS2CPacket(total.getBlocksMined()), player);
+				});
+				player.getCapability(IronMinedProvider.IRON_MINED).ifPresent(total -> {
+					ModMessages.sendToPlayer(new IronMinedDataSyncS2CPacket(total.getBlocksMined()), player);
+				});
+				player.getCapability(LapisMinedProvider.LAPIS_MINED).ifPresent(total -> {
+					ModMessages.sendToPlayer(new LapisMinedDataSyncS2CPacket(total.getBlocksMined()), player);
+				});
+				player.getCapability(NetherGoldMinedProvider.NETHER_GOLD_MINED).ifPresent(total -> {
+					ModMessages.sendToPlayer(new NetherGoldMinedDataSyncS2CPacket(total.getBlocksMined()), player);
+				});
+				player.getCapability(QuartzMinedProvider.QUARTZ_MINED).ifPresent(total -> {
+					ModMessages.sendToPlayer(new QuartzMinedDataSyncS2CPacket(total.getBlocksMined()), player);
+				});
+				player.getCapability(RedstoneMinedProvider.REDSTONE_MINED).ifPresent(total -> {
+					ModMessages.sendToPlayer(new RedstoneMinedDataSyncS2CPacket(total.getBlocksMined()), player);
 				});
 			}
 		}
