@@ -4,10 +4,22 @@ public class ClientCapabilityData {
 	private static int playerMana;
 	private static int playerMiningLevel;
 	private static int playerMiningExp;
+	private static int playerArcheryLevel;
+	private static int playerArcheryExp;
+	private static int playerChoppingLevel;
+	private static int playerChoppingExp;
+	private static int playerCombatLevel;
+	private static int playerCombatExp;
+	private static int playerFarmingLevel;
+	private static int playerFarmingExp;
+	private static int playerSwordsLevel;
+	private static int playerSwordsExp;
+	
 	private static boolean isUpgradedNightVision;
 	private static boolean isUpgradedNoJunkBlocks;
 	private static boolean isUpgradedJunkBlocksDropExp;
 	private static boolean isUpgradedObsidianBreaker;
+	
 	private static int ancientDebrisMined;
 	private static int coalMined;
 	private static int copperMined;
@@ -174,6 +186,86 @@ public class ClientCapabilityData {
 
 	public static void setRedstoneMined(int redstoneMined) {
 		ClientCapabilityData.redstoneMined = redstoneMined;
+	}
+
+	public static int getPlayerArcheryLevel() {
+		return playerArcheryLevel;
+	}
+
+	public static void setPlayerArcheryLevel(int playerArcheryLevel) {
+		ClientCapabilityData.playerArcheryLevel = playerArcheryLevel;
+	}
+
+	public static int getPlayerArcheryExp() {
+		return playerArcheryExp;
+	}
+
+	public static void setPlayerArcheryExp(int playerArcheryExp) {
+		ClientCapabilityData.playerArcheryExp = playerArcheryExp;
+	}
+
+	public static int getPlayerChoppingLevel() {
+		return playerChoppingLevel;
+	}
+
+	public static void setPlayerChoppingLevel(int playerChoppingLevel) {
+		ClientCapabilityData.playerChoppingLevel = playerChoppingLevel;
+	}
+
+	public static int getPlayerChoppingExp() {
+		return playerChoppingExp;
+	}
+
+	public static void setPlayerChoppingExp(int playerChoppingExp) {
+		ClientCapabilityData.playerChoppingExp = playerChoppingExp;
+	}
+
+	public static int getPlayerCombatLevel() {
+		return playerCombatLevel;
+	}
+
+	public static void setPlayerCombatLevel(int playerCombatLevel) {
+		ClientCapabilityData.playerCombatLevel = playerCombatLevel;
+	}
+
+	public static int getPlayerFarmingLevel() {
+		return playerFarmingLevel;
+	}
+
+	public static void setPlayerFarmingLevel(int playerFarmingLevel) {
+		ClientCapabilityData.playerFarmingLevel = playerFarmingLevel;
+	}
+
+	public static int getPlayerCombatExp() {
+		return playerCombatExp;
+	}
+
+	public static void setPlayerCombatExp(int playerCombatExp) {
+		ClientCapabilityData.playerCombatExp = playerCombatExp;
+	}
+
+	public static int getPlayerFarmingExp() {
+		return playerFarmingExp;
+	}
+
+	public static void setPlayerFarmingExp(int playerFarmingExp) {
+		ClientCapabilityData.playerFarmingExp = playerFarmingExp;
+	}
+
+	public static int getPlayerSwordsLevel() {
+		return playerSwordsLevel;
+	}
+
+	public static void setPlayerSwordsLevel(int playerSwordsLevel) {
+		ClientCapabilityData.playerSwordsLevel = playerSwordsLevel;
+	}
+
+	public static int getPlayerSwordsExp() {
+		return playerSwordsExp;
+	}
+
+	public static void setPlayerSwordsExp(int playerSwordsExp) {
+		ClientCapabilityData.playerSwordsExp = playerSwordsExp;
 	}
 
 }

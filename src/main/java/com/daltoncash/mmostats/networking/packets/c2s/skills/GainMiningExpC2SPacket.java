@@ -1,23 +1,23 @@
-package com.daltoncash.mmostats.networking.packets.c2s;
+package com.daltoncash.mmostats.networking.packets.c2s.skills;
 
 import java.util.function.Supplier;
 
 import com.daltoncash.mmostats.capabilities.mining.PlayerMiningExpProvider;
 import com.daltoncash.mmostats.events.ClientEvents.ClientForgeEvents;
 import com.daltoncash.mmostats.networking.ModMessages;
-import com.daltoncash.mmostats.networking.packets.s2c.MiningExpDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.skills.MiningExpDataSyncS2CPacket;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 
-public class ResetMiningExpC2SPacket {
+public class GainMiningExpC2SPacket {
 
-	public ResetMiningExpC2SPacket() {
+	public GainMiningExpC2SPacket() {
 
 	}
 
-	public ResetMiningExpC2SPacket(FriendlyByteBuf buf) {
+	public GainMiningExpC2SPacket(FriendlyByteBuf buf) {
 
 	}
 
@@ -30,7 +30,7 @@ public class ResetMiningExpC2SPacket {
 		context.enqueueWork(() -> {
 			ServerPlayer player = context.getSender();
 			player.getCapability(PlayerMiningExpProvider.PLAYER_MINING_EXP).ifPresent(miningExp -> {
-				miningExp.subMiningExp(ClientForgeEvents.expToSub);
+				miningExp.addMiningExp(ClientForgeEvents.expToAdd);
 				ModMessages.sendToPlayer(new MiningExpDataSyncS2CPacket(miningExp.getMiningExp()), player);
 			});
 		});

@@ -1,4 +1,4 @@
-package com.daltoncash.mmostats.networking.packets.s2c;
+package com.daltoncash.mmostats.networking.packets.s2c.skills;
 
 import java.util.function.Supplier;
 
@@ -7,25 +7,25 @@ import com.daltoncash.mmostats.capabilities.ClientCapabilityData;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
-public class MiningLevelDataSyncS2CPacket {
-	private final int miningLevel;
+public class SwordsExpDataSyncS2CPacket {
+	private final int swordsExp;
 
-	public MiningLevelDataSyncS2CPacket(int miningLevel) {
-		this.miningLevel = miningLevel;
+	public SwordsExpDataSyncS2CPacket(int swordsExp) {
+		this.swordsExp = swordsExp;
 	}
 
-	public MiningLevelDataSyncS2CPacket(FriendlyByteBuf buf) {
-		this.miningLevel = buf.readInt();
+	public SwordsExpDataSyncS2CPacket(FriendlyByteBuf buf) {
+		this.swordsExp = buf.readInt();
 	}
 
 	public void toBytes(FriendlyByteBuf buf) {
-		buf.writeInt(miningLevel);
+		buf.writeInt(swordsExp);
 	}
 
 	public boolean handle(Supplier<NetworkEvent.Context> supplier) {
 		NetworkEvent.Context context = supplier.get();
 		context.enqueueWork(() -> {
-			ClientCapabilityData.setPlayerMiningLevel(miningLevel);
+			ClientCapabilityData.setPlayerSwordsExp(swordsExp);
 		});
 		return true;
 	}
