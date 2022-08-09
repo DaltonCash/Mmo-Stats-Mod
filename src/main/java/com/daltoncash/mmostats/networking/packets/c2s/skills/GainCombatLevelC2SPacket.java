@@ -2,10 +2,8 @@ package com.daltoncash.mmostats.networking.packets.c2s.skills;
 
 import java.util.function.Supplier;
 
-import com.daltoncash.mmostats.capabilities.archery.PlayerArcheryLevelProvider;
 import com.daltoncash.mmostats.capabilities.combat.PlayerCombatLevelProvider;
 import com.daltoncash.mmostats.networking.ModMessages;
-import com.daltoncash.mmostats.networking.packets.s2c.skills.ArcheryLevelDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.CombatLevelDataSyncS2CPacket;
 
 import net.minecraft.network.FriendlyByteBuf;

@@ -2,7 +2,6 @@ package com.daltoncash.mmostats.networking.packets.c2s.skills;
 
 import java.util.function.Supplier;
 
-import com.daltoncash.mmostats.capabilities.farming.PlayerFarmingLevelProvider;
 import com.daltoncash.mmostats.capabilities.swords.PlayerSwordsLevelProvider;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.FarmingLevelDataSyncS2CPacket;
