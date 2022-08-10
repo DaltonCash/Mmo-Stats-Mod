@@ -76,6 +76,7 @@ public class ClientEvents {
 				event.setNewSpeed((float) (event.getOriginalSpeed() * 2));
 			}
 		}
+		
 
 		@SuppressWarnings("resource")
 		@SubscribeEvent

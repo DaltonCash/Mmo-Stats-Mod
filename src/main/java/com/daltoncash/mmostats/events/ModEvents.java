@@ -1,6 +1,22 @@
 package com.daltoncash.mmostats.events;
 
 import com.daltoncash.mmostats.MmoStatsMod;
+import com.daltoncash.mmostats.capabilities.archery.PlayerArcheryExp;
+import com.daltoncash.mmostats.capabilities.archery.PlayerArcheryExpProvider;
+import com.daltoncash.mmostats.capabilities.archery.PlayerArcheryLevel;
+import com.daltoncash.mmostats.capabilities.archery.PlayerArcheryLevelProvider;
+import com.daltoncash.mmostats.capabilities.chopping.PlayerChoppingExp;
+import com.daltoncash.mmostats.capabilities.chopping.PlayerChoppingExpProvider;
+import com.daltoncash.mmostats.capabilities.chopping.PlayerChoppingLevel;
+import com.daltoncash.mmostats.capabilities.chopping.PlayerChoppingLevelProvider;
+import com.daltoncash.mmostats.capabilities.combat.PlayerCombatExp;
+import com.daltoncash.mmostats.capabilities.combat.PlayerCombatExpProvider;
+import com.daltoncash.mmostats.capabilities.combat.PlayerCombatLevel;
+import com.daltoncash.mmostats.capabilities.combat.PlayerCombatLevelProvider;
+import com.daltoncash.mmostats.capabilities.farming.PlayerFarmingExp;
+import com.daltoncash.mmostats.capabilities.farming.PlayerFarmingExpProvider;
+import com.daltoncash.mmostats.capabilities.farming.PlayerFarmingLevel;
+import com.daltoncash.mmostats.capabilities.farming.PlayerFarmingLevelProvider;
 import com.daltoncash.mmostats.capabilities.mana.PlayerMana;
 import com.daltoncash.mmostats.capabilities.mana.PlayerManaProvider;
 import com.daltoncash.mmostats.capabilities.mining.PlayerMiningExp;
@@ -39,6 +55,10 @@ import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.QuartzMi
 import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.QuartzMinedProvider;
 import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.RedstoneMined;
 import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.RedstoneMinedProvider;
+import com.daltoncash.mmostats.capabilities.swords.PlayerSwordsExp;
+import com.daltoncash.mmostats.capabilities.swords.PlayerSwordsExpProvider;
+import com.daltoncash.mmostats.capabilities.swords.PlayerSwordsLevel;
+import com.daltoncash.mmostats.capabilities.swords.PlayerSwordsLevelProvider;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.s2c.ManaDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.JunkBlocksDropExpDataSyncS2CPacket;
@@ -57,8 +77,18 @@ import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined
 import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.NetherGoldMinedDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.QuartzMinedDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.RedstoneMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.skills.ArcheryExpDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.skills.ArcheryLevelDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.skills.ChoppingExpDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.skills.ChoppingLevelDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.skills.CombatExpDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.skills.CombatLevelDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.skills.FarmingExpDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.skills.FarmingLevelDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.MiningExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.MiningLevelDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.skills.SwordsExpDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.skills.SwordsLevelDataSyncS2CPacket;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -105,6 +135,46 @@ public class ModEvents {
 			if (!event.getObject().getCapability(PlayerMiningExpProvider.PLAYER_MINING_EXP).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "miningexpproperties"),
 						new PlayerMiningExpProvider());
+			}
+			if (!event.getObject().getCapability(PlayerArcheryLevelProvider.PLAYER_ARCHERY_LEVEL).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "archerylevelproperties"),
+						new PlayerArcheryLevelProvider());
+			}
+			if (!event.getObject().getCapability(PlayerArcheryExpProvider.PLAYER_ARCHERY_EXP).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "archeryexpproperties"),
+						new PlayerArcheryExpProvider());
+			}
+			if (!event.getObject().getCapability(PlayerChoppingLevelProvider.PLAYER_CHOPPING_LEVEL).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "choppinglevelproperties"),
+						new PlayerChoppingLevelProvider());
+			}
+			if (!event.getObject().getCapability(PlayerChoppingExpProvider.PLAYER_CHOPPING_EXP).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "choppingexpproperties"),
+						new PlayerChoppingExpProvider());
+			}
+			if (!event.getObject().getCapability(PlayerCombatLevelProvider.PLAYER_COMBAT_LEVEL).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "combatlevelproperties"),
+						new PlayerCombatLevelProvider());
+			}
+			if (!event.getObject().getCapability(PlayerCombatExpProvider.PLAYER_COMBAT_EXP).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "combatexpproperties"),
+						new PlayerCombatExpProvider());
+			}
+			if (!event.getObject().getCapability(PlayerFarmingLevelProvider.PLAYER_FARMING_LEVEL).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "farminglevelproperties"),
+						new PlayerFarmingLevelProvider());
+			}
+			if (!event.getObject().getCapability(PlayerFarmingExpProvider.PLAYER_FARMING_EXP).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "farmingexpproperties"),
+						new PlayerFarmingExpProvider());
+			}
+			if (!event.getObject().getCapability(PlayerSwordsLevelProvider.PLAYER_SWORDS_LEVEL).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "swordslevelproperties"),
+						new PlayerSwordsLevelProvider());
+			}
+			if (!event.getObject().getCapability(PlayerSwordsExpProvider.PLAYER_SWORDS_EXP).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "swordsexpproperties"),
+						new PlayerSwordsExpProvider());
 			}
 			//mining upgrades
 			if (!event.getObject().getCapability(JunkBlocksDropExpUpgradeProvider.JUNK_BLOCKS_DROP_EXP).isPresent()) {
@@ -195,6 +265,57 @@ public class ModEvents {
 					newStore.copyFrom(oldStore);
 				});
 			});
+			event.getOriginal().getCapability(PlayerArcheryLevelProvider.PLAYER_ARCHERY_LEVEL).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(PlayerArcheryLevelProvider.PLAYER_ARCHERY_LEVEL).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(PlayerArcheryExpProvider.PLAYER_ARCHERY_EXP).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(PlayerArcheryExpProvider.PLAYER_ARCHERY_EXP).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(PlayerCombatLevelProvider.PLAYER_COMBAT_LEVEL).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(PlayerCombatLevelProvider.PLAYER_COMBAT_LEVEL).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(PlayerCombatExpProvider.PLAYER_COMBAT_EXP).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(PlayerCombatExpProvider.PLAYER_COMBAT_EXP).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(PlayerChoppingLevelProvider.PLAYER_CHOPPING_LEVEL).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(PlayerChoppingLevelProvider.PLAYER_CHOPPING_LEVEL).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(PlayerChoppingExpProvider.PLAYER_CHOPPING_EXP).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(PlayerChoppingExpProvider.PLAYER_CHOPPING_EXP).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(PlayerFarmingLevelProvider.PLAYER_FARMING_LEVEL).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(PlayerFarmingLevelProvider.PLAYER_FARMING_LEVEL).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(PlayerFarmingExpProvider.PLAYER_FARMING_EXP).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(PlayerFarmingExpProvider.PLAYER_FARMING_EXP).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(PlayerSwordsLevelProvider.PLAYER_SWORDS_LEVEL).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(PlayerSwordsLevelProvider.PLAYER_SWORDS_LEVEL).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(PlayerSwordsExpProvider.PLAYER_SWORDS_EXP).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(PlayerSwordsExpProvider.PLAYER_SWORDS_EXP).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			//-----------------------------Upgrades-----------------------
 			event.getOriginal().getCapability(JunkBlocksDropExpUpgradeProvider.JUNK_BLOCKS_DROP_EXP).ifPresent(oldStore -> {
 				event.getOriginal().getCapability(JunkBlocksDropExpUpgradeProvider.JUNK_BLOCKS_DROP_EXP).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
@@ -284,6 +405,16 @@ public class ModEvents {
 		event.register(PlayerMana.class);
 		event.register(PlayerMiningLevel.class);
 		event.register(PlayerMiningExp.class);
+		event.register(PlayerArcheryLevel.class);
+		event.register(PlayerArcheryExp.class);
+		event.register(PlayerChoppingLevel.class);
+		event.register(PlayerChoppingExp.class);
+		event.register(PlayerCombatLevel.class);
+		event.register(PlayerCombatExp.class);
+		event.register(PlayerFarmingLevel.class);
+		event.register(PlayerFarmingExp.class);
+		event.register(PlayerSwordsLevel.class);
+		event.register(PlayerSwordsExp.class);
 		
 		event.register(JunkBlocksDropExpUpgrade.class);
 		event.register(NightVisionUpgrade.class);
@@ -318,6 +449,37 @@ public class ModEvents {
 				player.getCapability(PlayerMiningExpProvider.PLAYER_MINING_EXP).ifPresent(miningExp -> {
 					ModMessages.sendToPlayer(new MiningExpDataSyncS2CPacket(miningExp.getMiningExp()), player);
 				});
+				player.getCapability(PlayerArcheryLevelProvider.PLAYER_ARCHERY_LEVEL).ifPresent(archeryLevel -> {
+					ModMessages.sendToPlayer(new ArcheryLevelDataSyncS2CPacket(archeryLevel.getArcheryLevel()), player);
+				});
+				player.getCapability(PlayerArcheryExpProvider.PLAYER_ARCHERY_EXP).ifPresent(archeryExp -> {
+					ModMessages.sendToPlayer(new ArcheryExpDataSyncS2CPacket(archeryExp.getArcheryExp()), player);
+				});
+				player.getCapability(PlayerChoppingLevelProvider.PLAYER_CHOPPING_LEVEL).ifPresent(choppingLevel -> {
+					ModMessages.sendToPlayer(new ChoppingLevelDataSyncS2CPacket(choppingLevel.getChoppingLevel()), player);
+				});
+				player.getCapability(PlayerChoppingExpProvider.PLAYER_CHOPPING_EXP).ifPresent(choppingExp -> {
+					ModMessages.sendToPlayer(new ChoppingExpDataSyncS2CPacket(choppingExp.getChoppingExp()), player);
+				});
+				player.getCapability(PlayerCombatLevelProvider.PLAYER_COMBAT_LEVEL).ifPresent(combatLevel -> {
+					ModMessages.sendToPlayer(new CombatLevelDataSyncS2CPacket(combatLevel.getCombatLevel()), player);
+				});
+				player.getCapability(PlayerCombatExpProvider.PLAYER_COMBAT_EXP).ifPresent(combatExp -> {
+					ModMessages.sendToPlayer(new CombatExpDataSyncS2CPacket(combatExp.getCombatExp()), player);
+				});
+				player.getCapability(PlayerFarmingLevelProvider.PLAYER_FARMING_LEVEL).ifPresent(farmingLevel -> {
+					ModMessages.sendToPlayer(new FarmingLevelDataSyncS2CPacket(farmingLevel.getFarmingLevel()), player);
+				});
+				player.getCapability(PlayerFarmingExpProvider.PLAYER_FARMING_EXP).ifPresent(farmingExp -> {
+					ModMessages.sendToPlayer(new FarmingExpDataSyncS2CPacket(farmingExp.getFarmingExp()), player);
+				});
+				player.getCapability(PlayerSwordsLevelProvider.PLAYER_SWORDS_LEVEL).ifPresent(swordsLevel -> {
+					ModMessages.sendToPlayer(new SwordsLevelDataSyncS2CPacket(swordsLevel.getSwordsLevel()), player);
+				});
+				player.getCapability(PlayerSwordsExpProvider.PLAYER_SWORDS_EXP).ifPresent(swordsExp -> {
+					ModMessages.sendToPlayer(new SwordsExpDataSyncS2CPacket(swordsExp.getSwordsExp()), player);
+				});
+				//------Upgrades------
 				player.getCapability(JunkBlocksDropExpUpgradeProvider.JUNK_BLOCKS_DROP_EXP).ifPresent(isUpgraded -> {
 					ModMessages.sendToPlayer(new JunkBlocksDropExpDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
 				});
