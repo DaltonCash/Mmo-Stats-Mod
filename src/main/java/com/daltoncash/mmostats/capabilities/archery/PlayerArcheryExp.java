@@ -12,6 +12,10 @@ public class PlayerArcheryExp {
 	public void addArcheryExp(int add) {
 		this.archeryExp = archeryExp + add;
 	}
+	
+	public void subArcheryExp(int sub) {
+		this.archeryExp = Math.max(archeryExp - sub, 0);
+	}
 
 	public void copyFrom(PlayerArcheryExp source) {
 		this.archeryExp = source.archeryExp;

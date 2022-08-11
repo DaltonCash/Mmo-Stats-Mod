@@ -12,6 +12,10 @@ public class PlayerSwordsExp {
 	public void addSwordsExp(int add) {
 		this.swordsExp = swordsExp + add;
 	}
+	
+	public void subSwordsExp(int sub) {
+		this.swordsExp = Math.max(swordsExp - sub, 0);
+	}
 
 	public void copyFrom(PlayerSwordsExp source) {
 		this.swordsExp = source.swordsExp;

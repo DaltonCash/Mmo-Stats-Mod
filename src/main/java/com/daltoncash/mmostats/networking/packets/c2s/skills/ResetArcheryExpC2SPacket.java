@@ -2,21 +2,22 @@ package com.daltoncash.mmostats.networking.packets.c2s.skills;
 
 import java.util.function.Supplier;
 
-import com.daltoncash.mmostats.capabilities.chopping.PlayerChoppingExpProvider;
+import com.daltoncash.mmostats.capabilities.archery.PlayerArcheryExpProvider;
 import com.daltoncash.mmostats.events.ClientEvents.ClientForgeEvents;
 import com.daltoncash.mmostats.networking.ModMessages;
-import com.daltoncash.mmostats.networking.packets.s2c.skills.ChoppingExpDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.skills.ArcheryExpDataSyncS2CPacket;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 
-public class GainChoppingExpC2SPacket {
-	
-	public GainChoppingExpC2SPacket() {
+public class ResetArcheryExpC2SPacket {
+
+	public ResetArcheryExpC2SPacket() {
 
 	}
-	public GainChoppingExpC2SPacket(FriendlyByteBuf buf) {
+
+	public ResetArcheryExpC2SPacket(FriendlyByteBuf buf) {
 
 	}
 
@@ -28,9 +29,9 @@ public class GainChoppingExpC2SPacket {
 		NetworkEvent.Context context = supplier.get();
 		context.enqueueWork(() -> {
 			ServerPlayer player = context.getSender();
-			player.getCapability(PlayerChoppingExpProvider.PLAYER_CHOPPING_EXP).ifPresent(choppingExp -> {
-				choppingExp.addChoppingExp(ClientForgeEvents.expToAdd);
-				ModMessages.sendToPlayer(new ChoppingExpDataSyncS2CPacket(choppingExp.getChoppingExp()), player);
+			player.getCapability(PlayerArcheryExpProvider.PLAYER_ARCHERY_EXP).ifPresent(archeryExp -> {
+				archeryExp.subArcheryExp(ClientForgeEvents.expToSub);
+				ModMessages.sendToPlayer(new ArcheryExpDataSyncS2CPacket(archeryExp.getArcheryExp()), player);
 			});
 		});
 		return true;

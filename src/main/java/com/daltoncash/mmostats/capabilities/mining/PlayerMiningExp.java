@@ -4,7 +4,6 @@ import net.minecraft.nbt.CompoundTag;
 
 public class PlayerMiningExp {
 	private int miningExp;
-	private final int MIN_MINING_EXP = 0;
 
 	public int getMiningExp() {
 		return miningExp;
@@ -15,7 +14,7 @@ public class PlayerMiningExp {
 	}
 
 	public void subMiningExp(int sub) {
-		this.miningExp = Math.max(miningExp - sub, MIN_MINING_EXP);
+		this.miningExp = Math.max(miningExp - sub, 0);
 	}
 
 	public void copyFrom(PlayerMiningExp source) {

@@ -20,8 +20,12 @@ import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.NetherGoldMinedC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.QuartzMinedC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.RedstoneMinedC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.GainChoppingExpC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.GainChoppingLevelC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.GainFarmingExpFromSeededCropsC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainMiningExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainMiningLevelC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetChoppingExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetMiningExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainNightVisionC2SPacket;
 import com.daltoncash.mmostats.util.KeyBinding;
@@ -63,7 +67,8 @@ public class ClientEvents {
 				}
 			}
 		}
-
+		
+		
 		@SubscribeEvent
 		public static void onBreaking(BreakSpeed event) {
 			if(ClientCapabilityData.isUpgradedObsidianBreaker()) {
@@ -77,31 +82,62 @@ public class ClientEvents {
 			}
 		}
 		
-
 		@SuppressWarnings("resource")
 		@SubscribeEvent
 		public static void onBreakBlock(BlockEvent.BreakEvent event) {
-			int miningExp = ClientCapabilityData.getPlayerMiningExp();
-			int miningLevel = ClientCapabilityData.getPlayerMiningLevel();
 			Block block = event.getState().getBlock();
 			expToSub = 0;
 			expToAdd = 0;
 			blockevent = event;
+			if(ListOfSkillBlocks.getFarmingBlocks().contains(block)) {
+				if(block.equals(Blocks.WHEAT) || block.equals(Blocks.CARROTS) ||
+						block.equals(Blocks.POTATOES) || block.equals(Blocks.BEETROOTS)) {
+					expToAdd = 1;
+					ModMessages.sendToServer(new GainFarmingExpFromSeededCropsC2SPacket());
+				}
+				Minecraft.getInstance().player.sendSystemMessage(
+							Component.literal("your farming Exp: " + ClientCapabilityData.getPlayerFarmingExp()));
+			}
+			if(ListOfSkillBlocks.getChoppingBlocks().contains(block)) {
+				int choppingExp = ClientCapabilityData.getPlayerChoppingExp();
+				int choppingLevel = ClientCapabilityData.getPlayerChoppingLevel();
+				if(block.equals(Blocks.OAK_LOG) || block.equals(Blocks.BIRCH_LOG) ||
+						block.equals(Blocks.SPRUCE_LOG) || block.equals(Blocks.JUNGLE_LOG) ||
+						block.equals(Blocks.ACACIA_LOG) || block.equals(Blocks.MANGROVE_LOG) ||
+						block.equals(Blocks.DARK_OAK_LOG)) {
+					expToAdd = 100;
+				}else if(block.equals(Blocks.OAK_LEAVES) || block.equals(Blocks.BIRCH_LEAVES) ||
+						block.equals(Blocks.SPRUCE_LEAVES) || block.equals(Blocks.JUNGLE_LEAVES) ||
+						block.equals(Blocks.ACACIA_LEAVES) || block.equals(Blocks.MANGROVE_LEAVES) ||
+						block.equals(Blocks.DARK_OAK_LEAVES)) {
+					expToAdd = 5;
+				}
+				ModMessages.sendToServer(new GainChoppingExpC2SPacket());
+				Minecraft.getInstance().player.sendSystemMessage(
+						Component.literal("your chopping Exp: " + ClientCapabilityData.getPlayerChoppingExp()));
+				// level up if player has sufficient choppingExp
+				if (choppingExp > (choppingLevel * 40) + 400) {
+					expToSub = (choppingLevel * 40) + 400;
+					ModMessages.sendToServer(new GainChoppingLevelC2SPacket());
+					ModMessages.sendToServer(new ResetChoppingExpC2SPacket());
+					Minecraft.getInstance().player.sendSystemMessage(
+							Component.literal("your chopping Level: " + 1 + ClientCapabilityData.getPlayerChoppingLevel()));
+				}
+			}
 			
 			// Checks if the block being destroyed is part of the accepted list
-			if (ListOfMiningBlocks.getBlocks().contains(block)) {
-
+			else if (ListOfSkillBlocks.getMiningBlocks().contains(block)) {
+				int miningExp = ClientCapabilityData.getPlayerMiningExp();
+				int miningLevel = ClientCapabilityData.getPlayerMiningLevel();
 				// Check for Passive Ability Double Drops
 				if (miningLevel / 500.0 >= Math.random()) {
 					ModMessages.sendToServer(new AdditionalFortuneProcC2SPacket());
 				}
 
 				// Mining ore gives miningExp according to this table:
-				if (event.getState().getBlock().equals(Blocks.STONE)
-						|| event.getState().getBlock().equals(Blocks.DIORITE)
-						|| event.getState().getBlock().equals(Blocks.ANDESITE)
-						|| event.getState().getBlock().equals(Blocks.GRANITE)
-						|| event.getState().getBlock().equals(Blocks.DEEPSLATE)) {
+				if (block.equals(Blocks.STONE) || block.equals(Blocks.DIORITE)
+						|| block.equals(Blocks.ANDESITE) || block.equals(Blocks.GRANITE)
+						|| block.equals(Blocks.DEEPSLATE) || block.equals(Blocks.NETHERRACK)) {
 					if(ClientCapabilityData.isUpgradedJunkBlocksDropExp()) {
 						event.setExpToDrop(event.getExpToDrop() + 1);
 					}

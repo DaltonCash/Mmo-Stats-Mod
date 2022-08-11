@@ -12,6 +12,10 @@ public class PlayerChoppingExp {
 	public void addChoppingExp(int add) {
 		this.choppingExp = choppingExp + add;
 	}
+	
+	public void subChoppingExp(int sub) {
+		this.choppingExp = Math.max(choppingExp - sub, 0);
+	}
 
 	public void copyFrom(PlayerChoppingExp source) {
 		this.choppingExp = source.choppingExp;

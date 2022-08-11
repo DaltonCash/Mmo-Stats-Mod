@@ -6,8 +6,8 @@ import java.util.List;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
-public class ListOfMiningBlocks {
-	public static List<Block> getBlocks() {
+public class ListOfSkillBlocks {
+	public static List<Block> getMiningBlocks() {
 		List<Block> list = new ArrayList<>();
 		list.add(Blocks.STONE);
 		list.add(Blocks.DIORITE);
@@ -40,6 +40,43 @@ public class ListOfMiningBlocks {
 		list.add(Blocks.NETHERRACK);
 		list.add(Blocks.NETHER_BRICKS);
 		list.add(Blocks.GLOWSTONE);
+		return list;
+	}
+	public static List<Block> getChoppingBlocks(){
+		List<Block> list = new ArrayList<>();
+		list.add(Blocks.OAK_LOG);
+		list.add(Blocks.BIRCH_LOG);
+		list.add(Blocks.SPRUCE_LOG);
+		list.add(Blocks.JUNGLE_LOG);
+		list.add(Blocks.DARK_OAK_LOG);
+		list.add(Blocks.MANGROVE_LOG);
+		list.add(Blocks.ACACIA_LOG);
+		list.add(Blocks.OAK_LEAVES);
+		list.add(Blocks.BIRCH_LEAVES);
+		list.add(Blocks.SPRUCE_LEAVES);
+		list.add(Blocks.JUNGLE_LEAVES);
+		list.add(Blocks.DARK_OAK_LEAVES);
+		list.add(Blocks.MANGROVE_LEAVES);
+		list.add(Blocks.ACACIA_LEAVES);
+		return list;
+	}
+	public static List<Block> getFarmingBlocks(){
+		List<Block> list = new ArrayList<>();
+		list.add(Blocks.WHEAT);
+		list.add(Blocks.POTATOES);
+		list.add(Blocks.CARROTS);
+		list.add(Blocks.BEETROOTS);
+		list.add(Blocks.PUMPKIN);
+		list.add(Blocks.MELON);
+		list.add(Blocks.CACTUS);
+		list.add(Blocks.SUGAR_CANE);
+		list.add(Blocks.COCOA);
+		list.add(Blocks.BROWN_MUSHROOM);
+		list.add(Blocks.RED_MUSHROOM);
+		list.add(Blocks.CRIMSON_FUNGUS);
+		list.add(Blocks.WARPED_FUNGUS);
+		list.add(Blocks.BROWN_MUSHROOM_BLOCK);
+		list.add(Blocks.RED_MUSHROOM_BLOCK);
 		return list;
 	}
 }

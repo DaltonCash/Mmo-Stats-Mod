@@ -12,6 +12,10 @@ public class PlayerFarmingExp {
 	public void addFarmingExp(int add) {
 		this.farmingExp = farmingExp + add;
 	}
+	
+	public void subFarmingExp(int sub) {
+		this.farmingExp = Math.max(farmingExp - sub, 0);
+	}
 
 	public void copyFrom(PlayerFarmingExp source) {
 		this.farmingExp = source.farmingExp;

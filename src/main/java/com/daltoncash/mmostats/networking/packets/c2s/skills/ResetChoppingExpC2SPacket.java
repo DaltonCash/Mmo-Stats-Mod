@@ -11,12 +11,13 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 
-public class GainChoppingExpC2SPacket {
-	
-	public GainChoppingExpC2SPacket() {
+public class ResetChoppingExpC2SPacket {
+
+	public ResetChoppingExpC2SPacket() {
 
 	}
-	public GainChoppingExpC2SPacket(FriendlyByteBuf buf) {
+
+	public ResetChoppingExpC2SPacket(FriendlyByteBuf buf) {
 
 	}
 
@@ -29,7 +30,7 @@ public class GainChoppingExpC2SPacket {
 		context.enqueueWork(() -> {
 			ServerPlayer player = context.getSender();
 			player.getCapability(PlayerChoppingExpProvider.PLAYER_CHOPPING_EXP).ifPresent(choppingExp -> {
-				choppingExp.addChoppingExp(ClientForgeEvents.expToAdd);
+				choppingExp.subChoppingExp(ClientForgeEvents.expToSub);
 				ModMessages.sendToPlayer(new ChoppingExpDataSyncS2CPacket(choppingExp.getChoppingExp()), player);
 			});
 		});

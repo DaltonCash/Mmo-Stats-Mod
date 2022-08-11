@@ -11,13 +11,13 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 
-public class GainFarmingExpC2SPacket {
+public class ResetFarmingExpC2SPacket {
 
-	public GainFarmingExpC2SPacket() {
+	public ResetFarmingExpC2SPacket() {
 
 	}
 
-	public GainFarmingExpC2SPacket(FriendlyByteBuf buf) {
+	public ResetFarmingExpC2SPacket(FriendlyByteBuf buf) {
 
 	}
 
@@ -30,7 +30,7 @@ public class GainFarmingExpC2SPacket {
 		context.enqueueWork(() -> {
 			ServerPlayer player = context.getSender();
 			player.getCapability(PlayerFarmingExpProvider.PLAYER_FARMING_EXP).ifPresent(farmingExp -> {
-				farmingExp.addFarmingExp(ClientForgeEvents.expToAdd);
+				farmingExp.subFarmingExp(ClientForgeEvents.expToSub);
 				ModMessages.sendToPlayer(new FarmingExpDataSyncS2CPacket(farmingExp.getFarmingExp()), player);
 			});
 		});

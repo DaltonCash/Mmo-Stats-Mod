@@ -25,14 +25,20 @@ import com.daltoncash.mmostats.networking.packets.c2s.skills.GainChoppingExpC2SP
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainChoppingLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainCombatExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainCombatLevelC2SPacket;
-import com.daltoncash.mmostats.networking.packets.c2s.skills.GainFarmingExpC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.GainFarmingExpFromUnseededCropsC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.GainFarmingExpFromSeededCropsC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainFarmingLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainMiningExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainMiningLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainSwordsExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainSwordsLevelC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetArcheryExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetCapabilityDataC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetChoppingExpC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetCombatExpC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetFarmingExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetMiningExpC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetSwordsExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainNightVisionC2SPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.ManaDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.JunkBlocksDropExpDataSyncS2CPacket;
@@ -94,25 +100,46 @@ public class ModMessages {
 				.encoder(AdditionalFortuneProcC2SPacket::toBytes)
 				.consumerMainThread(AdditionalFortuneProcC2SPacket::handle)
 				.add();
-        
         net.messageBuilder(ResetMiningExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
 				.decoder(ResetMiningExpC2SPacket::new)
 				.encoder(ResetMiningExpC2SPacket::toBytes)
 				.consumerMainThread(ResetMiningExpC2SPacket::handle)
 				.add();
-        
+        net.messageBuilder(ResetArcheryExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+				.decoder(ResetArcheryExpC2SPacket::new)
+				.encoder(ResetArcheryExpC2SPacket::toBytes)
+				.consumerMainThread(ResetArcheryExpC2SPacket::handle)
+				.add();
+        net.messageBuilder(ResetChoppingExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+				.decoder(ResetChoppingExpC2SPacket::new)
+				.encoder(ResetChoppingExpC2SPacket::toBytes)
+				.consumerMainThread(ResetChoppingExpC2SPacket::handle)
+				.add();
+        net.messageBuilder(ResetCombatExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+				.decoder(ResetCombatExpC2SPacket::new)
+				.encoder(ResetCombatExpC2SPacket::toBytes)
+				.consumerMainThread(ResetCombatExpC2SPacket::handle)
+				.add();
+        net.messageBuilder(ResetFarmingExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+				.decoder(ResetFarmingExpC2SPacket::new)
+				.encoder(ResetFarmingExpC2SPacket::toBytes)
+				.consumerMainThread(ResetFarmingExpC2SPacket::handle)
+				.add();
+        net.messageBuilder(ResetSwordsExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+				.decoder(ResetSwordsExpC2SPacket::new)
+				.encoder(ResetSwordsExpC2SPacket::toBytes)
+				.consumerMainThread(ResetSwordsExpC2SPacket::handle)
+				.add();
         net.messageBuilder(ResetCapabilityDataC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
 				.decoder(ResetCapabilityDataC2SPacket::new)
 				.encoder(ResetCapabilityDataC2SPacket::toBytes)
 				.consumerMainThread(ResetCapabilityDataC2SPacket::handle)
 				.add();
-        
         net.messageBuilder(GainMiningLevelC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
 				.decoder(GainMiningLevelC2SPacket::new)
 				.encoder(GainMiningLevelC2SPacket::toBytes)
 				.consumerMainThread(GainMiningLevelC2SPacket::handle)
 				.add();
-        	
         net.messageBuilder(GainMiningExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
         		.decoder(GainMiningExpC2SPacket::new)
         		.encoder(GainMiningExpC2SPacket::toBytes)
@@ -153,10 +180,15 @@ public class ModMessages {
 				.encoder(GainFarmingLevelC2SPacket::toBytes)
 				.consumerMainThread(GainFarmingLevelC2SPacket::handle)
 				.add();
-        net.messageBuilder(GainFarmingExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-				.decoder(GainFarmingExpC2SPacket::new)
-				.encoder(GainFarmingExpC2SPacket::toBytes)
-				.consumerMainThread(GainFarmingExpC2SPacket::handle)
+        net.messageBuilder(GainFarmingExpFromUnseededCropsC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+				.decoder(GainFarmingExpFromUnseededCropsC2SPacket::new)
+				.encoder(GainFarmingExpFromUnseededCropsC2SPacket::toBytes)
+				.consumerMainThread(GainFarmingExpFromUnseededCropsC2SPacket::handle)
+				.add();
+        net.messageBuilder(GainFarmingExpFromSeededCropsC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+				.decoder(GainFarmingExpFromSeededCropsC2SPacket::new)
+				.encoder(GainFarmingExpFromSeededCropsC2SPacket::toBytes)
+				.consumerMainThread(GainFarmingExpFromSeededCropsC2SPacket::handle)
 				.add();
         net.messageBuilder(GainSwordsLevelC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
 				.decoder(GainSwordsLevelC2SPacket::new)

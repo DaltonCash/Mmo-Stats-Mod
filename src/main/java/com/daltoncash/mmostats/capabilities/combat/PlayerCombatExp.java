@@ -14,6 +14,10 @@ public class PlayerCombatExp {
 	public void addCombatExp(int add) {
 		this.combatExp = combatExp + add;
 	}
+	
+	public void subCombatExp(int sub) {
+		this.combatExp = Math.max(combatExp - sub, 0);
+	}
 
 	public void copyFrom(PlayerCombatExp source) {
 		this.combatExp = source.combatExp;

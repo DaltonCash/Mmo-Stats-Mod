@@ -2,6 +2,7 @@ package com.daltoncash.mmostats.networking.packets.c2s.skills;
 
 import java.util.function.Supplier;
 
+import com.daltoncash.mmostats.capabilities.chopping.PlayerChoppingExpProvider;
 import com.daltoncash.mmostats.capabilities.mining.PlayerMiningExpProvider;
 import com.daltoncash.mmostats.capabilities.mining.PlayerMiningLevelProvider;
 import com.daltoncash.mmostats.capabilities.mining.upgrades.JunkBlocksDropExpUpgradeProvider;
@@ -13,6 +14,7 @@ import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.JunkBlocksD
 import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.NightVisionDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.NoJunkBlocksDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.ObsidianBreakerDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.skills.ChoppingExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.MiningExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.MiningLevelDataSyncS2CPacket;
 
@@ -60,6 +62,10 @@ public class ResetCapabilityDataC2SPacket {
 			player.getCapability(ObsidianBreakerUpgradeProvider.OBSIDIAN_BREAKER).ifPresent(isUpgraded -> {
 				isUpgraded.setIsUpgraded(false);
 				ModMessages.sendToPlayer(new ObsidianBreakerDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+			});
+			player.getCapability(PlayerChoppingExpProvider.PLAYER_CHOPPING_EXP).ifPresent(choppingExp -> {
+				choppingExp.subChoppingExp(10000);
+				ModMessages.sendToPlayer(new ChoppingExpDataSyncS2CPacket(choppingExp.getChoppingExp()), player);
 			});
 			
 		});
