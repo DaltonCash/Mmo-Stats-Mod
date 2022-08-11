@@ -13,6 +13,10 @@ public class PlayerSwordsLevel {
 		this.swordsLevel = swordsLevel + add;
 	}
 
+	public void subSwordsLevel(int sub) {
+	    this.swordsLevel = Math.max(swordsLevel - sub, 0);
+	}
+
 	public void copyFrom(PlayerSwordsLevel source) {
 		this.swordsLevel = source.swordsLevel;
 	}

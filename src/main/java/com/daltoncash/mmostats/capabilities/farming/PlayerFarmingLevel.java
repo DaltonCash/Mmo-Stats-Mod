@@ -13,6 +13,10 @@ public class PlayerFarmingLevel {
 		this.farmingLevel = farmingLevel + add;
 	}
 
+	public void subFarmingLevel(int sub) {
+	    this.farmingLevel = Math.max(farmingLevel - sub, 0);
+	}
+
 	public void copyFrom(PlayerFarmingLevel source) {
 		this.farmingLevel = source.farmingLevel;
 	}

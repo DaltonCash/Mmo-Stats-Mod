@@ -12,6 +12,10 @@ public class PlayerArcheryLevel {
 	public void addArcheryLevel(int add) {
 		this.archeryLevel = archeryLevel + add;
 	}
+	
+	public void subArcheryLevel(int sub) {
+	    this.archeryLevel = Math.max(archeryLevel - sub, 0);
+	}
 
 	public void copyFrom(PlayerArcheryLevel source) {
 		this.archeryLevel = source.archeryLevel;

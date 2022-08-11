@@ -38,7 +38,6 @@ public class GainFarmingExpFromSeededCropsC2SPacket {
 			BlockEvent event = ClientForgeEvents.blockevent;
 			List<ItemStack> drops = Block.getDrops(event.getState(), level, event.getPos(), null);
 			if(drops.size() > 1) {
-				System.out.println("should be sent");
 				player.getCapability(PlayerFarmingExpProvider.PLAYER_FARMING_EXP).ifPresent(farmingExp -> {
 					farmingExp.addFarmingExp(ClientForgeEvents.expToAdd);
 					ModMessages.sendToPlayer(new FarmingExpDataSyncS2CPacket(farmingExp.getFarmingExp()), player);

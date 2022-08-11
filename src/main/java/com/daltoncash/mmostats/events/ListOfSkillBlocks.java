@@ -58,25 +58,36 @@ public class ListOfSkillBlocks {
 		list.add(Blocks.DARK_OAK_LEAVES);
 		list.add(Blocks.MANGROVE_LEAVES);
 		list.add(Blocks.ACACIA_LEAVES);
+
+		list.add(Blocks.CRIMSON_STEM);
+		list.add(Blocks.WARPED_STEM);
+		list.add(Blocks.WARPED_WART_BLOCK);
+		list.add(Blocks.NETHER_WART_BLOCK);
 		return list;
 	}
 	public static List<Block> getFarmingBlocks(){
 		List<Block> list = new ArrayList<>();
+		list.add(Blocks.GRASS);
+		list.add(Blocks.TALL_GRASS);
 		list.add(Blocks.WHEAT);
 		list.add(Blocks.POTATOES);
 		list.add(Blocks.CARROTS);
 		list.add(Blocks.BEETROOTS);
+		list.add(Blocks.COCOA);
+		
 		list.add(Blocks.PUMPKIN);
 		list.add(Blocks.MELON);
 		list.add(Blocks.CACTUS);
 		list.add(Blocks.SUGAR_CANE);
-		list.add(Blocks.COCOA);
+		list.add(Blocks.BAMBOO);
+		list.add(Blocks.KELP);
 		list.add(Blocks.BROWN_MUSHROOM);
 		list.add(Blocks.RED_MUSHROOM);
 		list.add(Blocks.CRIMSON_FUNGUS);
 		list.add(Blocks.WARPED_FUNGUS);
 		list.add(Blocks.BROWN_MUSHROOM_BLOCK);
 		list.add(Blocks.RED_MUSHROOM_BLOCK);
+		list.add(Blocks.SHROOMLIGHT);
 		return list;
 	}
 }

@@ -13,6 +13,10 @@ public class PlayerCombatLevel {
 		this.combatLevel = combatLevel + add;
 	}
 
+	public void subCombatLevel(int sub) {
+	    this.combatLevel = Math.max(combatLevel - sub, 0);
+	}
+
 	public void copyFrom(PlayerCombatLevel source) {
 		this.combatLevel = source.combatLevel;
 	}

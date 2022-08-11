@@ -29,7 +29,6 @@ public class GainFarmingExpFromUnseededCropsC2SPacket {
 		NetworkEvent.Context context = supplier.get();
 		context.enqueueWork(() -> {
 			ServerPlayer player = context.getSender();
-				System.out.println("should be sent");
 				player.getCapability(PlayerFarmingExpProvider.PLAYER_FARMING_EXP).ifPresent(farmingExp -> {
 					farmingExp.addFarmingExp(ClientForgeEvents.expToAdd);
 					ModMessages.sendToPlayer(new FarmingExpDataSyncS2CPacket(farmingExp.getFarmingExp()), player);

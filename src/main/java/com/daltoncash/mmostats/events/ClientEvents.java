@@ -23,9 +23,12 @@ import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainChoppingExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainChoppingLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainFarmingExpFromSeededCropsC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.GainFarmingExpFromUnseededCropsC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.GainFarmingLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainMiningExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainMiningLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetChoppingExpC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetFarmingExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetMiningExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainNightVisionC2SPacket;
 import com.daltoncash.mmostats.util.KeyBinding;
@@ -34,6 +37,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
@@ -68,7 +72,6 @@ public class ClientEvents {
 			}
 		}
 		
-		
 		@SubscribeEvent
 		public static void onBreaking(BreakSpeed event) {
 			if(ClientCapabilityData.isUpgradedObsidianBreaker()) {
@@ -89,27 +92,64 @@ public class ClientEvents {
 			expToSub = 0;
 			expToAdd = 0;
 			blockevent = event;
+			event.getPlayer().getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.1);
 			if(ListOfSkillBlocks.getFarmingBlocks().contains(block)) {
-				if(block.equals(Blocks.WHEAT) || block.equals(Blocks.CARROTS) ||
-						block.equals(Blocks.POTATOES) || block.equals(Blocks.BEETROOTS)) {
-					expToAdd = 1;
+				int farmingExp = ClientCapabilityData.getPlayerFarmingExp();
+				int farmingLevel = ClientCapabilityData.getPlayerFarmingLevel();
+				
+				if(block.equals(Blocks.GRASS) || block.equals(Blocks.TALL_GRASS)) {
+					expToAdd = 3;
+					ModMessages.sendToServer(new GainFarmingExpFromUnseededCropsC2SPacket());
+				}
+				else if(block.equals(Blocks.WHEAT) || block.equals(Blocks.CARROTS) ||
+						block.equals(Blocks.POTATOES) || block.equals(Blocks.BEETROOTS) ||
+						block.equals(Blocks.COCOA)) {
+					expToAdd = 20;
 					ModMessages.sendToServer(new GainFarmingExpFromSeededCropsC2SPacket());
+				}
+				else if(block.equals(Blocks.PUMPKIN) || block.equals(Blocks.MELON) || 
+						block.equals(Blocks.SHROOMLIGHT)){
+					expToAdd = 20;
+					ModMessages.sendToServer(new GainFarmingExpFromUnseededCropsC2SPacket());
+				}
+				else if(block.equals(Blocks.CACTUS) || block.equals(Blocks.SUGAR_CANE) ||
+						block.equals(Blocks.BAMBOO) || block.equals(Blocks.KELP) ||
+						block.equals(Blocks.BROWN_MUSHROOM_BLOCK) || block.equals(Blocks.RED_MUSHROOM_BLOCK)) {
+					expToAdd = 10;
+					ModMessages.sendToServer(new GainFarmingExpFromUnseededCropsC2SPacket());
+				}
+				else if(block.equals(Blocks.BROWN_MUSHROOM) || block.equals(Blocks.RED_MUSHROOM) || 
+						block.equals(Blocks.CRIMSON_FUNGUS) || block.equals(Blocks.WARPED_FUNGUS)) {
+					expToAdd = 30;
+					ModMessages.sendToServer(new GainFarmingExpFromUnseededCropsC2SPacket());
 				}
 				Minecraft.getInstance().player.sendSystemMessage(
 							Component.literal("your farming Exp: " + ClientCapabilityData.getPlayerFarmingExp()));
+				
+				if (farmingExp > (farmingLevel * 40) + 400) {
+					expToSub = (farmingLevel * 40) + 400;
+					ModMessages.sendToServer(new GainFarmingLevelC2SPacket());
+					ModMessages.sendToServer(new ResetFarmingExpC2SPacket());
+					Minecraft.getInstance().player.sendSystemMessage(
+							Component.literal("your farming Level: " + ClientCapabilityData.getPlayerFarmingLevel()));
+				}
+				
 			}
 			if(ListOfSkillBlocks.getChoppingBlocks().contains(block)) {
 				int choppingExp = ClientCapabilityData.getPlayerChoppingExp();
 				int choppingLevel = ClientCapabilityData.getPlayerChoppingLevel();
+				
 				if(block.equals(Blocks.OAK_LOG) || block.equals(Blocks.BIRCH_LOG) ||
 						block.equals(Blocks.SPRUCE_LOG) || block.equals(Blocks.JUNGLE_LOG) ||
 						block.equals(Blocks.ACACIA_LOG) || block.equals(Blocks.MANGROVE_LOG) ||
-						block.equals(Blocks.DARK_OAK_LOG)) {
-					expToAdd = 100;
+						block.equals(Blocks.DARK_OAK_LOG) || block.equals(Blocks.CRIMSON_STEM) ||
+						block.equals(Blocks.WARPED_STEM)) {
+					expToAdd = 50;
 				}else if(block.equals(Blocks.OAK_LEAVES) || block.equals(Blocks.BIRCH_LEAVES) ||
 						block.equals(Blocks.SPRUCE_LEAVES) || block.equals(Blocks.JUNGLE_LEAVES) ||
 						block.equals(Blocks.ACACIA_LEAVES) || block.equals(Blocks.MANGROVE_LEAVES) ||
-						block.equals(Blocks.DARK_OAK_LEAVES)) {
+						block.equals(Blocks.DARK_OAK_LEAVES) || block.equals(Blocks.NETHER_WART_BLOCK) ||
+						block.equals(Blocks.WARPED_WART_BLOCK)) {
 					expToAdd = 5;
 				}
 				ModMessages.sendToServer(new GainChoppingExpC2SPacket());
@@ -121,7 +161,7 @@ public class ClientEvents {
 					ModMessages.sendToServer(new GainChoppingLevelC2SPacket());
 					ModMessages.sendToServer(new ResetChoppingExpC2SPacket());
 					Minecraft.getInstance().player.sendSystemMessage(
-							Component.literal("your chopping Level: " + 1 + ClientCapabilityData.getPlayerChoppingLevel()));
+							Component.literal("your chopping Level: " + ClientCapabilityData.getPlayerChoppingLevel()));
 				}
 			}
 			
@@ -233,7 +273,7 @@ public class ClientEvents {
 					ModMessages.sendToServer(new GainMiningLevelC2SPacket());
 					ModMessages.sendToServer(new ResetMiningExpC2SPacket());
 					Minecraft.getInstance().player.sendSystemMessage(
-							Component.literal("your mining Level: " + 1 + ClientCapabilityData.getPlayerMiningLevel()));
+							Component.literal("your mining Level: " + ClientCapabilityData.getPlayerMiningLevel()));
 				}
 				event.setExpToDrop((int)(event.getExpToDrop() * 
 						((Math.log10(ClientCapabilityData.getLapisMined()) + 2) / 2)));
