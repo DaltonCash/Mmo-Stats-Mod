@@ -107,18 +107,18 @@ import net.minecraftforge.fml.common.Mod;
 public class ModEvents {
 
 	// Adds Mana to the Player over time.
-		@SubscribeEvent
-		public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-			if (event.side == LogicalSide.SERVER) {
-				event.player.getCapability(PlayerManaProvider.PLAYER_MANA).ifPresent(mana -> {
-					if (mana.getMana() < 10 && event.player.getRandom().nextFloat() < 0.05f) { // Once Every 10 Seconds on
-																								// Avg
-						mana.addMana(1);
-						ModMessages.sendToPlayer(new ManaDataSyncS2CPacket(mana.getMana()), ((ServerPlayer) event.player));
-					}
-				});
-			}
+	@SubscribeEvent
+	public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
+		if (event.side == LogicalSide.SERVER) {
+			event.player.getCapability(PlayerManaProvider.PLAYER_MANA).ifPresent(mana -> {
+				if (mana.getMana() < 10 && event.player.getRandom().nextFloat() < 0.05f) {
+																						
+					mana.addMana(1);
+					ModMessages.sendToPlayer(new ManaDataSyncS2CPacket(mana.getMana()), ((ServerPlayer) event.player));
+				}
+			});
 		}
+	}
 	
 	@SubscribeEvent
 	public static void onAttachCapabilitiesPlayer(AttachCapabilitiesEvent<Entity> event) {

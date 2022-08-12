@@ -22,6 +22,7 @@ import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.RedstoneMinedC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainChoppingExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainChoppingLevelC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.GainCombatExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainFarmingExpFromSeededCropsC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainFarmingExpFromUnseededCropsC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainFarmingLevelC2SPacket;
@@ -37,6 +38,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -44,6 +47,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.entity.player.PlayerEvent.HarvestCheck;
 import net.minecraftforge.event.level.BlockEvent;
@@ -54,6 +58,7 @@ public class ClientEvents {
 	@Mod.EventBusSubscriber(modid = MmoStatsMod.MODID, value = Dist.CLIENT)
 	public static class ClientForgeEvents {
 		public static BlockEvent.BreakEvent blockevent = null;
+		public static LivingDeathEvent killevent = null;
 		public static int expToSub = 0;
 		public static int expToAdd = 0;
 
@@ -68,6 +73,25 @@ public class ClientEvents {
 						|| event.getTargetBlock().getBlock().equals(Blocks.DEEPSLATE)
 						|| event.getTargetBlock().getBlock().equals(Blocks.COBBLED_DEEPSLATE)) {
 					event.setCanHarvest(false);
+				}
+			}
+		}
+		
+		@SubscribeEvent
+		public static void onkill(LivingDeathEvent event) {
+			Entity entity = event.getEntity();
+			expToAdd = 0;
+			killevent = event;
+			
+			if(event.getSource().getEntity() != null) {
+				if(event.getSource().getEntity().getType().equals(EntityType.PLAYER)) {
+					if(ExpYieldList.getCombatEntities().contains(entity.getType())) {
+						if(entity.getType().equals(EntityType.ENDERMAN)) {
+							expToAdd = 10;
+							ModMessages.sendToServer(new GainCombatExpC2SPacket());
+							System.out.println(ClientCapabilityData.getPlayerCombatExp());
+						}
+					}
 				}
 			}
 		}
@@ -93,7 +117,7 @@ public class ClientEvents {
 			expToAdd = 0;
 			blockevent = event;
 			event.getPlayer().getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.1);
-			if(ListOfSkillBlocks.getFarmingBlocks().contains(block)) {
+			if(ExpYieldList.getFarmingBlocks().contains(block)) {
 				int farmingExp = ClientCapabilityData.getPlayerFarmingExp();
 				int farmingLevel = ClientCapabilityData.getPlayerFarmingLevel();
 				
@@ -135,7 +159,7 @@ public class ClientEvents {
 				}
 				
 			}
-			if(ListOfSkillBlocks.getChoppingBlocks().contains(block)) {
+			else if(ExpYieldList.getChoppingBlocks().contains(block)) {
 				int choppingExp = ClientCapabilityData.getPlayerChoppingExp();
 				int choppingLevel = ClientCapabilityData.getPlayerChoppingLevel();
 				
@@ -166,7 +190,7 @@ public class ClientEvents {
 			}
 			
 			// Checks if the block being destroyed is part of the accepted list
-			else if (ListOfSkillBlocks.getMiningBlocks().contains(block)) {
+			else if (ExpYieldList.getMiningBlocks().contains(block)) {
 				int miningExp = ClientCapabilityData.getPlayerMiningExp();
 				int miningLevel = ClientCapabilityData.getPlayerMiningLevel();
 				// Check for Passive Ability Double Drops

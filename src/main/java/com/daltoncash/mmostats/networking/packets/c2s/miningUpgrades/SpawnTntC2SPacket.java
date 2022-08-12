@@ -30,7 +30,7 @@ public class SpawnTntC2SPacket {
 	            ServerLevel level = player.getLevel();
 
 	            EntityType.TNT.spawn(level, null, null, player.blockPosition(),
-	                    MobSpawnType.COMMAND, true, false);
+	                    MobSpawnType.COMMAND, true, false).setDeltaMovement(1.0f, 0.5f, 0f);
 	        });
 	        
 	        return true;

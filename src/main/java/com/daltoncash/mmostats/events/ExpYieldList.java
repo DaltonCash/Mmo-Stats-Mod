@@ -3,10 +3,11 @@ package com.daltoncash.mmostats.events;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
-public class ListOfSkillBlocks {
+public class ExpYieldList {
 	public static List<Block> getMiningBlocks() {
 		List<Block> list = new ArrayList<>();
 		list.add(Blocks.STONE);
@@ -88,6 +89,13 @@ public class ListOfSkillBlocks {
 		list.add(Blocks.BROWN_MUSHROOM_BLOCK);
 		list.add(Blocks.RED_MUSHROOM_BLOCK);
 		list.add(Blocks.SHROOMLIGHT);
+		return list;
+	}
+	
+	public static List<EntityType<?>> getCombatEntities(){
+		List<EntityType<?>> list = new ArrayList<>();
+		list.add(EntityType.SLIME);
+		list.add(EntityType.ENDERMAN);
 		return list;
 	}
 }
