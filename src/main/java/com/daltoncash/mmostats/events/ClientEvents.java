@@ -33,6 +33,7 @@ import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetFarmingExpC2SP
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetMiningExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainNightVisionC2SPacket;
 import com.daltoncash.mmostats.util.KeyBinding;
+import com.mojang.logging.LogUtils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
@@ -53,15 +54,19 @@ import net.minecraftforge.event.entity.player.PlayerEvent.HarvestCheck;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.slf4j.Logger;
 
 public class ClientEvents {
 	@Mod.EventBusSubscriber(modid = MmoStatsMod.MODID, value = Dist.CLIENT)
 	public static class ClientForgeEvents {
 		public static BlockEvent.BreakEvent blockevent = null;
-		public static LivingDeathEvent killevent = null;
+		public static final Logger LOGGER = LogUtils.getLogger();
 		public static int expToSub = 0;
 		public static int expToAdd = 0;
 
+		//HarvestCheck is an event that triggers when a block is being destroyed.
+		//This method removes the drop from "junk blocks" if the appropriate upgrade(NoJunkBlocks)
+		//has been upgraded.
 		@SubscribeEvent
 		public static void onHarvest(HarvestCheck event) {
 			if(ClientCapabilityData.isUpgradedNoJunkBlocks()) {
@@ -76,26 +81,82 @@ public class ClientEvents {
 				}
 			}
 		}
-		
+		//LivingDeathEvent is an event that triggers when an entity dies.
+		//This method gives the player exp for combat when they kill an entity.
 		@SubscribeEvent
 		public static void onkill(LivingDeathEvent event) {
-			Entity entity = event.getEntity();
 			expToAdd = 0;
-			killevent = event;
-			
 			if(event.getSource().getEntity() != null) {
 				if(event.getSource().getEntity().getType().equals(EntityType.PLAYER)) {
+					Entity entity = event.getEntity();
+					EntityType<?> type = entity.getType();
 					if(ExpYieldList.getCombatEntities().contains(entity.getType())) {
-						if(entity.getType().equals(EntityType.ENDERMAN)) {
+						//for passive mobs:
+						expToAdd = 5;
+						//for neutral mobs:
+						if(type.equals(EntityType.BEE) || type.equals(EntityType.DOLPHIN) || 
+								type.equals(EntityType.GOAT) || type.equals(EntityType.LLAMA) || 
+								type.equals(EntityType.PANDA) || type.equals(EntityType.POLAR_BEAR) ||
+								type.equals(EntityType.TRADER_LLAMA) || type.equals(EntityType.WOLF)) {
 							expToAdd = 10;
-							ModMessages.sendToServer(new GainCombatExpC2SPacket());
-							System.out.println(ClientCapabilityData.getPlayerCombatExp());
 						}
+						//for hostile mobs:
+						else if(type.equals(EntityType.ENDERMITE) || type.equals(EntityType.SILVERFISH) ||
+								type.equals(EntityType.SLIME) || type.equals(EntityType.MAGMA_CUBE)) {
+							expToAdd = 15;
+						}
+						else if(type.equals(EntityType.ZOMBIE) || type.equals(EntityType.HUSK) || 
+								type.equals(EntityType.DROWNED) || type.equals(EntityType.PIGLIN) ||
+								type.equals(EntityType.ZOMBIFIED_PIGLIN) || type.equals(EntityType.VEX) ||
+								type.equals(EntityType.ZOMBIE_VILLAGER)){
+							expToAdd = 20;
+						}
+						else if(type.equals(EntityType.SKELETON) || type.equals(EntityType.STRAY) ||
+								type.equals(EntityType.SPIDER) || type.equals(EntityType.VINDICATOR) ||
+								type.equals(EntityType.PILLAGER) || type.equals(EntityType.SHULKER) || 
+								type.equals(EntityType.WITCH)) {
+							expToAdd = 30;
+						}
+						else if(type.equals(EntityType.CREEPER) || type.equals(EntityType.CAVE_SPIDER) ||
+								type.equals(EntityType.WITHER_SKELETON)) {
+							expToAdd = 35;
+						}
+						else if(type.equals(EntityType.ENDERMAN) || type.equals(EntityType.BLAZE) || 
+								type.equals(EntityType.PIGLIN_BRUTE)) {
+							expToAdd = 50;
+						}
+						else if(type.equals(EntityType.EVOKER) || type.equals(EntityType.GHAST) || 
+								type.equals(EntityType.GUARDIAN) || type.equals(EntityType.HOGLIN) ||
+								type.equals(EntityType.ZOGLIN)) {
+							expToAdd = 100;
+						}
+						else if(type.equals(EntityType.IRON_GOLEM) || type.equals(EntityType.PHANTOM)) {
+							expToAdd = 200;
+						}
+						else if(type.equals(EntityType.RAVAGER)) {
+							expToAdd = 300;
+						}
+						else if(type.equals(EntityType.ELDER_GUARDIAN)) {
+							expToAdd = 500;
+						}
+						else if(type.equals(EntityType.WARDEN)) {
+							expToAdd = 600;
+						}
+						else if(type.equals(EntityType.WITHER)) {
+							expToAdd = 800;
+						}
+						else if(type.equals(EntityType.ENDER_DRAGON)) {
+							expToAdd = 5000;
+						}
+						
+						ModMessages.sendToServer(new GainCombatExpC2SPacket());
+						System.out.println(ClientCapabilityData.getPlayerCombatExp());
 					}
 				}
 			}
 		}
-		
+		//BreakSpeed is an event that triggers when a block is left-clicked
+		//This method doubles the speed of mining deepslate and obsidian
 		@SubscribeEvent
 		public static void onBreaking(BreakSpeed event) {
 			if(ClientCapabilityData.isUpgradedObsidianBreaker()) {
@@ -108,7 +169,9 @@ public class ClientEvents {
 				event.setNewSpeed((float) (event.getOriginalSpeed() * 2));
 			}
 		}
-		
+		//BlockEvent.BreakEvent is an event that is triggered when a block is broken
+		//This method gives exp to the player when they mine mining blocks,
+		//chop chopping blocks, or farm farming blocks.
 		@SuppressWarnings("resource")
 		@SubscribeEvent
 		public static void onBreakBlock(BlockEvent.BreakEvent event) {
@@ -138,7 +201,8 @@ public class ClientEvents {
 				}
 				else if(block.equals(Blocks.CACTUS) || block.equals(Blocks.SUGAR_CANE) ||
 						block.equals(Blocks.BAMBOO) || block.equals(Blocks.KELP) ||
-						block.equals(Blocks.BROWN_MUSHROOM_BLOCK) || block.equals(Blocks.RED_MUSHROOM_BLOCK)) {
+						block.equals(Blocks.BROWN_MUSHROOM_BLOCK) || block.equals(Blocks.RED_MUSHROOM_BLOCK) ||
+						block.equals(Blocks.MUSHROOM_STEM)) {
 					expToAdd = 10;
 					ModMessages.sendToServer(new GainFarmingExpFromUnseededCropsC2SPacket());
 				}
@@ -303,7 +367,7 @@ public class ClientEvents {
 						((Math.log10(ClientCapabilityData.getLapisMined()) + 2) / 2)));
 			}
 		}
-
+		//This method defines what happens when a modded keybinding is pressed.
 		@SuppressWarnings("resource")
 		@SubscribeEvent
 		public static void onKeyInput(InputEvent.Key event) {
@@ -321,7 +385,7 @@ public class ClientEvents {
 			}
 			
 		}
-
+		//This class registers keybindings and gui overlays to the mos bus.
 		@Mod.EventBusSubscriber(modid = MmoStatsMod.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 		public static class ClientModBusEvents {
 
