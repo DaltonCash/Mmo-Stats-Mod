@@ -2,6 +2,7 @@ package com.daltoncash.mmostats.events;
 
 import com.daltoncash.mmostats.MmoStatsMod;
 import com.daltoncash.mmostats.capabilities.ClientCapabilityData;
+import com.daltoncash.mmostats.capabilities.mana.PlayerManaProvider;
 import com.daltoncash.mmostats.gui.ManaOverlay;
 import com.daltoncash.mmostats.gui.UpgradeMenu;
 import com.daltoncash.mmostats.networking.ModMessages;
@@ -19,6 +20,8 @@ import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.NetherGoldMinedC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.QuartzMinedC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.RedstoneMinedC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.GainArcheryExpC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.GainArcheryLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainChoppingExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainChoppingLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainCombatExpC2SPacket;
@@ -28,31 +31,41 @@ import com.daltoncash.mmostats.networking.packets.c2s.skills.GainFarmingExpFromU
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainFarmingLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainMiningExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainMiningLevelC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetArcheryExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetChoppingExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetCombatExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetFarmingExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetMiningExpC2SPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.ManaDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainNightVisionC2SPacket;
 import com.daltoncash.mmostats.util.KeyBinding;
 import com.mojang.logging.LogUtils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.ProjectileImpactEvent;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.entity.player.PlayerEvent.HarvestCheck;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 import org.slf4j.Logger;
 
@@ -63,7 +76,59 @@ public class ClientEvents {
 		public static BlockEvent.BreakEvent blockevent = null;
 		public static int expToSub = 0;
 		public static int expToAdd = 0;
-
+		public static int cooldown = 20;
+		//WIP
+		//farming sweet berry bushes:
+		//use event RightClickBlock in PlayerInteractEvent in PlayerEvent in Living Event
+		//WIP
+		
+		//WIP
+		//Could be used to detect what the play was holding when attacking an entity
+		//This is to give corresponding Exp for what weapon was held(swords, longsword, etc., but not arrows)
+		/*
+		@SubscribeEvent
+		public static void onSwordHit(AttackEntityEvent event) {
+			System.out.println(event.getEntity().getScoreboardName());
+		}
+		*/
+		//WIP
+		
+		//Provides a cooldown to the onArrowHit to prevent exploits
+		@SubscribeEvent
+		public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
+			if (cooldown < 20) {
+				cooldown++;
+			}
+		}
+		
+		@SubscribeEvent
+		public static void onArrowHit(LivingAttackEvent event) {
+			if(event.getSource().getEntity() != null) {
+				if(event.getSource().getEntity().getType().equals(EntityType.PLAYER)) {
+					if(event.getSource().getDirectEntity().getType().equals(EntityType.ARROW)) {
+						if(cooldown == 20) {
+							int archeryExp = ClientCapabilityData.getPlayerArcheryExp();
+							int archeryLevel = ClientCapabilityData.getPlayerArcheryLevel();
+							
+							ModMessages.sendToServer(new GainArcheryExpC2SPacket());
+							cooldown = 0;
+							// level up if player has sufficient choppingExp
+							if (archeryExp > (archeryLevel * 40) + 400) {
+								LOGGER.info("{} leveled up to {} in Archery", 
+										event.getSource().getEntity().getScoreboardName(), 
+										archeryLevel + 1);
+								expToSub = (archeryLevel * 40) + 400;
+								ModMessages.sendToServer(new GainArcheryLevelC2SPacket());
+								ModMessages.sendToServer(new ResetArcheryExpC2SPacket());
+							}
+						}else {
+							LOGGER.debug("Player {} is firing too fast!(archeryExp on cooldown)", 
+									event.getSource().getEntity().getScoreboardName());
+						}
+					}
+				}
+			}
+		}
 		//HarvestCheck is an event that triggers when a block is being destroyed.
 		//This method removes the drop from "junk blocks" if the appropriate upgrade(NoJunkBlocks)
 		//has been upgraded.

@@ -30,7 +30,7 @@ public class GainArcheryExpC2SPacket {
 		context.enqueueWork(() -> {
 			ServerPlayer player = context.getSender();
 			player.getCapability(PlayerArcheryExpProvider.PLAYER_ARCHERY_EXP).ifPresent(archeryExp -> {
-				archeryExp.addArcheryExp(ClientForgeEvents.expToAdd);
+				archeryExp.addArcheryExp(50);
 				ModMessages.sendToPlayer(new ArcheryExpDataSyncS2CPacket(archeryExp.getArcheryExp()), player);
 			});
 		});
