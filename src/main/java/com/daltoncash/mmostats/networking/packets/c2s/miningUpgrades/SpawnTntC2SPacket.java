@@ -29,10 +29,10 @@ public class SpawnTntC2SPacket {
 	            ServerPlayer player = context.getSender();
 	            ServerLevel level = player.getLevel();
 
-	            EntityType.TNT.spawn(level, null, null, player.blockPosition(),
-	                    MobSpawnType.COMMAND, true, false).setDeltaMovement(1.0f, 0.5f, 0f);
+	            EntityType.TNT.spawn(level, null, null, player.blockPosition().offset(0, player.getEyeHeight(), 0),
+	                    MobSpawnType.COMMAND, true, false).setDeltaMovement(player.getLookAngle());
 	        });
-	        
+
 	        return true;
 	    }
 }
