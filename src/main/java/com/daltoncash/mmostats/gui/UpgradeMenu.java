@@ -25,6 +25,8 @@ public class UpgradeMenu extends Screen {
 	private final ResourceLocation MINING_TEXTURE = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/test_mining_image_3.png");
 
+	private final ResourceLocation EXP_BAR = new ResourceLocation(MmoStatsMod.MODID, "textures/gui/exp_bar_0.png");
+
 	public UpgradeMenu(Component p_96550_) {
 		super(p_96550_);
 	}
@@ -40,7 +42,20 @@ public class UpgradeMenu extends Screen {
 		addRenderableWidget(new ImageButton((this.width / 6) * 1, (this.height / 6) * 1, 100, 100, 0, 0, 0,
 				MINING_TEXTURE, 100, 100, UpgradeMenu::onPressMining));
 
+		float percentEXP = (float) 100 * (ClientCapabilityData.getPlayerMiningExp() / (ClientCapabilityData.getPlayerMiningLevel() * 40 + 400));
+		int imageNumber = (int) percentEXP / 5;
+
+		renderExpBar(imageNumber);
 	}
+
+	private void renderExpBar(int num)
+	{
+		String location = "textures/gui/exp_bar_" + num + ".png";
+		ResourceLocation Rendered_Texture = new ResourceLocation(MmoStatsMod.MODID, location);
+		addRenderableWidget(new ImageButton((this.width / 6) * 1, (this.height / 6) * 1, 100, 100, 0, 0, 0,
+				, 100, 100, UpgradeMenu::onPressMining));
+	}
+
 
 	private static void onPressReset(Button button) {
 		ModMessages.sendToServer(new ResetCapabilityDataC2SPacket());
