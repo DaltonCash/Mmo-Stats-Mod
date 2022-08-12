@@ -1,6 +1,5 @@
 package com.daltoncash.mmostats.events;
 
-
 import com.daltoncash.mmostats.MmoStatsMod;
 import com.daltoncash.mmostats.capabilities.ClientCapabilityData;
 import com.daltoncash.mmostats.gui.ManaOverlay;
@@ -59,8 +58,8 @@ import org.slf4j.Logger;
 public class ClientEvents {
 	@Mod.EventBusSubscriber(modid = MmoStatsMod.MODID, value = Dist.CLIENT)
 	public static class ClientForgeEvents {
-		public static BlockEvent.BreakEvent blockevent = null;
 		public static final Logger LOGGER = LogUtils.getLogger();
+		public static BlockEvent.BreakEvent blockevent = null;
 		public static int expToSub = 0;
 		public static int expToAdd = 0;
 
@@ -91,6 +90,9 @@ public class ClientEvents {
 					Entity entity = event.getEntity();
 					EntityType<?> type = entity.getType();
 					if(ExpYieldList.getCombatEntities().contains(entity.getType())) {
+						LOGGER.info("{} has killed {}", 
+								event.getSource().getEntity().getScoreboardName(), 
+								entity.getType().toShortString());
 						//for passive mobs:
 						expToAdd = 5;
 						//for neutral mobs:
@@ -151,6 +153,7 @@ public class ClientEvents {
 						
 						ModMessages.sendToServer(new GainCombatExpC2SPacket());
 						System.out.println(ClientCapabilityData.getPlayerCombatExp());
+						
 					}
 				}
 			}
@@ -181,6 +184,9 @@ public class ClientEvents {
 			blockevent = event;
 			event.getPlayer().getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.1);
 			if(ExpYieldList.getFarmingBlocks().contains(block)) {
+				LOGGER.info("{} has farmed {}", 
+						event.getPlayer().getScoreboardName(), 
+						event.getState().getBlock().asItem());
 				int farmingExp = ClientCapabilityData.getPlayerFarmingExp();
 				int farmingLevel = ClientCapabilityData.getPlayerFarmingLevel();
 				
@@ -215,6 +221,9 @@ public class ClientEvents {
 							Component.literal("your farming Exp: " + ClientCapabilityData.getPlayerFarmingExp()));
 				
 				if (farmingExp > (farmingLevel * 40) + 400) {
+					LOGGER.info("{} leveled up from {}", 
+							event.getPlayer().getScoreboardName(), 
+							farmingLevel);
 					expToSub = (farmingLevel * 40) + 400;
 					ModMessages.sendToServer(new GainFarmingLevelC2SPacket());
 					ModMessages.sendToServer(new ResetFarmingExpC2SPacket());
@@ -224,6 +233,9 @@ public class ClientEvents {
 				
 			}
 			else if(ExpYieldList.getChoppingBlocks().contains(block)) {
+				LOGGER.info("{} has chopped {}", 
+						event.getPlayer().getScoreboardName(), 
+						event.getState().getBlock().asItem());
 				int choppingExp = ClientCapabilityData.getPlayerChoppingExp();
 				int choppingLevel = ClientCapabilityData.getPlayerChoppingLevel();
 				
@@ -245,6 +257,9 @@ public class ClientEvents {
 						Component.literal("your chopping Exp: " + ClientCapabilityData.getPlayerChoppingExp()));
 				// level up if player has sufficient choppingExp
 				if (choppingExp > (choppingLevel * 40) + 400) {
+					LOGGER.info("{} leveled up from {}", 
+							event.getPlayer().getScoreboardName(), 
+							choppingLevel);
 					expToSub = (choppingLevel * 40) + 400;
 					ModMessages.sendToServer(new GainChoppingLevelC2SPacket());
 					ModMessages.sendToServer(new ResetChoppingExpC2SPacket());
@@ -255,6 +270,9 @@ public class ClientEvents {
 			
 			// Checks if the block being destroyed is part of the accepted list
 			else if (ExpYieldList.getMiningBlocks().contains(block)) {
+				LOGGER.info("{} has mined {}", 
+						event.getPlayer().getScoreboardName(), 
+						event.getState().getBlock().asItem());
 				int miningExp = ClientCapabilityData.getPlayerMiningExp();
 				int miningLevel = ClientCapabilityData.getPlayerMiningLevel();
 				// Check for Passive Ability Double Drops
@@ -357,6 +375,9 @@ public class ClientEvents {
 
 				// level up if player has sufficient miningExp
 				if (miningExp > (miningLevel * 40) + 400) {
+					LOGGER.info("{} leveled up from level {}", 
+							event.getPlayer().getScoreboardName(), 
+							miningLevel);
 					expToSub = (miningLevel * 40) + 400;
 					ModMessages.sendToServer(new GainMiningLevelC2SPacket());
 					ModMessages.sendToServer(new ResetMiningExpC2SPacket());
