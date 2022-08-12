@@ -22,12 +22,14 @@ import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainChoppingExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainChoppingLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainCombatExpC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.GainCombatLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainFarmingExpFromSeededCropsC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainFarmingExpFromUnseededCropsC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainFarmingLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainMiningExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainMiningLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetChoppingExpC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetCombatExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetFarmingExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetMiningExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainNightVisionC2SPacket;
@@ -38,7 +40,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.block.Block;
@@ -87,12 +88,11 @@ public class ClientEvents {
 			expToAdd = 0;
 			if(event.getSource().getEntity() != null) {
 				if(event.getSource().getEntity().getType().equals(EntityType.PLAYER)) {
-					Entity entity = event.getEntity();
-					EntityType<?> type = entity.getType();
-					if(ExpYieldList.getCombatEntities().contains(entity.getType())) {
-						LOGGER.info("{} has killed {}", 
-								event.getSource().getEntity().getScoreboardName(), 
-								entity.getType().toShortString());
+					
+					EntityType<?> type = event.getEntity().getType();
+					if(ExpYieldList.getCombatEntities().contains(type)) {
+						int combatExp = ClientCapabilityData.getPlayerCombatExp();
+						int combatLevel = ClientCapabilityData.getPlayerCombatLevel();
 						//for passive mobs:
 						expToAdd = 5;
 						//for neutral mobs:
@@ -150,10 +150,21 @@ public class ClientEvents {
 						else if(type.equals(EntityType.ENDER_DRAGON)) {
 							expToAdd = 5000;
 						}
-						
 						ModMessages.sendToServer(new GainCombatExpC2SPacket());
-						System.out.println(ClientCapabilityData.getPlayerCombatExp());
 						
+						// level up if player has sufficient choppingExp
+						if (combatExp > (combatLevel * 40) + 400) {
+							LOGGER.info("{} leveled up to {} in Combat", 
+									event.getSource().getEntity().getScoreboardName(), 
+									combatLevel + 1);
+							expToSub = (combatLevel * 40) + 400;
+							ModMessages.sendToServer(new GainCombatLevelC2SPacket());
+							ModMessages.sendToServer(new ResetCombatExpC2SPacket());
+						}
+						LOGGER.info("{} has killed {}(Player CombatExp: {})", 
+								event.getSource().getEntity().getScoreboardName(), 
+								type.toShortString(),
+								combatExp + expToAdd);
 					}
 				}
 			}
@@ -175,7 +186,6 @@ public class ClientEvents {
 		//BlockEvent.BreakEvent is an event that is triggered when a block is broken
 		//This method gives exp to the player when they mine mining blocks,
 		//chop chopping blocks, or farm farming blocks.
-		@SuppressWarnings("resource")
 		@SubscribeEvent
 		public static void onBreakBlock(BlockEvent.BreakEvent event) {
 			Block block = event.getState().getBlock();
@@ -184,9 +194,6 @@ public class ClientEvents {
 			blockevent = event;
 			event.getPlayer().getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.1);
 			if(ExpYieldList.getFarmingBlocks().contains(block)) {
-				LOGGER.info("{} has farmed {}", 
-						event.getPlayer().getScoreboardName(), 
-						event.getState().getBlock().asItem());
 				int farmingExp = ClientCapabilityData.getPlayerFarmingExp();
 				int farmingLevel = ClientCapabilityData.getPlayerFarmingLevel();
 				
@@ -217,25 +224,20 @@ public class ClientEvents {
 					expToAdd = 30;
 					ModMessages.sendToServer(new GainFarmingExpFromUnseededCropsC2SPacket());
 				}
-				Minecraft.getInstance().player.sendSystemMessage(
-							Component.literal("your farming Exp: " + ClientCapabilityData.getPlayerFarmingExp()));
-				
 				if (farmingExp > (farmingLevel * 40) + 400) {
-					LOGGER.info("{} leveled up from {}", 
+					LOGGER.info("{} leveled up to {} in Farming", 
 							event.getPlayer().getScoreboardName(), 
-							farmingLevel);
+							farmingLevel + 1);
 					expToSub = (farmingLevel * 40) + 400;
 					ModMessages.sendToServer(new GainFarmingLevelC2SPacket());
 					ModMessages.sendToServer(new ResetFarmingExpC2SPacket());
-					Minecraft.getInstance().player.sendSystemMessage(
-							Component.literal("your farming Level: " + ClientCapabilityData.getPlayerFarmingLevel()));
 				}
-				
+				LOGGER.info("{} has farmed {}(Player FarmingExp: {})", 
+						event.getPlayer().getScoreboardName(), 
+						event.getState().getBlock().asItem(),
+						farmingExp + expToAdd);
 			}
 			else if(ExpYieldList.getChoppingBlocks().contains(block)) {
-				LOGGER.info("{} has chopped {}", 
-						event.getPlayer().getScoreboardName(), 
-						event.getState().getBlock().asItem());
 				int choppingExp = ClientCapabilityData.getPlayerChoppingExp();
 				int choppingLevel = ClientCapabilityData.getPlayerChoppingLevel();
 				
@@ -253,26 +255,23 @@ public class ClientEvents {
 					expToAdd = 5;
 				}
 				ModMessages.sendToServer(new GainChoppingExpC2SPacket());
-				Minecraft.getInstance().player.sendSystemMessage(
-						Component.literal("your chopping Exp: " + ClientCapabilityData.getPlayerChoppingExp()));
 				// level up if player has sufficient choppingExp
 				if (choppingExp > (choppingLevel * 40) + 400) {
-					LOGGER.info("{} leveled up from {}", 
+					LOGGER.info("{} leveled up to {} in Chopping", 
 							event.getPlayer().getScoreboardName(), 
-							choppingLevel);
+							choppingLevel + 1);
 					expToSub = (choppingLevel * 40) + 400;
 					ModMessages.sendToServer(new GainChoppingLevelC2SPacket());
 					ModMessages.sendToServer(new ResetChoppingExpC2SPacket());
-					Minecraft.getInstance().player.sendSystemMessage(
-							Component.literal("your chopping Level: " + ClientCapabilityData.getPlayerChoppingLevel()));
 				}
+				LOGGER.info("{} has chopped {}(Player ChoppingExp: {})", 
+						event.getPlayer().getScoreboardName(), 
+						event.getState().getBlock().asItem(),
+						choppingExp + expToAdd);
 			}
 			
 			// Checks if the block being destroyed is part of the accepted list
 			else if (ExpYieldList.getMiningBlocks().contains(block)) {
-				LOGGER.info("{} has mined {}", 
-						event.getPlayer().getScoreboardName(), 
-						event.getState().getBlock().asItem());
 				int miningExp = ClientCapabilityData.getPlayerMiningExp();
 				int miningLevel = ClientCapabilityData.getPlayerMiningLevel();
 				// Check for Passive Ability Double Drops
@@ -368,24 +367,23 @@ public class ClientEvents {
 					expToAdd = 10;
 					ModMessages.sendToServer(new GlowstoneMinedC2SPacket());
 				}
-
 				ModMessages.sendToServer(new GainMiningExpC2SPacket());
-				Minecraft.getInstance().player.sendSystemMessage(
-						Component.literal("your mining Exp: " + ClientCapabilityData.getPlayerMiningExp()));
 
 				// level up if player has sufficient miningExp
 				if (miningExp > (miningLevel * 40) + 400) {
-					LOGGER.info("{} leveled up from level {}", 
+					LOGGER.info("{} leveled up to {} in Mining", 
 							event.getPlayer().getScoreboardName(), 
-							miningLevel);
+							miningLevel + 1);
 					expToSub = (miningLevel * 40) + 400;
 					ModMessages.sendToServer(new GainMiningLevelC2SPacket());
 					ModMessages.sendToServer(new ResetMiningExpC2SPacket());
-					Minecraft.getInstance().player.sendSystemMessage(
-							Component.literal("your mining Level: " + ClientCapabilityData.getPlayerMiningLevel()));
 				}
 				event.setExpToDrop((int)(event.getExpToDrop() * 
 						((Math.log10(ClientCapabilityData.getLapisMined()) + 2) / 2)));
+				LOGGER.info("{} has mined {}(Player miningExp: {})", 
+						event.getPlayer().getScoreboardName(), 
+						event.getState().getBlock().asItem(),
+						(miningExp + expToAdd));
 			}
 		}
 		//This method defines what happens when a modded keybinding is pressed.
