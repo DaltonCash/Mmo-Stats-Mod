@@ -10,6 +10,8 @@ import net.minecraft.world.level.block.Blocks;
 public class ExpYieldList {
 	public static List<Block> getMiningBlocks() {
 		List<Block> list = new ArrayList<>();
+		list.add(Blocks.SAND);
+		list.add(Blocks.SANDSTONE);
 		list.add(Blocks.STONE);
 		list.add(Blocks.DIORITE);
 		list.add(Blocks.ANDESITE);
