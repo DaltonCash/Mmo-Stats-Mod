@@ -2,7 +2,6 @@ package com.daltoncash.mmostats.events;
 
 import com.daltoncash.mmostats.MmoStatsMod;
 import com.daltoncash.mmostats.capabilities.ClientCapabilityData;
-import com.daltoncash.mmostats.capabilities.mana.PlayerManaProvider;
 import com.daltoncash.mmostats.gui.ManaOverlay;
 import com.daltoncash.mmostats.gui.UpgradeMenu;
 import com.daltoncash.mmostats.networking.ModMessages;
@@ -36,20 +35,16 @@ import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetChoppingExpC2S
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetCombatExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetFarmingExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetMiningExpC2SPacket;
-import com.daltoncash.mmostats.networking.packets.s2c.ManaDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainNightVisionC2SPacket;
 import com.daltoncash.mmostats.util.KeyBinding;
 import com.mojang.logging.LogUtils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
@@ -57,15 +52,12 @@ import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.entity.player.PlayerEvent.HarvestCheck;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 import org.slf4j.Logger;
 
@@ -77,12 +69,12 @@ public class ClientEvents {
 		public static int expToSub = 0;
 		public static int expToAdd = 0;
 		public static int cooldown = 20;
-		//WIP
+		//WIP1
 		//farming sweet berry bushes:
 		//use event RightClickBlock in PlayerInteractEvent in PlayerEvent in Living Event
-		//WIP
+		//WIP1
 		
-		//WIP
+		//WIP2
 		//Could be used to detect what the play was holding when attacking an entity
 		//This is to give corresponding Exp for what weapon was held(swords, longsword, etc., but not arrows)
 		/*
@@ -91,7 +83,7 @@ public class ClientEvents {
 			System.out.println(event.getEntity().getScoreboardName());
 		}
 		*/
-		//WIP
+		//WIP2
 		
 		//Provides a cooldown to the onArrowHit to prevent exploits
 		@SubscribeEvent
