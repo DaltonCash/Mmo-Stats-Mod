@@ -19,6 +19,8 @@ import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.NetherGoldMinedC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.QuartzMinedC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.RedstoneMinedC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.GainArcheryExpC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.GainArcheryLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainChoppingExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainChoppingLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainCombatExpC2SPacket;
@@ -28,6 +30,7 @@ import com.daltoncash.mmostats.networking.packets.c2s.skills.GainFarmingExpFromU
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainFarmingLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainMiningExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainMiningLevelC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetArcheryExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetChoppingExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetCombatExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetFarmingExpC2SPacket;
@@ -48,6 +51,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.entity.player.PlayerEvent.HarvestCheck;
@@ -63,7 +68,59 @@ public class ClientEvents {
 		public static BlockEvent.BreakEvent blockevent = null;
 		public static int expToSub = 0;
 		public static int expToAdd = 0;
-
+		public static int cooldown = 20;
+		//WIP1
+		//farming sweet berry bushes:
+		//use event RightClickBlock in PlayerInteractEvent in PlayerEvent in Living Event
+		//WIP1
+		
+		//WIP2
+		//Could be used to detect what the play was holding when attacking an entity
+		//This is to give corresponding Exp for what weapon was held(swords, longsword, etc., but not arrows)
+		/*
+		@SubscribeEvent
+		public static void onSwordHit(AttackEntityEvent event) {
+			System.out.println(event.getEntity().getScoreboardName());
+		}
+		*/
+		//WIP2
+		
+		//Provides a cooldown to the onArrowHit to prevent exploits
+		@SubscribeEvent
+		public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
+			if (cooldown < 20) {
+				cooldown++;
+			}
+		}
+		
+		@SubscribeEvent
+		public static void onArrowHit(LivingAttackEvent event) {
+			if(event.getSource().getEntity() != null) {
+				if(event.getSource().getEntity().getType().equals(EntityType.PLAYER)) {
+					if(event.getSource().getDirectEntity().getType().equals(EntityType.ARROW)) {
+						if(cooldown == 20) {
+							int archeryExp = ClientCapabilityData.getPlayerArcheryExp();
+							int archeryLevel = ClientCapabilityData.getPlayerArcheryLevel();
+							
+							ModMessages.sendToServer(new GainArcheryExpC2SPacket());
+							cooldown = 0;
+							// level up if player has sufficient choppingExp
+							if (archeryExp > (archeryLevel * 40) + 400) {
+								LOGGER.info("{} leveled up to {} in Archery", 
+										event.getSource().getEntity().getScoreboardName(), 
+										archeryLevel + 1);
+								expToSub = (archeryLevel * 40) + 400;
+								ModMessages.sendToServer(new GainArcheryLevelC2SPacket());
+								ModMessages.sendToServer(new ResetArcheryExpC2SPacket());
+							}
+						}else {
+							LOGGER.debug("Player {} is firing too fast!(archeryExp on cooldown)", 
+									event.getSource().getEntity().getScoreboardName());
+						}
+					}
+				}
+			}
+		}
 		//HarvestCheck is an event that triggers when a block is being destroyed.
 		//This method removes the drop from "junk blocks" if the appropriate upgrade(NoJunkBlocks)
 		//has been upgraded.
