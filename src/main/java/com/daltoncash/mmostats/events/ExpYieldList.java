@@ -7,6 +7,8 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
+// List of Blocks that will give Mining Experience to the player
+
 public class ExpYieldList {
 	public static List<Block> getMiningBlocks() {
 		List<Block> list = new ArrayList<>();
