@@ -7,8 +7,8 @@ import com.daltoncash.mmostats.capabilities.UpgradeCapabilityProvider;
 public class SharpshooterUpgrade extends UpgradeCapability{
 	SharpshooterUpgrade(String nbtString) {
 		super("isupgradedsharpshooterupgrade");
+
 	}
-	public class SharpshooterUpgradeProvider extends UpgradeCapabilityProvider{
-		
-	}
+
+
 }

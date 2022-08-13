@@ -4,5 +4,9 @@
 	"key.category.mmostatsmod.mmostats": "Mmo Stats Mod",
 	"key.mmostats.open_upgrade_gui": "Open Gui",
 	"key.mmostats.night_vision": "Use Night Vision(if upgraded)",
-	"key.mmostats.xplosive_miner": "Plant bomb(if upgraded)"
+	"key.mmostats.xplosive_miner": "Plant bomb(if upgraded)",
+
+	//Presi's items
+	"item.mmostats.bonk_stick": "Bonk Stick",
+	"item.mmostats.bonk_stick_v2": "Bonk Stick V2"
 }

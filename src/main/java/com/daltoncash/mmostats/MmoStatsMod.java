@@ -1,5 +1,6 @@
 package com.daltoncash.mmostats;
 
+import com.daltoncash.mmostats.item.ModItems;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
@@ -55,6 +56,8 @@ public class MmoStatsMod {
 		// Register the Deferred Register to the mod event bus so items get registered
 		ITEMS.register(modEventBus);
 
+		//register
+		ModItems.register(modEventBus);
 		// Register ourselves for server and other game events we are interested in
 		MinecraftForge.EVENT_BUS.register(this);
 	}

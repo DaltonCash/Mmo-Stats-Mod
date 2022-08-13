@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "mmostats:item/bonk_stick_v2"
+  }
+}

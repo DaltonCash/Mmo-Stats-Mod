@@ -13,8 +13,10 @@ import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
 public class UpgradeCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
-	public static Capability<UpgradeCapability> IS_UPGRADED = CapabilityManager
+
+	protected static Capability<?> IS_UPGRADED = CapabilityManager
 			.get(new CapabilityToken<UpgradeCapability>() {});
+
 
 	private UpgradeCapability isUpgraded = null;
 	private final LazyOptional<UpgradeCapability> optional = LazyOptional
@@ -46,5 +48,8 @@ public class UpgradeCapabilityProvider implements ICapabilityProvider, INBTSeria
 	public void deserializeNBT(CompoundTag nbt) {
 		createUpgradeCapability().loadNBTData(nbt);
 	}
+
+
+
 
 }
