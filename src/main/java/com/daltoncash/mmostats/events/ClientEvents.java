@@ -2,6 +2,7 @@ package com.daltoncash.mmostats.events;
 
 import com.daltoncash.mmostats.MmoStatsMod;
 import com.daltoncash.mmostats.capabilities.ClientCapabilityData;
+import com.daltoncash.mmostats.common.handler.Sounds;
 import com.daltoncash.mmostats.gui.ManaOverlay;
 import com.daltoncash.mmostats.gui.UpgradeMenu;
 import com.daltoncash.mmostats.networking.ModMessages;
@@ -40,7 +41,10 @@ import com.daltoncash.mmostats.util.KeyBinding;
 import com.mojang.logging.LogUtils;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
@@ -408,7 +412,7 @@ public class ClientEvents {
 					expToSub = (miningLevel * 40) + 400;
 					ModMessages.sendToServer(new GainMiningLevelC2SPacket());
 					ModMessages.sendToServer(new ResetMiningExpC2SPacket());
-					//Minecraft.getInstance().getSoundManager().play(new LevelUpSound());
+					Minecraft.getInstance().getSoundManager().play(new LevelUpSound());
 				}
 				event.setExpToDrop((int)(event.getExpToDrop() * 
 						((Math.log10(ClientCapabilityData.getLapisMined()) + 2) / 2)));
@@ -418,12 +422,11 @@ public class ClientEvents {
 						(miningExp + expToAdd));
 			}
 		}
-		/*
 		private static class LevelUpSound extends AbstractTickableSoundInstance {
 			
 
 			protected LevelUpSound() {
-				super(Sounds.levelUp, SoundSource.RECORDS, RandomSource.create());
+				super(Sounds.levelUp, SoundSource.AMBIENT, RandomSource.create());
 				this.looping = false;
 				LOGGER.info("Sound should be playing...");
 			}
@@ -439,7 +442,7 @@ public class ClientEvents {
 				
 			}
 		}
-		*/
+		
 
 		//This method defines what happens when a modded keybinding is pressed.
 		@SuppressWarnings("resource")

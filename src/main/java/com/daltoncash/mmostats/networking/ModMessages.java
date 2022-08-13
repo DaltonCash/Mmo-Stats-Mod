@@ -1,5 +1,9 @@
 package com.daltoncash.mmostats.networking;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
+
 import com.daltoncash.mmostats.MmoStatsMod;
 import com.daltoncash.mmostats.networking.packets.c2s.AdditionalFortuneProcC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.SpawnTntC2SPacket;
@@ -40,7 +44,9 @@ import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetFarmingExpC2SP
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetMiningExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetSwordsExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainNightVisionC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.UpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.ManaDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.UpgradeS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.JunkBlocksDropExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.NightVisionDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.NoJunkBlocksDataSyncS2CPacket;
@@ -70,6 +76,7 @@ import com.daltoncash.mmostats.networking.packets.s2c.skills.MiningLevelDataSync
 import com.daltoncash.mmostats.networking.packets.s2c.skills.SwordsExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.SwordsLevelDataSyncS2CPacket;
 
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -94,6 +101,21 @@ public class ModMessages {
                 .simpleChannel();
 
         INSTANCE = net;
+        //Idea for shortening the length of this class:
+        //Add all of the packets to the c2sPackets list and add them to the SimpleChannel net
+        /*
+        List<UpgradeC2SPacket> c2sPackets = new ArrayList<>();
+        
+        for(UpgradeC2SPacket packet : c2sPackets) {
+        	Class<? extends UpgradeC2SPacket> packetClass = packet.getClass();
+        	
+        	net.messageBuilder(packetClass, id(), NetworkDirection.PLAY_TO_SERVER)
+				.decoder(packet :: new)
+				.encoder(packetClass::toBytes)
+				.consumerMainThread(packetClass::handle)
+				.add();
+        }
+        */
         //C2S
         net.messageBuilder(AdditionalFortuneProcC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
 				.decoder(AdditionalFortuneProcC2SPacket::new)
@@ -440,6 +462,7 @@ public class ModMessages {
 				.encoder(RedstoneMinedDataSyncS2CPacket::toBytes)
 				.consumerMainThread(RedstoneMinedDataSyncS2CPacket::handle)
 				.add();
+				
     }
 
     public static <MSG> void sendToServer(MSG message) {
