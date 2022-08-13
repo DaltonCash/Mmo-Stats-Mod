@@ -347,85 +347,59 @@ public class ClientEvents {
 				}
 				
 				// overworld ores
-				else if (event.getState().getBlock().equals(Blocks.COAL_ORE)) {
+				else if (block.equals(Blocks.COAL_ORE) || block.equals(Blocks.DEEPSLATE_COAL_ORE)) {
 					expToAdd = 10;
 					ModMessages.sendToServer(new CoalMinedC2SPacket());
-				} else if (event.getState().getBlock().equals(Blocks.DEEPSLATE_COAL_ORE)) {
-					expToAdd = 10;
-					ModMessages.sendToServer(new CoalMinedC2SPacket());
-				} else if (event.getState().getBlock().equals(Blocks.COPPER_ORE)) {
+				} else if (block.equals(Blocks.COPPER_ORE) || block.equals(Blocks.DEEPSLATE_COPPER_ORE)) {
 					expToAdd = 50;
 					ModMessages.sendToServer(new CopperMinedC2SPacket());
-				} else if (event.getState().getBlock().equals(Blocks.DEEPSLATE_COPPER_ORE)) {
-					expToAdd = 50;
-					ModMessages.sendToServer(new CopperMinedC2SPacket());
-				} else if (event.getState().getBlock().equals(Blocks.IRON_ORE)) {
+				} else if (block.equals(Blocks.IRON_ORE) || block.equals(Blocks.DEEPSLATE_IRON_ORE)) {
 					expToAdd = 50;
 					ModMessages.sendToServer(new IronMinedC2SPacket());
-				} else if (event.getState().getBlock().equals(Blocks.DEEPSLATE_IRON_ORE)) {
-					expToAdd = 50;
-					ModMessages.sendToServer(new IronMinedC2SPacket());
-				} else if (event.getState().getBlock().equals(Blocks.GOLD_ORE)) {
+				} else if (block.equals(Blocks.GOLD_ORE) || block.equals(Blocks.DEEPSLATE_GOLD_ORE)) {
 					expToAdd = 200;
 					ModMessages.sendToServer(new GoldMinedC2SPacket());
-				} else if (event.getState().getBlock().equals(Blocks.DEEPSLATE_GOLD_ORE)) {
-					expToAdd = 200;
-					ModMessages.sendToServer(new GoldMinedC2SPacket());
-				} else if (event.getState().getBlock().equals(Blocks.REDSTONE_ORE)) {
+				} else if (block.equals(Blocks.REDSTONE_ORE) || block.equals(Blocks.DEEPSLATE_REDSTONE_ORE)) {
 					expToAdd = 20;
 					ModMessages.sendToServer(new RedstoneMinedC2SPacket());
-				} else if (event.getState().getBlock().equals(Blocks.DEEPSLATE_REDSTONE_ORE)) {
-					expToAdd = 20;
-					ModMessages.sendToServer(new RedstoneMinedC2SPacket());
-				} else if (event.getState().getBlock().equals(Blocks.LAPIS_ORE)) {
+				} else if (block.equals(Blocks.LAPIS_ORE) || block.equals(Blocks.DEEPSLATE_LAPIS_ORE)) {
 					expToAdd = 100;
 					ModMessages.sendToServer(new LapisMinedC2SPacket());
-				} else if (event.getState().getBlock().equals(Blocks.DEEPSLATE_LAPIS_ORE)) {
-					expToAdd = 100;
-					ModMessages.sendToServer(new LapisMinedC2SPacket());
-				} else if (event.getState().getBlock().equals(Blocks.EMERALD_ORE)) {
+				} else if (block.equals(Blocks.EMERALD_ORE) || block.equals(Blocks.DEEPSLATE_EMERALD_ORE)) {
 					expToAdd = 500;
 					ModMessages.sendToServer(new EmeraldMinedC2SPacket());
-				} else if (event.getState().getBlock().equals(Blocks.DEEPSLATE_EMERALD_ORE)) {
-					expToAdd = 500;
-					ModMessages.sendToServer(new EmeraldMinedC2SPacket());
-				} else if (event.getState().getBlock().equals(Blocks.DIAMOND_ORE)) {
+				} else if (block.equals(Blocks.DIAMOND_ORE) || block.equals(Blocks.DEEPSLATE_DIAMOND_ORE)) {
 					expToAdd = 400;
 					ModMessages.sendToServer(new DiamondMinedC2SPacket());
-				} else if (event.getState().getBlock().equals(Blocks.DEEPSLATE_DIAMOND_ORE)) {
-					expToAdd = 400;
-					ModMessages.sendToServer(new DiamondMinedC2SPacket());
-				} else if (event.getState().getBlock().equals(Blocks.ANCIENT_DEBRIS)) {
+				} else if (block.equals(Blocks.ANCIENT_DEBRIS)) {
 					expToAdd = 2800;
 					ModMessages.sendToServer(new AncientDebrisMinedC2SPacket());
 				}
 				// end ores/stones
-				else if (event.getState().getBlock().equals(Blocks.OBSIDIAN)) {
+				else if (block.equals(Blocks.OBSIDIAN) || block.equals(Blocks.CRYING_OBSIDIAN)) {
 					expToAdd = 20;
-				} else if (event.getState().getBlock().equals(Blocks.CRYING_OBSIDIAN)) {
-					expToAdd = 20;
-				} else if (event.getState().getBlock().equals(Blocks.END_STONE)) {
+				} else if (block.equals(Blocks.END_STONE)) {
 					expToAdd = 4;
-				} else if (event.getState().getBlock().equals(Blocks.END_STONE_BRICKS)) {
+				} else if (block.equals(Blocks.END_STONE_BRICKS)) {
 					expToAdd = 5;
 				}
 				// nether ores/stones
-				else if (event.getState().getBlock().equals(Blocks.NETHER_GOLD_ORE)) {
+				else if (block.equals(Blocks.NETHER_GOLD_ORE)) {
 					expToAdd = 100;
 					ModMessages.sendToServer(new NetherGoldMinedC2SPacket());
-				} else if (event.getState().getBlock().equals(Blocks.NETHER_QUARTZ_ORE)) {
+				} else if (block.equals(Blocks.NETHER_QUARTZ_ORE)) {
 					expToAdd = 25;
 					ModMessages.sendToServer(new QuartzMinedC2SPacket());
-				} else if (event.getState().getBlock().equals(Blocks.NETHERRACK)) {
+				} else if (block.equals(Blocks.NETHERRACK)) {
 					expToAdd = 1;
-				} else if (event.getState().getBlock().equals(Blocks.NETHER_BRICKS)) {
+				} else if (block.equals(Blocks.NETHER_BRICKS)) {
 					expToAdd = 4;
-				} else if (event.getState().getBlock().equals(Blocks.GLOWSTONE)) {
+				} else if (block.equals(Blocks.GLOWSTONE)) {
 					expToAdd = 10;
 					ModMessages.sendToServer(new GlowstoneMinedC2SPacket());
 				}
 				ModMessages.sendToServer(new GainMiningExpC2SPacket());
-
+				
 				// level up if player has sufficient miningExp
 				if (miningExp > (miningLevel * 40) + 400) {
 					LOGGER.info("{} leveled up to {} in Mining", 
@@ -434,6 +408,7 @@ public class ClientEvents {
 					expToSub = (miningLevel * 40) + 400;
 					ModMessages.sendToServer(new GainMiningLevelC2SPacket());
 					ModMessages.sendToServer(new ResetMiningExpC2SPacket());
+					//Minecraft.getInstance().getSoundManager().play(new LevelUpSound());
 				}
 				event.setExpToDrop((int)(event.getExpToDrop() * 
 						((Math.log10(ClientCapabilityData.getLapisMined()) + 2) / 2)));
@@ -443,6 +418,29 @@ public class ClientEvents {
 						(miningExp + expToAdd));
 			}
 		}
+		/*
+		private static class LevelUpSound extends AbstractTickableSoundInstance {
+			
+
+			protected LevelUpSound() {
+				super(Sounds.levelUp, SoundSource.RECORDS, RandomSource.create());
+				this.looping = false;
+				LOGGER.info("Sound should be playing...");
+			}
+
+			@SuppressWarnings("resource")
+			public static void play() {
+				Minecraft.getInstance().getSoundManager().play(new LevelUpSound());
+			}
+
+			@Override
+			public void tick() {
+				// TODO Auto-generated method stub
+				
+			}
+		}
+		*/
+
 		//This method defines what happens when a modded keybinding is pressed.
 		@SuppressWarnings("resource")
 		@SubscribeEvent

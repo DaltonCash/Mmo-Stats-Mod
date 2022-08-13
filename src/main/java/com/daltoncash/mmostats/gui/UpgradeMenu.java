@@ -33,7 +33,7 @@ public class UpgradeMenu extends Screen {
 
 	@Override
 	public final void init() {
-
+		
 		// addRenderableWidget(new Button(10,10,100,100, Component.literal("" +
 		// ClientCapabilityData.getPlayerMiningExp()), UpgradeMenu::onPressMining));
 		addRenderableWidget(new Button(20, 200, 100, 100,
@@ -50,10 +50,14 @@ public class UpgradeMenu extends Screen {
 
 	private void renderExpBar(int num)
 	{
+		/*
 		String location = "textures/gui/exp_bar_" + num + ".png";
 		ResourceLocation Rendered_Texture = new ResourceLocation(MmoStatsMod.MODID, location);
 		addRenderableWidget(new ImageButton((this.width / 6) * 1, (this.height / 6) * 1, 100, 100, 0, 0, 0,
 				, 100, 100, UpgradeMenu::onPressMining));
+		*/
+		
+
 	}
 
 

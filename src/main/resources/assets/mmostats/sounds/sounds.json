@@ -1,0 +1,6 @@
+{
+  "level_up": {
+    "subtitle": "mymod.subtitle.level_up",
+    "sounds": [ "mymod:sounds/Xplat_src_main_resources_assets_botania_sounds_altarcraft.ogg" ]
+  }
+}
