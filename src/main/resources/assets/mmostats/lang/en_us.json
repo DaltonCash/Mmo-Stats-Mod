@@ -8,5 +8,8 @@
 
 	//Presi's items
 	"item.mmostats.bonk_stick": "Bonk Stick",
-	"item.mmostats.bonk_stick_v2": "Bonk Stick V2"
+	"item.mmostats.bonk_stick_v2": "Bonk Stick V2",
+
+	//Presi's creative mode tabs
+	"itemGroup.mmostatsmodtab": "MMO Items Tab"
 }

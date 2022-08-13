@@ -14,10 +14,10 @@ public class ModItems {
 
     //presi's bonk stick test item
     public static final RegistryObject<Item> BONK_STICK = ITEMS.register("bonk_stick",
-            () -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_TOOLS)));
+            () -> new Item(new Item.Properties().tab(ModCreativeModeTab.MMO_TAB)));
 
     public static final RegistryObject<Item> BONK_STICK_V2 = ITEMS.register("bonk_stick_v2",
-            () -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_TOOLS)));
+            () -> new Item(new Item.Properties().tab(ModCreativeModeTab.MMO_TAB)));
 
     public static void register(IEventBus eventBus){
         ITEMS.register(eventBus);
