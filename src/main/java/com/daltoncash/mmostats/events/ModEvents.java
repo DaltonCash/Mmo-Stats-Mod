@@ -273,7 +273,7 @@ public class ModEvents {
 						new EfficientMarksmanUpgradeProvider());
 			}
 			if (!event.getObject().getCapability(HunterUpgradeProvider.IS_UPGRADED).isPresent()) {
-				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "Hunterupgradeproperties"),
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "hunterupgradeproperties"),
 						new HunterUpgradeProvider());
 			}
 			if (!event.getObject().getCapability(InsecurityUpgradeProvider.IS_UPGRADED).isPresent()) {
