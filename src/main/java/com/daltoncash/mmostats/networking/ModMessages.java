@@ -39,6 +39,7 @@ import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetCombatExpC2SPa
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetFarmingExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetMiningExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetSwordsExpC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.magic.GainMagicExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.magic.GainMagicLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.swordsUpgrades.CritasticUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.swordsUpgrades.FleshWoundUpgradeC2SPacket;
@@ -83,6 +84,7 @@ import com.daltoncash.mmostats.networking.packets.s2c.skills.MiningExpDataSyncS2
 import com.daltoncash.mmostats.networking.packets.s2c.skills.MiningLevelDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.SwordsExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.SwordsLevelDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.skills.magic.MagicExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.magic.MagicLevelDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.EfficientMarksmanUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.HunterUpgradeDataSyncS2CPacket;
@@ -169,6 +171,7 @@ public class ModMessages {
 				.add();
         }
         */
+        
 //-----------C2S--Skills---------------------------------------------------------------------------------
         net.messageBuilder(AdditionalFortuneProcC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
 				.decoder(AdditionalFortuneProcC2SPacket::new)
@@ -285,6 +288,11 @@ public class ModMessages {
 				.encoder(GainMagicLevelC2SPacket::toBytes)
 				.consumerMainThread(GainMagicLevelC2SPacket::handle)
 				.add();
+		net.messageBuilder(GainMagicExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+				.decoder(GainMagicExpC2SPacket::new)
+				.encoder(GainMagicExpC2SPacket::toBytes)
+				.consumerMainThread(GainMagicExpC2SPacket::handle)
+				.add();
 
 //--------------S2C--Skills----------------------------------------------------
         net.messageBuilder(ManaDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
@@ -356,6 +364,11 @@ public class ModMessages {
 				.decoder(MagicLevelDataSyncS2CPacket::new)
 				.encoder(MagicLevelDataSyncS2CPacket::toBytes)
 				.consumerMainThread(MagicLevelDataSyncS2CPacket::handle)
+				.add();
+		net.messageBuilder(MagicExpDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+				.decoder(MagicExpDataSyncS2CPacket::new)
+				.encoder(MagicExpDataSyncS2CPacket::toBytes)
+				.consumerMainThread(MagicExpDataSyncS2CPacket::handle)
 				.add();
 //-------------Upgrades---C2S--------------------------------------------
         //Archery

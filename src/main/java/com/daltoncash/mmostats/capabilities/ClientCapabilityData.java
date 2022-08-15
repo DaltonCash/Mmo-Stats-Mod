@@ -15,10 +15,9 @@ public class ClientCapabilityData {
 	private static int playerFarmingExp;
 	private static int playerSwordsLevel;
 	private static int playerSwordsExp;
-
-	private static int playerMagicExp;
-
 	private static int playerMagicLevel;
+	private static int playerMagicExp;
+	
 	//archery
 	private static boolean isUpgradedEfficientMarksman;
 	private static boolean isUpgradedHunter;
@@ -538,8 +537,8 @@ public class ClientCapabilityData {
 	public static void setUpgradedSweetSpotSwords(boolean isUpgradedSweetSpotSwords) {
 		ClientCapabilityData.isUpgradedSweetSpotSwords = isUpgradedSweetSpotSwords;
 	}
-
-	public static int getPlayerMagicExp(){
+	
+	public static int getPlayerMagicExp() {
 		return playerMagicExp;
 	}
 
@@ -547,11 +546,13 @@ public class ClientCapabilityData {
 		ClientCapabilityData.playerMagicExp = playerMagicExp;
 	}
 
+
 	public static int getPlayerMagicLevel(){
 		return playerMagicLevel;
 	}
 
-	public static void setPlayerMagicLevel(int PlayerMagicLevel){
+	public static void setPlayerMagicLevel(int playerMagicLevel) {
+
 		ClientCapabilityData.playerMagicLevel = playerMagicLevel;
 	}
 

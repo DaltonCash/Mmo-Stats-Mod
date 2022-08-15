@@ -1,6 +1,6 @@
 package com.daltoncash.mmostats.capabilities.magic;
 
-import com.daltoncash.mmostats.capabilities.UpgradeCapability;
+
 import net.minecraft.nbt.CompoundTag;
 
 public class PlayerMagicLevel {
