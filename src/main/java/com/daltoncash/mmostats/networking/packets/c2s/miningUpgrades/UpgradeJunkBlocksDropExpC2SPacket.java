@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 import com.daltoncash.mmostats.capabilities.mining.upgrades.JunkBlocksDropExpUpgradeProvider;
 import com.daltoncash.mmostats.networking.ModMessages;
-import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.JunkBlocksDropExpDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.JunkBlocksDropExpDataSyncS2CPacket;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;

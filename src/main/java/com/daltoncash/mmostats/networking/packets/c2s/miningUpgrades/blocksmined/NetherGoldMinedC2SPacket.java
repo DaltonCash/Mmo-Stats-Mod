@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.NetherGoldMinedProvider;
 import com.daltoncash.mmostats.networking.ModMessages;
-import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.NetherGoldMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.NetherGoldMinedDataSyncS2CPacket;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;

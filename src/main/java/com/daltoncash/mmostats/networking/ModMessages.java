@@ -1,9 +1,5 @@
 package com.daltoncash.mmostats.networking;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Function;
-
 import com.daltoncash.mmostats.MmoStatsMod;
 import com.daltoncash.mmostats.networking.packets.c2s.AdditionalFortuneProcC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.SpawnTntC2SPacket;
@@ -44,25 +40,7 @@ import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetFarmingExpC2SP
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetMiningExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetSwordsExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainNightVisionC2SPacket;
-import com.daltoncash.mmostats.networking.packets.c2s.UpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.ManaDataSyncS2CPacket;
-import com.daltoncash.mmostats.networking.packets.s2c.UpgradeS2CPacket;
-import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.JunkBlocksDropExpDataSyncS2CPacket;
-import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.NightVisionDataSyncS2CPacket;
-import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.NoJunkBlocksDataSyncS2CPacket;
-import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.ObsidianBreakerDataSyncS2CPacket;
-import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.AncientDebrisMinedDataSyncS2CPacket;
-import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.CoalMinedDataSyncS2CPacket;
-import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.CopperMinedDataSyncS2CPacket;
-import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.DiamondMinedDataSyncS2CPacket;
-import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.EmeraldMinedDataSyncS2CPacket;
-import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.GlowstoneMinedDataSyncS2CPacket;
-import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.GoldMinedDataSyncS2CPacket;
-import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.IronMinedDataSyncS2CPacket;
-import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.LapisMinedDataSyncS2CPacket;
-import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.NetherGoldMinedDataSyncS2CPacket;
-import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.QuartzMinedDataSyncS2CPacket;
-import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.RedstoneMinedDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.ArcheryExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.ArcheryLevelDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.ChoppingExpDataSyncS2CPacket;
@@ -75,8 +53,51 @@ import com.daltoncash.mmostats.networking.packets.s2c.skills.MiningExpDataSyncS2
 import com.daltoncash.mmostats.networking.packets.s2c.skills.MiningLevelDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.SwordsExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.SwordsLevelDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.EfficientMarksmanUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.HunterUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.InsecurityUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.LeftClickUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.QuickshotUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.SharpshooterUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.SweetSpotArcheryUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.UnabatedUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.GrannySmithUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.HardwoodUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.HighGroundUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.StrongArmsUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.DodgeRollUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.FreeArrowsUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.OvercomeUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.RagnorokUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.StableFootingUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.TakeStanceUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.CarnivoreUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.EggerUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.SugarRushUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.WellFedUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.JunkBlocksDropExpDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.NightVisionDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.NoJunkBlocksDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.ObsidianBreakerDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.AncientDebrisMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.CoalMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.CopperMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.DiamondMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.EmeraldMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.GlowstoneMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.GoldMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.IronMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.LapisMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.NetherGoldMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.QuartzMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.RedstoneMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.swordsUpgrades.CritasticUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.swordsUpgrades.FleshWoundUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.swordsUpgrades.PerfectTimingUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.swordsUpgrades.RightClickUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.swordsUpgrades.ShieldBashUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.swordsUpgrades.SweetSpotSwordsUpgradeDataSyncS2CPacket;
 
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -104,10 +125,10 @@ public class ModMessages {
         //Idea for shortening the length of this class:
         //Add all of the packets to the c2sPackets list and add them to the SimpleChannel net
         /*
-        List<UpgradeC2SPacket> c2sPackets = new ArrayList<>();
+        List<Class> c2sPackets = new ArrayList<>();
         
-        for(UpgradeC2SPacket packet : c2sPackets) {
-        	Class<? extends UpgradeC2SPacket> packetClass = packet.getClass();
+        for(Class packet : c2sPackets) {
+        	Class<?> packetClass = packet.getClass();
         	
         	net.messageBuilder(packetClass, id(), NetworkDirection.PLAY_TO_SERVER)
 				.decoder(packet :: new)
@@ -116,7 +137,7 @@ public class ModMessages {
 				.add();
         }
         */
-        //C2S
+//-----------C2S--Skills---------------------------------------------------------------------------------
         net.messageBuilder(AdditionalFortuneProcC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
 				.decoder(AdditionalFortuneProcC2SPacket::new)
 				.encoder(AdditionalFortuneProcC2SPacket::toBytes)
@@ -227,7 +248,7 @@ public class ModMessages {
                 .encoder(GainNightVisionC2SPacket::toBytes)
                 .consumerMainThread(GainNightVisionC2SPacket::handle)
                 .add();
-//--------------S2C----------------------------------------------------
+//--------------S2C--Skills----------------------------------------------------
         net.messageBuilder(ManaDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(ManaDataSyncS2CPacket::new)
                 .encoder(ManaDataSyncS2CPacket::toBytes)
@@ -294,52 +315,354 @@ public class ModMessages {
 				.consumerMainThread(SwordsExpDataSyncS2CPacket::handle)
 				.add();
 //-------------Upgrades---C2S--------------------------------------------
+        //Archery
         net.messageBuilder(UpgradeJunkBlocksDropExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-				.decoder(UpgradeJunkBlocksDropExpC2SPacket::new)
-				.encoder(UpgradeJunkBlocksDropExpC2SPacket::toBytes)
-				.consumerMainThread(UpgradeJunkBlocksDropExpC2SPacket::handle)
-				.add();
+		.decoder(UpgradeJunkBlocksDropExpC2SPacket::new)
+		.encoder(UpgradeJunkBlocksDropExpC2SPacket::toBytes)
+		.consumerMainThread(UpgradeJunkBlocksDropExpC2SPacket::handle)
+		.add();
+        net.messageBuilder(UpgradeJunkBlocksDropExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+		.decoder(UpgradeJunkBlocksDropExpC2SPacket::new)
+		.encoder(UpgradeJunkBlocksDropExpC2SPacket::toBytes)
+		.consumerMainThread(UpgradeJunkBlocksDropExpC2SPacket::handle)
+		.add();
+        net.messageBuilder(UpgradeJunkBlocksDropExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+		.decoder(UpgradeJunkBlocksDropExpC2SPacket::new)
+		.encoder(UpgradeJunkBlocksDropExpC2SPacket::toBytes)
+		.consumerMainThread(UpgradeJunkBlocksDropExpC2SPacket::handle)
+		.add();
+        net.messageBuilder(UpgradeJunkBlocksDropExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+		.decoder(UpgradeJunkBlocksDropExpC2SPacket::new)
+		.encoder(UpgradeJunkBlocksDropExpC2SPacket::toBytes)
+		.consumerMainThread(UpgradeJunkBlocksDropExpC2SPacket::handle)
+		.add();
+        net.messageBuilder(UpgradeJunkBlocksDropExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+		.decoder(UpgradeJunkBlocksDropExpC2SPacket::new)
+		.encoder(UpgradeJunkBlocksDropExpC2SPacket::toBytes)
+		.consumerMainThread(UpgradeJunkBlocksDropExpC2SPacket::handle)
+		.add();
+        net.messageBuilder(UpgradeJunkBlocksDropExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+		.decoder(UpgradeJunkBlocksDropExpC2SPacket::new)
+		.encoder(UpgradeJunkBlocksDropExpC2SPacket::toBytes)
+		.consumerMainThread(UpgradeJunkBlocksDropExpC2SPacket::handle)
+		.add();
+        net.messageBuilder(UpgradeJunkBlocksDropExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+		.decoder(UpgradeJunkBlocksDropExpC2SPacket::new)
+		.encoder(UpgradeJunkBlocksDropExpC2SPacket::toBytes)
+		.consumerMainThread(UpgradeJunkBlocksDropExpC2SPacket::handle)
+		.add();
+        net.messageBuilder(UpgradeJunkBlocksDropExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+		.decoder(UpgradeJunkBlocksDropExpC2SPacket::new)
+		.encoder(UpgradeJunkBlocksDropExpC2SPacket::toBytes)
+		.consumerMainThread(UpgradeJunkBlocksDropExpC2SPacket::handle)
+		.add();
+        net.messageBuilder(UpgradeJunkBlocksDropExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+		.decoder(UpgradeJunkBlocksDropExpC2SPacket::new)
+		.encoder(UpgradeJunkBlocksDropExpC2SPacket::toBytes)
+		.consumerMainThread(UpgradeJunkBlocksDropExpC2SPacket::handle)
+		.add();
+        //Chopping
+        net.messageBuilder(UpgradeJunkBlocksDropExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+		.decoder(UpgradeJunkBlocksDropExpC2SPacket::new)
+		.encoder(UpgradeJunkBlocksDropExpC2SPacket::toBytes)
+		.consumerMainThread(UpgradeJunkBlocksDropExpC2SPacket::handle)
+		.add();
+        net.messageBuilder(UpgradeJunkBlocksDropExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+		.decoder(UpgradeJunkBlocksDropExpC2SPacket::new)
+		.encoder(UpgradeJunkBlocksDropExpC2SPacket::toBytes)
+		.consumerMainThread(UpgradeJunkBlocksDropExpC2SPacket::handle)
+		.add();
+        net.messageBuilder(UpgradeJunkBlocksDropExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+		.decoder(UpgradeJunkBlocksDropExpC2SPacket::new)
+		.encoder(UpgradeJunkBlocksDropExpC2SPacket::toBytes)
+		.consumerMainThread(UpgradeJunkBlocksDropExpC2SPacket::handle)
+		.add();
+        net.messageBuilder(UpgradeJunkBlocksDropExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+		.decoder(UpgradeJunkBlocksDropExpC2SPacket::new)
+		.encoder(UpgradeJunkBlocksDropExpC2SPacket::toBytes)
+		.consumerMainThread(UpgradeJunkBlocksDropExpC2SPacket::handle)
+		.add();
+        //Combat
+        net.messageBuilder(UpgradeJunkBlocksDropExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+		.decoder(UpgradeJunkBlocksDropExpC2SPacket::new)
+		.encoder(UpgradeJunkBlocksDropExpC2SPacket::toBytes)
+		.consumerMainThread(UpgradeJunkBlocksDropExpC2SPacket::handle)
+		.add();
+        net.messageBuilder(UpgradeJunkBlocksDropExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+		.decoder(UpgradeJunkBlocksDropExpC2SPacket::new)
+		.encoder(UpgradeJunkBlocksDropExpC2SPacket::toBytes)
+		.consumerMainThread(UpgradeJunkBlocksDropExpC2SPacket::handle)
+		.add();
+        net.messageBuilder(UpgradeJunkBlocksDropExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+		.decoder(UpgradeJunkBlocksDropExpC2SPacket::new)
+		.encoder(UpgradeJunkBlocksDropExpC2SPacket::toBytes)
+		.consumerMainThread(UpgradeJunkBlocksDropExpC2SPacket::handle)
+		.add();
+        net.messageBuilder(UpgradeJunkBlocksDropExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+		.decoder(UpgradeJunkBlocksDropExpC2SPacket::new)
+		.encoder(UpgradeJunkBlocksDropExpC2SPacket::toBytes)
+		.consumerMainThread(UpgradeJunkBlocksDropExpC2SPacket::handle)
+		.add();
+        net.messageBuilder(UpgradeJunkBlocksDropExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+		.decoder(UpgradeJunkBlocksDropExpC2SPacket::new)
+		.encoder(UpgradeJunkBlocksDropExpC2SPacket::toBytes)
+		.consumerMainThread(UpgradeJunkBlocksDropExpC2SPacket::handle)
+		.add();
+        net.messageBuilder(UpgradeJunkBlocksDropExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+		.decoder(UpgradeJunkBlocksDropExpC2SPacket::new)
+		.encoder(UpgradeJunkBlocksDropExpC2SPacket::toBytes)
+		.consumerMainThread(UpgradeJunkBlocksDropExpC2SPacket::handle)
+		.add();
+        //Farming
+        net.messageBuilder(UpgradeJunkBlocksDropExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+		.decoder(UpgradeJunkBlocksDropExpC2SPacket::new)
+		.encoder(UpgradeJunkBlocksDropExpC2SPacket::toBytes)
+		.consumerMainThread(UpgradeJunkBlocksDropExpC2SPacket::handle)
+		.add();
+        net.messageBuilder(UpgradeJunkBlocksDropExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+		.decoder(UpgradeJunkBlocksDropExpC2SPacket::new)
+		.encoder(UpgradeJunkBlocksDropExpC2SPacket::toBytes)
+		.consumerMainThread(UpgradeJunkBlocksDropExpC2SPacket::handle)
+		.add();
+        net.messageBuilder(UpgradeJunkBlocksDropExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+		.decoder(UpgradeJunkBlocksDropExpC2SPacket::new)
+		.encoder(UpgradeJunkBlocksDropExpC2SPacket::toBytes)
+		.consumerMainThread(UpgradeJunkBlocksDropExpC2SPacket::handle)
+		.add();
+        net.messageBuilder(UpgradeJunkBlocksDropExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+		.decoder(UpgradeJunkBlocksDropExpC2SPacket::new)
+		.encoder(UpgradeJunkBlocksDropExpC2SPacket::toBytes)
+		.consumerMainThread(UpgradeJunkBlocksDropExpC2SPacket::handle)
+		.add();
+        //Mining
+        net.messageBuilder(UpgradeJunkBlocksDropExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+		.decoder(UpgradeJunkBlocksDropExpC2SPacket::new)
+		.encoder(UpgradeJunkBlocksDropExpC2SPacket::toBytes)
+		.consumerMainThread(UpgradeJunkBlocksDropExpC2SPacket::handle)
+		.add();
         net.messageBuilder(UpgradeNightVisionC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-				.decoder(UpgradeNightVisionC2SPacket::new)
-				.encoder(UpgradeNightVisionC2SPacket::toBytes)
-				.consumerMainThread(UpgradeNightVisionC2SPacket::handle)
-				.add();
+		.decoder(UpgradeNightVisionC2SPacket::new)
+		.encoder(UpgradeNightVisionC2SPacket::toBytes)
+		.consumerMainThread(UpgradeNightVisionC2SPacket::handle)
+		.add();
         net.messageBuilder(UpgradeNoJunkBlocksC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-				.decoder(UpgradeNoJunkBlocksC2SPacket::new)
-				.encoder(UpgradeNoJunkBlocksC2SPacket::toBytes)
-				.consumerMainThread(UpgradeNoJunkBlocksC2SPacket::handle)
-				.add();
+		.decoder(UpgradeNoJunkBlocksC2SPacket::new)
+		.encoder(UpgradeNoJunkBlocksC2SPacket::toBytes)
+		.consumerMainThread(UpgradeNoJunkBlocksC2SPacket::handle)
+		.add();
         net.messageBuilder(UpgradeObsidianBreakerC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-				.decoder(UpgradeObsidianBreakerC2SPacket::new)
-				.encoder(UpgradeObsidianBreakerC2SPacket::toBytes)
-				.consumerMainThread(UpgradeObsidianBreakerC2SPacket::handle)
-				.add();
+		.decoder(UpgradeObsidianBreakerC2SPacket::new)
+		.encoder(UpgradeObsidianBreakerC2SPacket::toBytes)
+		.consumerMainThread(UpgradeObsidianBreakerC2SPacket::handle)
+		.add();
         net.messageBuilder(SpawnTntC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-				.decoder(SpawnTntC2SPacket::new)
-				.encoder(SpawnTntC2SPacket::toBytes)
-				.consumerMainThread(SpawnTntC2SPacket::handle)
-				.add();
+		.decoder(SpawnTntC2SPacket::new)
+		.encoder(SpawnTntC2SPacket::toBytes)
+		.consumerMainThread(SpawnTntC2SPacket::handle)
+		.add();
+        //Swords
+        net.messageBuilder(UpgradeJunkBlocksDropExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+		.decoder(UpgradeJunkBlocksDropExpC2SPacket::new)
+		.encoder(UpgradeJunkBlocksDropExpC2SPacket::toBytes)
+		.consumerMainThread(UpgradeJunkBlocksDropExpC2SPacket::handle)
+		.add();
+        net.messageBuilder(UpgradeJunkBlocksDropExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+		.decoder(UpgradeJunkBlocksDropExpC2SPacket::new)
+		.encoder(UpgradeJunkBlocksDropExpC2SPacket::toBytes)
+		.consumerMainThread(UpgradeJunkBlocksDropExpC2SPacket::handle)
+		.add();
+        net.messageBuilder(UpgradeJunkBlocksDropExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+		.decoder(UpgradeJunkBlocksDropExpC2SPacket::new)
+		.encoder(UpgradeJunkBlocksDropExpC2SPacket::toBytes)
+		.consumerMainThread(UpgradeJunkBlocksDropExpC2SPacket::handle)
+		.add();
+        net.messageBuilder(UpgradeJunkBlocksDropExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+		.decoder(UpgradeJunkBlocksDropExpC2SPacket::new)
+		.encoder(UpgradeJunkBlocksDropExpC2SPacket::toBytes)
+		.consumerMainThread(UpgradeJunkBlocksDropExpC2SPacket::handle)
+		.add();
+        net.messageBuilder(UpgradeJunkBlocksDropExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+		.decoder(UpgradeJunkBlocksDropExpC2SPacket::new)
+		.encoder(UpgradeJunkBlocksDropExpC2SPacket::toBytes)
+		.consumerMainThread(UpgradeJunkBlocksDropExpC2SPacket::handle)
+		.add();
+        net.messageBuilder(UpgradeJunkBlocksDropExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+		.decoder(UpgradeJunkBlocksDropExpC2SPacket::new)
+		.encoder(UpgradeJunkBlocksDropExpC2SPacket::toBytes)
+		.consumerMainThread(UpgradeJunkBlocksDropExpC2SPacket::handle)
+		.add();
 //-------------Upgrades---S2C--------------------------------------------
+        //Archery
+        net.messageBuilder(EfficientMarksmanUpgradeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+		.decoder(EfficientMarksmanUpgradeDataSyncS2CPacket::new)
+		.encoder(EfficientMarksmanUpgradeDataSyncS2CPacket::toBytes)
+		.consumerMainThread(EfficientMarksmanUpgradeDataSyncS2CPacket::handle)
+		.add();
+        net.messageBuilder(HunterUpgradeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+		.decoder(HunterUpgradeDataSyncS2CPacket::new)
+		.encoder(HunterUpgradeDataSyncS2CPacket::toBytes)
+		.consumerMainThread(HunterUpgradeDataSyncS2CPacket::handle)
+		.add();
+        net.messageBuilder(InsecurityUpgradeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+		.decoder(InsecurityUpgradeDataSyncS2CPacket::new)
+		.encoder(InsecurityUpgradeDataSyncS2CPacket::toBytes)
+		.consumerMainThread(InsecurityUpgradeDataSyncS2CPacket::handle)
+		.add();
+        net.messageBuilder(LeftClickUpgradeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+		.decoder(LeftClickUpgradeDataSyncS2CPacket::new)
+		.encoder(LeftClickUpgradeDataSyncS2CPacket::toBytes)
+		.consumerMainThread(LeftClickUpgradeDataSyncS2CPacket::handle)
+		.add();
         net.messageBuilder(JunkBlocksDropExpDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
-				.decoder(JunkBlocksDropExpDataSyncS2CPacket::new)
-				.encoder(JunkBlocksDropExpDataSyncS2CPacket::toBytes)
-				.consumerMainThread(JunkBlocksDropExpDataSyncS2CPacket::handle)
-				.add();
+		.decoder(JunkBlocksDropExpDataSyncS2CPacket::new)
+		.encoder(JunkBlocksDropExpDataSyncS2CPacket::toBytes)
+		.consumerMainThread(JunkBlocksDropExpDataSyncS2CPacket::handle)
+		.add();
+        net.messageBuilder(QuickshotUpgradeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+		.decoder(QuickshotUpgradeDataSyncS2CPacket::new)
+		.encoder(QuickshotUpgradeDataSyncS2CPacket::toBytes)
+		.consumerMainThread(QuickshotUpgradeDataSyncS2CPacket::handle)
+		.add();
+        net.messageBuilder(SharpshooterUpgradeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+		.decoder(SharpshooterUpgradeDataSyncS2CPacket::new)
+		.encoder(SharpshooterUpgradeDataSyncS2CPacket::toBytes)
+		.consumerMainThread(SharpshooterUpgradeDataSyncS2CPacket::handle)
+		.add();
+        net.messageBuilder(SweetSpotArcheryUpgradeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+		.decoder(SweetSpotArcheryUpgradeDataSyncS2CPacket::new)
+		.encoder(SweetSpotArcheryUpgradeDataSyncS2CPacket::toBytes)
+		.consumerMainThread(SweetSpotArcheryUpgradeDataSyncS2CPacket::handle)
+		.add();
+        net.messageBuilder(UnabatedUpgradeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+		.decoder(UnabatedUpgradeDataSyncS2CPacket::new)
+		.encoder(UnabatedUpgradeDataSyncS2CPacket::toBytes)
+		.consumerMainThread(UnabatedUpgradeDataSyncS2CPacket::handle)
+		.add();
+        //Chopping
+        net.messageBuilder(GrannySmithUpgradeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+		.decoder(GrannySmithUpgradeDataSyncS2CPacket::new)
+		.encoder(GrannySmithUpgradeDataSyncS2CPacket::toBytes)
+		.consumerMainThread(GrannySmithUpgradeDataSyncS2CPacket::handle)
+		.add();
+        net.messageBuilder(HardwoodUpgradeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+		.decoder(HardwoodUpgradeDataSyncS2CPacket::new)
+		.encoder(HardwoodUpgradeDataSyncS2CPacket::toBytes)
+		.consumerMainThread(HardwoodUpgradeDataSyncS2CPacket::handle)
+		.add();
+        net.messageBuilder(HighGroundUpgradeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+		.decoder(HighGroundUpgradeDataSyncS2CPacket::new)
+		.encoder(HighGroundUpgradeDataSyncS2CPacket::toBytes)
+		.consumerMainThread(HighGroundUpgradeDataSyncS2CPacket::handle)
+		.add();
+        net.messageBuilder(StrongArmsUpgradeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+		.decoder(StrongArmsUpgradeDataSyncS2CPacket::new)
+		.encoder(StrongArmsUpgradeDataSyncS2CPacket::toBytes)
+		.consumerMainThread(StrongArmsUpgradeDataSyncS2CPacket::handle)
+		.add();
+        //Combat
+        net.messageBuilder(DodgeRollUpgradeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+		.decoder(DodgeRollUpgradeDataSyncS2CPacket::new)
+		.encoder(DodgeRollUpgradeDataSyncS2CPacket::toBytes)
+		.consumerMainThread(DodgeRollUpgradeDataSyncS2CPacket::handle)
+		.add();
+        net.messageBuilder(FreeArrowsUpgradeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+		.decoder(FreeArrowsUpgradeDataSyncS2CPacket::new)
+		.encoder(FreeArrowsUpgradeDataSyncS2CPacket::toBytes)
+		.consumerMainThread(FreeArrowsUpgradeDataSyncS2CPacket::handle)
+		.add();
+        net.messageBuilder(OvercomeUpgradeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+		.decoder(OvercomeUpgradeDataSyncS2CPacket::new)
+		.encoder(OvercomeUpgradeDataSyncS2CPacket::toBytes)
+		.consumerMainThread(OvercomeUpgradeDataSyncS2CPacket::handle)
+		.add();
+        net.messageBuilder(RagnorokUpgradeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+		.decoder(RagnorokUpgradeDataSyncS2CPacket::new)
+		.encoder(RagnorokUpgradeDataSyncS2CPacket::toBytes)
+		.consumerMainThread(RagnorokUpgradeDataSyncS2CPacket::handle)
+		.add();
+        net.messageBuilder(StableFootingUpgradeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+		.decoder(StableFootingUpgradeDataSyncS2CPacket::new)
+		.encoder(StableFootingUpgradeDataSyncS2CPacket::toBytes)
+		.consumerMainThread(StableFootingUpgradeDataSyncS2CPacket::handle)
+		.add();
+        net.messageBuilder(TakeStanceUpgradeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+		.decoder(TakeStanceUpgradeDataSyncS2CPacket::new)
+		.encoder(TakeStanceUpgradeDataSyncS2CPacket::toBytes)
+		.consumerMainThread(TakeStanceUpgradeDataSyncS2CPacket::handle)
+		.add();
+        //Farming
+        net.messageBuilder(CarnivoreUpgradeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+		.decoder(CarnivoreUpgradeDataSyncS2CPacket::new)
+		.encoder(CarnivoreUpgradeDataSyncS2CPacket::toBytes)
+		.consumerMainThread(CarnivoreUpgradeDataSyncS2CPacket::handle)
+		.add();
+        net.messageBuilder(EggerUpgradeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+		.decoder(EggerUpgradeDataSyncS2CPacket::new)
+		.encoder(EggerUpgradeDataSyncS2CPacket::toBytes)
+		.consumerMainThread(EggerUpgradeDataSyncS2CPacket::handle)
+		.add();
+        net.messageBuilder(SugarRushUpgradeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+		.decoder(SugarRushUpgradeDataSyncS2CPacket::new)
+		.encoder(SugarRushUpgradeDataSyncS2CPacket::toBytes)
+		.consumerMainThread(SugarRushUpgradeDataSyncS2CPacket::handle)
+		.add();
+        net.messageBuilder(WellFedUpgradeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+		.decoder(WellFedUpgradeDataSyncS2CPacket::new)
+		.encoder(WellFedUpgradeDataSyncS2CPacket::toBytes)
+		.consumerMainThread(WellFedUpgradeDataSyncS2CPacket::handle)
+		.add();
+        //Mining
+        net.messageBuilder(JunkBlocksDropExpDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+		.decoder(JunkBlocksDropExpDataSyncS2CPacket::new)
+		.encoder(JunkBlocksDropExpDataSyncS2CPacket::toBytes)
+		.consumerMainThread(JunkBlocksDropExpDataSyncS2CPacket::handle)
+		.add();
         net.messageBuilder(NightVisionDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
-				.decoder(NightVisionDataSyncS2CPacket::new)
-				.encoder(NightVisionDataSyncS2CPacket::toBytes)
-				.consumerMainThread(NightVisionDataSyncS2CPacket::handle)
-				.add();
+		.decoder(NightVisionDataSyncS2CPacket::new)
+		.encoder(NightVisionDataSyncS2CPacket::toBytes)
+		.consumerMainThread(NightVisionDataSyncS2CPacket::handle)
+		.add();
         net.messageBuilder(NoJunkBlocksDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
-				.decoder(NoJunkBlocksDataSyncS2CPacket::new)
-				.encoder(NoJunkBlocksDataSyncS2CPacket::toBytes)
-				.consumerMainThread(NoJunkBlocksDataSyncS2CPacket::handle)
-				.add();
+		.decoder(NoJunkBlocksDataSyncS2CPacket::new)
+		.encoder(NoJunkBlocksDataSyncS2CPacket::toBytes)
+		.consumerMainThread(NoJunkBlocksDataSyncS2CPacket::handle)
+		.add();
         net.messageBuilder(ObsidianBreakerDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
-				.decoder(ObsidianBreakerDataSyncS2CPacket::new)
-				.encoder(ObsidianBreakerDataSyncS2CPacket::toBytes)
-				.consumerMainThread(ObsidianBreakerDataSyncS2CPacket::handle)
-				.add();
+		.decoder(ObsidianBreakerDataSyncS2CPacket::new)
+		.encoder(ObsidianBreakerDataSyncS2CPacket::toBytes)
+		.consumerMainThread(ObsidianBreakerDataSyncS2CPacket::handle)
+		.add();
+        //Swords
+        net.messageBuilder(CritasticUpgradeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+		.decoder(CritasticUpgradeDataSyncS2CPacket::new)
+		.encoder(CritasticUpgradeDataSyncS2CPacket::toBytes)
+		.consumerMainThread(CritasticUpgradeDataSyncS2CPacket::handle)
+		.add();
+        net.messageBuilder(FleshWoundUpgradeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+		.decoder(FleshWoundUpgradeDataSyncS2CPacket::new)
+		.encoder(FleshWoundUpgradeDataSyncS2CPacket::toBytes)
+		.consumerMainThread(FleshWoundUpgradeDataSyncS2CPacket::handle)
+		.add();
+        net.messageBuilder(PerfectTimingUpgradeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+		.decoder(PerfectTimingUpgradeDataSyncS2CPacket::new)
+		.encoder(PerfectTimingUpgradeDataSyncS2CPacket::toBytes)
+		.consumerMainThread(PerfectTimingUpgradeDataSyncS2CPacket::handle)
+		.add();
+        net.messageBuilder(RightClickUpgradeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+		.decoder(RightClickUpgradeDataSyncS2CPacket::new)
+		.encoder(RightClickUpgradeDataSyncS2CPacket::toBytes)
+		.consumerMainThread(RightClickUpgradeDataSyncS2CPacket::handle)
+		.add();
+        net.messageBuilder(ShieldBashUpgradeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+		.decoder(ShieldBashUpgradeDataSyncS2CPacket::new)
+		.encoder(ShieldBashUpgradeDataSyncS2CPacket::toBytes)
+		.consumerMainThread(ShieldBashUpgradeDataSyncS2CPacket::handle)
+		.add();
+        net.messageBuilder(SweetSpotSwordsUpgradeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+		.decoder(SweetSpotSwordsUpgradeDataSyncS2CPacket::new)
+		.encoder(SweetSpotSwordsUpgradeDataSyncS2CPacket::toBytes)
+		.consumerMainThread(SweetSpotSwordsUpgradeDataSyncS2CPacket::handle)
+		.add();
 //---------------Blocks Mined C2S-----------------------------------------------
         net.messageBuilder(AncientDebrisMinedC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
 				.decoder(AncientDebrisMinedC2SPacket::new)

@@ -1,6 +1,5 @@
 package com.daltoncash.mmostats.capabilities.mining.upgrades;
 
-import com.daltoncash.mmostats.capabilities.UpgradeCapabilityProvider;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -13,14 +12,11 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
-public class NightVisionUpgradeProvider extends UpgradeCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
+public class NightVisionUpgradeProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 	public static Capability<NightVisionUpgrade> NIGHT_VISION = CapabilityManager
 			.get(new CapabilityToken<NightVisionUpgrade>() {
 			});
-
-
-
-
+	
 	private NightVisionUpgrade isUpgraded = null;
 	private final LazyOptional<NightVisionUpgrade> optional = LazyOptional.of(this::createNightVisionUpgrade);
 

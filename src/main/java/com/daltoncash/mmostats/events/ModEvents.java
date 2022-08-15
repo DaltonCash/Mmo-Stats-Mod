@@ -61,22 +61,6 @@ import com.daltoncash.mmostats.capabilities.swords.PlayerSwordsLevel;
 import com.daltoncash.mmostats.capabilities.swords.PlayerSwordsLevelProvider;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.s2c.ManaDataSyncS2CPacket;
-import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.JunkBlocksDropExpDataSyncS2CPacket;
-import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.NightVisionDataSyncS2CPacket;
-import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.NoJunkBlocksDataSyncS2CPacket;
-import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.ObsidianBreakerDataSyncS2CPacket;
-import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.AncientDebrisMinedDataSyncS2CPacket;
-import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.CoalMinedDataSyncS2CPacket;
-import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.CopperMinedDataSyncS2CPacket;
-import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.DiamondMinedDataSyncS2CPacket;
-import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.EmeraldMinedDataSyncS2CPacket;
-import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.GlowstoneMinedDataSyncS2CPacket;
-import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.GoldMinedDataSyncS2CPacket;
-import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.IronMinedDataSyncS2CPacket;
-import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.LapisMinedDataSyncS2CPacket;
-import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.NetherGoldMinedDataSyncS2CPacket;
-import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.QuartzMinedDataSyncS2CPacket;
-import com.daltoncash.mmostats.networking.packets.s2c.miningUpgrades.blocksmined.RedstoneMinedDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.ArcheryExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.ArcheryLevelDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.ChoppingExpDataSyncS2CPacket;
@@ -89,6 +73,22 @@ import com.daltoncash.mmostats.networking.packets.s2c.skills.MiningExpDataSyncS2
 import com.daltoncash.mmostats.networking.packets.s2c.skills.MiningLevelDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.SwordsExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.SwordsLevelDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.JunkBlocksDropExpDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.NightVisionDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.NoJunkBlocksDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.ObsidianBreakerDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.AncientDebrisMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.CoalMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.CopperMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.DiamondMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.EmeraldMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.GlowstoneMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.GoldMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.IronMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.LapisMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.NetherGoldMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.QuartzMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.RedstoneMinedDataSyncS2CPacket;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -119,11 +119,12 @@ public class ModEvents {
 			});
 		}
 	}
-	
+
 	@SubscribeEvent
 	public static void onAttachCapabilitiesPlayer(AttachCapabilitiesEvent<Entity> event) {
 		if (event.getObject() instanceof Player) {
 			//core skills
+			
 			if (!event.getObject().getCapability(PlayerManaProvider.PLAYER_MANA).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "manaproperties"),
 						new PlayerManaProvider());
@@ -440,6 +441,7 @@ public class ModEvents {
 	public static void onPlayerJoinWorld(EntityJoinLevelEvent event) {
 		if (!event.getLevel().isClientSide()) {
 			if (event.getEntity() instanceof ServerPlayer player) {
+				
 				player.getCapability(PlayerManaProvider.PLAYER_MANA).ifPresent(mana -> {
 					ModMessages.sendToPlayer(new ManaDataSyncS2CPacket(mana.getMana()), player);
 				});

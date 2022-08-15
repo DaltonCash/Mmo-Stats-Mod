@@ -1,7 +1,6 @@
 package com.daltoncash.mmostats.item;
 
 import com.daltoncash.mmostats.MmoStatsMod;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;

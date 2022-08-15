@@ -431,14 +431,13 @@ public class ClientEvents {
 				LOGGER.info("Sound should be playing...");
 			}
 
-			@SuppressWarnings("resource")
+			/*
 			public static void play() {
 				Minecraft.getInstance().getSoundManager().play(new LevelUpSound());
 			}
-
+			 */
 			@Override
 			public void tick() {
-				// TODO Auto-generated method stub
 				
 			}
 		}

@@ -25,7 +25,7 @@ public class UpgradeMenu extends Screen {
 	private final ResourceLocation MINING_TEXTURE = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/test_mining_image_3.png");
 
-	private final ResourceLocation EXP_BAR = new ResourceLocation(MmoStatsMod.MODID, "textures/gui/exp_bar_0.png");
+	//private final ResourceLocation EXP_BAR = new ResourceLocation(MmoStatsMod.MODID, "textures/gui/exp_bar_0.png");
 
 	public UpgradeMenu(Component p_96550_) {
 		super(p_96550_);
