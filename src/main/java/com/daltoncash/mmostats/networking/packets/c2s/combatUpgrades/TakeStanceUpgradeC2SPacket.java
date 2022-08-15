@@ -2,7 +2,7 @@ package com.daltoncash.mmostats.networking.packets.c2s.combatUpgrades;
 
 import java.util.function.Supplier;
 
-import com.daltoncash.mmostats.capabilities.combat.upgrades.TakeStanceUpgrade.TakeStanceUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.combat.upgrades.TakeStanceUpgradeProvider;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.TakeStanceUpgradeDataSyncS2CPacket;
 

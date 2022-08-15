@@ -5,18 +5,64 @@ import com.daltoncash.mmostats.capabilities.archery.PlayerArcheryExp;
 import com.daltoncash.mmostats.capabilities.archery.PlayerArcheryExpProvider;
 import com.daltoncash.mmostats.capabilities.archery.PlayerArcheryLevel;
 import com.daltoncash.mmostats.capabilities.archery.PlayerArcheryLevelProvider;
+import com.daltoncash.mmostats.capabilities.archery.upgrades.EfficientMarksmanUpgrade;
+import com.daltoncash.mmostats.capabilities.archery.upgrades.EfficientMarksmanUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.archery.upgrades.HunterUpgrade;
+import com.daltoncash.mmostats.capabilities.archery.upgrades.HunterUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.archery.upgrades.InsecurityUpgrade;
+import com.daltoncash.mmostats.capabilities.archery.upgrades.InsecurityUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.archery.upgrades.LeftClickUpgrade;
+import com.daltoncash.mmostats.capabilities.archery.upgrades.LeftClickUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.archery.upgrades.QuickshotUpgrade;
+import com.daltoncash.mmostats.capabilities.archery.upgrades.QuickshotUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.archery.upgrades.SharpshooterUpgrade;
+import com.daltoncash.mmostats.capabilities.archery.upgrades.SharpshooterUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.archery.upgrades.SniperUpgrade;
+import com.daltoncash.mmostats.capabilities.archery.upgrades.SniperUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.archery.upgrades.SweetSpotArcheryUpgrade;
+import com.daltoncash.mmostats.capabilities.archery.upgrades.SweetSpotArcheryUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.archery.upgrades.UnabatedUpgrade;
+import com.daltoncash.mmostats.capabilities.archery.upgrades.UnabatedUpgradeProvider;
 import com.daltoncash.mmostats.capabilities.chopping.PlayerChoppingExp;
 import com.daltoncash.mmostats.capabilities.chopping.PlayerChoppingExpProvider;
 import com.daltoncash.mmostats.capabilities.chopping.PlayerChoppingLevel;
 import com.daltoncash.mmostats.capabilities.chopping.PlayerChoppingLevelProvider;
+import com.daltoncash.mmostats.capabilities.chopping.upgrades.GrannySmithUpgrade;
+import com.daltoncash.mmostats.capabilities.chopping.upgrades.GrannySmithUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.chopping.upgrades.HardwoodUpgrade;
+import com.daltoncash.mmostats.capabilities.chopping.upgrades.HardwoodUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.chopping.upgrades.HighGroundUpgrade;
+import com.daltoncash.mmostats.capabilities.chopping.upgrades.HighGroundUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.chopping.upgrades.StrongArmsUpgrade;
+import com.daltoncash.mmostats.capabilities.chopping.upgrades.StrongArmsUpgradeProvider;
 import com.daltoncash.mmostats.capabilities.combat.PlayerCombatExp;
 import com.daltoncash.mmostats.capabilities.combat.PlayerCombatExpProvider;
 import com.daltoncash.mmostats.capabilities.combat.PlayerCombatLevel;
 import com.daltoncash.mmostats.capabilities.combat.PlayerCombatLevelProvider;
+import com.daltoncash.mmostats.capabilities.combat.upgrades.DodgeRollUpgrade;
+import com.daltoncash.mmostats.capabilities.combat.upgrades.DodgeRollUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.combat.upgrades.FreeArrowsUpgrade;
+import com.daltoncash.mmostats.capabilities.combat.upgrades.FreeArrowsUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.combat.upgrades.OvercomeUpgrade;
+import com.daltoncash.mmostats.capabilities.combat.upgrades.OvercomeUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.combat.upgrades.RagnorokUpgrade;
+import com.daltoncash.mmostats.capabilities.combat.upgrades.RagnorokUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.combat.upgrades.StableFootingUpgrade;
+import com.daltoncash.mmostats.capabilities.combat.upgrades.StableFootingUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.combat.upgrades.TakeStanceUpgrade;
+import com.daltoncash.mmostats.capabilities.combat.upgrades.TakeStanceUpgradeProvider;
 import com.daltoncash.mmostats.capabilities.farming.PlayerFarmingExp;
 import com.daltoncash.mmostats.capabilities.farming.PlayerFarmingExpProvider;
 import com.daltoncash.mmostats.capabilities.farming.PlayerFarmingLevel;
 import com.daltoncash.mmostats.capabilities.farming.PlayerFarmingLevelProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.CarnivoreUpgrade;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.CarnivoreUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.EggerUpgrade;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.EggerUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.SugarRushUpgrade;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.SugarRushUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.WellFedUpgrade;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.WellFedUpgradeProvider;
 import com.daltoncash.mmostats.capabilities.mana.PlayerMana;
 import com.daltoncash.mmostats.capabilities.mana.PlayerManaProvider;
 import com.daltoncash.mmostats.capabilities.mining.PlayerMiningExp;
@@ -59,6 +105,18 @@ import com.daltoncash.mmostats.capabilities.swords.PlayerSwordsExp;
 import com.daltoncash.mmostats.capabilities.swords.PlayerSwordsExpProvider;
 import com.daltoncash.mmostats.capabilities.swords.PlayerSwordsLevel;
 import com.daltoncash.mmostats.capabilities.swords.PlayerSwordsLevelProvider;
+import com.daltoncash.mmostats.capabilities.swords.upgrades.CritasticUpgrade;
+import com.daltoncash.mmostats.capabilities.swords.upgrades.CritasticUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.swords.upgrades.FleshWoundUpgrade;
+import com.daltoncash.mmostats.capabilities.swords.upgrades.FleshWoundUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.swords.upgrades.PerfectTimingUpgrade;
+import com.daltoncash.mmostats.capabilities.swords.upgrades.PerfectTimingUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.swords.upgrades.RightClickUpgrade;
+import com.daltoncash.mmostats.capabilities.swords.upgrades.RightClickUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.swords.upgrades.ShieldBashUpgrade;
+import com.daltoncash.mmostats.capabilities.swords.upgrades.ShieldBashUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.swords.upgrades.SweetSpotSwordsUpgrade;
+import com.daltoncash.mmostats.capabilities.swords.upgrades.SweetSpotSwordsUpgradeProvider;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.s2c.ManaDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.ArcheryExpDataSyncS2CPacket;
@@ -73,6 +131,29 @@ import com.daltoncash.mmostats.networking.packets.s2c.skills.MiningExpDataSyncS2
 import com.daltoncash.mmostats.networking.packets.s2c.skills.MiningLevelDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.SwordsExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.SwordsLevelDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.EfficientMarksmanUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.HunterUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.InsecurityUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.LeftClickUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.QuickshotUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.SharpshooterUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.SniperUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.SweetSpotArcheryUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.UnabatedUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.GrannySmithUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.HardwoodUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.HighGroundUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.StrongArmsUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.DodgeRollUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.FreeArrowsUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.OvercomeUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.RagnorokUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.StableFootingUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.TakeStanceUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.CarnivoreUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.EggerUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.SugarRushUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.WellFedUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.JunkBlocksDropExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.NightVisionDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.NoJunkBlocksDataSyncS2CPacket;
@@ -89,6 +170,12 @@ import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.bl
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.NetherGoldMinedDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.QuartzMinedDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.RedstoneMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.swordsUpgrades.CritasticUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.swordsUpgrades.FleshWoundUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.swordsUpgrades.PerfectTimingUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.swordsUpgrades.RightClickUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.swordsUpgrades.ShieldBashUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.swordsUpgrades.SweetSpotSwordsUpgradeDataSyncS2CPacket;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -123,6 +210,7 @@ public class ModEvents {
 	@SubscribeEvent
 	public static void onAttachCapabilitiesPlayer(AttachCapabilitiesEvent<Entity> event) {
 		if (event.getObject() instanceof Player) {
+			
 			//core skills
 			
 			if (!event.getObject().getCapability(PlayerManaProvider.PLAYER_MANA).isPresent()) {
@@ -177,7 +265,113 @@ public class ModEvents {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "swordsexpproperties"),
 						new PlayerSwordsExpProvider());
 			}
-			//mining upgrades
+			
+			//Archery Upgrades
+			
+			if (!event.getObject().getCapability(EfficientMarksmanUpgradeProvider.IS_UPGRADED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "efficientmarksmanupgradeproperties"),
+						new EfficientMarksmanUpgradeProvider());
+			}
+			if (!event.getObject().getCapability(HunterUpgradeProvider.IS_UPGRADED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "Hunterupgradeproperties"),
+						new HunterUpgradeProvider());
+			}
+			if (!event.getObject().getCapability(InsecurityUpgradeProvider.IS_UPGRADED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "insecurityupgradeproperties"),
+						new InsecurityUpgradeProvider());
+			}
+			if (!event.getObject().getCapability(LeftClickUpgradeProvider.IS_UPGRADED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "leftclickupgradeproperties"),
+						new LeftClickUpgradeProvider());
+			}
+			if (!event.getObject().getCapability(QuickshotUpgradeProvider.IS_UPGRADED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "quickshotupgradeproperties"),
+						new QuickshotUpgradeProvider());
+			}
+			if (!event.getObject().getCapability(SharpshooterUpgradeProvider.IS_UPGRADED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "sharpshooterupgradeproperties"),
+						new SharpshooterUpgradeProvider());
+			}
+			if (!event.getObject().getCapability(SniperUpgradeProvider.IS_UPGRADED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "sniperupgradeproperties"),
+						new SniperUpgradeProvider());
+			}
+			if (!event.getObject().getCapability(SweetSpotArcheryUpgradeProvider.IS_UPGRADED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "sweetspotarcheryupgradeproperties"),
+						new SweetSpotArcheryUpgradeProvider());
+			}
+			if (!event.getObject().getCapability(UnabatedUpgradeProvider.IS_UPGRADED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "unabatedupgradeproperties"),
+						new UnabatedUpgradeProvider());
+			}
+			
+			//Chopping Upgrades
+			
+			if (!event.getObject().getCapability(GrannySmithUpgradeProvider.IS_UPGRADED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "grannysmithupgradeproperties"),
+						new GrannySmithUpgradeProvider());
+			}
+			if (!event.getObject().getCapability(HardwoodUpgradeProvider.IS_UPGRADED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "hardwoodupgradeproperties"),
+						new HardwoodUpgradeProvider());
+			}
+			if (!event.getObject().getCapability(HighGroundUpgradeProvider.IS_UPGRADED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "highgroundupgradeproperties"),
+						new HighGroundUpgradeProvider());
+			}
+			if (!event.getObject().getCapability(StrongArmsUpgradeProvider.IS_UPGRADED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "strongarmsupgradeproperties"),
+						new StrongArmsUpgradeProvider());
+			}
+			
+			//Combat Upgrades
+			
+			if (!event.getObject().getCapability(DodgeRollUpgradeProvider.IS_UPGRADED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "dodgerollupgradeproperties"),
+						new DodgeRollUpgradeProvider());
+			}
+			if (!event.getObject().getCapability(FreeArrowsUpgradeProvider.IS_UPGRADED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "freearrowsupgradeproperties"),
+						new FreeArrowsUpgradeProvider());
+			}
+			if (!event.getObject().getCapability(OvercomeUpgradeProvider.IS_UPGRADED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "overcomeupgradeproperties"),
+						new OvercomeUpgradeProvider());
+			}
+			if (!event.getObject().getCapability(RagnorokUpgradeProvider.IS_UPGRADED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "ragnorokupgradeproperties"),
+						new RagnorokUpgradeProvider());
+			}
+			if (!event.getObject().getCapability(StableFootingUpgradeProvider.IS_UPGRADED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "stablefootingupgradeproperties"),
+						new StableFootingUpgradeProvider());
+			}
+			if (!event.getObject().getCapability(TakeStanceUpgradeProvider.IS_UPGRADED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "takestanceupgradeproperties"),
+						new TakeStanceUpgradeProvider());
+			}
+			
+			//Farming Upgrades
+			
+			if (!event.getObject().getCapability(CarnivoreUpgradeProvider.IS_UPGRADED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "carnivoreupgradeproperties"),
+						new CarnivoreUpgradeProvider());
+			}
+			if (!event.getObject().getCapability(EggerUpgradeProvider.IS_UPGRADED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "eggerupgradeproperties"),
+						new EggerUpgradeProvider());
+			}
+			if (!event.getObject().getCapability(SugarRushUpgradeProvider.IS_UPGRADED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "sugarrushupgradeproperties"),
+						new SugarRushUpgradeProvider());
+			}
+			if (!event.getObject().getCapability(WellFedUpgradeProvider.IS_UPGRADED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "wellfedupgradeproperties"),
+						new WellFedUpgradeProvider());
+			}
+			
+			//Mining Upgrades
+			
 			if (!event.getObject().getCapability(JunkBlocksDropExpUpgradeProvider.JUNK_BLOCKS_DROP_EXP).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "junkblocksupgradeproperties"),
 						new JunkBlocksDropExpUpgradeProvider());
@@ -194,7 +388,36 @@ public class ModEvents {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "obsidianbreakerupgradeproperties"),
 						new ObsidianBreakerUpgradeProvider());
 			}
-			//blocks mined
+			
+			//Swords Upgrades
+			
+			if (!event.getObject().getCapability(CritasticUpgradeProvider.IS_UPGRADED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "critasticupgradeproperties"),
+						new CritasticUpgradeProvider());
+			}
+			if (!event.getObject().getCapability(FleshWoundUpgradeProvider.IS_UPGRADED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "fleshwoundupgradeproperties"),
+						new FleshWoundUpgradeProvider());
+			}
+			if (!event.getObject().getCapability(PerfectTimingUpgradeProvider.IS_UPGRADED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "perfecttimingupgradeproperties"),
+						new PerfectTimingUpgradeProvider());
+			}
+			if (!event.getObject().getCapability(RightClickUpgradeProvider.IS_UPGRADED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "rightclickupgradeproperties"),
+						new RightClickUpgradeProvider());
+			}
+			if (!event.getObject().getCapability(ShieldBashUpgradeProvider.IS_UPGRADED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "shieldbashupgradeproperties"),
+						new ShieldBashUpgradeProvider());
+			}
+			if (!event.getObject().getCapability(SweetSpotSwordsUpgradeProvider.IS_UPGRADED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "sweetspotupgradeproperties"),
+						new SweetSpotSwordsUpgradeProvider());
+			}
+			
+			//Blocks Mined
+			
 			if (!event.getObject().getCapability(AncientDebrisMinedProvider.ANCIENT_DEBRIS_MINED).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "ancientdebrismined"),
 						new AncientDebrisMinedProvider());
@@ -251,6 +474,7 @@ public class ModEvents {
 	@SubscribeEvent
 	public static void onPlayerCloned(PlayerEvent.Clone event) {
 		if (event.isWasDeath()) {
+			//Core Skills
 			event.getOriginal().getCapability(PlayerManaProvider.PLAYER_MANA).ifPresent(oldStore -> {
 				event.getOriginal().getCapability(PlayerManaProvider.PLAYER_MANA).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
@@ -316,7 +540,136 @@ public class ModEvents {
 					newStore.copyFrom(oldStore);
 				});
 			});
-			//-----------------------------Upgrades-----------------------
+			
+			//-------------------------Archery----Upgrades-----------------------
+			
+			event.getOriginal().getCapability(EfficientMarksmanUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(EfficientMarksmanUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(HunterUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(HunterUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(InsecurityUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(InsecurityUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(LeftClickUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(LeftClickUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(QuickshotUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(QuickshotUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(SharpshooterUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(SharpshooterUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(SniperUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(SniperUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(SweetSpotArcheryUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(SweetSpotArcheryUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(UnabatedUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(UnabatedUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			
+			//-------------------------Chopping----Upgrades-----------------------
+			
+			event.getOriginal().getCapability(GrannySmithUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(GrannySmithUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(HardwoodUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(HardwoodUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(HighGroundUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(HighGroundUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(StrongArmsUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(StrongArmsUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			
+			//-------------------------Combat----Upgrades-----------------------
+			
+			event.getOriginal().getCapability(DodgeRollUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(DodgeRollUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(FreeArrowsUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(FreeArrowsUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(OvercomeUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(OvercomeUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(RagnorokUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(RagnorokUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(StableFootingUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(StableFootingUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(TakeStanceUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(TakeStanceUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			
+			//-------------------------Farming----Upgrades-----------------------
+			
+			event.getOriginal().getCapability(CarnivoreUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(CarnivoreUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(EggerUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(EggerUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(SugarRushUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(SugarRushUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(WellFedUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(WellFedUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			
+			//-------------------------Mining----Upgrades-----------------------
+			
 			event.getOriginal().getCapability(JunkBlocksDropExpUpgradeProvider.JUNK_BLOCKS_DROP_EXP).ifPresent(oldStore -> {
 				event.getOriginal().getCapability(JunkBlocksDropExpUpgradeProvider.JUNK_BLOCKS_DROP_EXP).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
@@ -337,6 +690,42 @@ public class ModEvents {
 					newStore.copyFrom(oldStore);
 				});
 			});
+			
+			//-------------------------Swords----Upgrades-----------------------
+			
+			event.getOriginal().getCapability(CritasticUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(CritasticUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(FleshWoundUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(FleshWoundUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(PerfectTimingUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(PerfectTimingUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(RightClickUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(RightClickUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(ShieldBashUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(ShieldBashUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(SweetSpotSwordsUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(SweetSpotSwordsUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			
+			//-------------------------Blocks----Mined-----------------------
+			
 			event.getOriginal().getCapability(AncientDebrisMinedProvider.ANCIENT_DEBRIS_MINED).ifPresent(oldStore -> {
 				event.getOriginal().getCapability(AncientDebrisMinedProvider.ANCIENT_DEBRIS_MINED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
@@ -403,6 +792,7 @@ public class ModEvents {
 	// Registers Capabilities to the forge bus
 	@SubscribeEvent
 	public static void onRegisterCapabilities(RegisterCapabilitiesEvent event) {
+		//Core Skills
 		event.register(PlayerMana.class);
 		event.register(PlayerMiningLevel.class);
 		event.register(PlayerMiningExp.class);
@@ -417,11 +807,52 @@ public class ModEvents {
 		event.register(PlayerSwordsLevel.class);
 		event.register(PlayerSwordsExp.class);
 		
+		//Archery Upgrades
+		event.register(EfficientMarksmanUpgrade.class);
+		event.register(HunterUpgrade.class);
+		event.register(InsecurityUpgrade.class);
+		event.register(LeftClickUpgrade.class);
+		event.register(QuickshotUpgrade.class);
+		event.register(SharpshooterUpgrade.class);
+		event.register(SniperUpgrade.class);
+		event.register(SweetSpotArcheryUpgrade.class);
+		event.register(UnabatedUpgrade.class);
+		
+		//Chopping Upgrades
+		event.register(GrannySmithUpgrade.class);
+		event.register(HardwoodUpgrade.class);
+		event.register(HighGroundUpgrade.class);
+		event.register(StrongArmsUpgrade.class);
+		
+		//Combat Upgrades
+		event.register(DodgeRollUpgrade.class);
+		event.register(FreeArrowsUpgrade.class);
+		event.register(OvercomeUpgrade.class);
+		event.register(RagnorokUpgrade.class);
+		event.register(StableFootingUpgrade.class);
+		event.register(TakeStanceUpgrade.class);
+		
+		//Farming Upgrades
+		event.register(CarnivoreUpgrade.class);
+		event.register(EggerUpgrade.class);
+		event.register(SugarRushUpgrade.class);
+		event.register(WellFedUpgrade.class);
+		
+		//Mining Upgrades
 		event.register(JunkBlocksDropExpUpgrade.class);
 		event.register(NightVisionUpgrade.class);
 		event.register(NoJunkBlocksUpgrade.class);
 		event.register(ObsidianBreakerUpgrade.class);
 		
+		//Swords Upgrades
+		event.register(CritasticUpgrade.class);
+		event.register(FleshWoundUpgrade.class);
+		event.register(PerfectTimingUpgrade.class);
+		event.register(RightClickUpgrade.class);
+		event.register(ShieldBashUpgrade.class);
+		event.register(SweetSpotSwordsUpgrade.class);
+		
+		//Blocks Mined
 		event.register(AncientDebrisMined.class);
 		event.register(CoalMined.class);
 		event.register(CopperMined.class);
@@ -442,6 +873,7 @@ public class ModEvents {
 		if (!event.getLevel().isClientSide()) {
 			if (event.getEntity() instanceof ServerPlayer player) {
 				
+				//Core Skills
 				player.getCapability(PlayerManaProvider.PLAYER_MANA).ifPresent(mana -> {
 					ModMessages.sendToPlayer(new ManaDataSyncS2CPacket(mana.getMana()), player);
 				});
@@ -481,7 +913,85 @@ public class ModEvents {
 				player.getCapability(PlayerSwordsExpProvider.PLAYER_SWORDS_EXP).ifPresent(swordsExp -> {
 					ModMessages.sendToPlayer(new SwordsExpDataSyncS2CPacket(swordsExp.getSwordsExp()), player);
 				});
-				//------Upgrades------
+				
+				//----Archery--Upgrades------
+				player.getCapability(EfficientMarksmanUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+					ModMessages.sendToPlayer(new EfficientMarksmanUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				});
+				player.getCapability(HunterUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+					ModMessages.sendToPlayer(new HunterUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				});
+				player.getCapability(InsecurityUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+					ModMessages.sendToPlayer(new InsecurityUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				});
+				player.getCapability(LeftClickUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+					ModMessages.sendToPlayer(new LeftClickUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				});
+				player.getCapability(QuickshotUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+					ModMessages.sendToPlayer(new QuickshotUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				});
+				player.getCapability(SharpshooterUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+					ModMessages.sendToPlayer(new SharpshooterUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				});
+				player.getCapability(SniperUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+					ModMessages.sendToPlayer(new SniperUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				});
+				player.getCapability(SweetSpotArcheryUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+					ModMessages.sendToPlayer(new SweetSpotArcheryUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				});
+				player.getCapability(UnabatedUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+					ModMessages.sendToPlayer(new UnabatedUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				});
+				
+				//----Chopping--Upgrades------
+				player.getCapability(GrannySmithUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+					ModMessages.sendToPlayer(new GrannySmithUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				});
+				player.getCapability(HardwoodUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+					ModMessages.sendToPlayer(new HardwoodUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				});
+				player.getCapability(HighGroundUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+					ModMessages.sendToPlayer(new HighGroundUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				});
+				player.getCapability(StrongArmsUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+					ModMessages.sendToPlayer(new StrongArmsUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				});
+				
+				//----Combat--Upgrades------
+				player.getCapability(DodgeRollUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+					ModMessages.sendToPlayer(new DodgeRollUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				});
+				player.getCapability(FreeArrowsUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+					ModMessages.sendToPlayer(new FreeArrowsUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				});
+				player.getCapability(OvercomeUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+					ModMessages.sendToPlayer(new OvercomeUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				});
+				player.getCapability(RagnorokUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+					ModMessages.sendToPlayer(new RagnorokUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				});
+				player.getCapability(StableFootingUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+					ModMessages.sendToPlayer(new StableFootingUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				});
+				player.getCapability(TakeStanceUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+					ModMessages.sendToPlayer(new TakeStanceUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				});
+				
+				//----Farming--Upgrades------
+				player.getCapability(CarnivoreUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+					ModMessages.sendToPlayer(new CarnivoreUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				});
+				player.getCapability(EggerUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+					ModMessages.sendToPlayer(new EggerUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				});
+				player.getCapability(SugarRushUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+					ModMessages.sendToPlayer(new SugarRushUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				});
+				player.getCapability(WellFedUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+					ModMessages.sendToPlayer(new WellFedUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				});
+				
+				//----Mining--Upgrades------
 				player.getCapability(JunkBlocksDropExpUpgradeProvider.JUNK_BLOCKS_DROP_EXP).ifPresent(isUpgraded -> {
 					ModMessages.sendToPlayer(new JunkBlocksDropExpDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
 				});
@@ -494,6 +1004,28 @@ public class ModEvents {
 				player.getCapability(ObsidianBreakerUpgradeProvider.OBSIDIAN_BREAKER).ifPresent(isUpgraded -> {
 					ModMessages.sendToPlayer(new ObsidianBreakerDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
 				});
+				
+				//----Swords--Upgrades------
+				player.getCapability(CritasticUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+					ModMessages.sendToPlayer(new CritasticUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				});
+				player.getCapability(FleshWoundUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+					ModMessages.sendToPlayer(new FleshWoundUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				});
+				player.getCapability(PerfectTimingUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+					ModMessages.sendToPlayer(new PerfectTimingUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				});
+				player.getCapability(RightClickUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+					ModMessages.sendToPlayer(new RightClickUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				});
+				player.getCapability(ShieldBashUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+					ModMessages.sendToPlayer(new ShieldBashUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				});
+				player.getCapability(SweetSpotSwordsUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+					ModMessages.sendToPlayer(new SweetSpotSwordsUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				});
+				
+				//----Blocks--Mined-------
 				player.getCapability(AncientDebrisMinedProvider.ANCIENT_DEBRIS_MINED).ifPresent(total -> {
 					ModMessages.sendToPlayer(new AncientDebrisMinedDataSyncS2CPacket(total.getBlocksMined()), player);
 				});

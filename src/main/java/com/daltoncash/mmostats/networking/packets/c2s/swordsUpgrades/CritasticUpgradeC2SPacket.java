@@ -2,7 +2,7 @@ package com.daltoncash.mmostats.networking.packets.c2s.swordsUpgrades;
 
 import java.util.function.Supplier;
 
-import com.daltoncash.mmostats.capabilities.swords.upgrades.CritasticUpgrade.CritasticUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.swords.upgrades.CritasticUpgradeProvider;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.swordsUpgrades.CritasticUpgradeDataSyncS2CPacket;
 

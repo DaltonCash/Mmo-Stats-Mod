@@ -2,7 +2,7 @@ package com.daltoncash.mmostats.networking.packets.c2s.combatUpgrades;
 
 import java.util.function.Supplier;
 
-import com.daltoncash.mmostats.capabilities.combat.upgrades.RagnorokUpgrade.RagnorokUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.combat.upgrades.RagnorokUpgradeProvider;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.RagnorokUpgradeDataSyncS2CPacket;
 

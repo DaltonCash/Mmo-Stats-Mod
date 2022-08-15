@@ -2,7 +2,7 @@ package com.daltoncash.mmostats.networking.packets.c2s.archeryUpgrades;
 
 import java.util.function.Supplier;
 
-import com.daltoncash.mmostats.capabilities.archery.upgrades.HunterUpgrade.HunterUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.archery.upgrades.HunterUpgradeProvider;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.HunterUpgradeDataSyncS2CPacket;
 

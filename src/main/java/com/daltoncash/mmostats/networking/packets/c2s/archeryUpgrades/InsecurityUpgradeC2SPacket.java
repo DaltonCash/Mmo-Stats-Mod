@@ -2,7 +2,7 @@ package com.daltoncash.mmostats.networking.packets.c2s.archeryUpgrades;
 
 import java.util.function.Supplier;
 
-import com.daltoncash.mmostats.capabilities.archery.upgrades.InsecurityUpgrade.InsecurityUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.archery.upgrades.InsecurityUpgradeProvider;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.InsecurityUpgradeDataSyncS2CPacket;
 

@@ -2,7 +2,7 @@ package com.daltoncash.mmostats.networking.packets.c2s.combatUpgrades;
 
 import java.util.function.Supplier;
 
-import com.daltoncash.mmostats.capabilities.combat.upgrades.DodgeRollUpgrade.DodgeRollUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.combat.upgrades.DodgeRollUpgradeProvider;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.DodgeRollUpgradeDataSyncS2CPacket;
 

@@ -2,7 +2,7 @@ package com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades;
 
 import java.util.function.Supplier;
 
-import com.daltoncash.mmostats.capabilities.farming.upgrades.CarnivoreUpgrade.CarnivoreUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.CarnivoreUpgradeProvider;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.CarnivoreUpgradeDataSyncS2CPacket;
 

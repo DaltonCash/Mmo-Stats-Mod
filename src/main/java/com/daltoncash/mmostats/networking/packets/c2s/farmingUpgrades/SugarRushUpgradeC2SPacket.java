@@ -2,7 +2,7 @@ package com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades;
 
 import java.util.function.Supplier;
 
-import com.daltoncash.mmostats.capabilities.farming.upgrades.SugarRushUpgrade.SugarRushUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.SugarRushUpgradeProvider;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.SugarRushUpgradeDataSyncS2CPacket;
 

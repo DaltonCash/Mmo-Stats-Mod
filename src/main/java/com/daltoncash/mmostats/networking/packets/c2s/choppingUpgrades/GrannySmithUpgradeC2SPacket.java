@@ -2,7 +2,7 @@ package com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades;
 
 import java.util.function.Supplier;
 
-import com.daltoncash.mmostats.capabilities.chopping.upgrades.GrannySmithUpgrade.GrannySmithUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.chopping.upgrades.GrannySmithUpgradeProvider;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.GrannySmithUpgradeDataSyncS2CPacket;
 

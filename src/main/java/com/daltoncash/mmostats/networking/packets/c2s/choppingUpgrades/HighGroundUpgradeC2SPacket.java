@@ -2,7 +2,7 @@ package com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades;
 
 import java.util.function.Supplier;
 
-import com.daltoncash.mmostats.capabilities.chopping.upgrades.HighGroundUpgrade.HighGroundUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.chopping.upgrades.HighGroundUpgradeProvider;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.HighGroundUpgradeDataSyncS2CPacket;
 
