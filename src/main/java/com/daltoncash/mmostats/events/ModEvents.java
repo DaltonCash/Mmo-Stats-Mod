@@ -63,6 +63,8 @@ import com.daltoncash.mmostats.capabilities.farming.upgrades.SugarRushUpgrade;
 import com.daltoncash.mmostats.capabilities.farming.upgrades.SugarRushUpgradeProvider;
 import com.daltoncash.mmostats.capabilities.farming.upgrades.WellFedUpgrade;
 import com.daltoncash.mmostats.capabilities.farming.upgrades.WellFedUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.magic.PlayerMagicLevel;
+import com.daltoncash.mmostats.capabilities.magic.PlayerMagicLevelProvider;
 import com.daltoncash.mmostats.capabilities.mana.PlayerMana;
 import com.daltoncash.mmostats.capabilities.mana.PlayerManaProvider;
 import com.daltoncash.mmostats.capabilities.mining.PlayerMiningExp;
@@ -264,6 +266,10 @@ public class ModEvents {
 			if (!event.getObject().getCapability(PlayerSwordsExpProvider.PLAYER_SWORDS_EXP).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "swordsexpproperties"),
 						new PlayerSwordsExpProvider());
+			}
+			if (!event.getObject().getCapability(PlayerMagicLevelProvider.PLAYER_MAGIC_LEVEL).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "magiclevelproperties"),
+						new PlayerMagicLevelProvider());
 			}
 			
 			//Archery Upgrades
@@ -540,7 +546,12 @@ public class ModEvents {
 					newStore.copyFrom(oldStore);
 				});
 			});
-			
+			event.getOriginal().getCapability(PlayerMagicLevelProvider.PLAYER_MAGIC_LEVEL).ifPresent(oldStore -> {
+				event.getOriginal().getCapability(PlayerMagicLevelProvider.PLAYER_MAGIC_LEVEL).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+
 			//-------------------------Archery----Upgrades-----------------------
 			
 			event.getOriginal().getCapability(EfficientMarksmanUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
@@ -806,6 +817,7 @@ public class ModEvents {
 		event.register(PlayerFarmingExp.class);
 		event.register(PlayerSwordsLevel.class);
 		event.register(PlayerSwordsExp.class);
+		event.register(PlayerMagicLevel.class);
 		
 		//Archery Upgrades
 		event.register(EfficientMarksmanUpgrade.class);
@@ -912,6 +924,9 @@ public class ModEvents {
 				});
 				player.getCapability(PlayerSwordsExpProvider.PLAYER_SWORDS_EXP).ifPresent(swordsExp -> {
 					ModMessages.sendToPlayer(new SwordsExpDataSyncS2CPacket(swordsExp.getSwordsExp()), player);
+				});
+				player.getCapability(PlayerMagicLevelProvider.PLAYER_MAGIC_LEVEL).ifPresent(magicLevel -> {
+					ModMessages.sendToPlayer(new SwordsLevelDataSyncS2CPacket(magicLevel.getMagicLevel()), player);
 				});
 				
 				//----Archery--Upgrades------
