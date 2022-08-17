@@ -1,6 +1,8 @@
 package com.daltoncash.mmostats.networking.packets.c2s.magicAbilities;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
@@ -10,6 +12,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.network.NetworkEvent;
 
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.function.Supplier;
 
 public class SpawnNatureMagnetItemC2SPacket {
@@ -33,9 +37,20 @@ public class SpawnNatureMagnetItemC2SPacket {
             ServerPlayer player = context.getSender();
             ServerLevel level = player.getLevel();
 
-            ItemStack natureStack = new ItemStack(Items.DIAMOND);
+            ArrayList<ItemStack>  dropTable = new ArrayList<ItemStack>();
+            dropTable.add(new ItemStack(Items.DIAMOND));
+            dropTable.add(new ItemStack(Items.GOLD_BLOCK));
+            dropTable.add(new ItemStack(Items.EGG));
+            dropTable.add(new ItemStack(Items.DIRT));
+            dropTable.add(new ItemStack(Items.GLASS));
+
+            Random r = new Random();
+
+            ItemStack natureStack = dropTable.get(r.nextInt(5));
             ItemEntity natureLoot = new ItemEntity(level, player.getX(), player.getY(), player.getZ(), natureStack);
             level.addFreshEntity(natureLoot);
+            Minecraft.getInstance().player.sendSystemMessage(Component.literal(
+                    "Nature's Magnet looted you a " + natureStack.getItem().toString() + "!"));
         });
 
         return true;

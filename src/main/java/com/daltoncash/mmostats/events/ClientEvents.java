@@ -463,7 +463,6 @@ public class ClientEvents {
 
 			//testing nature's magnet
 			if(KeyBinding.NATURE_MAGNET_KEY.consumeClick()){
-				Minecraft.getInstance().player.sendSystemMessage(Component.literal("nature's magnet works!"));
 				ModMessages.sendToServer(new SpawnNatureMagnetItemC2SPacket());
 			}
 			
