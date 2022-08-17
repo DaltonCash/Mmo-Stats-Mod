@@ -47,7 +47,8 @@ public class SpawnNatureMagnetItemC2SPacket {
             Random r = new Random();
 
             ItemStack natureStack = dropTable.get(r.nextInt(5));
-            ItemEntity natureLoot = new ItemEntity(level, player.getX(), player.getY(), player.getZ(), natureStack);
+            ItemEntity natureLoot = new ItemEntity(level, player.getX() + r.nextInt(10 + 5) - 10,
+                    player.getY() + r.nextInt(3), player.getZ() + r.nextInt(10 + 5) - 10, natureStack);
             level.addFreshEntity(natureLoot);
             Minecraft.getInstance().player.sendSystemMessage(Component.literal(
                     "Nature's Magnet looted you a " + natureStack.getItem().toString() + "!"));
