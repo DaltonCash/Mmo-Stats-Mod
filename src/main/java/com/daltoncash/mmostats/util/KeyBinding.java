@@ -12,6 +12,8 @@ public class KeyBinding {
 	public static final String KEY_OPEN_UPGRADE_GUI = "key.mmostats.open_upgrade_gui";
 	public static final String KEY_NIGHT_VISION = "key.mmostats.night_vision";
 	public static final String KEY_XPLOSIVE_MINER = "key.mmostats.xplosive_miner";
+
+	public static final String KEY_NATURE_MAGNET = "key.mmostats.nature_magnet";
 	
 	public static final KeyMapping OPEN_UPGRADE_GUI_KEY = new KeyMapping(
 			KEY_OPEN_UPGRADE_GUI,
@@ -30,5 +32,12 @@ public class KeyBinding {
 			KeyConflictContext.IN_GAME,
 			InputConstants.Type.KEYSYM,
 			GLFW.GLFW_KEY_B,
+			KEY_CATEGORY_MMOSTATS);
+
+	public static final KeyMapping NATURE_MAGNET_KEY = new KeyMapping(
+			KEY_NATURE_MAGNET,
+			KeyConflictContext.IN_GAME,
+			InputConstants.Type.KEYSYM,
+			GLFW.GLFW_KEY_M,
 			KEY_CATEGORY_MMOSTATS);
 }

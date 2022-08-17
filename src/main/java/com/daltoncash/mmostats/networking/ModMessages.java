@@ -2,6 +2,7 @@ package com.daltoncash.mmostats.networking;
 
 import com.daltoncash.mmostats.MmoStatsMod;
 import com.daltoncash.mmostats.networking.packets.c2s.AdditionalFortuneProcC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.magicAbilities.SpawnNatureMagnetItemC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.SpawnTntC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.UpgradeJunkBlocksDropExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.UpgradeNightVisionC2SPacket;
@@ -552,6 +553,8 @@ public class ModMessages {
 		.encoder(SweetSpotSwordsUpgradeC2SPacket::toBytes)
 		.consumerMainThread(SweetSpotSwordsUpgradeC2SPacket::handle)
 		.add();
+
+
 //-------------Upgrades---S2C---------------------------------------------------------------------------------------
         //Archery
         net.messageBuilder(EfficientMarksmanUpgradeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
@@ -846,7 +849,14 @@ public class ModMessages {
 				.encoder(RedstoneMinedDataSyncS2CPacket::toBytes)
 				.consumerMainThread(RedstoneMinedDataSyncS2CPacket::handle)
 				.add();
-				
+
+		//PRESI'S MAGIC TO BE RELOCATED
+		net.messageBuilder(SpawnNatureMagnetItemC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+				.decoder(SpawnNatureMagnetItemC2SPacket::new)
+				.encoder(SpawnNatureMagnetItemC2SPacket::toBytes)
+				.consumerMainThread(SpawnNatureMagnetItemC2SPacket::handle)
+				.add();
+
     }
 
     public static <MSG> void sendToServer(MSG message) {

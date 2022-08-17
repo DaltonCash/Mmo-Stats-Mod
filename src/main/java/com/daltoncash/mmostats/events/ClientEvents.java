@@ -7,6 +7,7 @@ import com.daltoncash.mmostats.gui.ManaOverlay;
 import com.daltoncash.mmostats.gui.UpgradeMenu;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.c2s.AdditionalFortuneProcC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.magicAbilities.SpawnNatureMagnetItemC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.SpawnTntC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.AncientDebrisMinedC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.CoalMinedC2SPacket;
@@ -458,6 +459,12 @@ public class ClientEvents {
 			}
 			if(KeyBinding.X_PLOSIVE_MINER_KEY.consumeClick()) {
 				ModMessages.sendToServer(new SpawnTntC2SPacket());
+			}
+
+			//testing nature's magnet
+			if(KeyBinding.NATURE_MAGNET_KEY.consumeClick()){
+				Minecraft.getInstance().player.sendSystemMessage(Component.literal("nature's magnet works!"));
+				ModMessages.sendToServer(new SpawnNatureMagnetItemC2SPacket());
 			}
 			
 		}
