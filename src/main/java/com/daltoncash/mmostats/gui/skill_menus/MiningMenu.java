@@ -62,10 +62,10 @@ public class MiningMenu extends Screen {
 				descriptionBanner, (this.width * 40)/84, (this.height * 50)/49, MiningMenu::onPressDoNothing));
 		
 		
-		addRenderableWidget(new Button((this.width * 65) /80, (this.height * 35) / 40, (this.width * 100) / 840, 20, 
+		addRenderableWidget(new Button((this.width * 33) /40, (this.height * 35) / 40, (this.width * 100) / 840, 20, 
 				Component.literal("Upgrade"), MiningMenu::onPressDoNothing));
 		
-		
+		/*
 		//----------blocks mined buttons---------------
 		ancientDebris = addRenderableWidget(new Button(0, this.height / 16 * 1, 100, 20, 
 				Component.literal(ClientCapabilityData.getAncientDebrisMined() + " Ancient Debris"), 
@@ -103,6 +103,7 @@ public class MiningMenu extends Screen {
 		addRenderableWidget(new Button(0, this.height / 16 * 12, 100, 20, 
 				Component.literal(ClientCapabilityData.getRedstoneMined() + " Redstone"), 
 				MiningMenu::onPressDoNothing));
+				*/
 	}
 	private static void onPressDoNothing(Button button) {
 		

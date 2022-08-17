@@ -2,6 +2,7 @@ package com.daltoncash.mmostats.networking;
 
 import com.daltoncash.mmostats.MmoStatsMod;
 import com.daltoncash.mmostats.networking.packets.c2s.AdditionalFortuneProcC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.EatFoodWhileFullC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.magicAbilities.SpawnNatureMagnetItemC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.SpawnTntC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.UpgradeJunkBlocksDropExpC2SPacket;
@@ -49,6 +50,7 @@ import com.daltoncash.mmostats.networking.packets.c2s.swordsUpgrades.RightClickU
 import com.daltoncash.mmostats.networking.packets.c2s.swordsUpgrades.ShieldBashUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.swordsUpgrades.SweetSpotSwordsUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainNightVisionC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.GainEffectFromEatingC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.archeryUpgrades.EfficientMarksmanUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.archeryUpgrades.HunterUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.archeryUpgrades.InsecurityUpgradeC2SPacket;
@@ -172,13 +174,30 @@ public class ModMessages {
 				.add();
         }
         */
+//----------C2S---MISC-----------------------------------------------------------------------      
+        net.messageBuilder(AdditionalFortuneProcC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+		.decoder(AdditionalFortuneProcC2SPacket::new)
+		.encoder(AdditionalFortuneProcC2SPacket::toBytes)
+		.consumerMainThread(AdditionalFortuneProcC2SPacket::handle)
+		.add();
+        net.messageBuilder(EatFoodWhileFullC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+		.decoder(EatFoodWhileFullC2SPacket::new)
+		.encoder(EatFoodWhileFullC2SPacket::toBytes)
+		.consumerMainThread(EatFoodWhileFullC2SPacket::handle)
+		.add();
+        net.messageBuilder(SpawnTntC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+		.decoder(SpawnTntC2SPacket::new)
+		.encoder(SpawnTntC2SPacket::toBytes)
+		.consumerMainThread(SpawnTntC2SPacket::handle)
+		.add();
+		net.messageBuilder(GainEffectFromEatingC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+		.decoder(GainEffectFromEatingC2SPacket::new)
+		.encoder(GainEffectFromEatingC2SPacket::toBytes)
+		.consumerMainThread(GainEffectFromEatingC2SPacket::handle)
+		.add();
         
 //-----------C2S--Skills---------------------------------------------------------------------------------
-        net.messageBuilder(AdditionalFortuneProcC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-				.decoder(AdditionalFortuneProcC2SPacket::new)
-				.encoder(AdditionalFortuneProcC2SPacket::toBytes)
-				.consumerMainThread(AdditionalFortuneProcC2SPacket::handle)
-				.add();
+       
         net.messageBuilder(ResetMiningExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
 				.decoder(ResetMiningExpC2SPacket::new)
 				.encoder(ResetMiningExpC2SPacket::toBytes)
@@ -515,11 +534,6 @@ public class ModMessages {
 		.decoder(UpgradeObsidianBreakerC2SPacket::new)
 		.encoder(UpgradeObsidianBreakerC2SPacket::toBytes)
 		.consumerMainThread(UpgradeObsidianBreakerC2SPacket::handle)
-		.add();
-        net.messageBuilder(SpawnTntC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-		.decoder(SpawnTntC2SPacket::new)
-		.encoder(SpawnTntC2SPacket::toBytes)
-		.consumerMainThread(SpawnTntC2SPacket::handle)
 		.add();
         
         //Swords

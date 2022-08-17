@@ -11,7 +11,7 @@ import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 
 public class ManaOverlay {
 	private static final ResourceLocation FILLED_MANA = new ResourceLocation(MmoStatsMod.MODID,
-			"textures/gui/test_image_2.png");
+			"textures/gui/test_images/test_image_2.png");
 	private static final ResourceLocation EMPTY_MANA = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/mana_1.png");
 
@@ -35,4 +35,5 @@ public class ManaOverlay {
 			}
 		}
 	});
+	
 }

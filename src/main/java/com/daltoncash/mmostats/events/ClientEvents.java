@@ -7,6 +7,8 @@ import com.daltoncash.mmostats.gui.ManaOverlay;
 import com.daltoncash.mmostats.gui.UpgradeMenu;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.c2s.AdditionalFortuneProcC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.EatFoodWhileFullC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.GainEffectFromEatingC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.magicAbilities.SpawnNatureMagnetItemC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.SpawnTntC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.AncientDebrisMinedC2SPacket;
@@ -50,6 +52,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
@@ -59,9 +62,12 @@ import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.entity.player.PlayerEvent.HarvestCheck;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickItem;
 import net.minecraftforge.event.level.BlockEvent;
+import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.slf4j.Logger;
@@ -90,20 +96,86 @@ public class ClientEvents {
 		*/
 		//WIP2
 		
+		
 		//Provides a cooldown to the onArrowHit to prevent exploits
 		@SubscribeEvent
 		public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-			if (cooldown < 20) {
+			if (cooldown < 128) {
 				cooldown++;
 			}
 		}
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		//-------------------------------------------------------
+		//eat when full
 		@SubscribeEvent
-		public static void onArrowHit(LivingAttackEvent event) {
+		public static void onEatingFood(RightClickItem event) {
+			
+			if(event.getItemStack().isEdible()) {
+				if(event.getEntity().getFoodData().getFoodLevel() >= 20) {
+					if(cooldown >= 128) {
+						event.getEntity().eat(event.getLevel(), event.getItemStack());
+						ModMessages.sendToServer(new EatFoodWhileFullC2SPacket());
+						cooldown = 0;
+					}
+				}
+			}
+		}
+		//Gain speed from eating
+		@SubscribeEvent
+		public static void onEatingFood(LivingEntityUseItemEvent.Finish event) {
+			ModMessages.sendToServer(new GainEffectFromEatingC2SPacket());
+			System.out.println(event.getItem().getItem());
+			if(event.getItem().getItem().equals(Items.COOKED_BEEF)) {
+				System.out.println("beef");
+				ModMessages.sendToServer(new GainEffectFromEatingC2SPacket());
+			}
+		}
+		//Fast Food
+		@SubscribeEvent
+		public static void onEatingFood(LivingEntityUseItemEvent.Start event) {
+			event.setDuration(16);
+		}
+		//--------------------------------------------------------------
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		//Event for Arrows and Eggs hitting an entity
+		@SubscribeEvent
+		public static void onProjectileHit(LivingAttackEvent event) {
 			if(event.getSource().getEntity() != null) {
 				if(event.getSource().getEntity().getType().equals(EntityType.PLAYER)) {
+					if(event.getSource().getDirectEntity().getType().equals(EntityType.EGG)) {
+						event.getEntity().setHealth(event.getEntity().getHealth() - 2);
+					}
 					if(event.getSource().getDirectEntity().getType().equals(EntityType.ARROW)) {
-						if(cooldown == 20) {
+						if(cooldown >= 40) {
 							int archeryExp = ClientCapabilityData.getPlayerArcheryExp();
 							int archeryLevel = ClientCapabilityData.getPlayerArcheryLevel();
 							
@@ -243,6 +315,11 @@ public class ClientEvents {
 			}
 			if (event.getState().getBlock().equals(Blocks.DEEPSLATE)) {
 				event.setNewSpeed((float) (event.getOriginalSpeed() * 2));
+			}
+			if(!ClientCapabilityData.isUpgradedWellFed()) {
+				if(event.getEntity().getFoodData().getFoodLevel() == 20) {
+					event.setNewSpeed((float) (event.getNewSpeed() * 1.1));
+				}
 			}
 		}
 		//BlockEvent.BreakEvent is an event that is triggered when a block is broken
@@ -480,7 +557,7 @@ public class ClientEvents {
 
 			@SubscribeEvent
 			public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
-				event.registerAboveAll("mana", ManaOverlay.HUD_MANA);
+				//event.registerAboveAll("mana", ManaOverlay.HUD_MANA);
 			}
 		}
 	}
