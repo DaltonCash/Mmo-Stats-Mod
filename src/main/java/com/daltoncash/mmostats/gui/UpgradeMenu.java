@@ -22,9 +22,9 @@ public class UpgradeMenu extends Screen {
 	// private final ResourceLocation texture1 = new
 	// ResourceLocation(MmoStatsMod.MODID, "textures/gui/test_image.png");
 	private final ResourceLocation bgtexture = new ResourceLocation(MmoStatsMod.MODID,
-			"textures/gui/cobble_bg-2.png.png");
+			"textures/gui/cobble_bg-2.png");
 	private final ResourceLocation MINING_TEXTURE = new ResourceLocation(MmoStatsMod.MODID,
-			"textures/gui/test_mining_image_3.png");
+			"textures/gui/test_images/test_mining_image_3.png");
 
 	//private final ResourceLocation EXP_BAR = new ResourceLocation(MmoStatsMod.MODID, "textures/gui/exp_bar_0.png");
 
@@ -69,7 +69,6 @@ public class UpgradeMenu extends Screen {
 
 	private static void onPressMining(Button button) {
 		Minecraft.getInstance().setScreen(new MiningMenu(Component.literal("mining")));
-
 	}
 
 	protected void renderBackground(PoseStack poseStack, float pPartialTick, int mouseX, int mouseY) {

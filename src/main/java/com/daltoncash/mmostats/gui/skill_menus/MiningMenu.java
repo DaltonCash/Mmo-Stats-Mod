@@ -26,15 +26,17 @@ public class MiningMenu extends Screen {
 	//private OptionsList list;
 	//protected final Options options;
 	private final ResourceLocation bgtexture = new ResourceLocation(MmoStatsMod.MODID,
-			"textures/gui/new_test_mining_bg.png");
+			"textures/gui/test_images/new_test_mining_bg.png");
 	private final ResourceLocation upgradeTexture1 = new ResourceLocation(MmoStatsMod.MODID,
-			"textures/gui/experience_upgrade_texture.png");
+			"textures/gui/buttons/experience_upgrade_texture.png");
 	private final ResourceLocation upgradeTexture2 = new ResourceLocation(MmoStatsMod.MODID,
-			"textures/gui/no_junk_blocks_button.png");
+			"textures/gui/buttons/no_junk_blocks_button.png");
 	private final ResourceLocation upgradeTexture3 = new ResourceLocation(MmoStatsMod.MODID,
-			"textures/gui/night_vision_button_texture.png");
+			"textures/gui/buttons/night_vision_button_texture.png");
 	private final ResourceLocation upgradeTexture4 = new ResourceLocation(MmoStatsMod.MODID,
-			"textures/gui/crying_obsidian.png");
+			"textures/gui/buttons/crying_obsidian.png");
+	private final ResourceLocation descriptionBanner = new ResourceLocation(MmoStatsMod.MODID,
+			"textures/gui/background/descstuff1.png");
 
 	public MiningMenu(Component p_96550_) {
 		super(p_96550_);
@@ -42,19 +44,27 @@ public class MiningMenu extends Screen {
 	
 	@Override
 	public final void init() {
-		//this.list = new OptionsList(this.minecraft, this.width, this.height, 32, this.height - 32, 25);
 		
-		//this.list.addBig(optioninstance);
-	     // this.list.addBig(this.options.biomeBlendRadius());
-	     // this.list.addSmall(options(this.options));
-		addRenderableWidget(new ImageButton((this.width / 6) * 1, (this.height / 6) * 2, 100, 100, 0, 0, 0,
-				upgradeTexture1, 100, 100, MiningMenu::onPressUpgradeJunk));
-		addRenderableWidget(new ImageButton((this.width / 6) * 3, (this.height / 6) * 2, 100, 100, 0, 0, 0,
-				upgradeTexture2, 100, 100, MiningMenu::onPressUpgradeNoJunk));
-		addRenderableWidget(new ImageButton((this.width / 6) * 2, (this.height / 6) * 2, 100, 100, 0, 0, 0,
-				upgradeTexture3, 100, 100, MiningMenu::onPressUpgradeNightVision));
-		addRenderableWidget(new ImageButton((this.width / 6) * 4, (this.height / 6) * 2, 100, 100, 0, 0, 0,
-				upgradeTexture4, 100, 100, MiningMenu::onPressUpgradeObsidianBreaker));
+		addRenderableWidget(new Button(this.width/13 * 6, this.height/13 * 6, 50, 50, 
+				Component.literal(this.height + " " + this.width), MiningMenu::onPressDoNothing));
+		
+		addRenderableWidget(new ImageButton((this.width / 6) * 1, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+				upgradeTexture1, 50, 50, MiningMenu::onPressUpgradeJunk));
+		addRenderableWidget(new ImageButton((this.width / 6) * 3, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+				upgradeTexture2, 50, 50, MiningMenu::onPressUpgradeNoJunk));
+		addRenderableWidget(new ImageButton((this.width / 6) * 2, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+				upgradeTexture3, 50, 50, MiningMenu::onPressUpgradeNightVision));
+		addRenderableWidget(new ImageButton((this.width / 6) * 4, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+				upgradeTexture4, 50, 50, MiningMenu::onPressUpgradeObsidianBreaker));
+		
+		
+		addRenderableWidget(new ImageButton((this.width * 27) / 42, 0, this.width/10 * 9, this.height, 0, 0, 0,
+				descriptionBanner, (this.width * 40)/84, (this.height * 50)/49, MiningMenu::onPressDoNothing));
+		
+		
+		addRenderableWidget(new Button((this.width * 65) /80, (this.height * 35) / 40, (this.width * 100) / 840, 20, 
+				Component.literal("Upgrade"), MiningMenu::onPressDoNothing));
+		
 		
 		//----------blocks mined buttons---------------
 		ancientDebris = addRenderableWidget(new Button(0, this.height / 16 * 1, 100, 20, 
@@ -123,7 +133,7 @@ public class MiningMenu extends Screen {
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		RenderSystem.setShaderTexture(0, bgtexture);
-		this.blit(poseStack, 0, 0, 50, 50, this.width, this.height);
+		this.blit(poseStack, 0, 0, 0, 0, this.width, this.height);
 	}
 
 	public void render(PoseStack p_96562_, int p_96563_, int p_96564_, float p_96565_) {
@@ -138,5 +148,5 @@ public class MiningMenu extends Screen {
 	}
 	 public void onClose() {
 		 Minecraft.getInstance().setScreen(new UpgradeMenu(Component.literal("mining")));
-	   }
+	 }
 }
