@@ -50,6 +50,7 @@ import com.daltoncash.mmostats.networking.packets.c2s.swordsUpgrades.RightClickU
 import com.daltoncash.mmostats.networking.packets.c2s.swordsUpgrades.ShieldBashUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.swordsUpgrades.SweetSpotSwordsUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainNightVisionC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.ShotgunArrowsC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainEffectFromEatingC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.archeryUpgrades.EfficientMarksmanUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.archeryUpgrades.HunterUpgradeC2SPacket;
@@ -195,6 +196,11 @@ public class ModMessages {
 		.encoder(GainEffectFromEatingC2SPacket::toBytes)
 		.consumerMainThread(GainEffectFromEatingC2SPacket::handle)
 		.add();
+		 net.messageBuilder(ShotgunArrowsC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(ShotgunArrowsC2SPacket::new)
+			.encoder(ShotgunArrowsC2SPacket::toBytes)
+			.consumerMainThread(ShotgunArrowsC2SPacket::handle)
+			.add();
         
 //-----------C2S--Skills---------------------------------------------------------------------------------
        

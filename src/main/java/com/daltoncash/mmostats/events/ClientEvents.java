@@ -3,7 +3,6 @@ package com.daltoncash.mmostats.events;
 import com.daltoncash.mmostats.MmoStatsMod;
 import com.daltoncash.mmostats.capabilities.ClientCapabilityData;
 import com.daltoncash.mmostats.common.handler.Sounds;
-import com.daltoncash.mmostats.gui.ManaOverlay;
 import com.daltoncash.mmostats.gui.UpgradeMenu;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.c2s.AdditionalFortuneProcC2SPacket;
@@ -40,20 +39,24 @@ import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetCombatExpC2SPa
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetFarmingExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetMiningExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainNightVisionC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.ShotgunArrowsC2SPacket;
 import com.daltoncash.mmostats.util.KeyBinding;
 import com.mojang.logging.LogUtils;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.KeyboardInput;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -63,16 +66,21 @@ import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.ArrowLooseEvent;
+import net.minecraftforge.event.entity.player.ArrowNockEvent;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.entity.player.PlayerEvent.HarvestCheck;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickItem;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+
+import java.util.List;
+
 import org.slf4j.Logger;
 
 public class ClientEvents {
@@ -120,19 +128,30 @@ public class ClientEvents {
 			}
 		}
 		
+		//Blocking Damage taken during dodge roll
 		@SubscribeEvent
 		public static void onPlayerHit(LivingHurtEvent event) {
-			
 			if(event.getEntity().getType().equals(EntityType.PLAYER)) {
-				System.out.println(invulnFrameDuration);
 				if(invulnFrameDuration < 28) {
-					System.out.println("invincible");
 					event.setCanceled(true);
 				}
 			}
 		}
 		
+		@SubscribeEvent
+		public static void onAttackingEnemy(AttackEntityEvent event) {
+			List<Item> axes = List.of(Items.NETHERITE_AXE, Items.DIAMOND_AXE, Items.GOLDEN_AXE,
+					Items.IRON_AXE, Items.STONE_AXE, Items.WOODEN_AXE);
+			System.out.println("ok");
+			if(axes.contains(event.getEntity().getItemInHand(InteractionHand.MAIN_HAND).getItem())){
+				
+			}
+		}
 		
+		@SubscribeEvent
+		public static void onFiringBow(ArrowLooseEvent event) {
+			ModMessages.sendToServer(new ShotgunArrowsC2SPacket());
+		}
 		
 		
 		
@@ -158,6 +177,16 @@ public class ClientEvents {
 					}
 				}
 			}
+			
+			System.out.println(event.getEntity().getSpeed());
+			//event.getEntity().addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 40, 0));
+			event.getEntity().setSpeed(10);
+			
+		}
+		@SubscribeEvent
+		public static void drawBow(ArrowNockEvent event) {
+			event.getEntity().addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 15, 10));
+			
 		}
 		
 		//Gain effects from eating
@@ -166,29 +195,18 @@ public class ClientEvents {
 			if(event.getItem().getItem().isEdible()) {
 				ModMessages.sendToServer(new GainEffectFromEatingC2SPacket());
 			}
+			
 		}
 		
 		//Fast Food
 		@SubscribeEvent
 		public static void onEatingFood(LivingEntityUseItemEvent.Start event) {
-			event.setDuration(16);
+			//Fast Food
+			if(event.getItem().getItem().isEdible()) {
+				event.setDuration(16);
+			}
+			//Could be quickfire
 		}
-		//--------------------------------------------------------------
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		//Event for Arrows and Eggs hitting an entity
 		@SubscribeEvent
@@ -200,6 +218,9 @@ public class ClientEvents {
 					}
 					if(event.getSource().getDirectEntity().getType().equals(EntityType.ARROW)) {
 						if(bowCooldown >= 30) {
+							//WIP 8-18---
+							System.out.println(event.getAmount());
+							//WIP 8-18---
 							int archeryExp = ClientCapabilityData.getPlayerArcheryExp();
 							int archeryLevel = ClientCapabilityData.getPlayerArcheryLevel();
 							
@@ -222,6 +243,7 @@ public class ClientEvents {
 				}
 			}
 		}
+		
 		//HarvestCheck is an event that triggers when a block is being destroyed.
 		//This method removes the drop from "junk blocks" if the appropriate upgrade(NoJunkBlocks)
 		//has been upgraded.
@@ -239,6 +261,7 @@ public class ClientEvents {
 				}
 			}
 		}
+		
 		//LivingDeathEvent is an event that triggers when an entity dies.
 		//This method gives the player exp for combat when they kill an entity.
 		@SubscribeEvent
@@ -327,6 +350,7 @@ public class ClientEvents {
 				}
 			}
 		}
+		
 		//BreakSpeed is an event that triggers when a block is left-clicked
 		//This method doubles the speed of mining deepslate and obsidian
 		@SubscribeEvent
@@ -346,6 +370,7 @@ public class ClientEvents {
 				}
 			}
 		}
+		
 		//BlockEvent.BreakEvent is an event that is triggered when a block is broken
 		//This method gives exp to the player when they mine mining blocks,
 		//chop chopping blocks, or farm farming blocks.
@@ -549,17 +574,27 @@ public class ClientEvents {
 		@SuppressWarnings("resource")
 		@SubscribeEvent
 		public static void onKeyInput(InputEvent.Key event) {
+			//Dodge Roll
 			if (KeyBinding.NIGHT_VISION_KEY.consumeClick()) {
 				if (ClientCapabilityData.isUpgradedNightVision() && dodgeCooldown >= 80) {
 					Minecraft.getInstance().player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 1200));
 					ModMessages.sendToServer(new GainNightVisionC2SPacket());
 					Player player = Minecraft.getInstance().player;
 					double x = player.getDeltaMovement().x;
+					double y = player.getDeltaMovement().y;
 					double z = player.getDeltaMovement().z;
-					player.setDeltaMovement(
-							(x > 0) ? Math.min(x * 15, 2) : Math.max(x * 15, -2), 
-							0.22, 
-							(z > 0) ? Math.min(z * 15, 2) : Math.max(z * 15, -2));
+					if(player.isOnGround()) {
+						player.setDeltaMovement(
+								(x > 0) ? Math.min(x * 15, 2) : Math.max(x * 15, -2), 
+								0.22, 
+								(z > 0) ? Math.min(z * 15, 2) : Math.max(z * 15, -2));
+					}else {
+						player.setDeltaMovement(
+								(x > 0) ? Math.min(x * 15, 2) : Math.max(x * 15, -2), 
+								y - .5, 
+								(z > 0) ? Math.min(z * 15, 2) : Math.max(z * 15, -2));
+					}
+					
 					dodgeCooldown = 0;
 					invulnFrameDuration = 0;
 				}
