@@ -44,6 +44,7 @@ import com.daltoncash.mmostats.util.KeyBinding;
 import com.mojang.logging.LogUtils;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.KeyboardInput;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
@@ -52,6 +53,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -61,13 +63,14 @@ import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.entity.player.PlayerEvent.HarvestCheck;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickItem;
 import net.minecraftforge.event.level.BlockEvent;
-import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.slf4j.Logger;
@@ -79,7 +82,10 @@ public class ClientEvents {
 		public static BlockEvent.BreakEvent blockevent = null;
 		public static int expToSub = 0;
 		public static int expToAdd = 0;
-		public static int cooldown = 20;
+		public static int bowCooldown = 30;
+		public static int dodgeCooldown = 80;
+		public static int eatCooldown = 128;
+		public static int invulnFrameDuration = 28;
 		//WIP1
 		//farming sweet berry bushes:
 		//use event RightClickBlock in PlayerInteractEvent in PlayerEvent in Living Event
@@ -100,12 +106,31 @@ public class ClientEvents {
 		//Provides a cooldown to the onArrowHit to prevent exploits
 		@SubscribeEvent
 		public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-			if (cooldown < 128) {
-				cooldown++;
+			if (bowCooldown < 30) {
+				bowCooldown++;
+			}
+			if (dodgeCooldown < 80) {
+				dodgeCooldown++;
+			}
+			if (eatCooldown < 128) {
+				eatCooldown++;
+			}
+			if (invulnFrameDuration < 28) {
+				invulnFrameDuration++;
 			}
 		}
 		
-		
+		@SubscribeEvent
+		public static void onPlayerHit(LivingHurtEvent event) {
+			
+			if(event.getEntity().getType().equals(EntityType.PLAYER)) {
+				System.out.println(invulnFrameDuration);
+				if(invulnFrameDuration < 28) {
+					System.out.println("invincible");
+					event.setCanceled(true);
+				}
+			}
+		}
 		
 		
 		
@@ -126,24 +151,23 @@ public class ClientEvents {
 			
 			if(event.getItemStack().isEdible()) {
 				if(event.getEntity().getFoodData().getFoodLevel() >= 20) {
-					if(cooldown >= 128) {
+					if(eatCooldown >= 128) {
 						event.getEntity().eat(event.getLevel(), event.getItemStack());
 						ModMessages.sendToServer(new EatFoodWhileFullC2SPacket());
-						cooldown = 0;
+						eatCooldown = 0;
 					}
 				}
 			}
 		}
-		//Gain speed from eating
+		
+		//Gain effects from eating
 		@SubscribeEvent
 		public static void onEatingFood(LivingEntityUseItemEvent.Finish event) {
-			ModMessages.sendToServer(new GainEffectFromEatingC2SPacket());
-			System.out.println(event.getItem().getItem());
-			if(event.getItem().getItem().equals(Items.COOKED_BEEF)) {
-				System.out.println("beef");
+			if(event.getItem().getItem().isEdible()) {
 				ModMessages.sendToServer(new GainEffectFromEatingC2SPacket());
 			}
 		}
+		
 		//Fast Food
 		@SubscribeEvent
 		public static void onEatingFood(LivingEntityUseItemEvent.Start event) {
@@ -175,12 +199,12 @@ public class ClientEvents {
 						event.getEntity().setHealth(event.getEntity().getHealth() - 2);
 					}
 					if(event.getSource().getDirectEntity().getType().equals(EntityType.ARROW)) {
-						if(cooldown >= 40) {
+						if(bowCooldown >= 30) {
 							int archeryExp = ClientCapabilityData.getPlayerArcheryExp();
 							int archeryLevel = ClientCapabilityData.getPlayerArcheryLevel();
 							
 							ModMessages.sendToServer(new GainArcheryExpC2SPacket());
-							cooldown = 0;
+							bowCooldown = 0;
 							// level up if player has sufficient choppingExp
 							if (archeryExp > (archeryLevel * 40) + 400) {
 								LOGGER.info("{} leveled up to {} in Archery", 
@@ -526,9 +550,18 @@ public class ClientEvents {
 		@SubscribeEvent
 		public static void onKeyInput(InputEvent.Key event) {
 			if (KeyBinding.NIGHT_VISION_KEY.consumeClick()) {
-				if (ClientCapabilityData.isUpgradedNightVision() && ClientCapabilityData.getPlayerMana() >= 10) {
+				if (ClientCapabilityData.isUpgradedNightVision() && dodgeCooldown >= 80) {
 					Minecraft.getInstance().player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 1200));
 					ModMessages.sendToServer(new GainNightVisionC2SPacket());
+					Player player = Minecraft.getInstance().player;
+					double x = player.getDeltaMovement().x;
+					double z = player.getDeltaMovement().z;
+					player.setDeltaMovement(
+							(x > 0) ? Math.min(x * 15, 2) : Math.max(x * 15, -2), 
+							0.22, 
+							(z > 0) ? Math.min(z * 15, 2) : Math.max(z * 15, -2));
+					dodgeCooldown = 0;
+					invulnFrameDuration = 0;
 				}
 			}
 			if (KeyBinding.OPEN_UPGRADE_GUI_KEY.consumeClick()) {
