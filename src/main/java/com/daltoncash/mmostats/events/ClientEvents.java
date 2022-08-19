@@ -39,6 +39,7 @@ import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetCombatExpC2SPa
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetFarmingExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetMiningExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainNightVisionC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.SpawnArrowOnPlayerC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.EntityDropsAnArrowC2SPacket;
 import com.daltoncash.mmostats.util.KeyBinding;
 import com.mojang.logging.LogUtils;
@@ -70,6 +71,8 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
+import net.minecraftforge.event.entity.living.ShieldBlockEvent;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.ArrowNockEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
@@ -100,6 +103,9 @@ public class ClientEvents {
 		public static Entity clientEntity;
 		public static int healAtHalfHealth = 24000;
 		public static int applesGiveChopSpeed = 0;
+		public static int extendediframes = 0;
+		public static int ragnorokDuration = 0;
+		public static int ragnorokCooldown = 0;
 		//WIP1
 		//farming sweet berry bushes:
 		//use event RightClickBlock in PlayerInteractEvent in PlayerEvent in Living Event
@@ -125,6 +131,7 @@ public class ClientEvents {
 			}
 			if (dodgeCooldown < 80) {
 				dodgeCooldown++;
+				
 			}
 			if (eatCooldown < 128) {
 				eatCooldown++;
@@ -138,6 +145,7 @@ public class ClientEvents {
 			if (applesGiveChopSpeed > 0) {
 				applesGiveChopSpeed--;
 			}
+			//Unabated
 			if(event.player.getMainHandItem().getItem().equals(Items.BOW)) {
 				if(event.player.isUsingItem()) {
 					event.player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 1, 20));
@@ -145,18 +153,75 @@ public class ClientEvents {
 					
 				}
 			}
+			if(extendediframes > 0) {
+				extendediframes--;
+			}
+			if(ragnorokCooldown == 1) System.out.println("ragnorok ready");
+			if (ragnorokCooldown > 0) {
+				ragnorokCooldown--;
+				
+			}
+			if (ragnorokDuration > 0) {
+				ragnorokDuration--;
+			}
 		}
+		//Shield Block Drops Arrows
+		@SubscribeEvent
+		public static void onBlockingArrow(ShieldBlockEvent event) {
+			System.out.println(event.getDamageSource().getDirectEntity().getType());
+			ModMessages.sendToServer(new SpawnArrowOnPlayerC2SPacket());
+		}
+		
+		
 		
 		//Blocking Damage taken during dodge roll
 		@SubscribeEvent
 		public static void onPlayerGettingHit(LivingHurtEvent event) {
+			System.out.println(ClientCapabilityData.getPlayerMiningExp());
+			if(event.getSource().getEntity() != null) {
+				if(event.getSource().getEntity().getType().equals(EntityType.PLAYER)) {
+					if(ragnorokDuration > 0) {
+						if(event.getSource().getEntity().isAlive()) {
+							LivingEntity entity = (LivingEntity) event.getSource().getEntity();
+							entity.heal(2);
+						}
+					}
+				}
+			}
+			
+			
 			if(event.getEntity().getType().equals(EntityType.PLAYER)) {
 				if(invulnFrameDuration < 28) {
 					event.setCanceled(true);
+					System.out.println("dodge roll");
 				}
-				if(event.getEntity().getHealth() <= event.getEntity().getMaxHealth() / 4) {
-					event.getEntity().setHealth(event.getEntity().getMaxHealth() / 2);
-					healAtHalfHealth = 0;
+				if(healAtHalfHealth == 24000) {
+					if(event.getEntity().getHealth() <= event.getEntity().getMaxHealth() / 4) {
+						event.getEntity().setHealth(event.getEntity().getMaxHealth() / 2);
+						healAtHalfHealth = 0;
+						System.out.println();
+					}
+				}
+				//Extend IFrames
+				if(extendediframes > 0) {
+					event.setCanceled(true);
+					System.out.println("iframes");
+				}
+				if(extendediframes == 0) {
+					extendediframes = 80;
+				}
+				//Ragnorok
+				
+				if(event.getAmount() * (1 - (Math.max(event.getEntity().getArmorValue() / 5,
+						event.getEntity().getArmorValue() - ((4 * event.getAmount()) / 8))) / 25) + 1 > event.getEntity().getHealth()) {
+					if(ragnorokCooldown == 0) {
+						System.out.println("ragnorok used");
+						ragnorokDuration = 2400;
+						ragnorokCooldown = 3600;
+						if(ragnorokDuration > 0) {
+							event.setCanceled(true);
+						}
+					}
 				}
 			}
 			
@@ -168,23 +233,32 @@ public class ClientEvents {
 			List<Item> axes = List.of(Items.NETHERITE_AXE, Items.DIAMOND_AXE, Items.GOLDEN_AXE,
 					Items.IRON_AXE, Items.STONE_AXE, Items.WOODEN_AXE);
 			
-			
-			if(axes.contains(event.getEntity().getItemInHand(InteractionHand.MAIN_HAND).getItem())){
-				if(event.getTarget().isAlive()) {
-					LivingEntity entity = (LivingEntity) event.getTarget();
-					entity.setHealth(entity.getHealth() - 2);
-				
+			if(event.getEntity().getType().equals(EntityType.PLAYER)) {
+				if(axes.contains(event.getEntity().getItemInHand(InteractionHand.MAIN_HAND).getItem())){
+					if(event.getTarget().isAlive()) {
+						LivingEntity entity = (LivingEntity) event.getTarget();
+						entity.setHealth(entity.getHealth() - 2);
+					
+					}
 				}
 			}
+			
 		}
-		
+		//Archery: Shotgun
 		@SubscribeEvent
 		public static void onFiringBow(ArrowLooseEvent event) {
 			//ModMessages.sendToServer(new ShotgunArrowsC2SPacket());
 			//System.out.println("Spawning item...maybe");
 		}
 		
-		
+		//Combat: Stable Footing
+		@SubscribeEvent
+		public static void onTakingKnockback(LivingKnockBackEvent event) {
+			if(event.getEntity().getType().equals(EntityType.PLAYER)) {
+				event.setStrength((event.getOriginalStrength() * 3) / 4);
+				
+			}
+		}
 		
 		
 		
@@ -256,6 +330,7 @@ public class ClientEvents {
 		public static void onProjectileHit(LivingAttackEvent event) {
 			
 			if(event.getSource().getEntity() != null) {
+				
 				if(event.getSource().getEntity().getType().equals(EntityType.PLAYER)) {
 					Entity player = event.getSource().getEntity();
 					LivingEntity entity = event.getEntity();
@@ -292,10 +367,6 @@ public class ClientEvents {
 							//event.getEntity().setHealth(0);
 							event.getEntity().setHealth(Math.max(event.getEntity().getHealth() - (event.getAmount()/3), 0));
 						}
-						
-						
-						
-						
 						//Archery exp gain
 						if(bowCooldown >= 30) {
 							//WIP 8-18---
