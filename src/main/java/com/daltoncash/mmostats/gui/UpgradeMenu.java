@@ -2,6 +2,10 @@ package com.daltoncash.mmostats.gui;
 
 import com.daltoncash.mmostats.MmoStatsMod;
 import com.daltoncash.mmostats.capabilities.ClientCapabilityData;
+import com.daltoncash.mmostats.gui.skill_menus.ArcheryMenu;
+import com.daltoncash.mmostats.gui.skill_menus.ChoppingMenu;
+import com.daltoncash.mmostats.gui.skill_menus.CombatMenu;
+import com.daltoncash.mmostats.gui.skill_menus.FarmingMenu;
 import com.daltoncash.mmostats.gui.skill_menus.MiningMenu;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetCapabilityDataC2SPacket;
@@ -25,6 +29,14 @@ public class UpgradeMenu extends Screen {
 			"textures/gui/cobble_bg-2.png");
 	private final ResourceLocation MINING_TEXTURE = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/test_images/test_mining_image_3.png");
+	private final ResourceLocation ARCHERY_TEXTURE = new ResourceLocation(MmoStatsMod.MODID,
+			"textures/gui/test_buttons/archery_button.png");
+	private final ResourceLocation CHOPPING_TEXTURE = new ResourceLocation(MmoStatsMod.MODID,
+			"textures/gui/test_buttons/chopping_button.png");
+	private final ResourceLocation COMBAT_TEXTURE = new ResourceLocation(MmoStatsMod.MODID,
+			"textures/gui/test_buttons/combat_button.png");
+	private final ResourceLocation FARMING_TEXTURE = new ResourceLocation(MmoStatsMod.MODID,
+			"textures/gui/test_buttons/farming_button.png");
 
 	//private final ResourceLocation EXP_BAR = new ResourceLocation(MmoStatsMod.MODID, "textures/gui/exp_bar_0.png");
 
@@ -40,8 +52,22 @@ public class UpgradeMenu extends Screen {
 		addRenderableWidget(new Button(20, 200, 100, 100,
 				Component.literal("reset capabilities: " + ClientCapabilityData.getPlayerMiningLevel()),
 				UpgradeMenu::onPressReset));
-		addRenderableWidget(new ImageButton((this.width / 6) * 1, (this.height / 6) * 1, 100, 100, 0, 0, 0,
+		
+		//ImageButton mining = 
+		addRenderableWidget(new ImageButton((this.width / 7) * 1, (this.height / 6) * 1, 100, 100, 0, 0, 99,
 				MINING_TEXTURE, 100, 100, UpgradeMenu::onPressMining));
+		
+		addRenderableWidget(new ImageButton((this.width / 7) * 2, (this.height / 6) * 1, 100, 100, 0, 0, 99,
+				ARCHERY_TEXTURE, 100, 100, UpgradeMenu::onPressArchery));
+		
+		addRenderableWidget(new ImageButton((this.width / 7) * 3, (this.height / 6) * 1, 100, 100, 0, 0, 99,
+				CHOPPING_TEXTURE, 100, 100, UpgradeMenu::onPressChopping));
+		
+		addRenderableWidget(new ImageButton((this.width / 7) * 4, (this.height / 6) * 1, 100, 100, 0, 0, 99,
+				COMBAT_TEXTURE, 100, 100, UpgradeMenu::onPressCombat));
+		
+		addRenderableWidget(new ImageButton((this.width / 7) * 5, (this.height / 6) * 1, 100, 100, 0, 0, 99,
+				FARMING_TEXTURE, 100, 100, UpgradeMenu::onPressFarming));
 
 		float percentEXP = (float) 100 * (ClientCapabilityData.getPlayerMiningExp() / (ClientCapabilityData.getPlayerMiningLevel() * 40 + 400));
 		int imageNumber = (int) percentEXP / 5;
@@ -69,6 +95,18 @@ public class UpgradeMenu extends Screen {
 
 	private static void onPressMining(Button button) {
 		Minecraft.getInstance().setScreen(new MiningMenu(Component.literal("mining")));
+	}
+	private static void onPressArchery(Button button) {
+		Minecraft.getInstance().setScreen(new ArcheryMenu(Component.literal("mining")));
+	}
+	private static void onPressChopping(Button button) {
+		Minecraft.getInstance().setScreen(new ChoppingMenu(Component.literal("chopping")));
+	}
+	private static void onPressCombat(Button button) {
+		Minecraft.getInstance().setScreen(new CombatMenu(Component.literal("mining")));
+	}
+	private static void onPressFarming(Button button) {
+		Minecraft.getInstance().setScreen(new FarmingMenu(Component.literal("mining")));
 	}
 
 	protected void renderBackground(PoseStack poseStack, float pPartialTick, int mouseX, int mouseY) {

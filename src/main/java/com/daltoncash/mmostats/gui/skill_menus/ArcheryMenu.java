@@ -16,18 +16,18 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
-public class ChoppingMenu extends Screen {
+public class ArcheryMenu extends Screen {
 	public Widget ancientDebris;
 	//private OptionsList list;
 	//protected final Options options;
 	private final ResourceLocation bgtexture = new ResourceLocation(MmoStatsMod.MODID,
-			"textures/gui/test_buttons/chopping_button.png");
+			"textures/gui/test_buttons/archery_button.png");
 	private final ResourceLocation upgradeTexture1 = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/buttons/experience_upgrade_texture.png");
 	private final ResourceLocation descriptionBanner = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/background/descstuff1.png");
 
-	public ChoppingMenu(Component p_96550_) {
+	public ArcheryMenu(Component p_96550_) {
 		super(p_96550_);
 	}
 	
@@ -35,18 +35,18 @@ public class ChoppingMenu extends Screen {
 	public final void init() {
 		
 		addRenderableWidget(new Button(this.width/13 * 6, this.height/13 * 6, 50, 50, 
-				Component.literal(this.height + " " + this.width), ChoppingMenu::onPressDoNothing));
+				Component.literal(this.height + " " + this.width), ArcheryMenu::onPressDoNothing));
 		
 		addRenderableWidget(new ImageButton((this.width / 6) * 1, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-				upgradeTexture1, 50, 50, ChoppingMenu::onPressUpgradeJunk));
+				upgradeTexture1, 50, 50, ArcheryMenu::onPressUpgradeJunk));
 		
 		
 		addRenderableWidget(new ImageButton((this.width * 27) / 42, 0, this.width/10 * 9, this.height, 0, 0, 0,
-				descriptionBanner, (this.width * 40)/84, (this.height * 50)/49, ChoppingMenu::onPressDoNothing));
+				descriptionBanner, (this.width * 40)/84, (this.height * 50)/49, ArcheryMenu::onPressDoNothing));
 		
 		
 		addRenderableWidget(new Button((this.width * 33) /40, (this.height * 35) / 40, (this.width * 100) / 840, 20, 
-				Component.literal("Upgrade"), ChoppingMenu::onPressDoNothing));
+				Component.literal("Upgrade"), ArcheryMenu::onPressDoNothing));
 		
 	}
 	private static void onPressDoNothing(Button button) {
