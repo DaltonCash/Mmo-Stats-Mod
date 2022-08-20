@@ -39,7 +39,8 @@ import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetCombatExpC2SPa
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetFarmingExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetMiningExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainNightVisionC2SPacket;
-import com.daltoncash.mmostats.networking.packets.c2s.ShotgunArrowsC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.SpawnArrowOnPlayerC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.EntityDropsAnArrowC2SPacket;
 import com.daltoncash.mmostats.util.KeyBinding;
 import com.mojang.logging.LogUtils;
 
@@ -51,12 +52,12 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -69,6 +70,8 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
+import net.minecraftforge.event.entity.living.ShieldBlockEvent;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.ArrowNockEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
@@ -94,6 +97,12 @@ public class ClientEvents {
 		public static int dodgeCooldown = 80;
 		public static int eatCooldown = 128;
 		public static int invulnFrameDuration = 28;
+		public static Entity clientEntity;
+		public static int healAtHalfHealth = 24000;
+		public static int applesGiveChopSpeed = 0;
+		public static int extendediframes = 0;
+		public static int ragnorokDuration = 0;
+		public static int ragnorokCooldown = 0;
 		//WIP1
 		//farming sweet berry bushes:
 		//use event RightClickBlock in PlayerInteractEvent in PlayerEvent in Living Event
@@ -119,6 +128,7 @@ public class ClientEvents {
 			}
 			if (dodgeCooldown < 80) {
 				dodgeCooldown++;
+				
 			}
 			if (eatCooldown < 128) {
 				eatCooldown++;
@@ -126,34 +136,125 @@ public class ClientEvents {
 			if (invulnFrameDuration < 28) {
 				invulnFrameDuration++;
 			}
+			if (healAtHalfHealth < 24000) {
+				healAtHalfHealth++;
+			}
+			if (applesGiveChopSpeed > 0) {
+				applesGiveChopSpeed--;
+			}
+			//Unabated
+			if(event.player.getMainHandItem().getItem().equals(Items.BOW)) {
+				if(event.player.isUsingItem()) {
+					event.player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 1, 20));
+					
+					
+				}
+			}
+			if(extendediframes > 0) {
+				extendediframes--;
+			}
+			if(ragnorokCooldown == 1) System.out.println("ragnorok ready");
+			if (ragnorokCooldown > 0) {
+				ragnorokCooldown--;
+				
+			}
+			if (ragnorokDuration > 0) {
+				ragnorokDuration--;
+			}
 		}
+		//Shield Block Drops Arrows
+		@SubscribeEvent
+		public static void onBlockingArrow(ShieldBlockEvent event) {
+			//event.getDamageSource().getDirectEntity().getType()
+			ModMessages.sendToServer(new SpawnArrowOnPlayerC2SPacket());
+		}
+		
+		
 		
 		//Blocking Damage taken during dodge roll
 		@SubscribeEvent
-		public static void onPlayerHit(LivingHurtEvent event) {
+		public static void onPlayerGettingHit(LivingHurtEvent event) {
+			if(event.getSource().getEntity() != null) {
+				if(event.getSource().getEntity().getType().equals(EntityType.PLAYER)) {
+					if(ragnorokDuration > 0) {
+						if(event.getSource().getEntity().isAlive()) {
+							LivingEntity entity = (LivingEntity) event.getSource().getEntity();
+							entity.heal(2);
+						}
+					}
+				}
+			}
+			
+			
 			if(event.getEntity().getType().equals(EntityType.PLAYER)) {
 				if(invulnFrameDuration < 28) {
 					event.setCanceled(true);
+					System.out.println("dodge roll");
+				}
+				if(healAtHalfHealth == 24000) {
+					if(event.getEntity().getHealth() <= event.getEntity().getMaxHealth() / 4) {
+						event.getEntity().setHealth(event.getEntity().getMaxHealth() / 2);
+						healAtHalfHealth = 0;
+						System.out.println();
+					}
+				}
+				//Extend IFrames
+				if(extendediframes > 0) {
+					event.setCanceled(true);
+					System.out.println("iframes");
+				}
+				if(extendediframes == 0) {
+					extendediframes = 80;
+				}
+				//Ragnorok
+				
+				if(event.getAmount() * (1 - (Math.max(event.getEntity().getArmorValue() / 5,
+						event.getEntity().getArmorValue() - ((4 * event.getAmount()) / 8))) / 25) + 1 > event.getEntity().getHealth()) {
+					if(ragnorokCooldown == 0) {
+						System.out.println("ragnorok used");
+						ragnorokDuration = 2400;
+						ragnorokCooldown = 3600;
+						if(ragnorokDuration > 0) {
+							event.setCanceled(true);
+						}
+					}
 				}
 			}
+			
+			
 		}
-		
+		//Chopping gives axe damage
 		@SubscribeEvent
 		public static void onAttackingEnemy(AttackEntityEvent event) {
 			List<Item> axes = List.of(Items.NETHERITE_AXE, Items.DIAMOND_AXE, Items.GOLDEN_AXE,
 					Items.IRON_AXE, Items.STONE_AXE, Items.WOODEN_AXE);
-			System.out.println("ok");
-			if(axes.contains(event.getEntity().getItemInHand(InteractionHand.MAIN_HAND).getItem())){
+			
+			if(event.getEntity().getType().equals(EntityType.PLAYER)) {
+				if(axes.contains(event.getEntity().getItemInHand(InteractionHand.MAIN_HAND).getItem())){
+					if(event.getTarget().isAlive()) {
+						LivingEntity entity = (LivingEntity) event.getTarget();
+						entity.setHealth(entity.getHealth() - 2);
+					
+					}
+				}
+			}
+			
+		}
+		//Archery: Shotgun
+		@SubscribeEvent
+		public static void onFiringBow(ArrowLooseEvent event) {
+			//ModMessages.sendToServer(new ShotgunArrowsC2SPacket());
+			//System.out.println("Spawning item...maybe");
+		}
+		
+		//Combat: Stable Footing
+		@SubscribeEvent
+		public static void onTakingKnockback(LivingKnockBackEvent event) {
+			if(event.getEntity().getType().equals(EntityType.PLAYER)) {
+				event.setStrength((event.getOriginalStrength() * 3) / 4);
 				
 			}
 		}
-		
-		@SubscribeEvent
-		public static void onFiringBow(ArrowLooseEvent event) {
-			ModMessages.sendToServer(new ShotgunArrowsC2SPacket());
-		}
-		
-		
 		
 		
 		
@@ -174,18 +275,21 @@ public class ClientEvents {
 						event.getEntity().eat(event.getLevel(), event.getItemStack());
 						ModMessages.sendToServer(new EatFoodWhileFullC2SPacket());
 						eatCooldown = 0;
+						if(event.getItemStack().getItem().equals(Items.APPLE)) {
+							applesGiveChopSpeed += 2400;
+						}
 					}
 				}
 			}
 			
-			System.out.println(event.getEntity().getSpeed());
+			
 			//event.getEntity().addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 40, 0));
-			event.getEntity().setSpeed(10);
+			//event.getEntity().setSpeed(10);
+			
 			
 		}
 		@SubscribeEvent
 		public static void drawBow(ArrowNockEvent event) {
-			event.getEntity().addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 15, 10));
 			
 		}
 		
@@ -194,6 +298,11 @@ public class ClientEvents {
 		public static void onEatingFood(LivingEntityUseItemEvent.Finish event) {
 			if(event.getItem().getItem().isEdible()) {
 				ModMessages.sendToServer(new GainEffectFromEatingC2SPacket());
+				eatCooldown = 0;
+				if(event.getItem().getItem().equals(Items.APPLE)) {
+					applesGiveChopSpeed += 2400;
+					System.out.println(applesGiveChopSpeed);
+				}
 			}
 			
 		}
@@ -205,18 +314,56 @@ public class ClientEvents {
 			if(event.getItem().getItem().isEdible()) {
 				event.setDuration(16);
 			}
-			//Could be quickfire
+			//Arrow: Quickfire
+			if(event.getItem().getItem().equals(Items.BOW)) {
+				event.setDuration(71997);
+			}
+			
 		}
 		
 		//Event for Arrows and Eggs hitting an entity
 		@SubscribeEvent
 		public static void onProjectileHit(LivingAttackEvent event) {
+			
 			if(event.getSource().getEntity() != null) {
+				
 				if(event.getSource().getEntity().getType().equals(EntityType.PLAYER)) {
+					Entity player = event.getSource().getEntity();
+					LivingEntity entity = event.getEntity();
+					//Egger
 					if(event.getSource().getDirectEntity().getType().equals(EntityType.EGG)) {
-						event.getEntity().setHealth(event.getEntity().getHealth() - 2);
+						entity.setHealth(entity.getHealth() - 2);
 					}
+					
 					if(event.getSource().getDirectEntity().getType().equals(EntityType.ARROW)) {
+						
+						
+						if(entity.getType().equals(EntityType.COW)) {
+							
+						}
+						
+						
+						//Arrow: Insecurity
+						if(entity.getType().equals(EntityType.SKELETON) || entity.getType().equals(EntityType.BLAZE) ||
+								entity.getType().equals(EntityType.STRAY) || entity.getType().equals(EntityType.GHAST)) {
+							entity.setHealth(Math.max(entity.getHealth() - (event.getAmount()/3), 0));
+						}
+						
+						//Arrow: Sniper
+						if(player.distanceTo(entity) > 25) {
+							entity.setHealth(Math.max(entity.getHealth() - (event.getAmount()/3), 0));
+						}
+						
+						
+						
+						
+						//Arrow: Headshot
+						if(event.getSource().getSourcePosition().y >= event.getEntity().getEyePosition().y - 0.2) {
+							System.out.println("Headshot");
+							//event.getEntity().setHealth(0);
+							event.getEntity().setHealth(Math.max(event.getEntity().getHealth() - (event.getAmount()/3), 0));
+						}
+						//Archery exp gain
 						if(bowCooldown >= 30) {
 							//WIP 8-18---
 							System.out.println(event.getAmount());
@@ -333,7 +480,7 @@ public class ClientEvents {
 						}
 						ModMessages.sendToServer(new GainCombatExpC2SPacket());
 						
-						// level up if player has sufficient choppingExp
+						// level up if player has sufficient combatExp
 						if (combatExp > (combatLevel * 40) + 400) {
 							LOGGER.info("{} leveled up to {} in Combat", 
 									event.getSource().getEntity().getScoreboardName(), 
@@ -346,6 +493,9 @@ public class ClientEvents {
 								event.getSource().getEntity().getScoreboardName(), 
 								type.toShortString(),
 								combatExp + expToAdd);
+						//Archery: Efficient Marksman
+						clientEntity = event.getEntity();
+						ModMessages.sendToServer(new EntityDropsAnArrowC2SPacket());
 					}
 				}
 			}
@@ -368,6 +518,9 @@ public class ClientEvents {
 				if(event.getEntity().getFoodData().getFoodLevel() == 20) {
 					event.setNewSpeed((float) (event.getNewSpeed() * 1.1));
 				}
+			}
+			if(applesGiveChopSpeed > 0) {
+				event.setNewSpeed((float) (event.getNewSpeed() * 1.3));
 			}
 		}
 		

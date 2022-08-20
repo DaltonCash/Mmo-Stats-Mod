@@ -1,7 +1,5 @@
 package com.daltoncash.mmostats.networking.packets.c2s;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -64,7 +62,6 @@ public class GainEffectFromEatingC2SPacket {
 			//if(player has the upgrade for this)
 			player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 20, regenStrength));
 			//if player has upgrade
-			System.out.println(foodInHand.getFoodProperties(new ItemStack(foodInHand), player).getNutrition());
 			player.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 180, foodInHand.getFoodProperties(new ItemStack(foodInHand), player).getNutrition()/4 - 1));
 		});
 		return true;

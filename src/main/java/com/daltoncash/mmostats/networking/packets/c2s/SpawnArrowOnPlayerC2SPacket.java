@@ -5,16 +5,17 @@ import java.util.function.Supplier;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.network.NetworkEvent;
 
-public class ShotgunArrowsC2SPacket {
-	 public ShotgunArrowsC2SPacket() {
+public class SpawnArrowOnPlayerC2SPacket {
+	 public SpawnArrowOnPlayerC2SPacket() {
 
 	 }
 
-	 public ShotgunArrowsC2SPacket(FriendlyByteBuf buf) {
+	 public SpawnArrowOnPlayerC2SPacket(FriendlyByteBuf buf) {
 
 	 }
 
@@ -28,16 +29,11 @@ public class ShotgunArrowsC2SPacket {
 	         // HERE WE ARE ON THE SERVER!
 	         ServerPlayer player = context.getSender();
 	         ServerLevel level = player.getLevel();
-	         double x = player.getLookAngle().x;
-	         double y = player.getLookAngle().y;
-	         double z = player.getLookAngle().z;
-	         EntityType.ARROW.spawn(level, null, null, player.blockPosition().offset(0, player.getEyeHeight(), 0),
-	                 MobSpawnType.COMMAND, true, false).setDeltaMovement(
-	                		 (x - 0.2), 
-	                		 y * 2, 
-	                		 z);
+	         double x = player.position().x;
+	         double y = player.position().y;
+	         double z = player.position().z;
 	         
-	         
+	         level.addFreshEntity(new ItemEntity(level, x, y + 2, z, new ItemStack(Items.ARROW)));
 	         
 	     });
 
