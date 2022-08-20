@@ -58,7 +58,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -81,10 +80,8 @@ import net.minecraftforge.event.entity.player.PlayerEvent.HarvestCheck;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickItem;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -168,7 +165,7 @@ public class ClientEvents {
 		//Shield Block Drops Arrows
 		@SubscribeEvent
 		public static void onBlockingArrow(ShieldBlockEvent event) {
-			System.out.println(event.getDamageSource().getDirectEntity().getType());
+			//event.getDamageSource().getDirectEntity().getType()
 			ModMessages.sendToServer(new SpawnArrowOnPlayerC2SPacket());
 		}
 		
@@ -177,7 +174,6 @@ public class ClientEvents {
 		//Blocking Damage taken during dodge roll
 		@SubscribeEvent
 		public static void onPlayerGettingHit(LivingHurtEvent event) {
-			System.out.println(ClientCapabilityData.getPlayerMiningExp());
 			if(event.getSource().getEntity() != null) {
 				if(event.getSource().getEntity().getType().equals(EntityType.PLAYER)) {
 					if(ragnorokDuration > 0) {

@@ -198,7 +198,7 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = MmoStatsMod.MODID)
 public class ModEvents {
-
+	
 	// Adds Mana to the Player over time.
 	@SubscribeEvent
 	public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
@@ -213,6 +213,7 @@ public class ModEvents {
 		}
 	}
 
+	
 	@SubscribeEvent
 	public static void onAttachCapabilitiesPlayer(AttachCapabilitiesEvent<Entity> event) {
 		if (event.getObject() instanceof Player) {
@@ -482,85 +483,91 @@ public class ModEvents {
 			}
 		}
 	}
-
+	
+	
 	// Dying usually resets Player Capabilities. This method reattaches the
 	// Capabilities to the player.
 	@SubscribeEvent
 	public static void onPlayerCloned(PlayerEvent.Clone event) {
+		
 		if (event.isWasDeath()) {
+			event.getOriginal().reviveCaps();
+			
 			//Core Skills
 			event.getOriginal().getCapability(PlayerManaProvider.PLAYER_MANA).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(PlayerManaProvider.PLAYER_MANA).ifPresent(newStore -> {
+				event.getEntity().getCapability(PlayerManaProvider.PLAYER_MANA).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(PlayerMiningLevelProvider.PLAYER_MINING_LEVEL).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(PlayerMiningLevelProvider.PLAYER_MINING_LEVEL).ifPresent(newStore -> {
+				event.getEntity().getCapability(PlayerMiningLevelProvider.PLAYER_MINING_LEVEL).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
+			
+			
 			event.getOriginal().getCapability(PlayerMiningExpProvider.PLAYER_MINING_EXP).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(PlayerMiningExpProvider.PLAYER_MINING_EXP).ifPresent(newStore -> {
+				event.getEntity().getCapability(PlayerMiningExpProvider.PLAYER_MINING_EXP).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(PlayerArcheryLevelProvider.PLAYER_ARCHERY_LEVEL).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(PlayerArcheryLevelProvider.PLAYER_ARCHERY_LEVEL).ifPresent(newStore -> {
+				event.getEntity().getCapability(PlayerArcheryLevelProvider.PLAYER_ARCHERY_LEVEL).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(PlayerArcheryExpProvider.PLAYER_ARCHERY_EXP).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(PlayerArcheryExpProvider.PLAYER_ARCHERY_EXP).ifPresent(newStore -> {
+				event.getEntity().getCapability(PlayerArcheryExpProvider.PLAYER_ARCHERY_EXP).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(PlayerCombatLevelProvider.PLAYER_COMBAT_LEVEL).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(PlayerCombatLevelProvider.PLAYER_COMBAT_LEVEL).ifPresent(newStore -> {
+				event.getEntity().getCapability(PlayerCombatLevelProvider.PLAYER_COMBAT_LEVEL).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(PlayerCombatExpProvider.PLAYER_COMBAT_EXP).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(PlayerCombatExpProvider.PLAYER_COMBAT_EXP).ifPresent(newStore -> {
+				event.getEntity().getCapability(PlayerCombatExpProvider.PLAYER_COMBAT_EXP).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(PlayerChoppingLevelProvider.PLAYER_CHOPPING_LEVEL).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(PlayerChoppingLevelProvider.PLAYER_CHOPPING_LEVEL).ifPresent(newStore -> {
+				event.getEntity().getCapability(PlayerChoppingLevelProvider.PLAYER_CHOPPING_LEVEL).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(PlayerChoppingExpProvider.PLAYER_CHOPPING_EXP).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(PlayerChoppingExpProvider.PLAYER_CHOPPING_EXP).ifPresent(newStore -> {
+				event.getEntity().getCapability(PlayerChoppingExpProvider.PLAYER_CHOPPING_EXP).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(PlayerFarmingLevelProvider.PLAYER_FARMING_LEVEL).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(PlayerFarmingLevelProvider.PLAYER_FARMING_LEVEL).ifPresent(newStore -> {
+				event.getEntity().getCapability(PlayerFarmingLevelProvider.PLAYER_FARMING_LEVEL).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(PlayerFarmingExpProvider.PLAYER_FARMING_EXP).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(PlayerFarmingExpProvider.PLAYER_FARMING_EXP).ifPresent(newStore -> {
+				event.getEntity().getCapability(PlayerFarmingExpProvider.PLAYER_FARMING_EXP).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(PlayerSwordsLevelProvider.PLAYER_SWORDS_LEVEL).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(PlayerSwordsLevelProvider.PLAYER_SWORDS_LEVEL).ifPresent(newStore -> {
+				event.getEntity().getCapability(PlayerSwordsLevelProvider.PLAYER_SWORDS_LEVEL).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(PlayerSwordsExpProvider.PLAYER_SWORDS_EXP).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(PlayerSwordsExpProvider.PLAYER_SWORDS_EXP).ifPresent(newStore -> {
+				event.getEntity().getCapability(PlayerSwordsExpProvider.PLAYER_SWORDS_EXP).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(PlayerMagicLevelProvider.PLAYER_MAGIC_LEVEL).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(PlayerMagicLevelProvider.PLAYER_MAGIC_LEVEL).ifPresent(newStore -> {
+				event.getEntity().getCapability(PlayerMagicLevelProvider.PLAYER_MAGIC_LEVEL).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(PlayerMagicExpProvider.PLAYER_MAGIC_EXP).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(PlayerMagicExpProvider.PLAYER_MAGIC_EXP).ifPresent(newStore -> {
+				event.getEntity().getCapability(PlayerMagicExpProvider.PLAYER_MAGIC_EXP).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
@@ -568,47 +575,47 @@ public class ModEvents {
 			//-------------------------Archery----Upgrades-----------------------
 			
 			event.getOriginal().getCapability(EfficientMarksmanUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(EfficientMarksmanUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+				event.getEntity().getCapability(EfficientMarksmanUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(HunterUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(HunterUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+				event.getEntity().getCapability(HunterUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(InsecurityUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(InsecurityUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+				event.getEntity().getCapability(InsecurityUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(LeftClickUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(LeftClickUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+				event.getEntity().getCapability(LeftClickUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(QuickshotUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(QuickshotUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+				event.getEntity().getCapability(QuickshotUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(SharpshooterUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(SharpshooterUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+				event.getEntity().getCapability(SharpshooterUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(SniperUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(SniperUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+				event.getEntity().getCapability(SniperUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(SweetSpotArcheryUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(SweetSpotArcheryUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+				event.getEntity().getCapability(SweetSpotArcheryUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(UnabatedUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(UnabatedUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+				event.getEntity().getCapability(UnabatedUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
@@ -616,55 +623,54 @@ public class ModEvents {
 			//-------------------------Chopping----Upgrades-----------------------
 			
 			event.getOriginal().getCapability(GrannySmithUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(GrannySmithUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+				event.getEntity().getCapability(GrannySmithUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(HardwoodUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(HardwoodUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+				event.getEntity().getCapability(HardwoodUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(HighGroundUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(HighGroundUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+				event.getEntity().getCapability(HighGroundUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(StrongArmsUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(StrongArmsUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+				event.getEntity().getCapability(StrongArmsUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			
 			//-------------------------Combat----Upgrades-----------------------
-			
 			event.getOriginal().getCapability(DodgeRollUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(DodgeRollUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+				event.getEntity().getCapability(DodgeRollUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(FreeArrowsUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(FreeArrowsUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+				event.getEntity().getCapability(FreeArrowsUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(OvercomeUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(OvercomeUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+				event.getEntity().getCapability(OvercomeUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(RagnorokUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(RagnorokUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+				event.getEntity().getCapability(RagnorokUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(StableFootingUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(StableFootingUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+				event.getEntity().getCapability(StableFootingUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(TakeStanceUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(TakeStanceUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+				event.getEntity().getCapability(TakeStanceUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
@@ -672,22 +678,22 @@ public class ModEvents {
 			//-------------------------Farming----Upgrades-----------------------
 			
 			event.getOriginal().getCapability(CarnivoreUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(CarnivoreUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+				event.getEntity().getCapability(CarnivoreUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(EggerUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(EggerUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+				event.getEntity().getCapability(EggerUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(SugarRushUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(SugarRushUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+				event.getEntity().getCapability(SugarRushUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(WellFedUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(WellFedUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+				event.getEntity().getCapability(WellFedUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
@@ -695,22 +701,22 @@ public class ModEvents {
 			//-------------------------Mining----Upgrades-----------------------
 			
 			event.getOriginal().getCapability(JunkBlocksDropExpUpgradeProvider.JUNK_BLOCKS_DROP_EXP).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(JunkBlocksDropExpUpgradeProvider.JUNK_BLOCKS_DROP_EXP).ifPresent(newStore -> {
+				event.getEntity().getCapability(JunkBlocksDropExpUpgradeProvider.JUNK_BLOCKS_DROP_EXP).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(NightVisionUpgradeProvider.NIGHT_VISION).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(NightVisionUpgradeProvider.NIGHT_VISION).ifPresent(newStore -> {
+				event.getEntity().getCapability(NightVisionUpgradeProvider.NIGHT_VISION).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(NoJunkBlocksUpgradeProvider.NO_JUNK_BLOCKS).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(NoJunkBlocksUpgradeProvider.NO_JUNK_BLOCKS).ifPresent(newStore -> {
+				event.getEntity().getCapability(NoJunkBlocksUpgradeProvider.NO_JUNK_BLOCKS).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(ObsidianBreakerUpgradeProvider.OBSIDIAN_BREAKER).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(ObsidianBreakerUpgradeProvider.OBSIDIAN_BREAKER).ifPresent(newStore -> {
+				event.getEntity().getCapability(ObsidianBreakerUpgradeProvider.OBSIDIAN_BREAKER).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
@@ -718,32 +724,32 @@ public class ModEvents {
 			//-------------------------Swords----Upgrades-----------------------
 			
 			event.getOriginal().getCapability(CritasticUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(CritasticUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+				event.getEntity().getCapability(CritasticUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(FleshWoundUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(FleshWoundUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+				event.getEntity().getCapability(FleshWoundUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(PerfectTimingUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(PerfectTimingUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+				event.getEntity().getCapability(PerfectTimingUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(RightClickUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(RightClickUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+				event.getEntity().getCapability(RightClickUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(ShieldBashUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(ShieldBashUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+				event.getEntity().getCapability(ShieldBashUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(SweetSpotSwordsUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(SweetSpotSwordsUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+				event.getEntity().getCapability(SweetSpotSwordsUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
@@ -751,62 +757,62 @@ public class ModEvents {
 			//-------------------------Blocks----Mined-----------------------
 			
 			event.getOriginal().getCapability(AncientDebrisMinedProvider.ANCIENT_DEBRIS_MINED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(AncientDebrisMinedProvider.ANCIENT_DEBRIS_MINED).ifPresent(newStore -> {
+				event.getEntity().getCapability(AncientDebrisMinedProvider.ANCIENT_DEBRIS_MINED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(CoalMinedProvider.COAL_MINED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(CoalMinedProvider.COAL_MINED).ifPresent(newStore -> {
+				event.getEntity().getCapability(CoalMinedProvider.COAL_MINED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(CopperMinedProvider.COPPER_MINED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(CopperMinedProvider.COPPER_MINED).ifPresent(newStore -> {
+				event.getEntity().getCapability(CopperMinedProvider.COPPER_MINED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(DiamondMinedProvider.DIAMOND_MINED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(DiamondMinedProvider.DIAMOND_MINED).ifPresent(newStore -> {
+				event.getEntity().getCapability(DiamondMinedProvider.DIAMOND_MINED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(EmeraldMinedProvider.EMERALD_MINED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(EmeraldMinedProvider.EMERALD_MINED).ifPresent(newStore -> {
+				event.getEntity().getCapability(EmeraldMinedProvider.EMERALD_MINED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(GlowstoneMinedProvider.GLOWSTONE_MINED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(GlowstoneMinedProvider.GLOWSTONE_MINED).ifPresent(newStore -> {
+				event.getEntity().getCapability(GlowstoneMinedProvider.GLOWSTONE_MINED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(GoldMinedProvider.GOLD_MINED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(GoldMinedProvider.GOLD_MINED).ifPresent(newStore -> {
+				event.getEntity().getCapability(GoldMinedProvider.GOLD_MINED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(IronMinedProvider.IRON_MINED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(IronMinedProvider.IRON_MINED).ifPresent(newStore -> {
+				event.getEntity().getCapability(IronMinedProvider.IRON_MINED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(LapisMinedProvider.LAPIS_MINED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(LapisMinedProvider.LAPIS_MINED).ifPresent(newStore -> {
+				event.getEntity().getCapability(LapisMinedProvider.LAPIS_MINED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(NetherGoldMinedProvider.NETHER_GOLD_MINED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(NetherGoldMinedProvider.NETHER_GOLD_MINED).ifPresent(newStore -> {
+				event.getEntity().getCapability(NetherGoldMinedProvider.NETHER_GOLD_MINED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(QuartzMinedProvider.QUARTZ_MINED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(QuartzMinedProvider.QUARTZ_MINED).ifPresent(newStore -> {
+				event.getEntity().getCapability(QuartzMinedProvider.QUARTZ_MINED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
 			event.getOriginal().getCapability(RedstoneMinedProvider.REDSTONE_MINED).ifPresent(oldStore -> {
-				event.getOriginal().getCapability(RedstoneMinedProvider.REDSTONE_MINED).ifPresent(newStore -> {
+				event.getEntity().getCapability(RedstoneMinedProvider.REDSTONE_MINED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});

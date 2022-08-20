@@ -2,7 +2,6 @@ package com.daltoncash.mmostats.gui.skill_menus;
 
 
 import com.daltoncash.mmostats.MmoStatsMod;
-import com.daltoncash.mmostats.capabilities.ClientCapabilityData;
 import com.daltoncash.mmostats.gui.UpgradeMenu;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.UpgradeJunkBlocksDropExpC2SPacket;
