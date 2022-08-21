@@ -3,6 +3,8 @@ package com.daltoncash.mmostats;
 import com.daltoncash.mmostats.item.ModItems;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.mojang.logging.LogUtils;
+
+import assets.mmostats.entities.client.EntityInit;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
@@ -60,6 +62,9 @@ public class MmoStatsMod {
 		ModItems.register(modEventBus);
 		// Register ourselves for server and other game events we are interested in
 		MinecraftForge.EVENT_BUS.register(this);
+		
+		//entities
+		EntityInit.Entities.register(modEventBus);
 	}
 
 	private void commonSetup(final FMLCommonSetupEvent event) {
