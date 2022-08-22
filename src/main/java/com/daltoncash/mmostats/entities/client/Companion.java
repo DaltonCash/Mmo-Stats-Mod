@@ -1,7 +1,6 @@
 package com.daltoncash.mmostats.entities.client;
 
 import com.daltoncash.mmostats.entities.client.companion_goals.LookAtPlayer;
-
 import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.Keyframe;
@@ -21,7 +20,6 @@ import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.FollowOwnerGoal;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.LeapAtTargetGoal;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.SitWhenOrderedToGoal;
@@ -45,24 +43,20 @@ public class Companion extends TamableAnimal {
 	
 	@Override
 	protected void registerGoals() {
-	      
-	      this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
-	      this.goalSelector.addGoal(4, new LeapAtTargetGoal(this, 0.4F));
-	      this.goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.0D, true));
-	      this.goalSelector.addGoal(6, new FollowOwnerGoal(this, 1.0D, 10.0F, 2.0F, false));
-	      this.goalSelector.addGoal(2, new LookAtPlayer(this,  Player.class, 8.0F));
+
+	      this.goalSelector.addGoal(1, new LookAtPlayer(this,  Player.class, 8.0F));
 	      //this.goalSelector.addGoal(1, new HeadTiltGoal(this));
 	     
 	}
 	//animations
 	public static final AnimationDefinition MOVEHEAD = AnimationDefinition.Builder.withLength(1f).addAnimation
 			("undefined", new AnimationChannel(AnimationChannel.Targets.ROTATION, new Keyframe
-					(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f), AnimationChannel.Interpolations.LINEAR), new Keyframe
-					(1f, KeyframeAnimations.degreeVec(-12.45392054358581f, 1.0808891363294606f, -15.117940229032683f), AnimationChannel.Interpolations.LINEAR))).addAnimation
+			(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f), AnimationChannel.Interpolations.LINEAR), new Keyframe
+			(1f, KeyframeAnimations.degreeVec(-12.45392054358581f, 1.0808891363294606f, -15.117940229032683f), AnimationChannel.Interpolations.LINEAR))).addAnimation
 			("undefined", new AnimationChannel(AnimationChannel.Targets.ROTATION, new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f), AnimationChannel.Interpolations.LINEAR), new Keyframe
-					(1f, KeyframeAnimations.degreeVec(-12.45392054358581f, 1.0808891363294606f, -15.117940229033138f), AnimationChannel.Interpolations.LINEAR))).addAnimation
+			(1f, KeyframeAnimations.degreeVec(-12.45392054358581f, 1.0808891363294606f, -15.117940229033138f), AnimationChannel.Interpolations.LINEAR))).addAnimation
 			("undefined", new AnimationChannel(AnimationChannel.Targets.ROTATION, new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f), AnimationChannel.Interpolations.LINEAR), new Keyframe
-					(1f, KeyframeAnimations.degreeVec(-12.45392054358581f, 1.0808891363294606f, -15.117940229032683f), AnimationChannel.Interpolations.LINEAR))).build();
+			(1f, KeyframeAnimations.degreeVec(-12.45392054358581f, 1.0808891363294606f, -15.117940229032683f), AnimationChannel.Interpolations.LINEAR))).build();
 	
 
 	//end of animations
