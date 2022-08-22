@@ -1,10 +1,10 @@
 package com.daltoncash.mmostats;
 
+import com.daltoncash.mmostats.entities.client.EntityInit;
 import com.daltoncash.mmostats.item.ModItems;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.mojang.logging.LogUtils;
 
-import assets.mmostats.entities.client.EntityInit;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;

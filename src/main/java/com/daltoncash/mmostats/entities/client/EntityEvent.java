@@ -1,4 +1,4 @@
-package assets.mmostats.entities.client;
+package com.daltoncash.mmostats.entities.client;
 
 import com.daltoncash.mmostats.MmoStatsMod;
 

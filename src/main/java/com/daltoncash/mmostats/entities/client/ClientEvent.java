@@ -1,10 +1,9 @@
-package assets.mmostats.entities.client;
+package com.daltoncash.mmostats.entities.client;
 
 import com.daltoncash.mmostats.MmoStatsMod;
-import com.daltoncash.mmostats.MmoStatsMod.ClientModEvents;
+import com.daltoncash.mmostats.entities.entitydata.render.CompanionModel;
+import com.daltoncash.mmostats.entities.entitydata.render.CompanionRenderer;
 
-import assets.mmostats.entities.EntityData.render.CompanionModel;
-import assets.mmostats.entities.EntityData.render.CompanionRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -27,5 +26,4 @@ public final class ClientEvent {
 		event.registerEntityRenderer(EntityInit.COMPANION.get(), CompanionRenderer::new);
 	} 
 	
-
 }

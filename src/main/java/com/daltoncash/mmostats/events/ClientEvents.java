@@ -268,6 +268,10 @@ public class ClientEvents {
 		//eat when full
 		@SubscribeEvent
 		public static void onEatingFood(RightClickItem event) {
+			if(event.getItemStack().getItem().equals(Items.STICK)) {
+				System.out.println("Should be spawning in client events!");
+			}
+				
 			
 			if(event.getItemStack().isEdible()) {
 				if(event.getEntity().getFoodData().getFoodLevel() >= 20) {

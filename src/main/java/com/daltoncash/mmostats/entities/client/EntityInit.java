@@ -1,9 +1,5 @@
-package assets.mmostats.entities.client;
+package com.daltoncash.mmostats.entities.client;
 
-import java.util.function.Supplier;
-
-import javax.management.loading.PrivateClassLoader;
-import org.antlr.v4.parse.ANTLRParser.finallyClause_return;
 import com.daltoncash.mmostats.MmoStatsMod;
 
 import net.minecraft.resources.ResourceLocation;
@@ -21,5 +17,5 @@ public class EntityInit {
 
 	public static final RegistryObject<EntityType<Companion>> COMPANION = 
 			Entities.register("Companion", () -> EntityType.Builder.of(Companion::new, MobCategory.CREATURE).sized(0.6f, 0.85f)
-			.build(new ResourceLocation(MmoStatsMod.MODID, "Companion").toString()));
+			.build(new ResourceLocation(MmoStatsMod.MODID, "models/entities/companion_model.bbmodel").toString()));
 	} 
