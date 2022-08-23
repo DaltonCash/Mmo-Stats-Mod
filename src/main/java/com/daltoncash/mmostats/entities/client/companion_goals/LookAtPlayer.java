@@ -14,7 +14,7 @@ import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
 
 public class LookAtPlayer extends Goal {
-   public static final float DEFAULT_PROBABILITY = 0.02F;
+   public static final float DEFAULT_PROBABILITY = 10F;
    protected final Mob mob;
    @Nullable
    protected Entity lookAt;
