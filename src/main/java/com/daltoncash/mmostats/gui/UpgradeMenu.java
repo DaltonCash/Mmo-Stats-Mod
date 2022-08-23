@@ -30,13 +30,13 @@ public class UpgradeMenu extends Screen {
 	private final ResourceLocation MINING_TEXTURE = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/test_images/test_mining_image_3.png");
 	private final ResourceLocation ARCHERY_TEXTURE = new ResourceLocation(MmoStatsMod.MODID,
-			"textures/gui/test_buttons/archery_button.png");
+			"textures/gui/test_buttons/archery.png");
 	private final ResourceLocation CHOPPING_TEXTURE = new ResourceLocation(MmoStatsMod.MODID,
-			"textures/gui/test_buttons/chopping_button.png");
+			"textures/gui/test_buttons/chopping.png");
 	private final ResourceLocation COMBAT_TEXTURE = new ResourceLocation(MmoStatsMod.MODID,
-			"textures/gui/test_buttons/combat_button.png");
+			"textures/gui/test_buttons/combat.png");
 	private final ResourceLocation FARMING_TEXTURE = new ResourceLocation(MmoStatsMod.MODID,
-			"textures/gui/test_buttons/farming_button.png");
+			"textures/gui/test_buttons/farming.png");
 
 	//private final ResourceLocation EXP_BAR = new ResourceLocation(MmoStatsMod.MODID, "textures/gui/exp_bar_0.png");
 

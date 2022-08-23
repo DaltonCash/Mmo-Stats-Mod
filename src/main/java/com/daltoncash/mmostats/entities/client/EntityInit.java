@@ -16,6 +16,6 @@ public class EntityInit {
 	public static final DeferredRegister<EntityType<?>> Entities = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, MmoStatsMod.MODID);
 
 	public static final RegistryObject<EntityType<Companion>> COMPANION = 
-			Entities.register("Companion", () -> EntityType.Builder.of(Companion::new, MobCategory.CREATURE).sized(0.6f, 0.85f)
+			Entities.register("companion", () -> EntityType.Builder.of(Companion::new, MobCategory.CREATURE).sized(0.6f, 0.85f)
 			.build(new ResourceLocation(MmoStatsMod.MODID, "models/entities/companion_model.bbmodel").toString()));
 	} 

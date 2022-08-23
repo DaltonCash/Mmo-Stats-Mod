@@ -21,7 +21,7 @@ public class CombatMenu extends Screen {
 	//private OptionsList list;
 	//protected final Options options;
 	private final ResourceLocation bgtexture = new ResourceLocation(MmoStatsMod.MODID,
-			"textures/gui/test_buttons/combat_button.png");
+			"textures/gui/cobble_bg-2.png");
 	private final ResourceLocation upgradeTexture1 = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/buttons/experience_upgrade_texture.png");
 	private final ResourceLocation descriptionBanner = new ResourceLocation(MmoStatsMod.MODID,
