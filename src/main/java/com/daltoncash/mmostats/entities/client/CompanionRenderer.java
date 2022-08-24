@@ -19,7 +19,7 @@ public class CompanionRenderer extends GeoEntityRenderer<Companion> {
 
     @Override
     public ResourceLocation getTextureLocation(Companion instance) {
-        return new ResourceLocation(MmoStatsMod.MODID, "textures/entity/raccoon/raccoon.png");
+        return new ResourceLocation(MmoStatsMod.MODID, "textures/entity/companion/companion.png");
     }
 
     @Override
