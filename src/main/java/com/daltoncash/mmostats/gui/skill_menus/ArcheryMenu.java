@@ -64,7 +64,10 @@ public class ArcheryMenu extends Screen {
 
 	private static String upgradeString = "";
 	private static final String efficientMarksman = "does something";
-	private static final String hunter = "hunter";
+	private static final String hunter = "Hunter: \n\nDeal 1.5/2/3x damage to animals. "
+			+ "\n\nAlso, animals always drop 1/2/3x their average food drops in addition to normal drops"
+			+ "\n\nE.g., at level 1, chickens will drop 1 and 1 raw chicken(2 total) "
+			+ "and pigs will drop 2 and 1-3 raw pork\n(3-5 total).";
 	private static final String insecurity = "does another thing";
 	private static final String leftClick = "ayo this man nutting";
 	private static final String quickshot = "quickfire coom";
@@ -84,17 +87,15 @@ public class ArcheryMenu extends Screen {
 				Component.literal(this.width + " " + this.height), ArcheryMenu::onPressDoNothing));
 		
 		//Upgrade Banner-needs to be at bottom when done
-				addRenderableWidget(new ImageButton((this.width * 27) / 42, 0, 152, this.height, 0, 0, 0,
-						descriptionBanner, (this.width * 20)/56, (this.height * 50)/49, ArcheryMenu::onPressDoNothing));
-				
-				addRenderableWidget(new Button((this.width * 33) /40, (this.height * 35) / 40, (this.width * 100) / 840, 20, 
-						Component.literal("Upgrade"), ArcheryMenu::onPressDoUpgrade));
 				
 				
 				
 				
-				upgradeDescription = new DescriptionPanel(this.minecraft, this.width / 3 *1, this.height - 6 - 20, 20);
+				
+				upgradeDescription = new DescriptionPanel(this.minecraft, (this.width * 57) / 256 , this.height - (this.height * 27) / 64, this.height - ((this.height * 100) / 128));
 				this.addRenderableWidget(upgradeDescription);
+				
+				
 				List<String> lines = new ArrayList<>();
 				lines.add("Select Upgrade.");
 				upgradeDescription.setInfo(lines, null, null);
@@ -117,10 +118,19 @@ public class ArcheryMenu extends Screen {
 		addRenderableWidget(new ImageButton((this.width / 18) * 6, (this.height / 6) * 3, 50, 50, 0, 0, 99,
 				upgradeTexture8, 50, 50, ArcheryMenu::onPressToggleUnabated));
 		
+		addRenderableWidget(new ImageButton((this.width * 27) / 42, 0, (this.width * 91) / 256, this.height, 0, 0, 0,
+				descriptionBanner, (this.width * 20)/56, (this.height * 50)/49, ArcheryMenu::onPressCancel))
+				.active = false;
+				
+		addRenderableWidget(new Button((this.width * 195) / 256, (this.height * 34) / 40, (this.width * 100) / 840, 20, 
+				Component.literal("Upgrade"), ArcheryMenu::onPressDoUpgrade));
 		
 		
 		
 	}
+	private static void onPressCancel(Button button) {
+	}
+	
 	private static void onPressToggleEfficientMarksman(Button button) {
 		upgradeString = efficientMarksman;
 		updateCache();
@@ -219,7 +229,7 @@ public class ArcheryMenu extends Screen {
 	        @SuppressWarnings("resource")
 			DescriptionPanel(Minecraft mcIn, int widthIn, int heightIn, int topIn)
 	        {
-	            super(mcIn, widthIn, heightIn, topIn, (mcIn.getInstance().screen.width * 27) / 42);
+	            super(mcIn, widthIn, heightIn, topIn, (Minecraft.getInstance().screen.width * 91) / 128);
 	        }
 
 	        void setInfo(List<String> lines, ResourceLocation logoPath, Size2i logoDims)
@@ -241,7 +251,7 @@ public class ArcheryMenu extends Screen {
 	                }
 
 	                Component chat = ForgeHooks.newChatWithLinks(line, false);
-	                int maxTextLength = this.width - 12;
+	                int maxTextLength = this.width - 40;
 	                if (maxTextLength >= 0)
 	                {
 	                    ret.addAll(Language.getInstance().getVisualOrder(font.getSplitter().splitLines(chat, maxTextLength, Style.EMPTY)));
@@ -345,9 +355,6 @@ public class ArcheryMenu extends Screen {
 	        List<String> lines = new ArrayList<>();
 	        
 	        lines.add(null);
-	        lines.add("hello!");
-	        lines.add("This is a new line!");
-	        
 	        lines.add(upgradeString);
 	        upgradeDescription.setInfo(lines, null, null);
 	    }
