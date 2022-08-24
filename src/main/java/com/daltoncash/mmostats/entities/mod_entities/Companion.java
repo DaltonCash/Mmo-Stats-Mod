@@ -51,7 +51,7 @@ public class Companion extends Animal implements IAnimatable{
 	    
 	    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
 	        if (event.isMoving()) {
-	            event.getController().setAnimation(new AnimationBuilder().addAnimation("companion.movehead.animation", true));
+	            event.getController().setAnimation(new AnimationBuilder().addAnimation("companion.movehead", true));
 	            return PlayState.CONTINUE;
 	        }
 	        event.getController().setAnimation(new AnimationBuilder().addAnimation("companion.idle", true));
