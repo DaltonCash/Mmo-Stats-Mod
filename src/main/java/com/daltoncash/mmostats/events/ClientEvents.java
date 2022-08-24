@@ -169,7 +169,18 @@ public class ClientEvents {
 			ModMessages.sendToServer(new SpawnArrowOnPlayerC2SPacket());
 		}
 		
-		
+		@SubscribeEvent
+		public static void onTriggeringExtendedInvulnerabilityFrames(LivingHurtEvent event) {
+			if(event.getEntity().getType().equals(EntityType.PLAYER)) {
+				if(extendediframes > 0) {
+					event.setCanceled(true);
+					System.out.println("iframes");
+				}
+				if(extendediframes == 0) {
+					extendediframes = 80;
+				}
+			}
+		}
 		
 		//Blocking Damage taken during dodge roll
 		@SubscribeEvent
