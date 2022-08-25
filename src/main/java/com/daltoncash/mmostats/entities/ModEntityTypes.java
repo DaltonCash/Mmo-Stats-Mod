@@ -11,17 +11,16 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public class ModEntityTypes {
-		public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
-            DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, MmoStatsMod.MODID);
+	public static final DeferredRegister<EntityType<?>> Entities = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, MmoStatsMod.MODID);
 		
 public static final RegistryObject<EntityType<Companion>> COMPANION =
-		            ENTITY_TYPES.register("companion",
+					Entities.register("companion",
 		            () -> EntityType.Builder.of(Companion::new, MobCategory.CREATURE)
 		                    .sized(0.8f, 0.6f)
 		                    .build(new ResourceLocation(MmoStatsMod.MODID, "companion").toString()));
 
 
 		    public static void register(IEventBus eventBus) {
-		        ENTITY_TYPES.register(eventBus);
+		    				Entities.register(eventBus);
 		    }
 }

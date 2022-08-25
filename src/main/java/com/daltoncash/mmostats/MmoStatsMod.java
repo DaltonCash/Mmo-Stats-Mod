@@ -73,9 +73,12 @@ public class MmoStatsMod {
 		GeckoLib.initialize();
 	}
 
-
-	private void commonSetup(final FMLCommonSetupEvent event) {
+	private void clientSetup(final FMLClientSetupEvent event) {
 		EntityRenderers.register(ModEntityTypes.COMPANION.get(), CompanionRenderer::new);
+	}
+	
+	private void commonSetup(final FMLCommonSetupEvent event) {
+		
 		event.enqueueWork(() -> {
 			ModMessages.register();
 		});
