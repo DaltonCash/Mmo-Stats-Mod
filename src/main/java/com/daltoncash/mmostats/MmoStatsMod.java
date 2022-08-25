@@ -1,11 +1,14 @@
 package com.daltoncash.mmostats;
 
-import com.daltoncash.mmostats.entities.client.EntityInit;
+
+import com.daltoncash.mmostats.entities.ModEntityTypes;
+import com.daltoncash.mmostats.entities.client.CompanionRenderer;
 import com.daltoncash.mmostats.item.ModItems;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.mojang.logging.LogUtils;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -65,12 +68,17 @@ public class MmoStatsMod {
 		MinecraftForge.EVENT_BUS.register(this);
 		
 		//entities
-		EntityInit.Entities.register(modEventBus);
+		ModEntityTypes.register(modEventBus);
 		
 		GeckoLib.initialize();
 	}
 
+	private void clientSetup(final FMLClientSetupEvent event) {
+		EntityRenderers.register(ModEntityTypes.COMPANION.get(), CompanionRenderer::new);
+	}
+	
 	private void commonSetup(final FMLCommonSetupEvent event) {
+		
 		event.enqueueWork(() -> {
 			ModMessages.register();
 		});
@@ -92,6 +100,8 @@ public class MmoStatsMod {
 			// Some client setup code
 			LOGGER.info("HELLO FROM CLIENT SETUP");
 			LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+			
+		
 		}
 	}
 }
