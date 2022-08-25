@@ -69,7 +69,7 @@ public class MmoStatsMod {
 		
 		//entities
 		ModEntityTypes.register(modEventBus);
-		EntityRenderers.register(ModEntityTypes.COMPANION.get(), CompanionRenderer::new);
+		
 		GeckoLib.initialize();
 	}
 
@@ -97,6 +97,8 @@ public class MmoStatsMod {
 			// Some client setup code
 			LOGGER.info("HELLO FROM CLIENT SETUP");
 			LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+			
+			EntityRenderers.register(ModEntityTypes.COMPANION.get(), CompanionRenderer::new);
 		}
 	}
 }

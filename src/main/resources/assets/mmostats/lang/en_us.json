@@ -11,8 +11,6 @@
 	"item.mmostats.bonk_stick_v2": "Bonk Stick V2",
 
 	//Presi's creative mode tabs
-	"itemGroup.mmostatsmodtab": "MMO Items Tab",
-	
-	//retard mans stuff
-	"entity.mmostatsmod.Companion": "Companion",
+	"itemGroup.mmostatsmodtab": "MMO Items Tab"
+
 }
