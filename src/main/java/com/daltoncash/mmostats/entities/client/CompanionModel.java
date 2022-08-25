@@ -11,13 +11,13 @@ public class CompanionModel extends AnimatedGeoModel<Companion>{
 	@Override
 	public ResourceLocation getAnimationResource(Companion animatable) {
 		// TODO Auto-generated method stub
-		return new ResourceLocation(MmoStatsMod.MODID, "models/entities/animations/companion.animation.json");
+		return new ResourceLocation(MmoStatsMod.MODID, "animations/companion.animation.json");
 	}
 
 	@Override
 	public ResourceLocation getModelResource(Companion object) {
 		// TODO Auto-generated method stub
-		return new ResourceLocation(MmoStatsMod.MODID, "models/entities/companionmodel.geo.json");
+		return new ResourceLocation(MmoStatsMod.MODID, "geo/companionmodel.geo.json");
 	}
 
 	@Override

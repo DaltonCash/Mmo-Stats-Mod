@@ -3,7 +3,6 @@ package com.daltoncash.mmostats.networking.packets.c2s.skills;
 import java.util.function.Supplier;
 
 import com.daltoncash.mmostats.capabilities.playerlevel.PlayerLevelProvider;
-import com.daltoncash.mmostats.events.ClientEvents.ClientForgeEvents;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.PlayerLevelDataSyncS2CPacket;
 
