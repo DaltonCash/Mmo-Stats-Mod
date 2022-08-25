@@ -1,4 +1,4 @@
-package com.daltoncash.mmostats.capabilities.mana;
+package com.daltoncash.mmostats.capabilities.playerlevel.stats.mana;
 
 import net.minecraft.nbt.CompoundTag;
 

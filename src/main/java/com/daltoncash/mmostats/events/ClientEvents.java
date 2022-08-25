@@ -3,6 +3,7 @@ package com.daltoncash.mmostats.events;
 import com.daltoncash.mmostats.MmoStatsMod;
 import com.daltoncash.mmostats.capabilities.ClientCapabilityData;
 import com.daltoncash.mmostats.common.handler.Sounds;
+import com.daltoncash.mmostats.gui.LevelUpOverlay;
 import com.daltoncash.mmostats.gui.UpgradeMenu;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.c2s.AdditionalFortuneProcC2SPacket;
@@ -33,11 +34,14 @@ import com.daltoncash.mmostats.networking.packets.c2s.skills.GainFarmingExpFromU
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainFarmingLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainMiningExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainMiningLevelC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.GainPlayerLevelC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.GainPlayerLevelExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetArcheryExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetChoppingExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetCombatExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetFarmingExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetMiningExpC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetPlayerLevelExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainNightVisionC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.SpawnArrowOnPlayerC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.EntityDropsAnArrowC2SPacket;
@@ -90,14 +94,19 @@ public class ClientEvents {
 	@Mod.EventBusSubscriber(modid = MmoStatsMod.MODID, value = Dist.CLIENT)
 	public static class ClientForgeEvents {
 		public static final Logger LOGGER = LogUtils.getLogger();
+		public static Entity clientEntity;
 		public static BlockEvent.BreakEvent blockevent = null;
+		public static int overlayDuration = 800;
+		public static int seconds = 0;
 		public static int expToSub = 0;
 		public static int expToAdd = 0;
+		public static int playerLevelExpToSub = 0;
+		public static int playerLevelExpToAdd = 0;
+		
 		public static int bowCooldown = 30;
 		public static int dodgeCooldown = 80;
 		public static int eatCooldown = 128;
 		public static int invulnFrameDuration = 28;
-		public static Entity clientEntity;
 		public static int healAtHalfHealth = 24000;
 		public static int applesGiveChopSpeed = 0;
 		public static int extendediframes = 0;
@@ -119,7 +128,17 @@ public class ClientEvents {
 		*/
 		//WIP2
 		
-		
+		private static void PlayerLevelCheck(int playerLevelExpBeingAdded) {
+			int playerLevel = ClientCapabilityData.getPlayerLevel();
+			int playerLevelExp = ClientCapabilityData.getPlayerExp() + playerLevelExpBeingAdded;
+			if (playerLevelExp > (playerLevel * 5) + 25) {
+				playerLevelExpToSub = (playerLevel * 5) + 25;
+				System.out.println("level up: " + (playerLevel + 1));
+				ModMessages.sendToServer(new GainPlayerLevelC2SPacket());
+				ModMessages.sendToServer(new ResetPlayerLevelExpC2SPacket());
+				
+			}
+		}
 		//Provides a cooldown to the onArrowHit to prevent exploits
 		@SubscribeEvent
 		public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
@@ -161,6 +180,9 @@ public class ClientEvents {
 			if (ragnorokDuration > 0) {
 				ragnorokDuration--;
 			}
+			if(overlayDuration > 0) {
+				overlayDuration--;
+			}
 		}
 		//Shield Block Drops Arrows
 		@SubscribeEvent
@@ -168,7 +190,6 @@ public class ClientEvents {
 			//event.getDamageSource().getDirectEntity().getType()
 			ModMessages.sendToServer(new SpawnArrowOnPlayerC2SPacket());
 		}
-		
 		
 		
 		//Blocking Damage taken during dodge roll
@@ -322,6 +343,9 @@ public class ClientEvents {
 			if(event.getItem().getItem().equals(Items.BOW)) {
 				event.setDuration(71997);
 			}
+			overlayDuration = 800;
+			seconds++;
+			System.out.println(seconds);
 			
 		}
 		
@@ -369,15 +393,12 @@ public class ClientEvents {
 						}
 						//Archery exp gain
 						if(bowCooldown >= 30) {
-							//WIP 8-18---
-							System.out.println(event.getAmount());
-							//WIP 8-18---
 							int archeryExp = ClientCapabilityData.getPlayerArcheryExp();
 							int archeryLevel = ClientCapabilityData.getPlayerArcheryLevel();
-							
 							ModMessages.sendToServer(new GainArcheryExpC2SPacket());
 							bowCooldown = 0;
-							// level up if player has sufficient choppingExp
+							
+							// level up if player has sufficient archeryExp
 							if (archeryExp > (archeryLevel * 40) + 400) {
 								LOGGER.info("{} leveled up to {} in Archery", 
 										event.getSource().getEntity().getScoreboardName(), 
@@ -385,6 +406,11 @@ public class ClientEvents {
 								expToSub = (archeryLevel * 40) + 400;
 								ModMessages.sendToServer(new GainArcheryLevelC2SPacket());
 								ModMessages.sendToServer(new ResetArcheryExpC2SPacket());
+								
+								playerLevelExpToAdd = (archeryLevel % 25 == 24) ? 
+										(((archeryLevel + 1) / 100) + 1) * 5 : ((archeryLevel + 1) / 100) + 1;
+								ModMessages.sendToServer(new GainPlayerLevelExpC2SPacket());
+								PlayerLevelCheck(playerLevelExpToAdd);
 							}
 						}else {
 							LOGGER.debug("Player {} is firing too fast!(archeryExp on cooldown)", 
@@ -394,6 +420,7 @@ public class ClientEvents {
 				}
 			}
 		}
+		
 		
 		//HarvestCheck is an event that triggers when a block is being destroyed.
 		//This method removes the drop from "junk blocks" if the appropriate upgrade(NoJunkBlocks)
@@ -417,6 +444,7 @@ public class ClientEvents {
 		//This method gives the player exp for combat when they kill an entity.
 		@SubscribeEvent
 		public static void onkill(LivingDeathEvent event) {
+			seconds = 0;
 			expToAdd = 0;
 			if(event.getSource().getEntity() != null) {
 				if(event.getSource().getEntity().getType().equals(EntityType.PLAYER)) {
@@ -492,6 +520,11 @@ public class ClientEvents {
 							expToSub = (combatLevel * 40) + 400;
 							ModMessages.sendToServer(new GainCombatLevelC2SPacket());
 							ModMessages.sendToServer(new ResetCombatExpC2SPacket());
+							
+							playerLevelExpToAdd = (combatLevel % 25 == 24) ? 
+									(((combatLevel + 1) / 100) + 1) * 5 : ((combatLevel + 1) / 100) + 1;
+							ModMessages.sendToServer(new GainPlayerLevelExpC2SPacket());
+							PlayerLevelCheck(playerLevelExpToAdd);
 						}
 						LOGGER.info("{} has killed {}(Player CombatExp: {})", 
 								event.getSource().getEntity().getScoreboardName(), 
@@ -576,6 +609,11 @@ public class ClientEvents {
 					expToSub = (farmingLevel * 40) + 400;
 					ModMessages.sendToServer(new GainFarmingLevelC2SPacket());
 					ModMessages.sendToServer(new ResetFarmingExpC2SPacket());
+					
+					playerLevelExpToAdd = (farmingLevel % 25 == 24) ? 
+							(((farmingLevel + 1) / 100) + 1) * 5 : ((farmingLevel + 1) / 100) + 1;
+					ModMessages.sendToServer(new GainPlayerLevelExpC2SPacket());
+					PlayerLevelCheck(playerLevelExpToAdd);
 				}
 				LOGGER.info("{} has farmed {}(Player FarmingExp: {})", 
 						event.getPlayer().getScoreboardName(), 
@@ -608,6 +646,11 @@ public class ClientEvents {
 					expToSub = (choppingLevel * 40) + 400;
 					ModMessages.sendToServer(new GainChoppingLevelC2SPacket());
 					ModMessages.sendToServer(new ResetChoppingExpC2SPacket());
+					
+					playerLevelExpToAdd = (choppingLevel % 25 == 24) ? 
+							(((choppingLevel + 1) / 100) + 1) * 5 : ((choppingLevel + 1) / 100) + 1;
+					ModMessages.sendToServer(new GainPlayerLevelExpC2SPacket());
+					PlayerLevelCheck(playerLevelExpToAdd);
 				}
 				LOGGER.info("{} has chopped {}(Player ChoppingExp: {})", 
 						event.getPlayer().getScoreboardName(), 
@@ -696,7 +739,13 @@ public class ClientEvents {
 					expToSub = (miningLevel * 40) + 400;
 					ModMessages.sendToServer(new GainMiningLevelC2SPacket());
 					ModMessages.sendToServer(new ResetMiningExpC2SPacket());
-					Minecraft.getInstance().getSoundManager().play(new LevelUpSound());
+					
+					playerLevelExpToAdd = (miningLevel % 25 == 24) ? 
+							(((miningLevel + 1) / 100) + 1) * 5 : ((miningLevel + 1) / 100) + 1;
+					ModMessages.sendToServer(new GainPlayerLevelExpC2SPacket());
+					PlayerLevelCheck(playerLevelExpToAdd);
+					overlayDuration = 1200;
+					System.out.println(overlayDuration);
 				}
 				event.setExpToDrop((int)(event.getExpToDrop() * 
 						((Math.log10(ClientCapabilityData.getLapisMined()) + 2) / 2)));
@@ -706,9 +755,11 @@ public class ClientEvents {
 						(miningExp + expToAdd));
 			}
 		}
+		@SuppressWarnings("unused")
 		private static class LevelUpSound extends AbstractTickableSoundInstance {
 			
 
+			//Minecraft.getInstance().getSoundManager().play(new LevelUpSound());
 			protected LevelUpSound() {
 				super(Sounds.levelUp, SoundSource.AMBIENT, RandomSource.create());
 				this.looping = false;
@@ -783,6 +834,8 @@ public class ClientEvents {
 			@SubscribeEvent
 			public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
 				//event.registerAboveAll("mana", ManaOverlay.HUD_MANA);
+				event.registerAboveAll("level", LevelUpOverlay.LEVEL_UP_OVERLAY);
+				System.out.println("displaying overlay");
 			}
 		}
 	}

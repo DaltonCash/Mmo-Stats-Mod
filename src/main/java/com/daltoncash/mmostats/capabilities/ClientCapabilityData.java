@@ -2,6 +2,12 @@ package com.daltoncash.mmostats.capabilities;
 
 public class ClientCapabilityData {
 	//Core Levels
+	private static int playerExp;
+	private static int playerLevel;
+	private static int playerHealth;
+	private static int playerHealthExp;
+	private static int playerAgility;
+	private static int playerAgilityExp;
 	private static int playerMana;
 	private static int playerMiningLevel;
 	private static int playerMiningExp;
@@ -70,6 +76,54 @@ public class ClientCapabilityData {
 	private static int netherGoldMined;
 	private static int quartzMined;
 	private static int redstoneMined;
+
+	public static int getPlayerExp() {
+		return playerExp;
+	}
+
+	public static void setPlayerExp(int playerExp) {
+		ClientCapabilityData.playerExp = playerExp;
+	}
+
+	public static int getPlayerLevel() {
+		return playerLevel;
+	}
+
+	public static void setPlayerLevel(int playerLevel) {
+		ClientCapabilityData.playerLevel = playerLevel;
+	}
+
+	public static int getPlayerHealth() {
+		return playerHealth;
+	}
+
+	public static void setPlayerHealth(int playerHealth) {
+		ClientCapabilityData.playerHealth = playerHealth;
+	}
+
+	public static int getPlayerHealthExp() {
+		return playerHealthExp;
+	}
+
+	public static void setPlayerHealthExp(int playerHealthExp) {
+		ClientCapabilityData.playerHealthExp = playerHealthExp;
+	}
+
+	public static int getPlayerAgility() {
+		return playerAgility;
+	}
+
+	public static void setPlayerAgility(int playerAgility) {
+		ClientCapabilityData.playerAgility = playerAgility;
+	}
+
+	public static int getPlayerAgilityExp() {
+		return playerAgilityExp;
+	}
+
+	public static void setPlayerAgilityExp(int playerAgilityExp) {
+		ClientCapabilityData.playerAgilityExp = playerAgilityExp;
+	}
 
 	// Mana
 	public static int getPlayerMana() {

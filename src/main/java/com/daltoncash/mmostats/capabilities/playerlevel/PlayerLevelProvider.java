@@ -1,4 +1,4 @@
-package com.daltoncash.mmostats.capabilities.mana;
+package com.daltoncash.mmostats.capabilities.playerlevel;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -12,24 +12,25 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
-public class PlayerManaProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
-	public static Capability<PlayerMana> PLAYER_MANA = CapabilityManager.get(new CapabilityToken<PlayerMana>() {
-	});
+public class PlayerLevelProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
+	public static Capability<PlayerLevel> PLAYER_LEVEL = CapabilityManager
+			.get(new CapabilityToken<PlayerLevel>() {
+			});
 
-	private PlayerMana mana = null;
-	private final LazyOptional<PlayerMana> optional = LazyOptional.of(this::createPlayerMana);
+	private PlayerLevel playerLevel = null;
+	private final LazyOptional<PlayerLevel> optional = LazyOptional.of(this::createPlayerLevel);
 
-	private PlayerMana createPlayerMana() {
-		if (this.mana == null) {
-			this.mana = new PlayerMana();
+	private PlayerLevel createPlayerLevel() {
+		if (this.playerLevel == null) {
+			this.playerLevel = new PlayerLevel();
 		}
 
-		return this.mana;
+		return this.playerLevel;
 	}
 
 	@Override
 	public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-		if (cap == PLAYER_MANA) {
+		if (cap == PLAYER_LEVEL) {
 			return optional.cast();
 		}
 
@@ -39,12 +40,12 @@ public class PlayerManaProvider implements ICapabilityProvider, INBTSerializable
 	@Override
 	public CompoundTag serializeNBT() {
 		CompoundTag nbt = new CompoundTag();
-		createPlayerMana().saveNBTData(nbt);
+		createPlayerLevel().saveNBTData(nbt);
 		return nbt;
 	}
 
 	@Override
 	public void deserializeNBT(CompoundTag nbt) {
-		createPlayerMana().loadNBTData(nbt);
+		createPlayerLevel().loadNBTData(nbt);
 	}
 }

@@ -1,6 +1,7 @@
 package com.daltoncash.mmostats.events;
 
 import com.daltoncash.mmostats.MmoStatsMod;
+import com.daltoncash.mmostats.capabilities.ClientCapabilityData;
 import com.daltoncash.mmostats.capabilities.archery.PlayerArcheryExp;
 import com.daltoncash.mmostats.capabilities.archery.PlayerArcheryExpProvider;
 import com.daltoncash.mmostats.capabilities.archery.PlayerArcheryLevel;
@@ -67,8 +68,6 @@ import com.daltoncash.mmostats.capabilities.magic.PlayerMagicExp;
 import com.daltoncash.mmostats.capabilities.magic.PlayerMagicExpProvider;
 import com.daltoncash.mmostats.capabilities.magic.PlayerMagicLevel;
 import com.daltoncash.mmostats.capabilities.magic.PlayerMagicLevelProvider;
-import com.daltoncash.mmostats.capabilities.mana.PlayerMana;
-import com.daltoncash.mmostats.capabilities.mana.PlayerManaProvider;
 import com.daltoncash.mmostats.capabilities.mining.PlayerMiningExp;
 import com.daltoncash.mmostats.capabilities.mining.PlayerMiningExpProvider;
 import com.daltoncash.mmostats.capabilities.mining.PlayerMiningLevel;
@@ -105,6 +104,12 @@ import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.QuartzMi
 import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.QuartzMinedProvider;
 import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.RedstoneMined;
 import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.RedstoneMinedProvider;
+import com.daltoncash.mmostats.capabilities.playerlevel.PlayerLevel;
+import com.daltoncash.mmostats.capabilities.playerlevel.PlayerLevelExp;
+import com.daltoncash.mmostats.capabilities.playerlevel.PlayerLevelExpProvider;
+import com.daltoncash.mmostats.capabilities.playerlevel.PlayerLevelProvider;
+import com.daltoncash.mmostats.capabilities.playerlevel.stats.mana.PlayerMana;
+import com.daltoncash.mmostats.capabilities.playerlevel.stats.mana.PlayerManaProvider;
 import com.daltoncash.mmostats.capabilities.swords.PlayerSwordsExp;
 import com.daltoncash.mmostats.capabilities.swords.PlayerSwordsExpProvider;
 import com.daltoncash.mmostats.capabilities.swords.PlayerSwordsLevel;
@@ -133,6 +138,8 @@ import com.daltoncash.mmostats.networking.packets.s2c.skills.FarmingExpDataSyncS
 import com.daltoncash.mmostats.networking.packets.s2c.skills.FarmingLevelDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.MiningExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.MiningLevelDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.skills.PlayerLevelDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.skills.PlayerLevelExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.SwordsExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.SwordsLevelDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.magic.MagicExpDataSyncS2CPacket;
@@ -186,6 +193,7 @@ import com.daltoncash.mmostats.networking.packets.s2c.upgrades.swordsUpgrades.Sw
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
@@ -212,7 +220,29 @@ public class ModEvents {
 			});
 		}
 	}
-
+	//Changes attributes to the modded values on spawn
+	@SubscribeEvent
+	public static void onCloneAttributes(PlayerEvent.Clone event) {
+		if (event.isWasDeath()) {
+			event.getOriginal().getAttributes();
+			
+			//Core Skills
+			
+			event.getEntity().getAttribute(Attributes.MAX_HEALTH).setBaseValue(
+					event.getOriginal().getAttributeValue(Attributes.MAX_HEALTH));
+			
+		}
+	}
+	//Changes attributes to the modded values on joining world
+	@SubscribeEvent
+	public static void onPlayerJoinAttributes(EntityJoinLevelEvent event) {
+		if (!event.getLevel().isClientSide()) {
+			if (event.getEntity() instanceof ServerPlayer player) {
+				player.getAttribute(Attributes.MAX_HEALTH).setBaseValue(20 + (ClientCapabilityData.getPlayerHealth()) * 2);
+				player.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(.1 + (ClientCapabilityData.getPlayerAgility() / 20));
+			}
+		}
+	}
 	
 	@SubscribeEvent
 	public static void onAttachCapabilitiesPlayer(AttachCapabilitiesEvent<Entity> event) {
@@ -220,6 +250,14 @@ public class ModEvents {
 			
 			//core skills
 			
+			if (!event.getObject().getCapability(PlayerLevelProvider.PLAYER_LEVEL).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "playerlevelproperties"),
+						new PlayerLevelProvider());
+			}
+			if (!event.getObject().getCapability(PlayerLevelExpProvider.PLAYER_LEVEL_EXP).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "playerlevelexpproperties"),
+						new PlayerLevelExpProvider());
+			}
 			if (!event.getObject().getCapability(PlayerManaProvider.PLAYER_MANA).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "manaproperties"),
 						new PlayerManaProvider());
@@ -494,6 +532,18 @@ public class ModEvents {
 			event.getOriginal().reviveCaps();
 			
 			//Core Skills
+			
+			event.getOriginal().getCapability(PlayerLevelProvider.PLAYER_LEVEL).ifPresent(oldStore -> {
+				event.getEntity().getCapability(PlayerLevelProvider.PLAYER_LEVEL).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(PlayerLevelExpProvider.PLAYER_LEVEL_EXP).ifPresent(oldStore -> {
+				event.getEntity().getCapability(PlayerLevelExpProvider.PLAYER_LEVEL_EXP).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			
 			event.getOriginal().getCapability(PlayerManaProvider.PLAYER_MANA).ifPresent(oldStore -> {
 				event.getEntity().getCapability(PlayerManaProvider.PLAYER_MANA).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
@@ -823,6 +873,8 @@ public class ModEvents {
 	@SubscribeEvent
 	public static void onRegisterCapabilities(RegisterCapabilitiesEvent event) {
 		//Core Skills
+		event.register(PlayerLevel.class);
+		event.register(PlayerLevelExp.class);
 		event.register(PlayerMana.class);
 		event.register(PlayerMiningLevel.class);
 		event.register(PlayerMiningExp.class);
@@ -906,6 +958,12 @@ public class ModEvents {
 			if (event.getEntity() instanceof ServerPlayer player) {
 				
 				//Core Skills
+				player.getCapability(PlayerLevelProvider.PLAYER_LEVEL).ifPresent(playerLevel -> {
+					ModMessages.sendToPlayer(new PlayerLevelDataSyncS2CPacket(playerLevel.getPlayerLevel()), player);
+				});
+				player.getCapability(PlayerLevelExpProvider.PLAYER_LEVEL_EXP).ifPresent(playerLevelExp -> {
+					ModMessages.sendToPlayer(new PlayerLevelExpDataSyncS2CPacket(playerLevelExp.getLevelExp()), player);
+				});
 				player.getCapability(PlayerManaProvider.PLAYER_MANA).ifPresent(mana -> {
 					ModMessages.sendToPlayer(new ManaDataSyncS2CPacket(mana.getMana()), player);
 				});

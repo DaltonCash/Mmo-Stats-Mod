@@ -32,6 +32,8 @@ import com.daltoncash.mmostats.networking.packets.c2s.skills.GainFarmingExpFromS
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainFarmingLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainMiningExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainMiningLevelC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.GainPlayerLevelC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.GainPlayerLevelExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainSwordsExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainSwordsLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetArcheryExpC2SPacket;
@@ -40,6 +42,7 @@ import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetChoppingExpC2S
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetCombatExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetFarmingExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetMiningExpC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetPlayerLevelExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetSwordsExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.magic.GainMagicExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.magic.GainMagicLevelC2SPacket;
@@ -87,6 +90,8 @@ import com.daltoncash.mmostats.networking.packets.s2c.skills.FarmingExpDataSyncS
 import com.daltoncash.mmostats.networking.packets.s2c.skills.FarmingLevelDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.MiningExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.MiningLevelDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.skills.PlayerLevelDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.skills.PlayerLevelExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.SwordsExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.SwordsLevelDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.magic.MagicExpDataSyncS2CPacket;
@@ -209,7 +214,21 @@ public class ModMessages {
 			.add();
         
 //-----------C2S--Skills---------------------------------------------------------------------------------
-       
+		 net.messageBuilder(GainPlayerLevelC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+				.decoder(GainPlayerLevelC2SPacket::new)
+				.encoder(GainPlayerLevelC2SPacket::toBytes)
+				.consumerMainThread(GainPlayerLevelC2SPacket::handle)
+				.add();
+		 net.messageBuilder(GainPlayerLevelExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+				.decoder(GainPlayerLevelExpC2SPacket::new)
+				.encoder(GainPlayerLevelExpC2SPacket::toBytes)
+				.consumerMainThread(GainPlayerLevelExpC2SPacket::handle)
+				.add();
+		 net.messageBuilder(ResetPlayerLevelExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(ResetPlayerLevelExpC2SPacket::new)
+			.encoder(ResetPlayerLevelExpC2SPacket::toBytes)
+			.consumerMainThread(ResetPlayerLevelExpC2SPacket::handle)
+			.add();
         net.messageBuilder(ResetMiningExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
 				.decoder(ResetMiningExpC2SPacket::new)
 				.encoder(ResetMiningExpC2SPacket::toBytes)
@@ -327,6 +346,16 @@ public class ModMessages {
 				.add();
 
 //--------------S2C--Skills----------------------------------------------------
+		net.messageBuilder(PlayerLevelDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+        		.decoder(PlayerLevelDataSyncS2CPacket::new)
+        		.encoder(PlayerLevelDataSyncS2CPacket::toBytes)
+        		.consumerMainThread(PlayerLevelDataSyncS2CPacket::handle)
+        		.add();
+		net.messageBuilder(PlayerLevelExpDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+        		.decoder(PlayerLevelExpDataSyncS2CPacket::new)
+        		.encoder(PlayerLevelExpDataSyncS2CPacket::toBytes)
+        		.consumerMainThread(PlayerLevelExpDataSyncS2CPacket::handle)
+        		.add();
         net.messageBuilder(ManaDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(ManaDataSyncS2CPacket::new)
                 .encoder(ManaDataSyncS2CPacket::toBytes)
