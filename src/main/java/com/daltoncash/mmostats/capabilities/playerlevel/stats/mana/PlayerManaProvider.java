@@ -1,4 +1,4 @@
-package com.daltoncash.mmostats.capabilities.mana;
+package com.daltoncash.mmostats.capabilities.playerlevel.stats.mana;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

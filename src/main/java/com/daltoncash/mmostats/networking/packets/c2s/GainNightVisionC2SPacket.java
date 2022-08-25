@@ -2,7 +2,7 @@ package com.daltoncash.mmostats.networking.packets.c2s;
 
 import java.util.function.Supplier;
 
-import com.daltoncash.mmostats.capabilities.mana.PlayerManaProvider;
+import com.daltoncash.mmostats.capabilities.playerlevel.stats.mana.PlayerManaProvider;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.s2c.ManaDataSyncS2CPacket;
 
