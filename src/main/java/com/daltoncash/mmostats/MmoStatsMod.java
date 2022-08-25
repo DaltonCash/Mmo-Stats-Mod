@@ -73,9 +73,9 @@ public class MmoStatsMod {
 		GeckoLib.initialize();
 	}
 
-	  
 
 	private void commonSetup(final FMLCommonSetupEvent event) {
+		EntityRenderers.register(ModEntityTypes.COMPANION.get(), CompanionRenderer::new);
 		event.enqueueWork(() -> {
 			ModMessages.register();
 		});
@@ -98,7 +98,7 @@ public class MmoStatsMod {
 			LOGGER.info("HELLO FROM CLIENT SETUP");
 			LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
 			
-			EntityRenderers.register(ModEntityTypes.COMPANION.get(), CompanionRenderer::new);
+		
 		}
 	}
 }

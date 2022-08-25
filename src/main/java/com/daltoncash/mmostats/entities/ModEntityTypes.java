@@ -2,7 +2,6 @@ package com.daltoncash.mmostats.entities;
 
 import com.daltoncash.mmostats.MmoStatsMod;
 import com.daltoncash.mmostats.entities.mod_entities.Companion;
-
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;

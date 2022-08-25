@@ -17,7 +17,7 @@ public class CompanionModel extends AnimatedGeoModel<Companion>{
 	@Override
 	public ResourceLocation getModelResource(Companion object) {
 		// TODO Auto-generated method stub
-		return new ResourceLocation(MmoStatsMod.MODID, "textures/entities/companion/companion.geo.json");
+		return new ResourceLocation(MmoStatsMod.MODID, "models/entities/companionmodel.geo.json");
 	}
 
 	@Override
