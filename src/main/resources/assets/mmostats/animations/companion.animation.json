@@ -1,51 +1,103 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"companion.movehead": {
-			"loop": "hold_on_last_frame",
+		"animation.companion.walk": {
+			"loop": true,
 			"animation_length": 1,
 			"bones": {
-				"Head": {
-					"rotation": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						},
-						"1.0": {
-							"vector": [-12.45392, 1.08089, -15.11794]
-						}
-					}
-				},
-				"LeftEar": {
-					"rotation": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						},
-						"1.0": {
-							"vector": [-12.45392, 1.08089, -15.11794]
-						}
-					}
-				},
-				"RightEar": {
-					"rotation": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						},
-						"1.0": {
-							"vector": [-12.45392, 1.08089, -15.11794]
-						}
-					}
-				}
-			}
-		},
-		"companion.idle": {
-			"animation_length": 0.5,
-			"bones": {
-				"Head": {
+				"head": {
 					"position": {
 						"0.0": {
 							"vector": [0, 0, 0]
 						},
 						"0.5": {
+							"vector": [2, 0, 0]
+						},
+						"1.0": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"body": {
+					"position": {
+						"0.0833": {
+							"vector": [0, 0, 0]
+						},
+						"0.5417": {
+							"vector": [2, 0, 0]
+						},
+						"1.0": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"tail": {
+					"position": {
+						"0.1667": {
+							"vector": [0, 0, 0]
+						},
+						"0.5833": {
+							"vector": [2, 0, 0]
+						},
+						"1.0": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"leftear": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.5": {
+							"vector": [2, 0, 0]
+						},
+						"1.0": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"rightear": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.5": {
+							"vector": [2, 0, 0]
+						},
+						"1.0": {
+							"vector": [0, 0, 0]
+						}
+					}
+				}
+			}
+		},
+		"animation.companion.idle": {
+			"loop": false,
+			"animation_length": 3,
+			"bones": {
+				"leftear": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"1.5": {
+							"vector": [0, 0, 7.5]
+						},
+						"3.0": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"rightear": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"1.5": {
+							"vector": [0, 0, -7.5]
+						},
+						"3.0": {
 							"vector": [0, 0, 0]
 						}
 					}
