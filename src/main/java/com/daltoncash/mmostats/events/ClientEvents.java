@@ -96,7 +96,7 @@ public class ClientEvents {
 		public static final Logger LOGGER = LogUtils.getLogger();
 		public static Entity clientEntity;
 		public static BlockEvent.BreakEvent blockevent = null;
-		public static int overlayDuration = 800;
+		public static int overlayDuration = 0;
 		public static int seconds = 0;
 		public static int expToSub = 0;
 		public static int expToAdd = 0;
@@ -343,7 +343,7 @@ public class ClientEvents {
 			if(event.getItem().getItem().equals(Items.BOW)) {
 				event.setDuration(71997);
 			}
-			overlayDuration = 800;
+			overlayDuration = 450;
 			seconds++;
 			System.out.println(seconds);
 			

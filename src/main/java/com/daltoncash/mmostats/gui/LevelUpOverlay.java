@@ -14,17 +14,19 @@ public class LevelUpOverlay {
 			"textures/overlay/level_up_spritesheet2.png");
 
 	public static final IGuiOverlay LEVEL_UP_OVERLAY = ((gui, poseStack, partialTick, width, height) -> {
-		int x = width;
+		int x = width / 2;
 		int y = height;
+		
+		
 		int a = ClientForgeEvents.overlayDuration;
 		int b = ClientForgeEvents.seconds;
-				
+		int c = a/4 * -91;
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		RenderSystem.setShaderTexture(0, LEVEL_UP);
 		if(a > 0) {
-			GuiComponent.blit(poseStack, 100, 100,a * -92, 0,  50, 50, 5000, 50);
+			GuiComponent.blit(poseStack, x-45, 0, c, 0,  91, 50, 5005, 50);
 		}
-			
+			//a/4 * -91
 	});
 }
