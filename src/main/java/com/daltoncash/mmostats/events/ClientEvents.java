@@ -96,7 +96,10 @@ public class ClientEvents {
 		public static final Logger LOGGER = LogUtils.getLogger();
 		public static Entity clientEntity;
 		public static BlockEvent.BreakEvent blockevent = null;
-		public static int overlayDuration = 0;
+		public static int levelUpOverlayDuration = 0;
+		public static int skillOverlayDuration = 0;
+		public static String skillToDisplay = "";
+		
 		public static int seconds = 0;
 		public static int expToSub = 0;
 		public static int expToAdd = 0;
@@ -136,9 +139,20 @@ public class ClientEvents {
 				System.out.println("level up: " + (playerLevel + 1));
 				ModMessages.sendToServer(new GainPlayerLevelC2SPacket());
 				ModMessages.sendToServer(new ResetPlayerLevelExpC2SPacket());
+				levelUpOverLay();
 				
 			}
 		}
+		
+		private static void levelUpOverLay() {
+			levelUpOverlayDuration = 450;
+		}
+		
+		private static void skillOverlay(String skill) {
+			skillOverlayDuration = 1000;
+			skillToDisplay = skill;
+		}
+		
 		//Provides a cooldown to the onArrowHit to prevent exploits
 		@SubscribeEvent
 		public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
@@ -180,10 +194,14 @@ public class ClientEvents {
 			if (ragnorokDuration > 0) {
 				ragnorokDuration--;
 			}
-			if(overlayDuration > 0) {
-				overlayDuration--;
+			if(levelUpOverlayDuration > 0) {
+				levelUpOverlayDuration--;
+			}
+			if(skillOverlayDuration > 0) {
+				skillOverlayDuration--;
 			}
 		}
+		
 		//Shield Block Drops Arrows
 		@SubscribeEvent
 		public static void onBlockingArrow(ShieldBlockEvent event) {
@@ -343,10 +361,6 @@ public class ClientEvents {
 			if(event.getItem().getItem().equals(Items.BOW)) {
 				event.setDuration(71997);
 			}
-			overlayDuration = 450;
-			seconds++;
-			System.out.println(seconds);
-			
 		}
 		
 		//Event for Arrows and Eggs hitting an entity
@@ -406,12 +420,16 @@ public class ClientEvents {
 								expToSub = (archeryLevel * 40) + 400;
 								ModMessages.sendToServer(new GainArcheryLevelC2SPacket());
 								ModMessages.sendToServer(new ResetArcheryExpC2SPacket());
-								
+	
 								playerLevelExpToAdd = (archeryLevel % 25 == 24) ? 
 										(((archeryLevel + 1) / 100) + 1) * 5 : ((archeryLevel + 1) / 100) + 1;
 								ModMessages.sendToServer(new GainPlayerLevelExpC2SPacket());
 								PlayerLevelCheck(playerLevelExpToAdd);
 							}
+							
+							//Makes skill overlay appear on screen.
+							skillOverlay("Archery");
+							
 						}else {
 							LOGGER.debug("Player {} is firing too fast!(archeryExp on cooldown)", 
 									event.getSource().getEntity().getScoreboardName());
@@ -427,7 +445,7 @@ public class ClientEvents {
 		//has been upgraded.
 		@SubscribeEvent
 		public static void onHarvest(HarvestCheck event) {
-			if(ClientCapabilityData.isUpgradedNoJunkBlocks()) {
+			if(ClientCapabilityData.isUpgradedNoJunkBlocks() > 0) {
 				if (event.getTargetBlock().getBlock().equals(Blocks.STONE)
 						|| event.getTargetBlock().getBlock().equals(Blocks.COBBLESTONE)
 						|| event.getTargetBlock().getBlock().equals(Blocks.DIORITE)
@@ -526,6 +544,10 @@ public class ClientEvents {
 							ModMessages.sendToServer(new GainPlayerLevelExpC2SPacket());
 							PlayerLevelCheck(playerLevelExpToAdd);
 						}
+						
+						//Makes skill overlay appear on screen.
+						skillOverlay("Combat");
+						
 						LOGGER.info("{} has killed {}(Player CombatExp: {})", 
 								event.getSource().getEntity().getScoreboardName(), 
 								type.toShortString(),
@@ -542,7 +564,7 @@ public class ClientEvents {
 		//This method doubles the speed of mining deepslate and obsidian
 		@SubscribeEvent
 		public static void onBreaking(BreakSpeed event) {
-			if(ClientCapabilityData.isUpgradedObsidianBreaker()) {
+			if(ClientCapabilityData.isUpgradedObsidianBreaker() > 0) {
 				if (event.getState().getBlock().equals(Blocks.OBSIDIAN)
 						|| event.getState().getBlock().equals(Blocks.CRYING_OBSIDIAN)) {
 					event.setNewSpeed((float) (event.getOriginalSpeed() * 2));
@@ -551,7 +573,7 @@ public class ClientEvents {
 			if (event.getState().getBlock().equals(Blocks.DEEPSLATE)) {
 				event.setNewSpeed((float) (event.getOriginalSpeed() * 2));
 			}
-			if(!ClientCapabilityData.isUpgradedWellFed()) {
+			if(ClientCapabilityData.isUpgradedWellFed() > 0) {
 				if(event.getEntity().getFoodData().getFoodLevel() == 20) {
 					event.setNewSpeed((float) (event.getNewSpeed() * 1.1));
 				}
@@ -602,6 +624,8 @@ public class ClientEvents {
 					expToAdd = 30;
 					ModMessages.sendToServer(new GainFarmingExpFromUnseededCropsC2SPacket());
 				}
+				
+				//Checks if the player has enough farmingExp to LevelUp
 				if (farmingExp > (farmingLevel * 40) + 400) {
 					LOGGER.info("{} leveled up to {} in Farming", 
 							event.getPlayer().getScoreboardName(), 
@@ -615,6 +639,10 @@ public class ClientEvents {
 					ModMessages.sendToServer(new GainPlayerLevelExpC2SPacket());
 					PlayerLevelCheck(playerLevelExpToAdd);
 				}
+				
+				//Makes skill overlay appear on screen.
+				skillOverlay("Farming");
+				
 				LOGGER.info("{} has farmed {}(Player FarmingExp: {})", 
 						event.getPlayer().getScoreboardName(), 
 						event.getState().getBlock().asItem(),
@@ -652,6 +680,10 @@ public class ClientEvents {
 					ModMessages.sendToServer(new GainPlayerLevelExpC2SPacket());
 					PlayerLevelCheck(playerLevelExpToAdd);
 				}
+				
+				//Makes skill overlay appear on screen.
+				skillOverlay("Chopping");
+				
 				LOGGER.info("{} has chopped {}(Player ChoppingExp: {})", 
 						event.getPlayer().getScoreboardName(), 
 						event.getState().getBlock().asItem(),
@@ -671,7 +703,7 @@ public class ClientEvents {
 				if (block.equals(Blocks.STONE) || block.equals(Blocks.DIORITE)
 						|| block.equals(Blocks.ANDESITE) || block.equals(Blocks.GRANITE)
 						|| block.equals(Blocks.DEEPSLATE) || block.equals(Blocks.NETHERRACK)) {
-					if(ClientCapabilityData.isUpgradedJunkBlocksDropExp()) {
+					if(ClientCapabilityData.isUpgradedJunkBlocksDropExp() > 0) {
 						event.setExpToDrop(event.getExpToDrop() + 1);
 					}
 					expToAdd = 4;
@@ -744,9 +776,11 @@ public class ClientEvents {
 							(((miningLevel + 1) / 100) + 1) * 5 : ((miningLevel + 1) / 100) + 1;
 					ModMessages.sendToServer(new GainPlayerLevelExpC2SPacket());
 					PlayerLevelCheck(playerLevelExpToAdd);
-					overlayDuration = 1200;
-					System.out.println(overlayDuration);
 				}
+				
+				//Makes skill overlay appear on screen.
+				skillOverlay("Mining");
+				
 				event.setExpToDrop((int)(event.getExpToDrop() * 
 						((Math.log10(ClientCapabilityData.getLapisMined()) + 2) / 2)));
 				LOGGER.info("{} has mined {}(Player miningExp: {})", 
@@ -784,7 +818,7 @@ public class ClientEvents {
 		public static void onKeyInput(InputEvent.Key event) {
 			//Dodge Roll
 			if (KeyBinding.NIGHT_VISION_KEY.consumeClick()) {
-				if (ClientCapabilityData.isUpgradedNightVision() && dodgeCooldown >= 80) {
+				if (ClientCapabilityData.isUpgradedNightVision() > 0 && dodgeCooldown >= 80) {
 					Minecraft.getInstance().player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 1200));
 					ModMessages.sendToServer(new GainNightVisionC2SPacket());
 					Player player = Minecraft.getInstance().player;
@@ -835,7 +869,8 @@ public class ClientEvents {
 			public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
 				//event.registerAboveAll("mana", ManaOverlay.HUD_MANA);
 				event.registerAboveAll("level", LevelUpOverlay.LEVEL_UP_OVERLAY);
-				System.out.println("displaying overlay");
+				event.registerAboveAll("skills", LevelUpOverlay.SKILL_OVERLAY);
+				
 			}
 		}
 	}

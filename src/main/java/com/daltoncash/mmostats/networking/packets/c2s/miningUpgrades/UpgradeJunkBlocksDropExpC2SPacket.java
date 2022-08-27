@@ -28,8 +28,8 @@ public class UpgradeJunkBlocksDropExpC2SPacket {
 		context.enqueueWork(() -> {
 			ServerPlayer player = context.getSender();
 			player.getCapability(JunkBlocksDropExpUpgradeProvider.JUNK_BLOCKS_DROP_EXP).ifPresent(isUpgraded -> {
-				isUpgraded.setIsUpgraded(true);
-				ModMessages.sendToPlayer(new JunkBlocksDropExpDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				isUpgraded.setUpgradeLevel(isUpgraded.getUpgradeLevel() + 1);
+				ModMessages.sendToPlayer(new JunkBlocksDropExpDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 			});
 		});
 		return true;

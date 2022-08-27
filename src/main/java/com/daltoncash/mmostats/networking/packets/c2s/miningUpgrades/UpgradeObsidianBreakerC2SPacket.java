@@ -28,8 +28,8 @@ public class UpgradeObsidianBreakerC2SPacket {
 		context.enqueueWork(() -> {
 			ServerPlayer player = context.getSender();
 			player.getCapability(ObsidianBreakerUpgradeProvider.OBSIDIAN_BREAKER).ifPresent(isUpgraded -> {
-				isUpgraded.setIsUpgraded(true);
-				ModMessages.sendToPlayer(new ObsidianBreakerDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				isUpgraded.setUpgradeLevel(isUpgraded.getUpgradeLevel() + 1);
+				ModMessages.sendToPlayer(new ObsidianBreakerDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 			});
 		});
 		return true;

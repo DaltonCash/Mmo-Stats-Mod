@@ -103,7 +103,7 @@ public class ArcheryMenu extends Screen {
 	@Override
 	public final void init() {
 
-		if(ClientCapabilityData.isUpgradedEfficientMarksman()) {
+		if(ClientCapabilityData.isUpgradedEfficientMarksman() > 0) {
 			addRenderableWidget(new ImageButton((this.width / 18) * 1, (this.height / 6) * 2, 50, 50, 0, 0, 99,
 					upgradeTexture1, 50, 50, ArcheryMenu::onPressToggleEfficientMarksman));	
 		}else {
@@ -112,7 +112,7 @@ public class ArcheryMenu extends Screen {
 		}
 		
 		
-		if(ClientCapabilityData.isUpgradedHunter()) {
+		if(ClientCapabilityData.isUpgradedHunter() > 0) {
 			addRenderableWidget(new ImageButton((this.width / 18) * 3, (this.height / 6) * 2, 50, 50, 0, 0, 99,
 					upgradeTexture2, 50, 50, ArcheryMenu::onPressToggleHunter));
 		}else {
@@ -121,7 +121,7 @@ public class ArcheryMenu extends Screen {
 		}
 		
 		
-		if(ClientCapabilityData.isUpgradedInsecurity()) {
+		if(ClientCapabilityData.isUpgradedInsecurity() > 0) {
 			addRenderableWidget(new ImageButton((this.width / 18) * 5, (this.height / 6) * 2, 50, 50, 0, 0, 99,
 					upgradeTexture3, 50, 50, ArcheryMenu::onPressToggleInsecurity));
 		}else {
@@ -130,7 +130,7 @@ public class ArcheryMenu extends Screen {
 		}
 		
 		
-		if(ClientCapabilityData.isUpgradedLeftClick()) {
+		if(ClientCapabilityData.isUpgradedLeftClick() > 0) {
 			addRenderableWidget(new ImageButton((this.width / 18) * 7, (this.height / 6) * 2, 50, 50, 0, 0, 99,
 					upgradeTexture4, 50, 50, ArcheryMenu::onPressToggleLeftClick));
 		}else {
@@ -139,7 +139,7 @@ public class ArcheryMenu extends Screen {
 		}
 		
 		
-		if(ClientCapabilityData.isUpgradedQuickshot()) {
+		if(ClientCapabilityData.isUpgradedQuickshot() > 0) {
 			addRenderableWidget(new ImageButton((this.width / 18) * 9, (this.height / 6) * 2, 50, 50, 0, 0, 99,
 					upgradeTexture5, 50, 50, ArcheryMenu::onPressToggleQuickshot));
 		}else {
@@ -148,7 +148,7 @@ public class ArcheryMenu extends Screen {
 		}
 		
 		
-		if(ClientCapabilityData.isUpgradedSniper()) {
+		if(ClientCapabilityData.isUpgradedSniper() > 0) {
 			addRenderableWidget(new ImageButton((this.width / 18) * 2, (this.height / 6) * 3, 50, 50, 0, 0, 99,
 					upgradeTexture6, 50, 50, ArcheryMenu::onPressToggleSniper));
 		}else {
@@ -157,7 +157,7 @@ public class ArcheryMenu extends Screen {
 		}
 		
 		
-		if(ClientCapabilityData.isUpgradedSweetSpotArchery()) {
+		if(ClientCapabilityData.isUpgradedSweetSpotArchery() > 0) {
 			addRenderableWidget(new ImageButton((this.width / 18) * 4, (this.height / 6) * 3, 50, 50, 0, 0, 99,
 					upgradeTexture7, 50, 50, ArcheryMenu::onPressToggleSweetSpot));
 		}else {
@@ -166,7 +166,7 @@ public class ArcheryMenu extends Screen {
 		}
 		
 		
-		if(ClientCapabilityData.isUpgradedUnabated()) {
+		if(ClientCapabilityData.isUpgradedUnabated() > 0) {
 			addRenderableWidget(new ImageButton((this.width / 18) * 6, (this.height / 6) * 3, 50, 50, 0, 0, 99,
 					upgradeTexture8, 50, 50, ArcheryMenu::onPressToggleUnabated));
 		}else {

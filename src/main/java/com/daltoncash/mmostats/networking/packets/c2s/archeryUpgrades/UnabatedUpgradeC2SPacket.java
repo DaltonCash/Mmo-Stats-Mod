@@ -28,8 +28,8 @@ public class UnabatedUpgradeC2SPacket {
 		context.enqueueWork(() -> {
 			ServerPlayer player = context.getSender();
 			player.getCapability(UnabatedUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
-				isUpgraded.setIsUpgraded(true);
-				ModMessages.sendToPlayer(new UnabatedUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				isUpgraded.setUpgradeLevel(isUpgraded.getUpgradeLevel() + 1);
+				ModMessages.sendToPlayer(new UnabatedUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 			});
 		});
 		return true;

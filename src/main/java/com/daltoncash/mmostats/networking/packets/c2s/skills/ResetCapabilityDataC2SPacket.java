@@ -78,20 +78,20 @@ public class ResetCapabilityDataC2SPacket {
 				ModMessages.sendToPlayer(new SwordsLevelDataSyncS2CPacket(swordsLevel.getSwordsLevel()), player);
 			});
 			player.getCapability(JunkBlocksDropExpUpgradeProvider.JUNK_BLOCKS_DROP_EXP).ifPresent(isUpgraded -> {
-				isUpgraded.setIsUpgraded(false);
-				ModMessages.sendToPlayer(new JunkBlocksDropExpDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				isUpgraded.setUpgradeLevel(0);
+				ModMessages.sendToPlayer(new JunkBlocksDropExpDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 			});
 			player.getCapability(NightVisionUpgradeProvider.NIGHT_VISION).ifPresent(isUpgraded -> {
-				isUpgraded.setIsUpgraded(false);
-				ModMessages.sendToPlayer(new NightVisionDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				isUpgraded.setUpgradeLevel(0);
+				ModMessages.sendToPlayer(new NightVisionDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 			});
 			player.getCapability(NoJunkBlocksUpgradeProvider.NO_JUNK_BLOCKS).ifPresent(isUpgraded -> {
-				isUpgraded.setIsUpgraded(false);
-				ModMessages.sendToPlayer(new NoJunkBlocksDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				isUpgraded.setUpgradeLevel(0);
+				ModMessages.sendToPlayer(new NoJunkBlocksDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 			});
 			player.getCapability(ObsidianBreakerUpgradeProvider.OBSIDIAN_BREAKER).ifPresent(isUpgraded -> {
-				isUpgraded.setIsUpgraded(false);
-				ModMessages.sendToPlayer(new ObsidianBreakerDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				isUpgraded.setUpgradeLevel(0);
+				ModMessages.sendToPlayer(new ObsidianBreakerDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 			});
 			player.getCapability(PlayerChoppingExpProvider.PLAYER_CHOPPING_EXP).ifPresent(choppingExp -> {
 				choppingExp.subChoppingExp(10000);

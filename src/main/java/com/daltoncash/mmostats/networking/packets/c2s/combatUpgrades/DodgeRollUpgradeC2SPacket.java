@@ -28,8 +28,8 @@ public class DodgeRollUpgradeC2SPacket {
 		context.enqueueWork(() -> {
 			ServerPlayer player = context.getSender();
 			player.getCapability(DodgeRollUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
-				isUpgraded.setIsUpgraded(true);
-				ModMessages.sendToPlayer(new DodgeRollUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				isUpgraded.setUpgradeLevel(isUpgraded.getUpgradeLevel() + 1);
+				ModMessages.sendToPlayer(new DodgeRollUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 			});
 		});
 		return true;

@@ -25,44 +25,44 @@ public class ClientCapabilityData {
 	private static int playerMagicExp;
 	
 	//archery
-	private static boolean isUpgradedEfficientMarksman;
-	private static boolean isUpgradedHunter;
-	private static boolean isUpgradedInsecurity;
-	private static boolean isUpgradedLeftClick;
-	private static boolean isUpgradedQuickshot;
-	private static boolean isUpgradedSharpshooter;
-	private static boolean isUpgradedSniper;
-	private static boolean isUpgradedSweetSpotArchery;
-	private static boolean isUpgradedUnabated;
+	private static int isUpgradedEfficientMarksman;
+	private static int isUpgradedHunter;
+	private static int isUpgradedInsecurity;
+	private static int isUpgradedLeftClick;
+	private static int isUpgradedQuickshot;
+	private static int isUpgradedSharpshooter;
+	private static int isUpgradedSniper;
+	private static int isUpgradedSweetSpotArchery;
+	private static int isUpgradedUnabated;
 	//chopping
-	private static boolean isUpgradedGrannySmith;
-	private static boolean isUpgradedHardWood;
-	private static boolean isUpgradedHighGround;
-	private static boolean isUpgradedStrongArms;
+	private static int isUpgradedGrannySmith;
+	private static int isUpgradedHardWood;
+	private static int isUpgradedHighGround;
+	private static int isUpgradedStrongArms;
 	//combat
-	private static boolean isUpgradedDodgeRoll;
-	private static boolean isUpgradedFreeArrows;
-	private static boolean isUpgradedOvercome;
-	private static boolean isUpgradedRagnorok;
-	private static boolean isUpgradedStableFooting;
-	private static boolean isUpgradedTakeStance;
+	private static int isUpgradedDodgeRoll;
+	private static int isUpgradedFreeArrows;
+	private static int isUpgradedOvercome;
+	private static int isUpgradedRagnorok;
+	private static int isUpgradedStableFooting;
+	private static int isUpgradedTakeStance;
 	//farming
-	private static boolean isUpgradedCarnivore;
-	private static boolean isUpgradedEgger;
-	private static boolean isUpgradedSugarRush;
-	private static boolean isUpgradedWellFed;
+	private static int isUpgradedCarnivore;
+	private static int isUpgradedEgger;
+	private static int isUpgradedSugarRush;
+	private static int isUpgradedWellFed;
 	//swords
-	private static boolean isUpgradedCritastic;
-	private static boolean isUpgradedFleshWound;
-	private static boolean isUpgradedPerfectTiming;
-	private static boolean isUpgradedRightClick;
-	private static boolean isUpgradedShieldBash;
-	private static boolean isUpgradedSweetSpotSwords;
+	private static int isUpgradedCritastic;
+	private static int isUpgradedFleshWound;
+	private static int isUpgradedPerfectTiming;
+	private static int isUpgradedRightClick;
+	private static int isUpgradedShieldBash;
+	private static int isUpgradedSweetSpotSwords;
 	//mining
-	private static boolean isUpgradedNightVision;
-	private static boolean isUpgradedNoJunkBlocks;
-	private static boolean isUpgradedJunkBlocksDropExp;
-	private static boolean isUpgradedObsidianBreaker;
+	private static int isUpgradedNightVision;
+	private static int isUpgradedNoJunkBlocks;
+	private static int isUpgradedJunkBlocksDropExp;
+	private static int isUpgradedObsidianBreaker;
 	//Blocks Mined
 	private static int ancientDebrisMined;
 	private static int coalMined;
@@ -152,35 +152,35 @@ public class ClientCapabilityData {
 		ClientCapabilityData.playerMiningExp = playerMiningExp;
 	}
     //Upgrades
-	public static boolean isUpgradedNightVision() {
+	public static int isUpgradedNightVision() {
 		return isUpgradedNightVision;
 	}
 
-	public static void setUpgradedNightVision(boolean isUpgradedNightVision) {
+	public static void setUpgradedNightVision(int isUpgradedNightVision) {
 		ClientCapabilityData.isUpgradedNightVision = isUpgradedNightVision;
 	}
 
-	public static boolean isUpgradedNoJunkBlocks() {
+	public static int isUpgradedNoJunkBlocks() {
 		return isUpgradedNoJunkBlocks;
 	}
 
-	public static void setUpgradedNoJunkBlocks(boolean isUpgradedNoJunkBlocks) {
+	public static void setUpgradedNoJunkBlocks(int isUpgradedNoJunkBlocks) {
 		ClientCapabilityData.isUpgradedNoJunkBlocks = isUpgradedNoJunkBlocks;
 	}
 
-	public static boolean isUpgradedJunkBlocksDropExp() {
+	public static int isUpgradedJunkBlocksDropExp() {
 		return isUpgradedJunkBlocksDropExp;
 	}
 
-	public static void setUpgradedJunkBlocksDropExp(boolean isUpgradedJunkBlocksDropExp) {
+	public static void setUpgradedJunkBlocksDropExp(int isUpgradedJunkBlocksDropExp) {
 		ClientCapabilityData.isUpgradedJunkBlocksDropExp = isUpgradedJunkBlocksDropExp;
 	}
 
-	public static boolean isUpgradedObsidianBreaker() {
+	public static int isUpgradedObsidianBreaker() {
 		return isUpgradedObsidianBreaker;
 	}
 
-	public static void setUpgradedObsidianBreaker(boolean isUpgradedObsidianBreaker) {
+	public static void setUpgradedObsidianBreaker(int isUpgradedObsidianBreaker) {
 		ClientCapabilityData.isUpgradedObsidianBreaker = isUpgradedObsidianBreaker;
 	}
 
@@ -360,235 +360,235 @@ public class ClientCapabilityData {
 		ClientCapabilityData.playerSwordsExp = playerSwordsExp;
 	}
 
-	public static boolean isUpgradedEfficientMarksman() {
+	public static int isUpgradedEfficientMarksman() {
 		return isUpgradedEfficientMarksman;
 	}
 
-	public static void setUpgradedEfficientMarksman(boolean isUpgradedEfficientMarksman) {
+	public static void setUpgradedEfficientMarksman(int isUpgradedEfficientMarksman) {
 		ClientCapabilityData.isUpgradedEfficientMarksman = isUpgradedEfficientMarksman;
 	}
 
-	public static boolean isUpgradedHunter() {
+	public static int isUpgradedHunter() {
 		return isUpgradedHunter;
 	}
 
-	public static void setUpgradedHunter(boolean isUpgradedHunter) {
+	public static void setUpgradedHunter(int isUpgradedHunter) {
 		ClientCapabilityData.isUpgradedHunter = isUpgradedHunter;
 	}
 
-	public static boolean isUpgradedInsecurity() {
+	public static int isUpgradedInsecurity() {
 		return isUpgradedInsecurity;
 	}
 
-	public static void setUpgradedInsecurity(boolean isUpgradedInsecurity) {
+	public static void setUpgradedInsecurity(int isUpgradedInsecurity) {
 		ClientCapabilityData.isUpgradedInsecurity = isUpgradedInsecurity;
 	}
 
-	public static boolean isUpgradedLeftClick() {
+	public static int isUpgradedLeftClick() {
 		return isUpgradedLeftClick;
 	}
 
-	public static void setUpgradedLeftClick(boolean isUpgradedLeftClick) {
+	public static void setUpgradedLeftClick(int isUpgradedLeftClick) {
 		ClientCapabilityData.isUpgradedLeftClick = isUpgradedLeftClick;
 	}
 
-	public static boolean isUpgradedQuickshot() {
+	public static int isUpgradedQuickshot() {
 		return isUpgradedQuickshot;
 	}
 
-	public static void setUpgradedQuickshot(boolean isUpgradedQuickshot) {
+	public static void setUpgradedQuickshot(int isUpgradedQuickshot) {
 		ClientCapabilityData.isUpgradedQuickshot = isUpgradedQuickshot;
 	}
 
-	public static boolean isUpgradedSharpshooter() {
+	public static int isUpgradedSharpshooter() {
 		return isUpgradedSharpshooter;
 	}
 
-	public static void setUpgradedSharpshooter(boolean isUpgradedSharpshooter) {
+	public static void setUpgradedSharpshooter(int isUpgradedSharpshooter) {
 		ClientCapabilityData.isUpgradedSharpshooter = isUpgradedSharpshooter;
 	}
 
-	public static boolean isUpgradedSniper() {
+	public static int isUpgradedSniper() {
 		return isUpgradedSniper;
 	}
 
-	public static void setUpgradedSniper(boolean isUpgradedSniper) {
+	public static void setUpgradedSniper(int isUpgradedSniper) {
 		ClientCapabilityData.isUpgradedSniper = isUpgradedSniper;
 	}
 
-	public static boolean isUpgradedSweetSpotArchery() {
+	public static int isUpgradedSweetSpotArchery() {
 		return isUpgradedSweetSpotArchery;
 	}
 
-	public static void setUpgradedSweetSpotArchery(boolean isUpgradedSweetSpotArchery) {
+	public static void setUpgradedSweetSpotArchery(int isUpgradedSweetSpotArchery) {
 		ClientCapabilityData.isUpgradedSweetSpotArchery = isUpgradedSweetSpotArchery;
 	}
 
-	public static boolean isUpgradedUnabated() {
+	public static int isUpgradedUnabated() {
 		return isUpgradedUnabated;
 	}
 
-	public static void setUpgradedUnabated(boolean isUpgradedUnabated) {
+	public static void setUpgradedUnabated(int isUpgradedUnabated) {
 		ClientCapabilityData.isUpgradedUnabated = isUpgradedUnabated;
 	}
 
-	public static boolean isUpgradedGrannySmith() {
+	public static int isUpgradedGrannySmith() {
 		return isUpgradedGrannySmith;
 	}
 
-	public static void setUpgradedGrannySmith(boolean isUpgradedGrannySmith) {
+	public static void setUpgradedGrannySmith(int isUpgradedGrannySmith) {
 		ClientCapabilityData.isUpgradedGrannySmith = isUpgradedGrannySmith;
 	}
 
-	public static boolean isUpgradedHardWood() {
+	public static int isUpgradedHardWood() {
 		return isUpgradedHardWood;
 	}
 
-	public static void setUpgradedHardWood(boolean isUpgradedHardWood) {
+	public static void setUpgradedHardWood(int isUpgradedHardWood) {
 		ClientCapabilityData.isUpgradedHardWood = isUpgradedHardWood;
 	}
 
-	public static boolean isUpgradedHighGround() {
+	public static int isUpgradedHighGround() {
 		return isUpgradedHighGround;
 	}
 
-	public static void setUpgradedHighGround(boolean isUpgradedHighGround) {
+	public static void setUpgradedHighGround(int isUpgradedHighGround) {
 		ClientCapabilityData.isUpgradedHighGround = isUpgradedHighGround;
 	}
 
-	public static boolean isUpgradedStrongArms() {
+	public static int isUpgradedStrongArms() {
 		return isUpgradedStrongArms;
 	}
 
-	public static void setUpgradedStrongArms(boolean isUpgradedStrongArms) {
+	public static void setUpgradedStrongArms(int isUpgradedStrongArms) {
 		ClientCapabilityData.isUpgradedStrongArms = isUpgradedStrongArms;
 	}
 
-	public static boolean isUpgradedDodgeRoll() {
+	public static int isUpgradedDodgeRoll() {
 		return isUpgradedDodgeRoll;
 	}
 
-	public static void setUpgradedDodgeRoll(boolean isUpgradedDodgeRoll) {
+	public static void setUpgradedDodgeRoll(int isUpgradedDodgeRoll) {
 		ClientCapabilityData.isUpgradedDodgeRoll = isUpgradedDodgeRoll;
 	}
 
-	public static boolean isUpgradedFreeArrows() {
+	public static int isUpgradedFreeArrows() {
 		return isUpgradedFreeArrows;
 	}
 
-	public static void setUpgradedFreeArrows(boolean isUpgradedFreeArrows) {
+	public static void setUpgradedFreeArrows(int isUpgradedFreeArrows) {
 		ClientCapabilityData.isUpgradedFreeArrows = isUpgradedFreeArrows;
 	}
 
-	public static boolean isUpgradedOvercome() {
+	public static int isUpgradedOvercome() {
 		return isUpgradedOvercome;
 	}
 
-	public static void setUpgradedOvercome(boolean isUpgradedOvercome) {
+	public static void setUpgradedOvercome(int isUpgradedOvercome) {
 		ClientCapabilityData.isUpgradedOvercome = isUpgradedOvercome;
 	}
 
-	public static boolean isUpgradedRagnorok() {
+	public static int isUpgradedRagnorok() {
 		return isUpgradedRagnorok;
 	}
 
-	public static void setUpgradedRagnorok(boolean isUpgradedRagnorok) {
+	public static void setUpgradedRagnorok(int isUpgradedRagnorok) {
 		ClientCapabilityData.isUpgradedRagnorok = isUpgradedRagnorok;
 	}
 
-	public static boolean isUpgradedStableFooting() {
+	public static int isUpgradedStableFooting() {
 		return isUpgradedStableFooting;
 	}
 
-	public static void setUpgradedStableFooting(boolean isUpgradedStableFooting) {
+	public static void setUpgradedStableFooting(int isUpgradedStableFooting) {
 		ClientCapabilityData.isUpgradedStableFooting = isUpgradedStableFooting;
 	}
 
-	public static boolean isUpgradedTakeStance() {
+	public static int isUpgradedTakeStance() {
 		return isUpgradedTakeStance;
 	}
 
-	public static void setUpgradedTakeStance(boolean isUpgradedTakeStance) {
+	public static void setUpgradedTakeStance(int isUpgradedTakeStance) {
 		ClientCapabilityData.isUpgradedTakeStance = isUpgradedTakeStance;
 	}
 
-	public static boolean isUpgradedCarnivore() {
+	public static int isUpgradedCarnivore() {
 		return isUpgradedCarnivore;
 	}
 
-	public static void setUpgradedCarnivore(boolean isUpgradedCarnivore) {
+	public static void setUpgradedCarnivore(int isUpgradedCarnivore) {
 		ClientCapabilityData.isUpgradedCarnivore = isUpgradedCarnivore;
 	}
 
-	public static boolean isUpgradedEgger() {
+	public static int isUpgradedEgger() {
 		return isUpgradedEgger;
 	}
 
-	public static void setUpgradedEgger(boolean isUpgradedEgger) {
+	public static void setUpgradedEgger(int isUpgradedEgger) {
 		ClientCapabilityData.isUpgradedEgger = isUpgradedEgger;
 	}
 
-	public static boolean isUpgradedSugarRush() {
+	public static int isUpgradedSugarRush() {
 		return isUpgradedSugarRush;
 	}
 
-	public static void setUpgradedSugarRush(boolean isUpgradedSugarRush) {
+	public static void setUpgradedSugarRush(int isUpgradedSugarRush) {
 		ClientCapabilityData.isUpgradedSugarRush = isUpgradedSugarRush;
 	}
 
-	public static boolean isUpgradedWellFed() {
+	public static int isUpgradedWellFed() {
 		return isUpgradedWellFed;
 	}
 
-	public static void setUpgradedWellFed(boolean isUpgradedWellFed) {
+	public static void setUpgradedWellFed(int isUpgradedWellFed) {
 		ClientCapabilityData.isUpgradedWellFed = isUpgradedWellFed;
 	}
 
-	public static boolean isUpgradedCritastic() {
+	public static int isUpgradedCritastic() {
 		return isUpgradedCritastic;
 	}
 
-	public static void setUpgradedCritastic(boolean isUpgradedCritastic) {
+	public static void setUpgradedCritastic(int isUpgradedCritastic) {
 		ClientCapabilityData.isUpgradedCritastic = isUpgradedCritastic;
 	}
 
-	public static boolean isUpgradedFleshWound() {
+	public static int isUpgradedFleshWound() {
 		return isUpgradedFleshWound;
 	}
 
-	public static void setUpgradedFleshWound(boolean isUpgradedFleshWound) {
+	public static void setUpgradedFleshWound(int isUpgradedFleshWound) {
 		ClientCapabilityData.isUpgradedFleshWound = isUpgradedFleshWound;
 	}
 
-	public static boolean isUpgradedPerfectTiming() {
+	public static int isUpgradedPerfectTiming() {
 		return isUpgradedPerfectTiming;
 	}
 
-	public static void setUpgradedPerfectTiming(boolean isUpgradedPerfectTiming) {
+	public static void setUpgradedPerfectTiming(int isUpgradedPerfectTiming) {
 		ClientCapabilityData.isUpgradedPerfectTiming = isUpgradedPerfectTiming;
 	}
 
-	public static boolean isUpgradedRightClick() {
+	public static int isUpgradedRightClick() {
 		return isUpgradedRightClick;
 	}
 
-	public static void setUpgradedRightClick(boolean isUpgradedRightClick) {
+	public static void setUpgradedRightClick(int isUpgradedRightClick) {
 		ClientCapabilityData.isUpgradedRightClick = isUpgradedRightClick;
 	}
 
-	public static boolean isUpgradedShieldBash() {
+	public static int isUpgradedShieldBash() {
 		return isUpgradedShieldBash;
 	}
 
-	public static void setUpgradedShieldBash(boolean isUpgradedShieldBash) {
+	public static void setUpgradedShieldBash(int isUpgradedShieldBash) {
 		ClientCapabilityData.isUpgradedShieldBash = isUpgradedShieldBash;
 	}
 
-	public static boolean isUpgradedSweetSpotSwords() {
+	public static int isUpgradedSweetSpotSwords() {
 		return isUpgradedSweetSpotSwords;
 	}
 
-	public static void setUpgradedSweetSpotSwords(boolean isUpgradedSweetSpotSwords) {
+	public static void setUpgradedSweetSpotSwords(int isUpgradedSweetSpotSwords) {
 		ClientCapabilityData.isUpgradedSweetSpotSwords = isUpgradedSweetSpotSwords;
 	}
 	

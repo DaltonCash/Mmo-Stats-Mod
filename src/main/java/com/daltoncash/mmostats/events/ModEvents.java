@@ -1012,113 +1012,113 @@ public class ModEvents {
 				
 				//----Archery--Upgrades------
 				player.getCapability(EfficientMarksmanUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
-					ModMessages.sendToPlayer(new EfficientMarksmanUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+					ModMessages.sendToPlayer(new EfficientMarksmanUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 				});
 				player.getCapability(HunterUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
-					ModMessages.sendToPlayer(new HunterUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+					ModMessages.sendToPlayer(new HunterUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 				});
 				player.getCapability(InsecurityUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
-					ModMessages.sendToPlayer(new InsecurityUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+					ModMessages.sendToPlayer(new InsecurityUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 				});
 				player.getCapability(LeftClickUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
-					ModMessages.sendToPlayer(new LeftClickUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+					ModMessages.sendToPlayer(new LeftClickUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 				});
 				player.getCapability(QuickshotUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
-					ModMessages.sendToPlayer(new QuickshotUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+					ModMessages.sendToPlayer(new QuickshotUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 				});
 				player.getCapability(SharpshooterUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
-					ModMessages.sendToPlayer(new SharpshooterUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+					ModMessages.sendToPlayer(new SharpshooterUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 				});
 				player.getCapability(SniperUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
-					ModMessages.sendToPlayer(new SniperUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+					ModMessages.sendToPlayer(new SniperUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 				});
 				player.getCapability(SweetSpotArcheryUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
-					ModMessages.sendToPlayer(new SweetSpotArcheryUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+					ModMessages.sendToPlayer(new SweetSpotArcheryUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 				});
 				player.getCapability(UnabatedUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
-					ModMessages.sendToPlayer(new UnabatedUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+					ModMessages.sendToPlayer(new UnabatedUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 				});
 				
 				//----Chopping--Upgrades------
 				player.getCapability(GrannySmithUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
-					ModMessages.sendToPlayer(new GrannySmithUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+					ModMessages.sendToPlayer(new GrannySmithUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 				});
 				player.getCapability(HardwoodUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
-					ModMessages.sendToPlayer(new HardwoodUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+					ModMessages.sendToPlayer(new HardwoodUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 				});
 				player.getCapability(HighGroundUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
-					ModMessages.sendToPlayer(new HighGroundUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+					ModMessages.sendToPlayer(new HighGroundUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 				});
 				player.getCapability(StrongArmsUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
-					ModMessages.sendToPlayer(new StrongArmsUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+					ModMessages.sendToPlayer(new StrongArmsUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 				});
 				
 				//----Combat--Upgrades------
 				player.getCapability(DodgeRollUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
-					ModMessages.sendToPlayer(new DodgeRollUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+					ModMessages.sendToPlayer(new DodgeRollUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 				});
 				player.getCapability(FreeArrowsUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
-					ModMessages.sendToPlayer(new FreeArrowsUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+					ModMessages.sendToPlayer(new FreeArrowsUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 				});
 				player.getCapability(OvercomeUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
-					ModMessages.sendToPlayer(new OvercomeUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+					ModMessages.sendToPlayer(new OvercomeUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 				});
 				player.getCapability(RagnorokUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
-					ModMessages.sendToPlayer(new RagnorokUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+					ModMessages.sendToPlayer(new RagnorokUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 				});
 				player.getCapability(StableFootingUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
-					ModMessages.sendToPlayer(new StableFootingUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+					ModMessages.sendToPlayer(new StableFootingUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 				});
 				player.getCapability(TakeStanceUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
-					ModMessages.sendToPlayer(new TakeStanceUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+					ModMessages.sendToPlayer(new TakeStanceUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 				});
 				
 				//----Farming--Upgrades------
 				player.getCapability(CarnivoreUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
-					ModMessages.sendToPlayer(new CarnivoreUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+					ModMessages.sendToPlayer(new CarnivoreUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 				});
 				player.getCapability(EggerUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
-					ModMessages.sendToPlayer(new EggerUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+					ModMessages.sendToPlayer(new EggerUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 				});
 				player.getCapability(SugarRushUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
-					ModMessages.sendToPlayer(new SugarRushUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+					ModMessages.sendToPlayer(new SugarRushUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 				});
 				player.getCapability(WellFedUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
-					ModMessages.sendToPlayer(new WellFedUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+					ModMessages.sendToPlayer(new WellFedUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 				});
 				
 				//----Mining--Upgrades------
 				player.getCapability(JunkBlocksDropExpUpgradeProvider.JUNK_BLOCKS_DROP_EXP).ifPresent(isUpgraded -> {
-					ModMessages.sendToPlayer(new JunkBlocksDropExpDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+					ModMessages.sendToPlayer(new JunkBlocksDropExpDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 				});
 				player.getCapability(NightVisionUpgradeProvider.NIGHT_VISION).ifPresent(isUpgraded -> {
-					ModMessages.sendToPlayer(new NightVisionDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+					ModMessages.sendToPlayer(new NightVisionDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 				});
 				player.getCapability(NoJunkBlocksUpgradeProvider.NO_JUNK_BLOCKS).ifPresent(isUpgraded -> {
-					ModMessages.sendToPlayer(new NoJunkBlocksDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+					ModMessages.sendToPlayer(new NoJunkBlocksDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 				});
 				player.getCapability(ObsidianBreakerUpgradeProvider.OBSIDIAN_BREAKER).ifPresent(isUpgraded -> {
-					ModMessages.sendToPlayer(new ObsidianBreakerDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+					ModMessages.sendToPlayer(new ObsidianBreakerDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 				});
 				
 				//----Swords--Upgrades------
 				player.getCapability(CritasticUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
-					ModMessages.sendToPlayer(new CritasticUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+					ModMessages.sendToPlayer(new CritasticUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 				});
 				player.getCapability(FleshWoundUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
-					ModMessages.sendToPlayer(new FleshWoundUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+					ModMessages.sendToPlayer(new FleshWoundUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 				});
 				player.getCapability(PerfectTimingUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
-					ModMessages.sendToPlayer(new PerfectTimingUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+					ModMessages.sendToPlayer(new PerfectTimingUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 				});
 				player.getCapability(RightClickUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
-					ModMessages.sendToPlayer(new RightClickUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+					ModMessages.sendToPlayer(new RightClickUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 				});
 				player.getCapability(ShieldBashUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
-					ModMessages.sendToPlayer(new ShieldBashUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+					ModMessages.sendToPlayer(new ShieldBashUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 				});
 				player.getCapability(SweetSpotSwordsUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
-					ModMessages.sendToPlayer(new SweetSpotSwordsUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+					ModMessages.sendToPlayer(new SweetSpotSwordsUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 				});
 				
 				//----Blocks--Mined-------

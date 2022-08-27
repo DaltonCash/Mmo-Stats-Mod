@@ -28,8 +28,8 @@ public class StableFootingUpgradeC2SPacket {
 		context.enqueueWork(() -> {
 			ServerPlayer player = context.getSender();
 			player.getCapability(StableFootingUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
-				isUpgraded.setIsUpgraded(true);
-				ModMessages.sendToPlayer(new StableFootingUpgradeDataSyncS2CPacket(isUpgraded.getIsUpgraded()), player);
+				isUpgraded.setUpgradeLevel(isUpgraded.getUpgradeLevel() + 1);
+				ModMessages.sendToPlayer(new StableFootingUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 			});
 		});
 		return true;

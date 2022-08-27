@@ -3,7 +3,7 @@ package com.daltoncash.mmostats.capabilities;
 import net.minecraft.nbt.CompoundTag;
 
 public class UpgradeCapability {
-	private boolean isUpgraded;
+	private int upgradeLevel;
 	private String nbtString;
 
 	protected UpgradeCapability(String nbtString){
@@ -11,26 +11,25 @@ public class UpgradeCapability {
 	}
 	
 	public UpgradeCapability() {
-		// TODO Auto-generated constructor stub
 	}
 
-	public boolean getIsUpgraded() {
-		return isUpgraded;
+	public int getUpgradeLevel() {
+		return upgradeLevel;
 	}
 
-	public void setIsUpgraded(boolean bool) {
-		this.isUpgraded = bool;
+	public void setUpgradeLevel(int upgradeLevel) {
+		this.upgradeLevel = upgradeLevel;
 	}
 
 	public void copyFrom(UpgradeCapability source) {
-		this.isUpgraded = source.isUpgraded;
+		this.upgradeLevel = source.upgradeLevel;
 	}
 	public void saveNBTData(CompoundTag nbt) {
-		nbt.putBoolean(getNbtString(), getIsUpgraded());
+		nbt.putInt(getNbtString(), getUpgradeLevel());
 	}
 
 	public void loadNBTData(CompoundTag nbt) {
-		setIsUpgraded(nbt.getBoolean(getNbtString()));
+		setUpgradeLevel(nbt.getInt(getNbtString()));
 	}
 
 	public String getNbtString() {

@@ -8,18 +8,18 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
 public class SweetSpotSwordsUpgradeDataSyncS2CPacket {
-	private final boolean isUpgraded;
+	private final int isUpgraded;
 
-	public SweetSpotSwordsUpgradeDataSyncS2CPacket(boolean isUpgraded) {
+	public SweetSpotSwordsUpgradeDataSyncS2CPacket(int isUpgraded) {
 		this.isUpgraded = isUpgraded;
 	}
 
 	public SweetSpotSwordsUpgradeDataSyncS2CPacket(FriendlyByteBuf buf) {
-		this.isUpgraded = buf.readBoolean();
+		this.isUpgraded = buf.readInt();
 	}
 
 	public void toBytes(FriendlyByteBuf buf) {
-		buf.writeBoolean(isUpgraded);
+		buf.writeInt(isUpgraded);
 	}
 
 	public boolean handle(Supplier<NetworkEvent.Context> supplier) {

@@ -8,18 +8,18 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
 public class NightVisionDataSyncS2CPacket {
-	private final boolean isUpgraded;
+	private final int isUpgraded;
 
-	public NightVisionDataSyncS2CPacket(boolean isUpgraded) {
+	public NightVisionDataSyncS2CPacket(int isUpgraded) {
 		this.isUpgraded = isUpgraded;
 	}
 
 	public NightVisionDataSyncS2CPacket(FriendlyByteBuf buf) {
-		this.isUpgraded = buf.readBoolean();
+		this.isUpgraded = buf.readInt();
 	}
 
 	public void toBytes(FriendlyByteBuf buf) {
-		buf.writeBoolean(isUpgraded);
+		buf.writeInt(isUpgraded);
 	}
 
 	public boolean handle(Supplier<NetworkEvent.Context> supplier) {
