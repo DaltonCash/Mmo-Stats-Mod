@@ -35,10 +35,11 @@ public class Companion extends Animal implements IAnimatable{
 	    
 	    public static AttributeSupplier setAttributes() {
 	        return Animal.createMobAttributes()
-	                .add(Attributes.MAX_HEALTH, 200.0D)
+	                .add(Attributes.MAX_HEALTH, 20.0D)
 	                .add(Attributes.ATTACK_DAMAGE, 3.0f)
 	                .add(Attributes.ATTACK_SPEED, 2.0f)
-	                .add(Attributes.MOVEMENT_SPEED, 0.1f).build();	 
+	                //float underneath this comment must be 0.135 or higher to trigger .isMoving in the "predicate" method
+	                .add(Attributes.MOVEMENT_SPEED, 0.135f).build();	 
 	    }
 	    @Nullable
 	    @Override
