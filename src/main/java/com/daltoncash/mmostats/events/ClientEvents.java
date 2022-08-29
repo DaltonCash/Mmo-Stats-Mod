@@ -131,6 +131,7 @@ public class ClientEvents {
 		*/
 		//WIP2
 		
+		//Checks to see if the player has enough playerExp to level up
 		private static void PlayerLevelCheck(int playerLevelExpBeingAdded) {
 			int playerLevel = ClientCapabilityData.getPlayerLevel();
 			int playerLevelExp = ClientCapabilityData.getPlayerExp() + playerLevelExpBeingAdded;
@@ -143,11 +144,11 @@ public class ClientEvents {
 				
 			}
 		}
-		
+		//Provides the duration of the LEVEL_UP_OVERLAY for the LevelUpOverlay Class
 		private static void levelUpOverLay() {
 			levelUpOverlayDuration = 450;
 		}
-		
+		//Provides the duration of the SKILL_OVERLAY for the LevelUpOverlay Class
 		private static void skillOverlay(String skill) {
 			skillOverlayDuration = 1000;
 			skillToDisplay = skill;
