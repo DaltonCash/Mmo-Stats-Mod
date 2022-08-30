@@ -3,7 +3,7 @@ package com.daltoncash.mmostats.networking.packets.c2s.skills;
 import java.util.function.Supplier;
 
 import com.daltoncash.mmostats.capabilities.combat.PlayerCombatExpProvider;
-import com.daltoncash.mmostats.events.ClientEvents.ClientForgeEvents;
+import com.daltoncash.mmostats.events.SkillEvents;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.CombatExpDataSyncS2CPacket;
 
@@ -30,7 +30,7 @@ public class GainCombatExpC2SPacket {
 		context.enqueueWork(() -> {
 			ServerPlayer player = context.getSender();
 			player.getCapability(PlayerCombatExpProvider.PLAYER_COMBAT_EXP).ifPresent(combatExp -> {
-				combatExp.addCombatExp(ClientForgeEvents.expToAdd);
+				combatExp.addCombatExp(SkillEvents.expToAdd);
 				ModMessages.sendToPlayer(new CombatExpDataSyncS2CPacket(combatExp.getCombatExp()), player);
 			});
 		});

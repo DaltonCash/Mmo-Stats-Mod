@@ -3,7 +3,7 @@ package com.daltoncash.mmostats.networking.packets.c2s.skills;
 import java.util.function.Supplier;
 
 import com.daltoncash.mmostats.capabilities.playerlevel.PlayerLevelExpProvider;
-import com.daltoncash.mmostats.events.ClientEvents.ClientForgeEvents;
+import com.daltoncash.mmostats.events.SkillEvents;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.PlayerLevelExpDataSyncS2CPacket;
 
@@ -30,7 +30,7 @@ public class GainPlayerLevelExpC2SPacket {
 		context.enqueueWork(() -> {
 			ServerPlayer player = context.getSender();
 			player.getCapability(PlayerLevelExpProvider.PLAYER_LEVEL_EXP).ifPresent(playerExp -> {
-				playerExp.addLevelExp(ClientForgeEvents.playerLevelExpToAdd);
+				playerExp.addLevelExp(SkillEvents.playerLevelExpToAdd);
 				System.out.println("playerExp Added! in packets");
 				ModMessages.sendToPlayer(new PlayerLevelExpDataSyncS2CPacket(playerExp.getLevelExp()), player);
 			});

@@ -3,7 +3,7 @@ package com.daltoncash.mmostats.networking.packets.c2s.skills;
 import java.util.function.Supplier;
 
 import com.daltoncash.mmostats.capabilities.farming.PlayerFarmingExpProvider;
-import com.daltoncash.mmostats.events.ClientEvents.ClientForgeEvents;
+import com.daltoncash.mmostats.events.SkillEvents;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.FarmingExpDataSyncS2CPacket;
 
@@ -30,7 +30,7 @@ public class ResetFarmingExpC2SPacket {
 		context.enqueueWork(() -> {
 			ServerPlayer player = context.getSender();
 			player.getCapability(PlayerFarmingExpProvider.PLAYER_FARMING_EXP).ifPresent(farmingExp -> {
-				farmingExp.subFarmingExp(ClientForgeEvents.expToSub);
+				farmingExp.subFarmingExp(SkillEvents.expToSub);
 				ModMessages.sendToPlayer(new FarmingExpDataSyncS2CPacket(farmingExp.getFarmingExp()), player);
 			});
 		});

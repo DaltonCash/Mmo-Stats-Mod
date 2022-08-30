@@ -3,7 +3,7 @@ package com.daltoncash.mmostats.networking.packets.c2s.skills;
 import java.util.function.Supplier;
 
 import com.daltoncash.mmostats.capabilities.archery.PlayerArcheryExpProvider;
-import com.daltoncash.mmostats.events.ClientEvents.ClientForgeEvents;
+import com.daltoncash.mmostats.events.SkillEvents;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.ArcheryExpDataSyncS2CPacket;
 
@@ -30,7 +30,7 @@ public class ResetArcheryExpC2SPacket {
 		context.enqueueWork(() -> {
 			ServerPlayer player = context.getSender();
 			player.getCapability(PlayerArcheryExpProvider.PLAYER_ARCHERY_EXP).ifPresent(archeryExp -> {
-				archeryExp.subArcheryExp(ClientForgeEvents.expToSub);
+				archeryExp.subArcheryExp(SkillEvents.expToSub);
 				ModMessages.sendToPlayer(new ArcheryExpDataSyncS2CPacket(archeryExp.getArcheryExp()), player);
 			});
 		});

@@ -3,7 +3,7 @@ package com.daltoncash.mmostats.networking.packets.c2s.skills;
 import java.util.function.Supplier;
 
 import com.daltoncash.mmostats.capabilities.playerlevel.PlayerLevelExpProvider;
-import com.daltoncash.mmostats.events.ClientEvents.ClientForgeEvents;
+import com.daltoncash.mmostats.events.SkillEvents;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.PlayerLevelExpDataSyncS2CPacket;
 
@@ -30,7 +30,7 @@ public class ResetPlayerLevelExpC2SPacket {
 		context.enqueueWork(() -> {
 			ServerPlayer player = context.getSender();
 			player.getCapability(PlayerLevelExpProvider.PLAYER_LEVEL_EXP).ifPresent(playerExp -> {
-				playerExp.subLevelExp(ClientForgeEvents.playerLevelExpToSub);
+				playerExp.subLevelExp(SkillEvents.playerLevelExpToSub);
 				ModMessages.sendToPlayer(new PlayerLevelExpDataSyncS2CPacket(playerExp.getLevelExp()), player);
 			});
 		});
