@@ -69,18 +69,23 @@ public class LevelUpOverlay {
 		}
 		int b = (skillExp * 961) / ((skillLevel * 40) + 400);
 		
-		RenderSystem.setShader(GameRenderer::getPositionTexShader);
-		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-		RenderSystem.setShaderTexture(0, EXP_BIT);
 		if(a > 0) {
 			for(int i = 0; i < 31; i++) {
 				if(b/31 > i) {
-						GuiComponent.blit(poseStack, x-96, 93 - (i * 3), 0, 0,  93, 3, 3, 3);
+					RenderSystem.setShader(GameRenderer::getPositionTexShader);
+					RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 0.5F);
+					RenderSystem.setShaderTexture(0, EXP_BIT);
+					GuiComponent.blit(poseStack, x-96, 93 - (i * 3), 0, 0,  93, 3, 3, 3);
 				}else {
+					RenderSystem.setShader(GameRenderer::getPositionTexShader);
+					RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 0.5F);
+					RenderSystem.setShaderTexture(0, EXP_BIT);
 					GuiComponent.blit(poseStack, x-96, 93 - (b/31 * 3), 0, 0,  ((b % 31) * 3), 3, 3, 3);
 				}
 			}
 		}
+		RenderSystem.setShader(GameRenderer::getPositionTexShader);
+		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		RenderSystem.setShaderTexture(0, SKILL_BOX);
 		if(a > 0) {
 			GuiComponent.blit(poseStack, x-100, 0, c, 0,  100, 100, 500, 100);
