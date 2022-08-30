@@ -1,8 +1,8 @@
 package com.daltoncash.mmostats.capabilities.chopping.upgrades;
 
-import com.daltoncash.mmostats.capabilities.UpgradeCapability;
+import com.daltoncash.mmostats.capabilities.MmoStatsCapability;
 
-public class GrannySmithUpgrade extends UpgradeCapability{
+public class GrannySmithUpgrade extends MmoStatsCapability{
 	
 	public GrannySmithUpgrade() {
 		this.setNbtString("isupgradedgrannysmithupgrade");

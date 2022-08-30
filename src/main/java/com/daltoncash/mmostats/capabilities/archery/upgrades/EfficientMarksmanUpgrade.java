@@ -1,8 +1,8 @@
 package com.daltoncash.mmostats.capabilities.archery.upgrades;
 
-import com.daltoncash.mmostats.capabilities.UpgradeCapability;
+import com.daltoncash.mmostats.capabilities.MmoStatsCapability;
 
-public class EfficientMarksmanUpgrade extends UpgradeCapability{
+public class EfficientMarksmanUpgrade extends MmoStatsCapability{
 	
 	public EfficientMarksmanUpgrade() {
 		this.setNbtString("isupgradedefficientmarksmanupgrade");

@@ -1,8 +1,8 @@
 package com.daltoncash.mmostats.capabilities.farming.upgrades;
 
-import com.daltoncash.mmostats.capabilities.UpgradeCapability;
+import com.daltoncash.mmostats.capabilities.MmoStatsCapability;
 
-public class SugarRushUpgrade extends UpgradeCapability{
+public class SugarRushUpgrade extends MmoStatsCapability{
 	
 	public SugarRushUpgrade() {
 		this.setNbtString("isupgradedsugarrushupgrade");

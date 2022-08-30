@@ -79,6 +79,32 @@ import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.CarnivoreU
 import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.EggerUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.SugarRushUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.WellFedUpgradeC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.ApplesEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.BeefEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.BeetrootEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.BreadEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.CakeEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.CarrotsEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.ChickenEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.CookiesEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.FishEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.GlowBerriesEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.GoldApplesEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.GoldenCarrotsEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.HoneyEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.KelpEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.MelonEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.MushroomStewEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.MuttonEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.PoisonousPotatoEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.PorkEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.PotatoEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.PufferfishEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.PumpkinPieEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.RabbitEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.RawFoodEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.RottenFleshEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.SpiderEyeEatenC2SPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.ManaDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.ArcheryExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.ArcheryLevelDataSyncS2CPacket;
@@ -119,6 +145,32 @@ import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.C
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.EggerUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.SugarRushUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.WellFedUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.ApplesEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.BeefEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.BeetrootEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.BreadEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.CakeEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.CarrotsEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.ChickenEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.CookiesEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.FishEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.GlowBerriesEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.GoldApplesEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.GoldenCarrotsEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.HoneyEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.KelpEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.MelonEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.MushroomStewEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.MuttonEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.PoisonousPotatoEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.PorkEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.PotatoEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.PufferfishEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.PumpkinPieEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.RabbitEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.RawFoodEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.RottenFleshEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.SpiderEyeEatenDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.JunkBlocksDropExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.NightVisionDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.NoJunkBlocksDataSyncS2CPacket;
@@ -904,7 +956,274 @@ public class ModMessages {
 				.encoder(RedstoneMinedDataSyncS2CPacket::toBytes)
 				.consumerMainThread(RedstoneMinedDataSyncS2CPacket::handle)
 				.add();
-
+//Foods--Eaten-----C2S--------------------------------
+        net.messageBuilder(ApplesEatenC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(ApplesEatenC2SPacket::new)
+			.encoder(ApplesEatenC2SPacket::toBytes)
+			.consumerMainThread(ApplesEatenC2SPacket::handle)
+			.add();
+        net.messageBuilder(BeefEatenC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(BeefEatenC2SPacket::new)
+			.encoder(BeefEatenC2SPacket::toBytes)
+			.consumerMainThread(BeefEatenC2SPacket::handle)
+			.add();
+        net.messageBuilder(BeetrootEatenC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(BeetrootEatenC2SPacket::new)
+			.encoder(BeetrootEatenC2SPacket::toBytes)
+			.consumerMainThread(BeetrootEatenC2SPacket::handle)
+			.add();
+        net.messageBuilder(BreadEatenC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(BreadEatenC2SPacket::new)
+			.encoder(BreadEatenC2SPacket::toBytes)
+			.consumerMainThread(BreadEatenC2SPacket::handle)
+			.add();
+        net.messageBuilder(CakeEatenC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(CakeEatenC2SPacket::new)
+			.encoder(CakeEatenC2SPacket::toBytes)
+			.consumerMainThread(CakeEatenC2SPacket::handle)
+			.add();
+        net.messageBuilder(CarrotsEatenC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(CarrotsEatenC2SPacket::new)
+			.encoder(CarrotsEatenC2SPacket::toBytes)
+			.consumerMainThread(CarrotsEatenC2SPacket::handle)
+			.add();
+        net.messageBuilder(ChickenEatenC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(ChickenEatenC2SPacket::new)
+			.encoder(ChickenEatenC2SPacket::toBytes)
+			.consumerMainThread(ChickenEatenC2SPacket::handle)
+			.add();
+        net.messageBuilder(CookiesEatenC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(CookiesEatenC2SPacket::new)
+			.encoder(CookiesEatenC2SPacket::toBytes)
+			.consumerMainThread(CookiesEatenC2SPacket::handle)
+			.add();
+        net.messageBuilder(FishEatenC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(FishEatenC2SPacket::new)
+			.encoder(FishEatenC2SPacket::toBytes)
+			.consumerMainThread(FishEatenC2SPacket::handle)
+			.add();
+        net.messageBuilder(GlowBerriesEatenC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(GlowBerriesEatenC2SPacket::new)
+			.encoder(GlowBerriesEatenC2SPacket::toBytes)
+			.consumerMainThread(GlowBerriesEatenC2SPacket::handle)
+			.add();
+        net.messageBuilder(GoldApplesEatenC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(GoldApplesEatenC2SPacket::new)
+			.encoder(GoldApplesEatenC2SPacket::toBytes)
+			.consumerMainThread(GoldApplesEatenC2SPacket::handle)
+			.add();
+        net.messageBuilder(GoldenCarrotsEatenC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(GoldenCarrotsEatenC2SPacket::new)
+			.encoder(GoldenCarrotsEatenC2SPacket::toBytes)
+			.consumerMainThread(GoldenCarrotsEatenC2SPacket::handle)
+			.add();
+        net.messageBuilder(HoneyEatenC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(HoneyEatenC2SPacket::new)
+			.encoder(HoneyEatenC2SPacket::toBytes)
+			.consumerMainThread(HoneyEatenC2SPacket::handle)
+			.add();
+        net.messageBuilder(KelpEatenC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(KelpEatenC2SPacket::new)
+			.encoder(KelpEatenC2SPacket::toBytes)
+			.consumerMainThread(KelpEatenC2SPacket::handle)
+			.add();
+        net.messageBuilder(MelonEatenC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(MelonEatenC2SPacket::new)
+			.encoder(MelonEatenC2SPacket::toBytes)
+			.consumerMainThread(MelonEatenC2SPacket::handle)
+			.add();
+        net.messageBuilder(MushroomStewEatenC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(MushroomStewEatenC2SPacket::new)
+			.encoder(MushroomStewEatenC2SPacket::toBytes)
+			.consumerMainThread(MushroomStewEatenC2SPacket::handle)
+			.add();
+        net.messageBuilder(MuttonEatenC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(MuttonEatenC2SPacket::new)
+			.encoder(MuttonEatenC2SPacket::toBytes)
+			.consumerMainThread(MuttonEatenC2SPacket::handle)
+			.add();
+        net.messageBuilder(PoisonousPotatoEatenC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(PoisonousPotatoEatenC2SPacket::new)
+			.encoder(PoisonousPotatoEatenC2SPacket::toBytes)
+			.consumerMainThread(PoisonousPotatoEatenC2SPacket::handle)
+			.add();
+        net.messageBuilder(PorkEatenC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(PorkEatenC2SPacket::new)
+			.encoder(PorkEatenC2SPacket::toBytes)
+			.consumerMainThread(PorkEatenC2SPacket::handle)
+			.add();
+        net.messageBuilder(PotatoEatenC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(PotatoEatenC2SPacket::new)
+			.encoder(PotatoEatenC2SPacket::toBytes)
+			.consumerMainThread(PotatoEatenC2SPacket::handle)
+			.add();
+        net.messageBuilder(PufferfishEatenC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(PufferfishEatenC2SPacket::new)
+			.encoder(PufferfishEatenC2SPacket::toBytes)
+			.consumerMainThread(PufferfishEatenC2SPacket::handle)
+			.add();
+        net.messageBuilder(PumpkinPieEatenC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(PumpkinPieEatenC2SPacket::new)
+			.encoder(PumpkinPieEatenC2SPacket::toBytes)
+			.consumerMainThread(PumpkinPieEatenC2SPacket::handle)
+			.add();
+        net.messageBuilder(RabbitEatenC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(RabbitEatenC2SPacket::new)
+			.encoder(RabbitEatenC2SPacket::toBytes)
+			.consumerMainThread(RabbitEatenC2SPacket::handle)
+			.add();
+        net.messageBuilder(RawFoodEatenC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(RawFoodEatenC2SPacket::new)
+			.encoder(RawFoodEatenC2SPacket::toBytes)
+			.consumerMainThread(RawFoodEatenC2SPacket::handle)
+			.add();
+        net.messageBuilder(RottenFleshEatenC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(RottenFleshEatenC2SPacket::new)
+			.encoder(RottenFleshEatenC2SPacket::toBytes)
+			.consumerMainThread(RottenFleshEatenC2SPacket::handle)
+			.add();
+        net.messageBuilder(SpiderEyeEatenC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(SpiderEyeEatenC2SPacket::new)
+			.encoder(SpiderEyeEatenC2SPacket::toBytes)
+			.consumerMainThread(SpiderEyeEatenC2SPacket::handle)
+			.add();
+        
+//Foods--Eaten-----S2C--------------------------------
+        net.messageBuilder(ApplesEatenDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+			.decoder(ApplesEatenDataSyncS2CPacket::new)
+			.encoder(ApplesEatenDataSyncS2CPacket::toBytes)
+			.consumerMainThread(ApplesEatenDataSyncS2CPacket::handle)
+			.add();
+        net.messageBuilder(BeefEatenDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+ 			.decoder(BeefEatenDataSyncS2CPacket::new)
+ 			.encoder(BeefEatenDataSyncS2CPacket::toBytes)
+ 			.consumerMainThread(BeefEatenDataSyncS2CPacket::handle)
+ 			.add();
+        net.messageBuilder(BeetrootEatenDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+ 			.decoder(BeetrootEatenDataSyncS2CPacket::new)
+ 			.encoder(BeetrootEatenDataSyncS2CPacket::toBytes)
+ 			.consumerMainThread(BeetrootEatenDataSyncS2CPacket::handle)
+ 			.add();
+        net.messageBuilder(BreadEatenDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+ 			.decoder(BreadEatenDataSyncS2CPacket::new)
+ 			.encoder(BreadEatenDataSyncS2CPacket::toBytes)
+ 			.consumerMainThread(BreadEatenDataSyncS2CPacket::handle)
+ 			.add();
+        net.messageBuilder(CakeEatenDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+ 			.decoder(CakeEatenDataSyncS2CPacket::new)
+ 			.encoder(CakeEatenDataSyncS2CPacket::toBytes)
+ 			.consumerMainThread(CakeEatenDataSyncS2CPacket::handle)
+ 			.add();
+        net.messageBuilder(CarrotsEatenDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+ 			.decoder(CarrotsEatenDataSyncS2CPacket::new)
+ 			.encoder(CarrotsEatenDataSyncS2CPacket::toBytes)
+ 			.consumerMainThread(CarrotsEatenDataSyncS2CPacket::handle)
+ 			.add();
+        net.messageBuilder(ChickenEatenDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+ 			.decoder(ChickenEatenDataSyncS2CPacket::new)
+ 			.encoder(ChickenEatenDataSyncS2CPacket::toBytes)
+ 			.consumerMainThread(ChickenEatenDataSyncS2CPacket::handle)
+ 			.add();
+        net.messageBuilder(CookiesEatenDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+ 			.decoder(CookiesEatenDataSyncS2CPacket::new)
+ 			.encoder(CookiesEatenDataSyncS2CPacket::toBytes)
+ 			.consumerMainThread(CookiesEatenDataSyncS2CPacket::handle)
+ 			.add();
+        net.messageBuilder(FishEatenDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+ 			.decoder(FishEatenDataSyncS2CPacket::new)
+ 			.encoder(FishEatenDataSyncS2CPacket::toBytes)
+ 			.consumerMainThread(FishEatenDataSyncS2CPacket::handle)
+ 			.add();
+        net.messageBuilder(GlowBerriesEatenDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+ 			.decoder(GlowBerriesEatenDataSyncS2CPacket::new)
+ 			.encoder(GlowBerriesEatenDataSyncS2CPacket::toBytes)
+ 			.consumerMainThread(GlowBerriesEatenDataSyncS2CPacket::handle)
+ 			.add();
+        net.messageBuilder(GoldApplesEatenDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+ 			.decoder(GoldApplesEatenDataSyncS2CPacket::new)
+ 			.encoder(GoldApplesEatenDataSyncS2CPacket::toBytes)
+ 			.consumerMainThread(GoldApplesEatenDataSyncS2CPacket::handle)
+ 			.add();
+        net.messageBuilder(GoldenCarrotsEatenDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+ 			.decoder(GoldenCarrotsEatenDataSyncS2CPacket::new)
+ 			.encoder(GoldenCarrotsEatenDataSyncS2CPacket::toBytes)
+ 			.consumerMainThread(GoldenCarrotsEatenDataSyncS2CPacket::handle)
+ 			.add();
+        net.messageBuilder(HoneyEatenDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+ 			.decoder(HoneyEatenDataSyncS2CPacket::new)
+ 			.encoder(HoneyEatenDataSyncS2CPacket::toBytes)
+ 			.consumerMainThread(HoneyEatenDataSyncS2CPacket::handle)
+ 			.add();
+        net.messageBuilder(KelpEatenDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+ 			.decoder(KelpEatenDataSyncS2CPacket::new)
+ 			.encoder(KelpEatenDataSyncS2CPacket::toBytes)
+ 			.consumerMainThread(KelpEatenDataSyncS2CPacket::handle)
+ 			.add();
+        net.messageBuilder(MelonEatenDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+ 			.decoder(MelonEatenDataSyncS2CPacket::new)
+ 			.encoder(MelonEatenDataSyncS2CPacket::toBytes)
+ 			.consumerMainThread(MelonEatenDataSyncS2CPacket::handle)
+ 			.add();
+        net.messageBuilder(MushroomStewEatenDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+ 			.decoder(MushroomStewEatenDataSyncS2CPacket::new)
+ 			.encoder(MushroomStewEatenDataSyncS2CPacket::toBytes)
+ 			.consumerMainThread(MushroomStewEatenDataSyncS2CPacket::handle)
+ 			.add();
+        net.messageBuilder(MuttonEatenDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+ 			.decoder(MuttonEatenDataSyncS2CPacket::new)
+ 			.encoder(MuttonEatenDataSyncS2CPacket::toBytes)
+ 			.consumerMainThread(MuttonEatenDataSyncS2CPacket::handle)
+ 			.add();
+        net.messageBuilder(PoisonousPotatoEatenDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+ 			.decoder(PoisonousPotatoEatenDataSyncS2CPacket::new)
+ 			.encoder(PoisonousPotatoEatenDataSyncS2CPacket::toBytes)
+ 			.consumerMainThread(PoisonousPotatoEatenDataSyncS2CPacket::handle)
+ 			.add();
+        net.messageBuilder(PorkEatenDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+ 			.decoder(PorkEatenDataSyncS2CPacket::new)
+ 			.encoder(PorkEatenDataSyncS2CPacket::toBytes)
+ 			.consumerMainThread(PorkEatenDataSyncS2CPacket::handle)
+ 			.add();
+        net.messageBuilder(PotatoEatenDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+ 			.decoder(PotatoEatenDataSyncS2CPacket::new)
+ 			.encoder(PotatoEatenDataSyncS2CPacket::toBytes)
+ 			.consumerMainThread(PotatoEatenDataSyncS2CPacket::handle)
+ 			.add();
+        net.messageBuilder(PufferfishEatenDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+ 			.decoder(PufferfishEatenDataSyncS2CPacket::new)
+ 			.encoder(PufferfishEatenDataSyncS2CPacket::toBytes)
+ 			.consumerMainThread(PufferfishEatenDataSyncS2CPacket::handle)
+ 			.add();
+        net.messageBuilder(PumpkinPieEatenDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+ 			.decoder(PumpkinPieEatenDataSyncS2CPacket::new)
+ 			.encoder(PumpkinPieEatenDataSyncS2CPacket::toBytes)
+ 			.consumerMainThread(PumpkinPieEatenDataSyncS2CPacket::handle)
+ 			.add();
+        net.messageBuilder(RabbitEatenDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+ 			.decoder(RabbitEatenDataSyncS2CPacket::new)
+ 			.encoder(RabbitEatenDataSyncS2CPacket::toBytes)
+ 			.consumerMainThread(RabbitEatenDataSyncS2CPacket::handle)
+ 			.add();
+        net.messageBuilder(RawFoodEatenDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+ 			.decoder(RawFoodEatenDataSyncS2CPacket::new)
+ 			.encoder(RawFoodEatenDataSyncS2CPacket::toBytes)
+ 			.consumerMainThread(RawFoodEatenDataSyncS2CPacket::handle)
+ 			.add();
+        net.messageBuilder(RottenFleshEatenDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+ 			.decoder(RottenFleshEatenDataSyncS2CPacket::new)
+ 			.encoder(RottenFleshEatenDataSyncS2CPacket::toBytes)
+ 			.consumerMainThread(RottenFleshEatenDataSyncS2CPacket::handle)
+ 			.add();
+        net.messageBuilder(SpiderEyeEatenDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+ 			.decoder(SpiderEyeEatenDataSyncS2CPacket::new)
+ 			.encoder(SpiderEyeEatenDataSyncS2CPacket::toBytes)
+ 			.consumerMainThread(SpiderEyeEatenDataSyncS2CPacket::handle)
+ 			.add();
+        
+        
+        
+        
+        
 		//PRESI'S MAGIC TO BE RELOCATED
 		net.messageBuilder(SpawnNatureMagnetItemC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
 				.decoder(SpawnNatureMagnetItemC2SPacket::new)

@@ -1,8 +1,8 @@
 package com.daltoncash.mmostats.capabilities.swords.upgrades;
 
-import com.daltoncash.mmostats.capabilities.UpgradeCapability;
+import com.daltoncash.mmostats.capabilities.MmoStatsCapability;
 
-public class ShieldBashUpgrade extends UpgradeCapability{
+public class ShieldBashUpgrade extends MmoStatsCapability{
 	
 	public ShieldBashUpgrade() {
 		this.setNbtString("isupgradedshieldbashupgrade");

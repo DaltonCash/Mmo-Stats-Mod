@@ -1,8 +1,8 @@
 package com.daltoncash.mmostats.capabilities.swords.upgrades;
 
-import com.daltoncash.mmostats.capabilities.UpgradeCapability;
+import com.daltoncash.mmostats.capabilities.MmoStatsCapability;
 
-public class CritasticUpgrade extends UpgradeCapability{
+public class CritasticUpgrade extends MmoStatsCapability{
 	
 	public CritasticUpgrade() {
 		this.setNbtString("isupgradedcritasticupgrade");

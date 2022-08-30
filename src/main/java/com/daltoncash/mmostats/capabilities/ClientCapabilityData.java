@@ -76,6 +76,34 @@ public class ClientCapabilityData {
 	private static int netherGoldMined;
 	private static int quartzMined;
 	private static int redstoneMined;
+	//Foods Eaten
+	private static int applesEaten;
+	private static int beefEaten;
+	private static int beetrootEaten;
+	private static int breadEaten;
+	private static int cakeEaten;
+	private static int carrotsEaten;
+	private static int chickenEaten;
+	private static int cookiesEaten;
+	private static int fishEaten;
+	private static int glowBerriesEaten;
+	private static int goldApplesEaten;
+	private static int goldenCarrotsEaten;
+	private static int honeyEaten;
+	private static int kelpEaten;
+	private static int melonEaten;
+	private static int mushroomStewEaten;
+	private static int muttonEaten;
+	private static int poisonousPotatoEaten;
+	private static int porkEaten;
+	private static int potatoEaten;
+	private static int pufferfishEaten;
+	private static int pumpkinPieEaten;
+	private static int rabbitEaten;
+	private static int rawFoodEaten;
+	private static int rottenFleshEaten;
+	private static int spiderEyeEaten;
+
 
 	public static int getPlayerExp() {
 		return playerExp;
@@ -608,6 +636,214 @@ public class ClientCapabilityData {
 	public static void setPlayerMagicLevel(int playerMagicLevel) {
 
 		ClientCapabilityData.playerMagicLevel = playerMagicLevel;
+	}
+
+	public static int getApplesEaten() {
+		return applesEaten;
+	}
+
+	public static void setApplesEaten(int applesEaten) {
+		ClientCapabilityData.applesEaten = applesEaten;
+	}
+
+	public static int getBeefEaten() {
+		return beefEaten;
+	}
+
+	public static void setBeefEaten(int beefEaten) {
+		ClientCapabilityData.beefEaten = beefEaten;
+	}
+
+	public static int getBeetrootEaten() {
+		return beetrootEaten;
+	}
+
+	public static void setBeetrootEaten(int beetrootEaten) {
+		ClientCapabilityData.beetrootEaten = beetrootEaten;
+	}
+
+	public static int getBreadEaten() {
+		return breadEaten;
+	}
+
+	public static void setBreadEaten(int breadEaten) {
+		ClientCapabilityData.breadEaten = breadEaten;
+	}
+
+	public static int getCakeEaten() {
+		return cakeEaten;
+	}
+
+	public static void setCakeEaten(int cakeEaten) {
+		ClientCapabilityData.cakeEaten = cakeEaten;
+	}
+
+	public static int getCarrotsEaten() {
+		return carrotsEaten;
+	}
+
+	public static void setCarrotsEaten(int carrotsEaten) {
+		ClientCapabilityData.carrotsEaten = carrotsEaten;
+	}
+
+	public static int getChickenEaten() {
+		return chickenEaten;
+	}
+
+	public static void setChickenEaten(int chickenEaten) {
+		ClientCapabilityData.chickenEaten = chickenEaten;
+	}
+
+	public static int getCookiesEaten() {
+		return cookiesEaten;
+	}
+
+	public static void setCookiesEaten(int cookiesEaten) {
+		ClientCapabilityData.cookiesEaten = cookiesEaten;
+	}
+
+	public static int getFishEaten() {
+		return fishEaten;
+	}
+
+	public static void setFishEaten(int fishEaten) {
+		ClientCapabilityData.fishEaten = fishEaten;
+	}
+
+	public static int getGlowBerriesEaten() {
+		return glowBerriesEaten;
+	}
+
+	public static void setGlowBerriesEaten(int glowBerriesEaten) {
+		ClientCapabilityData.glowBerriesEaten = glowBerriesEaten;
+	}
+
+	public static int getGoldApplesEaten() {
+		return goldApplesEaten;
+	}
+
+	public static void setGoldApplesEaten(int goldApplesEaten) {
+		ClientCapabilityData.goldApplesEaten = goldApplesEaten;
+	}
+
+	public static int getGoldenCarrotsEaten() {
+		return goldenCarrotsEaten;
+	}
+
+	public static void setGoldenCarrotsEaten(int goldenCarrotsEaten) {
+		ClientCapabilityData.goldenCarrotsEaten = goldenCarrotsEaten;
+	}
+
+	public static int getHoneyEaten() {
+		return honeyEaten;
+	}
+
+	public static void setHoneyEaten(int honeyEaten) {
+		ClientCapabilityData.honeyEaten = honeyEaten;
+	}
+
+	public static int getKelpEaten() {
+		return kelpEaten;
+	}
+
+	public static void setKelpEaten(int kelpEaten) {
+		ClientCapabilityData.kelpEaten = kelpEaten;
+	}
+
+	public static int getMelonEaten() {
+		return melonEaten;
+	}
+
+	public static void setMelonEaten(int melonEaten) {
+		ClientCapabilityData.melonEaten = melonEaten;
+	}
+
+	public static int getMushroomStewEaten() {
+		return mushroomStewEaten;
+	}
+
+	public static void setMushroomStewEaten(int mushroomStewEaten) {
+		ClientCapabilityData.mushroomStewEaten = mushroomStewEaten;
+	}
+
+	public static int getMuttonEaten() {
+		return muttonEaten;
+	}
+
+	public static void setMuttonEaten(int muttonEaten) {
+		ClientCapabilityData.muttonEaten = muttonEaten;
+	}
+
+	public static int getPoisonousPotatoEaten() {
+		return poisonousPotatoEaten;
+	}
+
+	public static void setPoisonousPotatoEaten(int poisonousPotatoEaten) {
+		ClientCapabilityData.poisonousPotatoEaten = poisonousPotatoEaten;
+	}
+
+	public static int getPorkEaten() {
+		return porkEaten;
+	}
+
+	public static void setPorkEaten(int porkEaten) {
+		ClientCapabilityData.porkEaten = porkEaten;
+	}
+
+	public static int getPotatoEaten() {
+		return potatoEaten;
+	}
+
+	public static void setPotatoEaten(int potatoEaten) {
+		ClientCapabilityData.potatoEaten = potatoEaten;
+	}
+
+	public static int getPufferfishEaten() {
+		return pufferfishEaten;
+	}
+
+	public static void setPufferfishEaten(int pufferfishEaten) {
+		ClientCapabilityData.pufferfishEaten = pufferfishEaten;
+	}
+
+	public static int getPumpkinPieEaten() {
+		return pumpkinPieEaten;
+	}
+
+	public static void setPumpkinPieEaten(int pumpkinPieEaten) {
+		ClientCapabilityData.pumpkinPieEaten = pumpkinPieEaten;
+	}
+
+	public static int getRabbitEaten() {
+		return rabbitEaten;
+	}
+
+	public static void setRabbitEaten(int rabbitEaten) {
+		ClientCapabilityData.rabbitEaten = rabbitEaten;
+	}
+
+	public static int getRawFoodEaten() {
+		return rawFoodEaten;
+	}
+
+	public static void setRawFoodEaten(int rawFoodEaten) {
+		ClientCapabilityData.rawFoodEaten = rawFoodEaten;
+	}
+
+	public static int getRottenFleshEaten() {
+		return rottenFleshEaten;
+	}
+
+	public static void setRottenFleshEaten(int rottenFleshEaten) {
+		ClientCapabilityData.rottenFleshEaten = rottenFleshEaten;
+	}
+
+	public static int getSpiderEyeEaten() {
+		return spiderEyeEaten;
+	}
+
+	public static void setSpiderEyeEaten(int spiderEyeEaten) {
+		ClientCapabilityData.spiderEyeEaten = spiderEyeEaten;
 	}
 
 }

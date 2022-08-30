@@ -1,8 +1,8 @@
 package com.daltoncash.mmostats.capabilities.archery.upgrades;
 
-import com.daltoncash.mmostats.capabilities.UpgradeCapability;
+import com.daltoncash.mmostats.capabilities.MmoStatsCapability;
 
-public class HunterUpgrade extends UpgradeCapability{
+public class HunterUpgrade extends MmoStatsCapability{
 	
 	public HunterUpgrade() {
 		this.setNbtString("isupgradedhunterupgrade");

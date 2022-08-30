@@ -1,8 +1,8 @@
 package com.daltoncash.mmostats.capabilities.archery.upgrades;
 
-import com.daltoncash.mmostats.capabilities.UpgradeCapability;
+import com.daltoncash.mmostats.capabilities.MmoStatsCapability;
 
-public class SniperUpgrade extends UpgradeCapability{
+public class SniperUpgrade extends MmoStatsCapability{
 	
 	public SniperUpgrade() {
 		this.setNbtString("isupgradedsniperupgrade");

@@ -1,8 +1,8 @@
 package com.daltoncash.mmostats.capabilities.swords.upgrades;
 
-import com.daltoncash.mmostats.capabilities.UpgradeCapability;
+import com.daltoncash.mmostats.capabilities.MmoStatsCapability;
 
-public class RightClickUpgrade extends UpgradeCapability{
+public class RightClickUpgrade extends MmoStatsCapability{
 	
 	public RightClickUpgrade() {
 		this.setNbtString("isupgradedrightclickupgrade");

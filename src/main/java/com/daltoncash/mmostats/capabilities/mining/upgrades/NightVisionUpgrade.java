@@ -1,8 +1,8 @@
 package com.daltoncash.mmostats.capabilities.mining.upgrades;
 
-import com.daltoncash.mmostats.capabilities.UpgradeCapability;
+import com.daltoncash.mmostats.capabilities.MmoStatsCapability;
 
-public class NightVisionUpgrade extends UpgradeCapability{
+public class NightVisionUpgrade extends MmoStatsCapability{
 	
 	public NightVisionUpgrade() {
 		this.setNbtString("isupgradednightvisionupgrade");

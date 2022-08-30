@@ -1,8 +1,8 @@
 package com.daltoncash.mmostats.capabilities.combat.upgrades;
 
-import com.daltoncash.mmostats.capabilities.UpgradeCapability;
+import com.daltoncash.mmostats.capabilities.MmoStatsCapability;
 
-public class StableFootingUpgrade extends UpgradeCapability{
+public class StableFootingUpgrade extends MmoStatsCapability{
 	
 	public StableFootingUpgrade() {
 		this.setNbtString("isupgradedstablefootingupgrade");

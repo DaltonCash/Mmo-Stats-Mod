@@ -1,8 +1,8 @@
 package com.daltoncash.mmostats.capabilities.combat.upgrades;
 
-import com.daltoncash.mmostats.capabilities.UpgradeCapability;
+import com.daltoncash.mmostats.capabilities.MmoStatsCapability;
 
-public class TakeStanceUpgrade extends UpgradeCapability{
+public class TakeStanceUpgrade extends MmoStatsCapability{
 	
 	public TakeStanceUpgrade() {
 		this.setNbtString("isupgradedtakestanceupgrade");

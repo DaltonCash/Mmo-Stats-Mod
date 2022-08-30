@@ -2,15 +2,15 @@ package com.daltoncash.mmostats.capabilities;
 
 import net.minecraft.nbt.CompoundTag;
 
-public class UpgradeCapability {
+public class MmoStatsCapability {
 	private int upgradeLevel;
 	private String nbtString;
 
-	protected UpgradeCapability(String nbtString){
+	protected MmoStatsCapability(String nbtString){
 		this.nbtString = nbtString;
 	}
 	
-	public UpgradeCapability() {
+	public MmoStatsCapability() {
 	}
 
 	public int getUpgradeLevel() {
@@ -21,7 +21,7 @@ public class UpgradeCapability {
 		this.upgradeLevel = upgradeLevel;
 	}
 
-	public void copyFrom(UpgradeCapability source) {
+	public void copyFrom(MmoStatsCapability source) {
 		this.upgradeLevel = source.upgradeLevel;
 	}
 	public void saveNBTData(CompoundTag nbt) {
