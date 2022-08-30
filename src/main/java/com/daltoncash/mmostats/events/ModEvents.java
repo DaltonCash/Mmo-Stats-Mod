@@ -64,6 +64,58 @@ import com.daltoncash.mmostats.capabilities.farming.upgrades.SugarRushUpgrade;
 import com.daltoncash.mmostats.capabilities.farming.upgrades.SugarRushUpgradeProvider;
 import com.daltoncash.mmostats.capabilities.farming.upgrades.WellFedUpgrade;
 import com.daltoncash.mmostats.capabilities.farming.upgrades.WellFedUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.ApplesEaten;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.ApplesEatenProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.BeefEaten;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.BeefEatenProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.BeetrootEaten;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.BeetrootEatenProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.BreadEaten;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.BreadEatenProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.CakeEaten;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.CakeEatenProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.CarrotsEaten;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.CarrotsEatenProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.ChickenEaten;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.ChickenEatenProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.CookiesEaten;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.CookiesEatenProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.FishEaten;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.FishEatenProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.GlowBerriesEaten;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.GlowBerriesEatenProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.GoldApplesEaten;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.GoldApplesEatenProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.GoldenCarrotsEaten;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.GoldenCarrotsEatenProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.HoneyEaten;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.HoneyEatenProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.KelpEaten;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.KelpEatenProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.MelonEaten;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.MelonEatenProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.MushroomStewEaten;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.MushroomStewEatenProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.MuttonEaten;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.MuttonEatenProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.PoisonousPotatoEaten;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.PoisonousPotatoEatenProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.PorkEaten;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.PorkEatenProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.PotatoEaten;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.PotatoEatenProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.PufferfishEaten;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.PufferfishEatenProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.PumpkinPieEaten;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.PumpkinPieEatenProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.RabbitEaten;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.RabbitEatenProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.RawFoodEaten;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.RawFoodEatenProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.RottenFleshEaten;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.RottenFleshEatenProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.SpiderEyeEaten;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten.SpiderEyeEatenProvider;
 import com.daltoncash.mmostats.capabilities.magic.PlayerMagicExp;
 import com.daltoncash.mmostats.capabilities.magic.PlayerMagicExpProvider;
 import com.daltoncash.mmostats.capabilities.magic.PlayerMagicLevel;
@@ -167,6 +219,32 @@ import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.C
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.EggerUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.SugarRushUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.WellFedUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.ApplesEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.BeefEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.BeetrootEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.BreadEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.CakeEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.CarrotsEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.ChickenEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.CookiesEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.FishEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.GlowBerriesEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.GoldApplesEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.GoldenCarrotsEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.HoneyEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.KelpEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.MelonEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.MushroomStewEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.MuttonEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.PoisonousPotatoEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.PorkEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.PotatoEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.PufferfishEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.PumpkinPieEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.RabbitEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.RawFoodEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.RottenFleshEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.SpiderEyeEatenDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.JunkBlocksDropExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.NightVisionDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.NoJunkBlocksDataSyncS2CPacket;
@@ -519,6 +597,112 @@ public class ModEvents {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "redstonemined"),
 						new RedstoneMinedProvider());
 			}
+			
+			//Food Eaten
+			if (!event.getObject().getCapability(ApplesEatenProvider.SUM).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "apples_eaten"),
+						new ApplesEatenProvider());
+			}
+			if (!event.getObject().getCapability(BeefEatenProvider.SUM).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "beef_eaten"),
+						new BeefEatenProvider());
+			}
+			if (!event.getObject().getCapability(BeetrootEatenProvider.SUM).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "beetroot_eaten"),
+						new BeetrootEatenProvider());
+			}
+			if (!event.getObject().getCapability(BreadEatenProvider.SUM).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "bread_eaten"),
+						new BreadEatenProvider());
+			}
+			if (!event.getObject().getCapability(CakeEatenProvider.SUM).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "cake_eaten"),
+						new ApplesEatenProvider());
+			}
+			if (!event.getObject().getCapability(CarrotsEatenProvider.SUM).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "carrots_eaten"),
+						new ApplesEatenProvider());
+			}
+			if (!event.getObject().getCapability(ChickenEatenProvider.SUM).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "chicken_eaten"),
+						new ApplesEatenProvider());
+			}
+			if (!event.getObject().getCapability(CookiesEatenProvider.SUM).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "cookies_eaten"),
+						new ApplesEatenProvider());
+			}
+			if (!event.getObject().getCapability(FishEatenProvider.SUM).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "fish_eaten"),
+						new ApplesEatenProvider());
+			}
+			if (!event.getObject().getCapability(GlowBerriesEatenProvider.SUM).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "glow_berries_eaten"),
+						new ApplesEatenProvider());
+			}
+			if (!event.getObject().getCapability(GoldApplesEatenProvider.SUM).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "gold_apples_eaten"),
+						new ApplesEatenProvider());
+			}
+			if (!event.getObject().getCapability(GoldenCarrotsEatenProvider.SUM).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "golden_carrots_eaten"),
+						new ApplesEatenProvider());
+			}
+			if (!event.getObject().getCapability(HoneyEatenProvider.SUM).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "honey_eaten"),
+						new ApplesEatenProvider());
+			}
+			if (!event.getObject().getCapability(KelpEatenProvider.SUM).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "kelp_eaten"),
+						new ApplesEatenProvider());
+			}
+			if (!event.getObject().getCapability(MelonEatenProvider.SUM).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "melon_eaten"),
+						new ApplesEatenProvider());
+			}
+			if (!event.getObject().getCapability(MushroomStewEatenProvider.SUM).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "mushroom_stew_eaten"),
+						new ApplesEatenProvider());
+			}
+			if (!event.getObject().getCapability(MuttonEatenProvider.SUM).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "mutton_eaten"),
+						new ApplesEatenProvider());
+			}
+			if (!event.getObject().getCapability(PoisonousPotatoEatenProvider.SUM).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "poisonous_potato_eaten"),
+						new ApplesEatenProvider());
+			}
+			if (!event.getObject().getCapability(PorkEatenProvider.SUM).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "pork_eaten"),
+						new ApplesEatenProvider());
+			}
+			if (!event.getObject().getCapability(PotatoEatenProvider.SUM).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "potato_eaten"),
+						new ApplesEatenProvider());
+			}
+			if (!event.getObject().getCapability(PufferfishEatenProvider.SUM).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "pufferfish_eaten"),
+						new ApplesEatenProvider());
+			}
+			if (!event.getObject().getCapability(PumpkinPieEatenProvider.SUM).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "pumpkin_pie_eaten"),
+						new ApplesEatenProvider());
+			}
+			if (!event.getObject().getCapability(RabbitEatenProvider.SUM).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "rabbit_eaten"),
+						new ApplesEatenProvider());
+			}
+			if (!event.getObject().getCapability(RawFoodEatenProvider.SUM).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "raw_food_eaten"),
+						new ApplesEatenProvider());
+			}
+			if (!event.getObject().getCapability(RottenFleshEatenProvider.SUM).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "rotten_flesh_eaten"),
+						new ApplesEatenProvider());
+			}
+			if (!event.getObject().getCapability(SpiderEyeEatenProvider.SUM).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "spider_eye_eaten"),
+						new ApplesEatenProvider());
+			}
 		}
 	}
 	
@@ -543,7 +727,6 @@ public class ModEvents {
 					newStore.copyFrom(oldStore);
 				});
 			});
-			
 			event.getOriginal().getCapability(PlayerManaProvider.PLAYER_MANA).ifPresent(oldStore -> {
 				event.getEntity().getCapability(PlayerManaProvider.PLAYER_MANA).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
@@ -554,8 +737,6 @@ public class ModEvents {
 					newStore.copyFrom(oldStore);
 				});
 			});
-			
-			
 			event.getOriginal().getCapability(PlayerMiningExpProvider.PLAYER_MINING_EXP).ifPresent(oldStore -> {
 				event.getEntity().getCapability(PlayerMiningExpProvider.PLAYER_MINING_EXP).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
@@ -694,6 +875,7 @@ public class ModEvents {
 			});
 			
 			//-------------------------Combat----Upgrades-----------------------
+			
 			event.getOriginal().getCapability(DodgeRollUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
 				event.getEntity().getCapability(DodgeRollUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
@@ -866,12 +1048,146 @@ public class ModEvents {
 					newStore.copyFrom(oldStore);
 				});
 			});
+			
+			//Food--Eaten-------------------------------------------------
+			
+			event.getOriginal().getCapability(ApplesEatenProvider.SUM).ifPresent(oldStore -> {
+				event.getEntity().getCapability(ApplesEatenProvider.SUM).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(BeefEatenProvider.SUM).ifPresent(oldStore -> {
+				event.getEntity().getCapability(BeefEatenProvider.SUM).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(BeetrootEatenProvider.SUM).ifPresent(oldStore -> {
+				event.getEntity().getCapability(BeetrootEatenProvider.SUM).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(BreadEatenProvider.SUM).ifPresent(oldStore -> {
+				event.getEntity().getCapability(BreadEatenProvider.SUM).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(CakeEatenProvider.SUM).ifPresent(oldStore -> {
+				event.getEntity().getCapability(CakeEatenProvider.SUM).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(CarrotsEatenProvider.SUM).ifPresent(oldStore -> {
+				event.getEntity().getCapability(CarrotsEatenProvider.SUM).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(ChickenEatenProvider.SUM).ifPresent(oldStore -> {
+				event.getEntity().getCapability(ChickenEatenProvider.SUM).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(CookiesEatenProvider.SUM).ifPresent(oldStore -> {
+				event.getEntity().getCapability(CookiesEatenProvider.SUM).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(FishEatenProvider.SUM).ifPresent(oldStore -> {
+				event.getEntity().getCapability(FishEatenProvider.SUM).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(GlowBerriesEatenProvider.SUM).ifPresent(oldStore -> {
+				event.getEntity().getCapability(GlowBerriesEatenProvider.SUM).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(GoldApplesEatenProvider.SUM).ifPresent(oldStore -> {
+				event.getEntity().getCapability(GoldApplesEatenProvider.SUM).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(GoldenCarrotsEatenProvider.SUM).ifPresent(oldStore -> {
+				event.getEntity().getCapability(GoldenCarrotsEatenProvider.SUM).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(HoneyEatenProvider.SUM).ifPresent(oldStore -> {
+				event.getEntity().getCapability(HoneyEatenProvider.SUM).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(KelpEatenProvider.SUM).ifPresent(oldStore -> {
+				event.getEntity().getCapability(KelpEatenProvider.SUM).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(MelonEatenProvider.SUM).ifPresent(oldStore -> {
+				event.getEntity().getCapability(MelonEatenProvider.SUM).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(MushroomStewEatenProvider.SUM).ifPresent(oldStore -> {
+				event.getEntity().getCapability(MushroomStewEatenProvider.SUM).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(MuttonEatenProvider.SUM).ifPresent(oldStore -> {
+				event.getEntity().getCapability(MuttonEatenProvider.SUM).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(PoisonousPotatoEatenProvider.SUM).ifPresent(oldStore -> {
+				event.getEntity().getCapability(PoisonousPotatoEatenProvider.SUM).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(PorkEatenProvider.SUM).ifPresent(oldStore -> {
+				event.getEntity().getCapability(PorkEatenProvider.SUM).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(PotatoEatenProvider.SUM).ifPresent(oldStore -> {
+				event.getEntity().getCapability(PotatoEatenProvider.SUM).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(PufferfishEatenProvider.SUM).ifPresent(oldStore -> {
+				event.getEntity().getCapability(PufferfishEatenProvider.SUM).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(PumpkinPieEatenProvider.SUM).ifPresent(oldStore -> {
+				event.getEntity().getCapability(PumpkinPieEatenProvider.SUM).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(RabbitEatenProvider.SUM).ifPresent(oldStore -> {
+				event.getEntity().getCapability(RabbitEatenProvider.SUM).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(RawFoodEatenProvider.SUM).ifPresent(oldStore -> {
+				event.getEntity().getCapability(ApplesEatenProvider.SUM).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(RottenFleshEatenProvider.SUM).ifPresent(oldStore -> {
+				event.getEntity().getCapability(RottenFleshEatenProvider.SUM).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(SpiderEyeEatenProvider.SUM).ifPresent(oldStore -> {
+				event.getEntity().getCapability(SpiderEyeEatenProvider.SUM).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
 		}
 	}
 
 	// Registers Capabilities to the forge bus
 	@SubscribeEvent
 	public static void onRegisterCapabilities(RegisterCapabilitiesEvent event) {
+		
 		//Core Skills
 		event.register(PlayerLevel.class);
 		event.register(PlayerLevelExp.class);
@@ -949,9 +1265,37 @@ public class ModEvents {
 		event.register(NetherGoldMined.class);
 		event.register(QuartzMined.class);
 		event.register(RedstoneMined.class);
+		
+		//Foods Eaten
+		event.register(ApplesEaten.class);
+		event.register(BeefEaten.class);
+		event.register(BeetrootEaten.class);
+		event.register(BreadEaten.class);
+		event.register(CakeEaten.class);
+		event.register(CarrotsEaten.class);
+		event.register(ChickenEaten.class);
+		event.register(CookiesEaten.class);
+		event.register(FishEaten.class);
+		event.register(GlowBerriesEaten.class);
+		event.register(GoldApplesEaten.class);
+		event.register(GoldenCarrotsEaten.class);
+		event.register(HoneyEaten.class);
+		event.register(KelpEaten.class);
+		event.register(MelonEaten.class);
+		event.register(MushroomStewEaten.class);
+		event.register(MuttonEaten.class);
+		event.register(PoisonousPotatoEaten.class);
+		event.register(PorkEaten.class);
+		event.register(PotatoEaten.class);
+		event.register(PufferfishEaten.class);
+		event.register(PumpkinPieEaten.class);
+		event.register(RabbitEaten.class);
+		event.register(RawFoodEaten.class);
+		event.register(RottenFleshEaten.class);
+		event.register(SpiderEyeEaten.class);
 	}
 
-	// Applies Capabilities to the player on joining the world.
+	//Applies Capabilities to the player on joining the world.
 	@SubscribeEvent
 	public static void onPlayerJoinWorld(EntityJoinLevelEvent event) {
 		if (!event.getLevel().isClientSide()) {
@@ -1157,6 +1501,86 @@ public class ModEvents {
 				});
 				player.getCapability(RedstoneMinedProvider.REDSTONE_MINED).ifPresent(total -> {
 					ModMessages.sendToPlayer(new RedstoneMinedDataSyncS2CPacket(total.getBlocksMined()), player);
+				});
+				
+				//----Foods--Eaten
+				player.getCapability(ApplesEatenProvider.SUM).ifPresent(sum -> {
+					ModMessages.sendToPlayer(new ApplesEatenDataSyncS2CPacket(sum.getSum()), player);
+				});
+				player.getCapability(BeefEatenProvider.SUM).ifPresent(sum -> {
+					ModMessages.sendToPlayer(new BeefEatenDataSyncS2CPacket(sum.getSum()), player);
+				});
+				player.getCapability(BeetrootEatenProvider.SUM).ifPresent(sum -> {
+					ModMessages.sendToPlayer(new BeetrootEatenDataSyncS2CPacket(sum.getSum()), player);
+				});
+				player.getCapability(BreadEatenProvider.SUM).ifPresent(sum -> {
+					ModMessages.sendToPlayer(new BreadEatenDataSyncS2CPacket(sum.getSum()), player);
+				});
+				player.getCapability(CakeEatenProvider.SUM).ifPresent(sum -> {
+					ModMessages.sendToPlayer(new CakeEatenDataSyncS2CPacket(sum.getSum()), player);
+				});
+				player.getCapability(CarrotsEatenProvider.SUM).ifPresent(sum -> {
+					ModMessages.sendToPlayer(new CarrotsEatenDataSyncS2CPacket(sum.getSum()), player);
+				});
+				player.getCapability(ChickenEatenProvider.SUM).ifPresent(sum -> {
+					ModMessages.sendToPlayer(new ChickenEatenDataSyncS2CPacket(sum.getSum()), player);
+				});
+				player.getCapability(CookiesEatenProvider.SUM).ifPresent(sum -> {
+					ModMessages.sendToPlayer(new CookiesEatenDataSyncS2CPacket(sum.getSum()), player);
+				});
+				player.getCapability(FishEatenProvider.SUM).ifPresent(sum -> {
+					ModMessages.sendToPlayer(new FishEatenDataSyncS2CPacket(sum.getSum()), player);
+				});
+				player.getCapability(GlowBerriesEatenProvider.SUM).ifPresent(sum -> {
+					ModMessages.sendToPlayer(new GlowBerriesEatenDataSyncS2CPacket(sum.getSum()), player);
+				});
+				player.getCapability(GoldApplesEatenProvider.SUM).ifPresent(sum -> {
+					ModMessages.sendToPlayer(new GoldApplesEatenDataSyncS2CPacket(sum.getSum()), player);
+				});
+				player.getCapability(GoldenCarrotsEatenProvider.SUM).ifPresent(sum -> {
+					ModMessages.sendToPlayer(new GoldenCarrotsEatenDataSyncS2CPacket(sum.getSum()), player);
+				});
+				player.getCapability(HoneyEatenProvider.SUM).ifPresent(sum -> {
+					ModMessages.sendToPlayer(new HoneyEatenDataSyncS2CPacket(sum.getSum()), player);
+				});
+				player.getCapability(KelpEatenProvider.SUM).ifPresent(sum -> {
+					ModMessages.sendToPlayer(new KelpEatenDataSyncS2CPacket(sum.getSum()), player);
+				});
+				player.getCapability(MelonEatenProvider.SUM).ifPresent(sum -> {
+					ModMessages.sendToPlayer(new MelonEatenDataSyncS2CPacket(sum.getSum()), player);
+				});
+				player.getCapability(MushroomStewEatenProvider.SUM).ifPresent(sum -> {
+					ModMessages.sendToPlayer(new MushroomStewEatenDataSyncS2CPacket(sum.getSum()), player);
+				});
+				player.getCapability(MuttonEatenProvider.SUM).ifPresent(sum -> {
+					ModMessages.sendToPlayer(new MuttonEatenDataSyncS2CPacket(sum.getSum()), player);
+				});
+				player.getCapability(PoisonousPotatoEatenProvider.SUM).ifPresent(sum -> {
+					ModMessages.sendToPlayer(new PoisonousPotatoEatenDataSyncS2CPacket(sum.getSum()), player);
+				});
+				player.getCapability(PorkEatenProvider.SUM).ifPresent(sum -> {
+					ModMessages.sendToPlayer(new PorkEatenDataSyncS2CPacket(sum.getSum()), player);
+				});
+				player.getCapability(PotatoEatenProvider.SUM).ifPresent(sum -> {
+					ModMessages.sendToPlayer(new PotatoEatenDataSyncS2CPacket(sum.getSum()), player);
+				});
+				player.getCapability(PufferfishEatenProvider.SUM).ifPresent(sum -> {
+					ModMessages.sendToPlayer(new PufferfishEatenDataSyncS2CPacket(sum.getSum()), player);
+				});
+				player.getCapability(PumpkinPieEatenProvider.SUM).ifPresent(sum -> {
+					ModMessages.sendToPlayer(new PumpkinPieEatenDataSyncS2CPacket(sum.getSum()), player);
+				});
+				player.getCapability(RabbitEatenProvider.SUM).ifPresent(sum -> {
+					ModMessages.sendToPlayer(new RabbitEatenDataSyncS2CPacket(sum.getSum()), player);
+				});
+				player.getCapability(RawFoodEatenProvider.SUM).ifPresent(sum -> {
+					ModMessages.sendToPlayer(new RawFoodEatenDataSyncS2CPacket(sum.getSum()), player);
+				});
+				player.getCapability(RottenFleshEatenProvider.SUM).ifPresent(sum -> {
+					ModMessages.sendToPlayer(new RottenFleshEatenDataSyncS2CPacket(sum.getSum()), player);
+				});
+				player.getCapability(SpiderEyeEatenProvider.SUM).ifPresent(sum -> {
+					ModMessages.sendToPlayer(new SpiderEyeEatenDataSyncS2CPacket(sum.getSum()), player);
 				});
 			}
 		}
