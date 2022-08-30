@@ -131,7 +131,7 @@ public class ClientEvents {
 		*/
 		//WIP2
 		
-		//Checks to see if the player has enough playerExp to level up
+		//Checks if the player has enough playerExp to level up
 		private static void PlayerLevelCheck(int playerLevelExpBeingAdded) {
 			int playerLevel = ClientCapabilityData.getPlayerLevel();
 			int playerLevelExp = ClientCapabilityData.getPlayerExp() + playerLevelExpBeingAdded;
@@ -177,11 +177,11 @@ public class ClientEvents {
 				applesGiveChopSpeed--;
 			}
 			//Unabated
-			if(event.player.getMainHandItem().getItem().equals(Items.BOW)) {
-				if(event.player.isUsingItem()) {
-					event.player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 1, 20));
-					
-					
+			if(ClientCapabilityData.isUpgradedUnabated() > 0) {
+				if(event.player.getMainHandItem().getItem().equals(Items.BOW)) {
+					if(event.player.isUsingItem()) {
+						event.player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 1, 20));
+					}
 				}
 			}
 			if(extendediframes > 0) {
@@ -206,8 +206,9 @@ public class ClientEvents {
 		//Shield Block Drops Arrows
 		@SubscribeEvent
 		public static void onBlockingArrow(ShieldBlockEvent event) {
-			//event.getDamageSource().getDirectEntity().getType()
-			ModMessages.sendToServer(new SpawnArrowOnPlayerC2SPacket());
+			if(ClientCapabilityData.isUpgradedFreeArrows() > 0) {
+				ModMessages.sendToServer(new SpawnArrowOnPlayerC2SPacket());
+			}
 		}
 		
 		
@@ -227,38 +228,46 @@ public class ClientEvents {
 			
 			
 			if(event.getEntity().getType().equals(EntityType.PLAYER)) {
-				if(invulnFrameDuration < 28) {
-					event.setCanceled(true);
-					System.out.println("dodge roll");
-				}
-				if(healAtHalfHealth == 24000) {
-					if(event.getEntity().getHealth() <= event.getEntity().getMaxHealth() / 4) {
-						event.getEntity().setHealth(event.getEntity().getMaxHealth() / 2);
-						healAtHalfHealth = 0;
-						System.out.println();
+				
+				if(ClientCapabilityData.isUpgradedDodgeRoll() > 0) {
+					if(invulnFrameDuration < 28) {
+						event.setCanceled(true);
 					}
 				}
-				//Extend IFrames
-				if(extendediframes > 0) {
-					event.setCanceled(true);
-					System.out.println("iframes");
-				}
-				if(extendediframes == 0) {
-					extendediframes = 80;
-				}
-				//Ragnorok
 				
-				if(event.getAmount() * (1 - (Math.max(event.getEntity().getArmorValue() / 5,
-						event.getEntity().getArmorValue() - ((4 * event.getAmount()) / 8))) / 25) + 1 > event.getEntity().getHealth()) {
-					if(ragnorokCooldown == 0) {
-						System.out.println("ragnorok used");
-						ragnorokDuration = 2400;
-						ragnorokCooldown = 3600;
-						if(ragnorokDuration > 0) {
-							event.setCanceled(true);
+				if(ClientCapabilityData.isUpgradedHardWood() > 0) {
+					if(healAtHalfHealth == 24000) {
+						if(event.getEntity().getHealth() <= event.getEntity().getMaxHealth() / 4) {
+							event.getEntity().setHealth(event.getEntity().getMaxHealth() / 2);
+							healAtHalfHealth = 0;
 						}
 					}
 				}
+				
+				//Extend IFrames
+				if(ClientCapabilityData.isUpgradedOvercome() > 0) {
+					if(extendediframes > 0) {
+						event.setCanceled(true);
+					}
+					if(extendediframes == 0) {
+						extendediframes = 80;
+					}
+				}
+				
+				//Ragnorok
+				if(ClientCapabilityData.isUpgradedRagnorok() > 0) {
+					if(event.getAmount() * (1 - (Math.max(event.getEntity().getArmorValue() / 5,
+							event.getEntity().getArmorValue() - ((4 * event.getAmount()) / 8))) / 25) + 1 > event.getEntity().getHealth()) {
+						if(ragnorokCooldown == 0) {
+							ragnorokDuration = 2400;
+							ragnorokCooldown = 3600;
+							if(ragnorokDuration > 0) {
+								event.setCanceled(true);
+							}
+						}
+					}
+				}
+				
 			}
 			
 			
@@ -290,28 +299,16 @@ public class ClientEvents {
 		//Combat: Stable Footing
 		@SubscribeEvent
 		public static void onTakingKnockback(LivingKnockBackEvent event) {
-			if(event.getEntity().getType().equals(EntityType.PLAYER)) {
-				event.setStrength((event.getOriginalStrength() * 3) / 4);
-				
+			if(ClientCapabilityData.isUpgradedStableFooting() > 0) {
+				if(event.getEntity().getType().equals(EntityType.PLAYER)) {
+					event.setStrength((event.getOriginalStrength() * 3) / 4);
+				}
 			}
 		}
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		//-------------------------------------------------------
-		//eat when full
+		//insatiable-WIP
 		@SubscribeEvent
 		public static void onEatingFood(RightClickItem event) {
-			if(event.getItemStack().getItem().equals(Items.STICK)) {
-				System.out.println("Should be spawning in client events!");
-			}
-				
 			
 			if(event.getItemStack().isEdible()) {
 				if(event.getEntity().getFoodData().getFoodLevel() >= 20) {
@@ -319,22 +316,14 @@ public class ClientEvents {
 						event.getEntity().eat(event.getLevel(), event.getItemStack());
 						ModMessages.sendToServer(new EatFoodWhileFullC2SPacket());
 						eatCooldown = 0;
-						if(event.getItemStack().getItem().equals(Items.APPLE)) {
-							applesGiveChopSpeed += 2400;
+						if(ClientCapabilityData.isUpgradedGrannySmith() > 0) {
+							if(event.getItemStack().getItem().equals(Items.APPLE)) {
+								applesGiveChopSpeed += 2400;
+							}
 						}
 					}
 				}
 			}
-			
-			
-			//event.getEntity().addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 40, 0));
-			//event.getEntity().setSpeed(10);
-			
-			
-		}
-		@SubscribeEvent
-		public static void drawBow(ArrowNockEvent event) {
-			
 		}
 		
 		//Gain effects from eating
@@ -343,24 +332,28 @@ public class ClientEvents {
 			if(event.getItem().getItem().isEdible()) {
 				ModMessages.sendToServer(new GainEffectFromEatingC2SPacket());
 				eatCooldown = 0;
-				if(event.getItem().getItem().equals(Items.APPLE)) {
-					applesGiveChopSpeed += 2400;
-					System.out.println(applesGiveChopSpeed);
+				if(ClientCapabilityData.isUpgradedGrannySmith() > 0) {
+					if(event.getItem().getItem().equals(Items.APPLE)) {
+						applesGiveChopSpeed += 2400;
+						System.out.println(applesGiveChopSpeed);
+					}
 				}
 			}
-			
 		}
 		
-		//Fast Food
+		//Fast Food-WIP
 		@SubscribeEvent
 		public static void onEatingFood(LivingEntityUseItemEvent.Start event) {
-			//Fast Food
+			//Fast Food-WIP
 			if(event.getItem().getItem().isEdible()) {
 				event.setDuration(16);
 			}
-			//Arrow: Quickfire
-			if(event.getItem().getItem().equals(Items.BOW)) {
-				event.setDuration(71997);
+			
+			//Arrow: Quickshot
+			if(ClientCapabilityData.isUpgradedQuickshot() > 0) {
+				if(event.getItem().getItem().equals(Items.BOW)) {
+					event.setDuration(71997);
+				}
 			}
 		}
 		
@@ -374,8 +367,10 @@ public class ClientEvents {
 					Entity player = event.getSource().getEntity();
 					LivingEntity entity = event.getEntity();
 					//Egger
-					if(event.getSource().getDirectEntity().getType().equals(EntityType.EGG)) {
-						entity.setHealth(entity.getHealth() - 2);
+					if(ClientCapabilityData.isUpgradedEgger() > 0) {
+						if(event.getSource().getDirectEntity().getType().equals(EntityType.EGG)) {
+							entity.setHealth(entity.getHealth() - 2);
+						}
 					}
 					
 					if(event.getSource().getDirectEntity().getType().equals(EntityType.ARROW)) {
@@ -387,25 +382,29 @@ public class ClientEvents {
 						
 						
 						//Arrow: Insecurity
-						if(entity.getType().equals(EntityType.SKELETON) || entity.getType().equals(EntityType.BLAZE) ||
-								entity.getType().equals(EntityType.STRAY) || entity.getType().equals(EntityType.GHAST)) {
-							entity.setHealth(Math.max(entity.getHealth() - (event.getAmount()/3), 0));
+						if(ClientCapabilityData.isUpgradedInsecurity() > 0) {
+							if(entity.getType().equals(EntityType.SKELETON) || entity.getType().equals(EntityType.BLAZE) ||
+									entity.getType().equals(EntityType.STRAY) || entity.getType().equals(EntityType.GHAST)) {
+								entity.setHealth(Math.max(entity.getHealth() - (event.getAmount()/3), 0));
+							}
 						}
+						
 						
 						//Arrow: Sniper
-						if(player.distanceTo(entity) > 25) {
-							entity.setHealth(Math.max(entity.getHealth() - (event.getAmount()/3), 0));
+						if(ClientCapabilityData.isUpgradedSniper() > 0) {
+							if(player.distanceTo(entity) > 25) {
+								entity.setHealth(Math.max(entity.getHealth() - (event.getAmount()/3), 0));
+							}
 						}
-						
-						
-						
 						
 						//Arrow: Headshot
-						if(event.getSource().getSourcePosition().y >= event.getEntity().getEyePosition().y - 0.2) {
-							System.out.println("Headshot");
-							//event.getEntity().setHealth(0);
-							event.getEntity().setHealth(Math.max(event.getEntity().getHealth() - (event.getAmount()/3), 0));
+						if(ClientCapabilityData.isUpgradedSweetSpotArchery() > 0) {
+							if(event.getSource().getSourcePosition().y >= event.getEntity().getEyePosition().y - 0.2) {
+								System.out.println("Headshot");
+								event.getEntity().setHealth(Math.max(event.getEntity().getHealth() - (event.getAmount()/3), 0));
+							}
 						}
+						
 						//Archery exp gain
 						if(bowCooldown >= 30) {
 							int archeryExp = ClientCapabilityData.getPlayerArcheryExp();
