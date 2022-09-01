@@ -418,5 +418,4 @@ public class ArcheryMenu extends Screen {
 		public void updateNarration(NarrationElementOutput p_169152_) {
 		}
 	}
-
 }
