@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.daltoncash.mmostats.MmoStatsMod;
+import com.daltoncash.mmostats.capabilities.ClientCapabilityData;
 import com.daltoncash.mmostats.gui.skill_menus.FarmingMenu;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -14,6 +15,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.achievement.StatsScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
@@ -39,30 +41,85 @@ public class FarmingTotalsMenu extends Screen {
 	@Override
 	public final void init() {
 		
-		DescriptionPanel upgradeDescription = new DescriptionPanel(this.minecraft, (this.width * 6) / 10 ,
-				(this.height * 9) / 10, 25);
-		this.addRenderableWidget(upgradeDescription);
-		List<String> lines = new ArrayList<>();
-		lines.add("Food");
-		lines.add("Eaten");
-		lines.add("To Level");
-		lines.add("----");
-		lines.add("-----");
-		lines.add("--------");
-		lines.add("Apple");
-		lines.add("1234");
-		lines.add("123");
-		lines.add("Beef");
-		lines.add("0");
-		lines.add("64");
-		lines.add("Ya_momma");
-		lines.add("12345");
-		lines.add("1");
+		DescriptionPanel foodPanel = new DescriptionPanel(this.minecraft, (this.width * 3) / 10 ,
+				(this.height * 9) / 10, 25, (this.width * 1) / 20);
+		List<String> foodList = List.of("Food","====", 
+				"Apples", "Beef", "Beetroot", "------------------",
+				"Bread", "Cake","Carrots", "------------------", 
+				"Chicken", "Cookies", "Fish", "------------------", 
+				"Glow Berries", "Gold Apples", "Golden Carrots","------------------", 
+				"Honey Bottles", "Kelp", "Melon Slices", "------------------",
+				"Mushroom Stew", "Mutton", "Poisonous Potatoes","------------------", 
+				"Pork", "Potatoes", "Pufferfish", "------------------", 
+				"Pumpkin Pie", "Rabbit", "Raw Meats", "------------------", 
+				"Rotten Flesh", "Spider Eyes");
 		
-		upgradeDescription.setInfo(addLines(lines), null, null);	
+		DescriptionPanel eatenPanel = new DescriptionPanel(this.minecraft, (this.width * 3) / 10 ,
+				(this.height * 9) / 10, 25, (this.width * 7) / 20);
+		List<String> eatenList = new ArrayList<>();
+		eatenList.add("Eaten");
+		eatenList.add("=====");
+		eatenList.add(ClientCapabilityData.getApplesEaten() + "");
+		eatenList.add(ClientCapabilityData.getBeefEaten() + "");
+		eatenList.add(ClientCapabilityData.getBeetrootEaten() + "");
+		eatenList.add("------------------");
+		eatenList.add(ClientCapabilityData.getBreadEaten() + "");
+		eatenList.add(ClientCapabilityData.getCakeEaten() + "");
+		eatenList.add(ClientCapabilityData.getCarrotsEaten() + "");
+		eatenList.add("------------------");
+		eatenList.add(ClientCapabilityData.getChickenEaten() + "");
+		eatenList.add(ClientCapabilityData.getCookiesEaten() + "");
+		eatenList.add(ClientCapabilityData.getFishEaten() + "");
+		eatenList.add("------------------");
+		eatenList.add(ClientCapabilityData.getGlowBerriesEaten() + "");
+		eatenList.add(ClientCapabilityData.getGoldApplesEaten() + "");
+		eatenList.add(ClientCapabilityData.getGoldenCarrotsEaten() + "");
+		eatenList.add("------------------");
+		eatenList.add(ClientCapabilityData.getHoneyEaten() + "");
+		eatenList.add(ClientCapabilityData.getKelpEaten() + "");
+		eatenList.add(ClientCapabilityData.getMelonEaten() + "");
+		eatenList.add("------------------");
+		eatenList.add(ClientCapabilityData.getMushroomStewEaten() + "");
+		eatenList.add(ClientCapabilityData.getMuttonEaten() + "");
+		eatenList.add(ClientCapabilityData.getPoisonousPotatoEaten() + "");
+		eatenList.add("------------------");
+		eatenList.add(ClientCapabilityData.getPorkEaten() + "");
+		eatenList.add(ClientCapabilityData.getPotatoEaten() + "");
+		eatenList.add(ClientCapabilityData.getPufferfishEaten() + "");
+		eatenList.add("------------------");
+		eatenList.add(ClientCapabilityData.getPumpkinPieEaten() + "");
+		eatenList.add(ClientCapabilityData.getRabbitEaten() + "");
+		eatenList.add(ClientCapabilityData.getRawFoodEaten() + "");
+		eatenList.add("------------------");
+		eatenList.add(ClientCapabilityData.getRottenFleshEaten() + "");
+		eatenList.add(ClientCapabilityData.getSpiderEyeEaten() + "");
 		
+		DescriptionPanel toLevelPanel = new DescriptionPanel(this.minecraft, (this.width * 3) / 10 ,
+				(this.height * 9) / 10, 25, (this.width * 13) / 20);
+		List<String> toLevelList = new ArrayList<>();
+		toLevelList.add("To Level");
+		toLevelList.add("========");
 		
+		for(String eaten : eatenList) {
+			int i = 1;
+			if(eaten != eatenList.get(0) && eaten != eatenList.get(1) && eaten != eatenList.get(5)) {
+				System.out.println(eaten);
+				while(Integer.parseInt(eaten) > i) {
+					i *= 2;
+				}
+				toLevelList.add(i + "");
+			}else if(eaten == eatenList.get(5)){
+				toLevelList.add(eaten);
+			}
+		}
 		
+		this.addRenderableWidget(foodPanel);
+		this.addRenderableWidget(eatenPanel);
+		this.addRenderableWidget(toLevelPanel);
+		
+		foodPanel.setInfo(foodList, null, null);	
+		eatenPanel.setInfo(eatenList, null, null);
+		toLevelPanel.setInfo(toLevelList, null, null);
 	}
 	protected List<String> addLines(List<String> list){
 		List<String> newList = new ArrayList<>();
@@ -111,8 +168,8 @@ public class FarmingTotalsMenu extends Screen {
 			private List<FormattedCharSequence> lines = Collections.emptyList();
 
 			
-			DescriptionPanel(Minecraft mcIn, int widthIn, int heightIn, int topIn) {
-				super(mcIn, widthIn, heightIn, topIn, (mcIn.getInstance().screen.width * 2) / 10);
+			DescriptionPanel(Minecraft mcIn, int widthIn, int heightIn, int topIn, int widthStart) {
+				super(mcIn, widthIn, heightIn, topIn, widthStart);
 			}
 
 			void setInfo(List<String> lines, ResourceLocation logoPath, Size2i logoDims) {
