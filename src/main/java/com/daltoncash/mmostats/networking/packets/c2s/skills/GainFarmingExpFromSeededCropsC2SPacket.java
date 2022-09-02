@@ -4,8 +4,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 import com.daltoncash.mmostats.capabilities.farming.PlayerFarmingExpProvider;
-import com.daltoncash.mmostats.events.ClientEvents.ClientForgeEvents;
-import com.daltoncash.mmostats.events.SkillEvents;
+import com.daltoncash.mmostats.events.SkillEvents.SkillForgeEvents;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.FarmingExpDataSyncS2CPacket;
 
@@ -36,11 +35,11 @@ public class GainFarmingExpFromSeededCropsC2SPacket {
 		context.enqueueWork(() -> {
 			ServerPlayer player = context.getSender();
 			ServerLevel level = player.getLevel();
-			BlockEvent event = ClientForgeEvents.blockevent;
+			BlockEvent event = SkillForgeEvents.blockevent;
 			List<ItemStack> drops = Block.getDrops(event.getState(), level, event.getPos(), null);
 			if(drops.size() > 1) {
 				player.getCapability(PlayerFarmingExpProvider.PLAYER_FARMING_EXP).ifPresent(farmingExp -> {
-					farmingExp.addFarmingExp(SkillEvents.expToAdd);
+					farmingExp.addFarmingExp(SkillForgeEvents.expToAdd);
 					ModMessages.sendToPlayer(new FarmingExpDataSyncS2CPacket(farmingExp.getFarmingExp()), player);
 				});
 			}

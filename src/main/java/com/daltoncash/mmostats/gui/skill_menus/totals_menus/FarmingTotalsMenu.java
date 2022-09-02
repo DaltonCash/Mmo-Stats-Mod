@@ -15,7 +15,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.achievement.StatsScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
@@ -103,7 +102,6 @@ public class FarmingTotalsMenu extends Screen {
 		for(String eaten : eatenList) {
 			int i = 1;
 			if(eaten != eatenList.get(0) && eaten != eatenList.get(1) && eaten != eatenList.get(5)) {
-				System.out.println(eaten);
 				while(Integer.parseInt(eaten) > i) {
 					i *= 2;
 				}

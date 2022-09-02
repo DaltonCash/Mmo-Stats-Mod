@@ -2,7 +2,7 @@ package com.daltoncash.mmostats.gui;
 
 import com.daltoncash.mmostats.MmoStatsMod;
 import com.daltoncash.mmostats.capabilities.ClientCapabilityData;
-import com.daltoncash.mmostats.events.SkillEvents;
+import com.daltoncash.mmostats.events.SkillEvents.SkillForgeEvents;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.gui.GuiComponent;
@@ -20,7 +20,7 @@ public class LevelUpOverlay {
 
 	public static final IGuiOverlay LEVEL_UP_OVERLAY = ((gui, poseStack, partialTick, width, height) -> {
 		int x = width / 2;
-		int a = SkillEvents.levelUpOverlayDuration;
+		int a = SkillForgeEvents.levelUpOverlayDuration;
 		int c = a/2 * -91;
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
@@ -34,11 +34,11 @@ public class LevelUpOverlay {
 		int x = width;
 		int skillExp = 0;
 		int skillLevel = 0;
-		int a = SkillEvents.skillOverlayDuration;
+		int a = SkillForgeEvents.skillOverlayDuration;
 		
 		int c = 0;
 		
-		switch(SkillEvents.skillToDisplay) {
+		switch(SkillForgeEvents.skillToDisplay) {
 			case "Farming":
 				skillExp = ClientCapabilityData.getPlayerFarmingExp();
 				skillLevel = ClientCapabilityData.getPlayerFarmingLevel();
