@@ -13,6 +13,31 @@ import com.daltoncash.mmostats.networking.packets.c2s.magicAbilities.SpawnNature
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.SpawnTntC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainNightVisionC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.SpawnArrowOnPlayerC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.ApplesEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.BeefEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.BeetrootEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.BreadEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.CarrotsEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.ChickenEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.CookiesEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.FishEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.GlowBerriesEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.GoldApplesEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.GoldenCarrotsEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.HoneyEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.KelpEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.MelonEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.MushroomStewEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.MuttonEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.PoisonousPotatoEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.PorkEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.PotatoEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.PufferfishEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.PumpkinPieEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.RabbitEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.RawFoodEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.RottenFleshEatenC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.SpiderEyeEatenC2SPacket;
 import com.daltoncash.mmostats.util.KeyBinding;
 import com.mojang.logging.LogUtils;
 
@@ -45,6 +70,7 @@ import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.entity.player.PlayerEvent.HarvestCheck;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickItem;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -266,7 +292,7 @@ public class ClientEvents {
 		
 		//insatiable-WIP
 		@SubscribeEvent
-		public static void onEatingFood(RightClickItem event) {
+		public static void onEatingFoodWhenFull(RightClickItem event) {
 			
 			if(event.getItemStack().isEdible()) {
 				if(event.getEntity().getFoodData().getFoodLevel() >= 20) {
@@ -283,17 +309,137 @@ public class ClientEvents {
 				}
 			}
 		}
-		
-		//Gain effects from eating
+		//TEMP CAKE
+		@SuppressWarnings("resource")
 		@SubscribeEvent
-		public static void onEatingFood(LivingEntityUseItemEvent.Finish event) {
-			if(event.getItem().getItem().isEdible()) {
-				ModMessages.sendToServer(new GainEffectFromEatingC2SPacket());
-				eatCooldown = 0;
-				if(ClientCapabilityData.isUpgradedGrannySmith() > 0) {
-					if(event.getItem().getItem().equals(Items.APPLE)) {
-						applesGiveChopSpeed += 2400;
-						System.out.println(applesGiveChopSpeed);
+		public static void onEatingCakes(BlockEvent.BreakEvent event) {
+			System.out.println();
+			//if(event.getEntity().level.equals(Minecraft.getInstance().level)) {
+				System.out.println(event.getState().getBlock().equals(Blocks.CAKE));
+			//}
+		}
+		
+		//TEMP CAKE
+				@SuppressWarnings("resource")
+				@SubscribeEvent
+				public static void onEatingCake(RightClickBlock event) {
+					//if(event.getEntity().level.equals(Minecraft.getInstance().level)) {
+						System.out.println(event);
+					//}
+				}
+				
+		//Gain effects from eating
+		@SuppressWarnings("resource")
+		@SubscribeEvent
+		public static void onEatingFoodGainEffectsAndAddToTotals(LivingEntityUseItemEvent.Finish event) {
+			
+			if(event.getEntity().level.equals(Minecraft.getInstance().level)) {
+				if(event.getItem().getItem().isEdible()) {
+					Item item = event.getItem().getItem();
+					ModMessages.sendToServer(new GainEffectFromEatingC2SPacket());
+					eatCooldown = 0;
+					
+					System.out.println("food eaten when hungry: " + item);
+					if(item.equals(Items.APPLE)) {
+						ModMessages.sendToServer(new ApplesEatenC2SPacket());
+						if(ClientCapabilityData.isUpgradedGrannySmith() > 0) {
+							applesGiveChopSpeed += 2400;
+						}
+					}
+					if(item.equals(Items.BEEF) || item.equals(Items.COOKED_BEEF)) {
+						ModMessages.sendToServer(new BeefEatenC2SPacket());
+					}
+					if(item.equals(Items.BEETROOT)) {
+						ModMessages.sendToServer(new BeetrootEatenC2SPacket());
+					}
+					if(item.equals(Items.BEETROOT_SOUP)) {
+						ModMessages.sendToServer(new BeetrootEatenC2SPacket());
+						ModMessages.sendToServer(new BeetrootEatenC2SPacket());
+						ModMessages.sendToServer(new BeetrootEatenC2SPacket());
+						ModMessages.sendToServer(new BeetrootEatenC2SPacket());
+						ModMessages.sendToServer(new BeetrootEatenC2SPacket());
+						ModMessages.sendToServer(new BeetrootEatenC2SPacket());
+					}
+					if(item.equals(Items.BREAD)) {
+						System.out.println(ClientCapabilityData.getBreadEaten());
+						ModMessages.sendToServer(new BreadEatenC2SPacket());
+					}
+					if(item.equals(Items.CARROT)) {
+						ModMessages.sendToServer(new CarrotsEatenC2SPacket());
+						System.out.println(ClientCapabilityData.getCarrotsEaten());
+						System.out.println("Carrot has been eaten");
+					}
+					if(item.equals(Items.CHICKEN) || item.equals(Items.COOKED_CHICKEN)) {
+						ModMessages.sendToServer(new ChickenEatenC2SPacket());
+					}
+					if(item.equals(Items.COOKIE)) {
+						ModMessages.sendToServer(new CookiesEatenC2SPacket());
+					}
+					if(item.equals(Items.COD) || item.equals(Items.COOKED_COD) || 
+						item.equals(Items.SALMON) || item.equals(Items.COOKED_SALMON) ||
+						item.equals(Items.TROPICAL_FISH) || item.equals(Items.PUFFERFISH)) {
+						System.out.println("fish time");
+						ModMessages.sendToServer(new FishEatenC2SPacket());
+					}
+					if(item.equals(Items.GLOW_BERRIES)) {
+						ModMessages.sendToServer(new GlowBerriesEatenC2SPacket());
+					}
+					if(item.equals(Items.GOLDEN_APPLE)) {
+						ModMessages.sendToServer(new GoldApplesEatenC2SPacket());
+					}
+					if(item.equals(Items.GOLDEN_CARROT)) {
+						ModMessages.sendToServer(new GoldenCarrotsEatenC2SPacket());
+					}
+					if(item.equals(Items.HONEY_BOTTLE)) {
+						ModMessages.sendToServer(new HoneyEatenC2SPacket());
+					}
+					if(item.equals(Items.DRIED_KELP)) {
+						ModMessages.sendToServer(new KelpEatenC2SPacket());
+					}
+					if(item.equals(Items.MELON_SLICE)) {
+						ModMessages.sendToServer(new MelonEatenC2SPacket());
+					}
+					if(item.equals(Items.MUSHROOM_STEW)) {
+						ModMessages.sendToServer(new MushroomStewEatenC2SPacket());
+					}
+					if(item.equals(Items.MUTTON) || item.equals(Items.COOKED_MUTTON)) {
+						ModMessages.sendToServer(new MuttonEatenC2SPacket());
+					}
+					if(item.equals(Items.POISONOUS_POTATO)) {
+						ModMessages.sendToServer(new PoisonousPotatoEatenC2SPacket());
+						ModMessages.sendToServer(new PotatoEatenC2SPacket());
+					}
+					if(item.equals(Items.PORKCHOP) || item.equals(Items.COOKED_PORKCHOP)) {
+						ModMessages.sendToServer(new PorkEatenC2SPacket());
+					}
+					if(item.equals(Items.POTATO)) {
+						ModMessages.sendToServer(new PotatoEatenC2SPacket());
+					}
+					if(item.equals(Items.PUFFERFISH)) {
+						ModMessages.sendToServer(new PufferfishEatenC2SPacket());
+					}
+					if(item.equals(Items.PUMPKIN_PIE)) {
+						ModMessages.sendToServer(new PumpkinPieEatenC2SPacket());
+					}
+					if(item.equals(Items.RABBIT) || item.equals(Items.COOKED_RABBIT)) {
+						ModMessages.sendToServer(new RabbitEatenC2SPacket());
+					}
+					if(item.equals(Items.RABBIT_STEW)) {
+						ModMessages.sendToServer(new PotatoEatenC2SPacket());
+						ModMessages.sendToServer(new CarrotsEatenC2SPacket());
+						ModMessages.sendToServer(new RabbitEatenC2SPacket());
+					}
+					if(item.equals(Items.RABBIT) || item.equals(Items.MUTTON) || 
+							item.equals(Items.COD) || item.equals(Items.SALMON) ||
+							item.equals(Items.CHICKEN) || item.equals(Items.BEEF) ||
+							item.equals(Items.PORKCHOP)) {
+						ModMessages.sendToServer(new RawFoodEatenC2SPacket());
+					}
+					if(item.equals(Items.ROTTEN_FLESH)) {
+						ModMessages.sendToServer(new RottenFleshEatenC2SPacket());
+					}
+					if(item.equals(Items.SPIDER_EYE)) {
+						ModMessages.sendToServer(new SpiderEyeEatenC2SPacket());
 					}
 				}
 			}

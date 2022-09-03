@@ -35,8 +35,8 @@ public class FarmingMenu extends Screen {
 	@Override
 	public final void init() {
 		
-		addRenderableWidget(new Button(this.width/13 * 6, this.height/13 * 6, 50, 50, 
-				Component.literal(this.width + ""), FarmingMenu::onPressShowTotals));
+		addRenderableWidget(new Button((this.width * 1) / 20, (this.height * 6) / 7 , 80, 20, 
+				Component.literal("Farming Totals"), FarmingMenu::onPressShowTotals));
 		
 		addRenderableWidget(new ImageButton((this.width / 6) * 1, (this.height / 6) * 2, 50, 50, 0, 0, 99,
 				upgradeTexture1, 50, 50, FarmingMenu::onPressUpgradeJunk));

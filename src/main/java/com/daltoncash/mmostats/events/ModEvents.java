@@ -617,91 +617,91 @@ public class ModEvents {
 			}
 			if (!event.getObject().getCapability(CakeEatenProvider.SUM).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "cake_eaten"),
-						new ApplesEatenProvider());
+						new CakeEatenProvider());
 			}
 			if (!event.getObject().getCapability(CarrotsEatenProvider.SUM).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "carrots_eaten"),
-						new ApplesEatenProvider());
+						new CarrotsEatenProvider());
 			}
 			if (!event.getObject().getCapability(ChickenEatenProvider.SUM).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "chicken_eaten"),
-						new ApplesEatenProvider());
+						new ChickenEatenProvider());
 			}
 			if (!event.getObject().getCapability(CookiesEatenProvider.SUM).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "cookies_eaten"),
-						new ApplesEatenProvider());
+						new CookiesEatenProvider());
 			}
 			if (!event.getObject().getCapability(FishEatenProvider.SUM).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "fish_eaten"),
-						new ApplesEatenProvider());
+						new FishEatenProvider());
 			}
 			if (!event.getObject().getCapability(GlowBerriesEatenProvider.SUM).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "glow_berries_eaten"),
-						new ApplesEatenProvider());
+						new GlowBerriesEatenProvider());
 			}
 			if (!event.getObject().getCapability(GoldApplesEatenProvider.SUM).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "gold_apples_eaten"),
-						new ApplesEatenProvider());
+						new GoldApplesEatenProvider());
 			}
 			if (!event.getObject().getCapability(GoldenCarrotsEatenProvider.SUM).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "golden_carrots_eaten"),
-						new ApplesEatenProvider());
+						new GoldenCarrotsEatenProvider());
 			}
 			if (!event.getObject().getCapability(HoneyEatenProvider.SUM).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "honey_eaten"),
-						new ApplesEatenProvider());
+						new HoneyEatenProvider());
 			}
 			if (!event.getObject().getCapability(KelpEatenProvider.SUM).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "kelp_eaten"),
-						new ApplesEatenProvider());
+						new KelpEatenProvider());
 			}
 			if (!event.getObject().getCapability(MelonEatenProvider.SUM).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "melon_eaten"),
-						new ApplesEatenProvider());
+						new MelonEatenProvider());
 			}
 			if (!event.getObject().getCapability(MushroomStewEatenProvider.SUM).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "mushroom_stew_eaten"),
-						new ApplesEatenProvider());
+						new MushroomStewEatenProvider());
 			}
 			if (!event.getObject().getCapability(MuttonEatenProvider.SUM).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "mutton_eaten"),
-						new ApplesEatenProvider());
+						new MuttonEatenProvider());
 			}
 			if (!event.getObject().getCapability(PoisonousPotatoEatenProvider.SUM).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "poisonous_potato_eaten"),
-						new ApplesEatenProvider());
+						new PoisonousPotatoEatenProvider());
 			}
 			if (!event.getObject().getCapability(PorkEatenProvider.SUM).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "pork_eaten"),
-						new ApplesEatenProvider());
+						new PorkEatenProvider());
 			}
 			if (!event.getObject().getCapability(PotatoEatenProvider.SUM).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "potato_eaten"),
-						new ApplesEatenProvider());
+						new PotatoEatenProvider());
 			}
 			if (!event.getObject().getCapability(PufferfishEatenProvider.SUM).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "pufferfish_eaten"),
-						new ApplesEatenProvider());
+						new PufferfishEatenProvider());
 			}
 			if (!event.getObject().getCapability(PumpkinPieEatenProvider.SUM).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "pumpkin_pie_eaten"),
-						new ApplesEatenProvider());
+						new PumpkinPieEatenProvider());
 			}
 			if (!event.getObject().getCapability(RabbitEatenProvider.SUM).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "rabbit_eaten"),
-						new ApplesEatenProvider());
+						new RabbitEatenProvider());
 			}
 			if (!event.getObject().getCapability(RawFoodEatenProvider.SUM).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "raw_food_eaten"),
-						new ApplesEatenProvider());
+						new RawFoodEatenProvider());
 			}
 			if (!event.getObject().getCapability(RottenFleshEatenProvider.SUM).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "rotten_flesh_eaten"),
-						new ApplesEatenProvider());
+						new RottenFleshEatenProvider());
 			}
 			if (!event.getObject().getCapability(SpiderEyeEatenProvider.SUM).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "spider_eye_eaten"),
-						new ApplesEatenProvider());
+						new SpiderEyeEatenProvider());
 			}
 		}
 	}

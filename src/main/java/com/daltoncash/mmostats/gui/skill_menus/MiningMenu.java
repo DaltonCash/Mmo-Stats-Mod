@@ -3,6 +3,7 @@ package com.daltoncash.mmostats.gui.skill_menus;
 
 import com.daltoncash.mmostats.MmoStatsMod;
 import com.daltoncash.mmostats.gui.UpgradeMenu;
+import com.daltoncash.mmostats.gui.skill_menus.totals_menus.MiningTotalsMenu;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.UpgradeJunkBlocksDropExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.UpgradeNightVisionC2SPacket;
@@ -45,7 +46,7 @@ public class MiningMenu extends Screen {
 	public final void init() {
 		
 		addRenderableWidget(new Button(this.width/13 * 6, this.height/13 * 6, 50, 50, 
-				Component.literal(this.height + " " + this.width), MiningMenu::onPressDoNothing));
+				Component.literal("Mining Totals"), MiningMenu::onPressShowTotals));
 		
 		addRenderableWidget(new ImageButton((this.width / 6) * 1, (this.height / 6) * 2, 50, 50, 0, 0, 99,
 				upgradeTexture1, 50, 50, MiningMenu::onPressUpgradeJunk));
@@ -106,6 +107,9 @@ public class MiningMenu extends Screen {
 	}
 	private static void onPressDoNothing(Button button) {
 		
+	}
+	private static void onPressShowTotals(Button button) {
+		 Minecraft.getInstance().setScreen(new MiningTotalsMenu(Component.literal("mining_totals")));
 	}
 	private static void onPressUpgradeJunk(Button button) {
 		ModMessages.sendToServer(new UpgradeJunkBlocksDropExpC2SPacket());

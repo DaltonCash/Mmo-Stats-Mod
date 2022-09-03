@@ -100,9 +100,9 @@ public class FarmingTotalsMenu extends Screen {
 		toLevelList.add("========");
 		
 		for(String eaten : eatenList) {
-			int i = 1;
+			int i = 64;
 			if(eaten != eatenList.get(0) && eaten != eatenList.get(1) && eaten != eatenList.get(5)) {
-				while(Integer.parseInt(eaten) > i) {
+				while(Integer.parseInt(eaten) >= i) {
 					i *= 2;
 				}
 				toLevelList.add(i + "");

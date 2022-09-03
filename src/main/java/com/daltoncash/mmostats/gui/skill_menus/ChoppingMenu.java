@@ -2,6 +2,7 @@ package com.daltoncash.mmostats.gui.skill_menus;
 
 import com.daltoncash.mmostats.MmoStatsMod;
 import com.daltoncash.mmostats.gui.UpgradeMenu;
+import com.daltoncash.mmostats.gui.skill_menus.totals_menus.ChoppingTotalsMenu;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.UpgradeJunkBlocksDropExpC2SPacket;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -35,7 +36,7 @@ public class ChoppingMenu extends Screen {
 	public final void init() {
 		
 		addRenderableWidget(new Button(this.width/13 * 6, this.height/13 * 6, 50, 50, 
-				Component.literal(this.height + " " + this.width), ChoppingMenu::onPressDoNothing));
+				Component.literal("Chopping Totals"), ChoppingMenu::onPressShowTotals));
 		
 		addRenderableWidget(new ImageButton((this.width / 6) * 1, (this.height / 6) * 2, 50, 50, 0, 0, 99,
 				upgradeTexture1, 50, 50, ChoppingMenu::onPressUpgradeJunk));
@@ -48,6 +49,9 @@ public class ChoppingMenu extends Screen {
 		addRenderableWidget(new Button((this.width * 33) /40, (this.height * 35) / 40, (this.width * 100) / 840, 20, 
 				Component.literal("Upgrade"), ChoppingMenu::onPressDoNothing));
 		
+	}
+	private static void onPressShowTotals(Button button) {
+		 Minecraft.getInstance().setScreen(new ChoppingTotalsMenu(Component.literal("chopping_totals")));
 	}
 	private static void onPressDoNothing(Button button) {
 		
