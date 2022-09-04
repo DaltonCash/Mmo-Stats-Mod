@@ -146,7 +146,6 @@ public class SkillEvents {
 		@SubscribeEvent
 		public static void gainChoppingExpOnBreakingBlock(BlockEvent.BreakEvent event) {
 			Block block = event.getState().getBlock();
-			
 			if (ExpYieldList.getChoppingBlocks().contains(block)) {
 				int choppingExp = ClientCapabilityData.getPlayerChoppingExp();
 				int choppingLevel = ClientCapabilityData.getPlayerChoppingLevel();

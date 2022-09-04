@@ -52,10 +52,12 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.Fox.FoxEatBerriesGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
@@ -299,34 +301,111 @@ public class ClientEvents {
 					if(eatCooldown >= 128) {
 						event.getEntity().eat(event.getLevel(), event.getItemStack());
 						ModMessages.sendToServer(new EatFoodWhileFullC2SPacket());
+						Item item = event.getItemStack().getItem();
 						eatCooldown = 0;
-						if(ClientCapabilityData.isUpgradedGrannySmith() > 0) {
-							if(event.getItemStack().getItem().equals(Items.APPLE)) {
+						
+						if(item.equals(Items.APPLE)) {
+							ModMessages.sendToServer(new ApplesEatenC2SPacket());
+							if(ClientCapabilityData.isUpgradedGrannySmith() > 0) {
 								applesGiveChopSpeed += 2400;
 							}
+						}
+						if(item.equals(Items.BEEF) || item.equals(Items.COOKED_BEEF)) {
+							ModMessages.sendToServer(new BeefEatenC2SPacket());
+						}
+						if(item.equals(Items.BEETROOT)) {
+							ModMessages.sendToServer(new BeetrootEatenC2SPacket());
+						}
+						if(item.equals(Items.BEETROOT_SOUP)) {
+							ModMessages.sendToServer(new BeetrootEatenC2SPacket());
+							ModMessages.sendToServer(new BeetrootEatenC2SPacket());
+							ModMessages.sendToServer(new BeetrootEatenC2SPacket());
+							ModMessages.sendToServer(new BeetrootEatenC2SPacket());
+							ModMessages.sendToServer(new BeetrootEatenC2SPacket());
+							ModMessages.sendToServer(new BeetrootEatenC2SPacket());
+						}
+						if(item.equals(Items.BREAD)) {
+							ModMessages.sendToServer(new BreadEatenC2SPacket());
+						}
+						if(item.equals(Items.CARROT)) {
+							ModMessages.sendToServer(new CarrotsEatenC2SPacket());
+						}
+						if(item.equals(Items.CHICKEN) || item.equals(Items.COOKED_CHICKEN)) {
+							ModMessages.sendToServer(new ChickenEatenC2SPacket());
+						}
+						if(item.equals(Items.COOKIE)) {
+							ModMessages.sendToServer(new CookiesEatenC2SPacket());
+						}
+						if(item.equals(Items.COD) || item.equals(Items.COOKED_COD) || 
+							item.equals(Items.SALMON) || item.equals(Items.COOKED_SALMON) ||
+							item.equals(Items.TROPICAL_FISH) || item.equals(Items.PUFFERFISH)) {
+							System.out.println("fish time");
+							ModMessages.sendToServer(new FishEatenC2SPacket());
+						}
+						if(item.equals(Items.GLOW_BERRIES)) {
+							ModMessages.sendToServer(new GlowBerriesEatenC2SPacket());
+						}
+						if(item.equals(Items.GOLDEN_APPLE)) {
+							ModMessages.sendToServer(new GoldApplesEatenC2SPacket());
+						}
+						if(item.equals(Items.GOLDEN_CARROT)) {
+							ModMessages.sendToServer(new GoldenCarrotsEatenC2SPacket());
+						}
+						if(item.equals(Items.HONEY_BOTTLE)) {
+							ModMessages.sendToServer(new HoneyEatenC2SPacket());
+						}
+						if(item.equals(Items.DRIED_KELP)) {
+							ModMessages.sendToServer(new KelpEatenC2SPacket());
+						}
+						if(item.equals(Items.MELON_SLICE)) {
+							ModMessages.sendToServer(new MelonEatenC2SPacket());
+						}
+						if(item.equals(Items.MUSHROOM_STEW)) {
+							ModMessages.sendToServer(new MushroomStewEatenC2SPacket());
+						}
+						if(item.equals(Items.MUTTON) || item.equals(Items.COOKED_MUTTON)) {
+							ModMessages.sendToServer(new MuttonEatenC2SPacket());
+						}
+						if(item.equals(Items.POISONOUS_POTATO)) {
+							ModMessages.sendToServer(new PoisonousPotatoEatenC2SPacket());
+							ModMessages.sendToServer(new PotatoEatenC2SPacket());
+						}
+						if(item.equals(Items.PORKCHOP) || item.equals(Items.COOKED_PORKCHOP)) {
+							ModMessages.sendToServer(new PorkEatenC2SPacket());
+						}
+						if(item.equals(Items.POTATO)) {
+							ModMessages.sendToServer(new PotatoEatenC2SPacket());
+						}
+						if(item.equals(Items.PUFFERFISH)) {
+							ModMessages.sendToServer(new PufferfishEatenC2SPacket());
+						}
+						if(item.equals(Items.PUMPKIN_PIE)) {
+							ModMessages.sendToServer(new PumpkinPieEatenC2SPacket());
+						}
+						if(item.equals(Items.RABBIT) || item.equals(Items.COOKED_RABBIT)) {
+							ModMessages.sendToServer(new RabbitEatenC2SPacket());
+						}
+						if(item.equals(Items.RABBIT_STEW)) {
+							ModMessages.sendToServer(new PotatoEatenC2SPacket());
+							ModMessages.sendToServer(new CarrotsEatenC2SPacket());
+							ModMessages.sendToServer(new RabbitEatenC2SPacket());
+						}
+						if(item.equals(Items.RABBIT) || item.equals(Items.MUTTON) || 
+								item.equals(Items.COD) || item.equals(Items.SALMON) ||
+								item.equals(Items.CHICKEN) || item.equals(Items.BEEF) ||
+								item.equals(Items.PORKCHOP)) {
+							ModMessages.sendToServer(new RawFoodEatenC2SPacket());
+						}
+						if(item.equals(Items.ROTTEN_FLESH)) {
+							ModMessages.sendToServer(new RottenFleshEatenC2SPacket());
+						}
+						if(item.equals(Items.SPIDER_EYE)) {
+							ModMessages.sendToServer(new SpiderEyeEatenC2SPacket());
 						}
 					}
 				}
 			}
 		}
-		//TEMP CAKE
-		@SuppressWarnings("resource")
-		@SubscribeEvent
-		public static void onEatingCakes(BlockEvent.BreakEvent event) {
-			System.out.println();
-			//if(event.getEntity().level.equals(Minecraft.getInstance().level)) {
-				System.out.println(event.getState().getBlock().equals(Blocks.CAKE));
-			//}
-		}
-		
-		//TEMP CAKE
-				@SuppressWarnings("resource")
-				@SubscribeEvent
-				public static void onEatingCake(RightClickBlock event) {
-					//if(event.getEntity().level.equals(Minecraft.getInstance().level)) {
-						System.out.println(event);
-					//}
-				}
 				
 		//Gain effects from eating
 		@SuppressWarnings("resource")
@@ -336,10 +415,9 @@ public class ClientEvents {
 			if(event.getEntity().level.equals(Minecraft.getInstance().level)) {
 				if(event.getItem().getItem().isEdible()) {
 					Item item = event.getItem().getItem();
-					ModMessages.sendToServer(new GainEffectFromEatingC2SPacket());
 					eatCooldown = 0;
 					
-					System.out.println("food eaten when hungry: " + item);
+					
 					if(item.equals(Items.APPLE)) {
 						ModMessages.sendToServer(new ApplesEatenC2SPacket());
 						if(ClientCapabilityData.isUpgradedGrannySmith() > 0) {
@@ -361,13 +439,10 @@ public class ClientEvents {
 						ModMessages.sendToServer(new BeetrootEatenC2SPacket());
 					}
 					if(item.equals(Items.BREAD)) {
-						System.out.println(ClientCapabilityData.getBreadEaten());
 						ModMessages.sendToServer(new BreadEatenC2SPacket());
 					}
 					if(item.equals(Items.CARROT)) {
 						ModMessages.sendToServer(new CarrotsEatenC2SPacket());
-						System.out.println(ClientCapabilityData.getCarrotsEaten());
-						System.out.println("Carrot has been eaten");
 					}
 					if(item.equals(Items.CHICKEN) || item.equals(Items.COOKED_CHICKEN)) {
 						ModMessages.sendToServer(new ChickenEatenC2SPacket());
@@ -441,6 +516,7 @@ public class ClientEvents {
 					if(item.equals(Items.SPIDER_EYE)) {
 						ModMessages.sendToServer(new SpiderEyeEatenC2SPacket());
 					}
+					ModMessages.sendToServer(new GainEffectFromEatingC2SPacket());
 				}
 			}
 		}
