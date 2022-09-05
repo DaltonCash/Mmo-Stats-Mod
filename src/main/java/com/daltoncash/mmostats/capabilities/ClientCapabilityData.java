@@ -104,7 +104,16 @@ public class ClientCapabilityData {
 	private static int rottenFleshEaten;
 	private static int spiderEyeEaten;
 
-
+	public static int getTotalsLevel(int total) {
+		int i = 64;
+		int j = 0;
+		while(total >= i) {
+			i *= 2;
+			j++;
+		}
+		return j;
+	}
+	
 	public static int getPlayerExp() {
 		return playerExp;
 	}

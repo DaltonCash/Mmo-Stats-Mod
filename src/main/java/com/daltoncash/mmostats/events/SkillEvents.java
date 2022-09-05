@@ -401,7 +401,8 @@ public class SkillEvents {
 					expToAdd = 10;
 					ModMessages.sendToServer(new GlowstoneMinedC2SPacket());
 				}
-
+				int coalTotalsLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getCoalMined());
+				expToAdd += expToAdd * (coalTotalsLevel);
 				ModMessages.sendToServer(new GainMiningExpC2SPacket());
 				LOGGER.info("{} has mined {}(Player miningExp: {})", event.getPlayer().getScoreboardName(),
 						event.getState().getBlock().asItem(), (miningExp + expToAdd));
