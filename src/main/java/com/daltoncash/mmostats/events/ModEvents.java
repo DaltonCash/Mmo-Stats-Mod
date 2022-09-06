@@ -278,6 +278,7 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
@@ -306,18 +307,31 @@ public class ModEvents {
 			
 			//Core Skills
 			
-			event.getEntity().getAttribute(Attributes.MAX_HEALTH).setBaseValue(
-					event.getOriginal().getAttributeValue(Attributes.MAX_HEALTH));
+			//event.getEntity().getAttribute(Attributes.MAX_HEALTH).setBaseValue(
+					//event.getOriginal().getAttributeValue(Attributes.MAX_HEALTH));
 			
 		}
 	}
 	//Changes attributes to the modded values on joining world
 	@SubscribeEvent
 	public static void onPlayerJoinAttributes(EntityJoinLevelEvent event) {
+		event.setPhase(EventPriority.LOWEST);
 		if (!event.getLevel().isClientSide()) {
 			if (event.getEntity() instanceof ServerPlayer player) {
-				player.getAttribute(Attributes.MAX_HEALTH).setBaseValue(20 + (ClientCapabilityData.getPlayerHealth()) * 2);
-				player.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(.1 + (ClientCapabilityData.getPlayerAgility() / 20));
+				
+				//(base hp + base hp modifiers) * (perc hp modifiers)
+				//(base + leveluphp + obsidian) * (coal + oak + goldapples)
+				player.getAttribute(Attributes.MAX_HEALTH).setBaseValue((20 + 
+						(ClientCapabilityData.getPlayerHealth() * 2) +
+						(ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getCoalMined())))
+						//WIP
+						//(ClientCapabilityData.getPlayerHealth())
+						);
+				player.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(.1 + 
+						(ClientCapabilityData.getPlayerAgility() / 200f) + 
+						(ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getRedstoneMined()) / 200f));
+				
+				player.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(1);
 			}
 		}
 	}
