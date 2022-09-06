@@ -71,12 +71,11 @@ public class SkillEvents {
 
 		@SubscribeEvent
 		public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-			if (levelUpOverlayDuration > 0) {
-				levelUpOverlayDuration--;
-			}
-			if (skillOverlayDuration > 0) {
-				skillOverlayDuration--;
-			}
+			if (levelUpOverlayDuration > 0) levelUpOverlayDuration--;
+			
+			if (skillOverlayDuration > 0) skillOverlayDuration--;
+			
+			if (bowCooldown < 30) bowCooldown++;
 		}
 
 		// Checks if the player has enough playerExp to level up
@@ -132,7 +131,8 @@ public class SkillEvents {
 
 							// Makes skill overlay appear on screen.
 							skillOverlay("Archery");
-
+							
+							
 						} else {
 							LOGGER.debug("Player {} is firing too fast!(archeryExp on cooldown)",
 									event.getSource().getEntity().getScoreboardName());
@@ -289,23 +289,28 @@ public class SkillEvents {
 				if (block.equals(Blocks.GRASS) || block.equals(Blocks.TALL_GRASS)) {
 					expToAdd = 3;
 					ModMessages.sendToServer(new GainFarmingExpFromUnseededCropsC2SPacket());
+					
 				} else if (block.equals(Blocks.WHEAT) || block.equals(Blocks.CARROTS) || block.equals(Blocks.POTATOES)
 						|| block.equals(Blocks.BEETROOTS) || block.equals(Blocks.COCOA)) {
 					expToAdd = 20;
 					ModMessages.sendToServer(new GainFarmingExpFromSeededCropsC2SPacket());
+					
 				} else if (block.equals(Blocks.PUMPKIN) || block.equals(Blocks.MELON)
 						|| block.equals(Blocks.SHROOMLIGHT)) {
 					expToAdd = 20;
 					ModMessages.sendToServer(new GainFarmingExpFromUnseededCropsC2SPacket());
+					
 				} else if (block.equals(Blocks.CACTUS) || block.equals(Blocks.SUGAR_CANE) || block.equals(Blocks.BAMBOO)
 						|| block.equals(Blocks.KELP) || block.equals(Blocks.BROWN_MUSHROOM_BLOCK)
 						|| block.equals(Blocks.RED_MUSHROOM_BLOCK) || block.equals(Blocks.MUSHROOM_STEM)) {
 					expToAdd = 10;
 					ModMessages.sendToServer(new GainFarmingExpFromUnseededCropsC2SPacket());
+					
 				} else if (block.equals(Blocks.BROWN_MUSHROOM) || block.equals(Blocks.RED_MUSHROOM)
 						|| block.equals(Blocks.CRIMSON_FUNGUS) || block.equals(Blocks.WARPED_FUNGUS)) {
 					expToAdd = 30;
 					ModMessages.sendToServer(new GainFarmingExpFromUnseededCropsC2SPacket());
+					
 				}
 				LOGGER.info("{} has farmed {}(Player FarmingExp: {})", event.getPlayer().getScoreboardName(),
 						event.getState().getBlock().asItem(), farmingExp + expToAdd);
@@ -401,8 +406,7 @@ public class SkillEvents {
 					expToAdd = 10;
 					ModMessages.sendToServer(new GlowstoneMinedC2SPacket());
 				}
-				int coalTotalsLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getCoalMined());
-				expToAdd += expToAdd * (coalTotalsLevel);
+				
 				ModMessages.sendToServer(new GainMiningExpC2SPacket());
 				LOGGER.info("{} has mined {}(Player miningExp: {})", event.getPlayer().getScoreboardName(),
 						event.getState().getBlock().asItem(), (miningExp + expToAdd));

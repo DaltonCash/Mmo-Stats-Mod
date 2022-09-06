@@ -2,6 +2,7 @@ package com.daltoncash.mmostats.networking.packets.c2s.skills;
 
 import java.util.function.Supplier;
 
+import com.daltoncash.mmostats.capabilities.ClientCapabilityData;
 import com.daltoncash.mmostats.capabilities.chopping.PlayerChoppingExpProvider;
 import com.daltoncash.mmostats.events.SkillEvents.SkillForgeEvents;
 import com.daltoncash.mmostats.networking.ModMessages;
@@ -29,7 +30,9 @@ public class GainChoppingExpC2SPacket {
 		context.enqueueWork(() -> {
 			ServerPlayer player = context.getSender();
 			player.getCapability(PlayerChoppingExpProvider.PLAYER_CHOPPING_EXP).ifPresent(choppingExp -> {
-				choppingExp.addChoppingExp(SkillForgeEvents.expToAdd);
+				int AppleTotalsLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getApplesEaten());
+				int jungleWoodTotalsLevel = ClientCapabilityData.getTotalsLevel(0);
+				choppingExp.addChoppingExp(Math.round(SkillForgeEvents.expToAdd * (1 + ((AppleTotalsLevel * jungleWoodTotalsLevel) / 100f))));
 				ModMessages.sendToPlayer(new ChoppingExpDataSyncS2CPacket(choppingExp.getChoppingExp()), player);
 			});
 		});

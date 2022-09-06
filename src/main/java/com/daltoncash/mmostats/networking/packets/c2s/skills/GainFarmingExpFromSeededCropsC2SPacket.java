@@ -3,6 +3,7 @@ package com.daltoncash.mmostats.networking.packets.c2s.skills;
 import java.util.List;
 import java.util.function.Supplier;
 
+import com.daltoncash.mmostats.capabilities.ClientCapabilityData;
 import com.daltoncash.mmostats.capabilities.farming.PlayerFarmingExpProvider;
 import com.daltoncash.mmostats.events.SkillEvents.SkillForgeEvents;
 import com.daltoncash.mmostats.networking.ModMessages;
@@ -39,7 +40,12 @@ public class GainFarmingExpFromSeededCropsC2SPacket {
 			List<ItemStack> drops = Block.getDrops(event.getState(), level, event.getPos(), null);
 			if(drops.size() > 1) {
 				player.getCapability(PlayerFarmingExpProvider.PLAYER_FARMING_EXP).ifPresent(farmingExp -> {
-					farmingExp.addFarmingExp(SkillForgeEvents.expToAdd);
+					int copperTotalsLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getCopperMined());
+					//WIP
+					int birchTotalsLevel = ClientCapabilityData.getTotalsLevel(1);
+					int breadTotalsLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getBreadEaten());
+					
+					farmingExp.addFarmingExp(Math.round(SkillForgeEvents.expToAdd * (1 + ((copperTotalsLevel * birchTotalsLevel * breadTotalsLevel) / 100f))));
 					ModMessages.sendToPlayer(new FarmingExpDataSyncS2CPacket(farmingExp.getFarmingExp()), player);
 				});
 			}

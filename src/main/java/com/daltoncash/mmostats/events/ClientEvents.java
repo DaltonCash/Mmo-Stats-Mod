@@ -86,7 +86,7 @@ public class ClientEvents {
 		public static Entity clientEntity;
 		public static BlockEvent.BreakEvent blockevent = null;
 		
-		public static int bowCooldown = 30;
+		
 		public static int dodgeCooldown = 80;
 		public static int eatCooldown = 128;
 		public static int invulnFrameDuration = 28;
@@ -114,7 +114,7 @@ public class ClientEvents {
 		//Provides a cooldown to the onArrowHit to prevent exploits
 		@SubscribeEvent
 		public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-			if (bowCooldown < 30) bowCooldown++;
+			
 			
 			if (dodgeCooldown < 80) dodgeCooldown++;
 			
@@ -184,7 +184,6 @@ public class ClientEvents {
 						//Arrow: Headshot
 						if(ClientCapabilityData.isUpgradedSweetSpotArchery() > 0) {
 							if(event.getSource().getSourcePosition().y >= event.getEntity().getEyePosition().y - 0.2) {
-								System.out.println("Headshot");
 								event.getEntity().setHealth(Math.max(event.getEntity().getHealth() - (event.getAmount()/3), 0));
 							}
 						}
@@ -521,9 +520,10 @@ public class ClientEvents {
 		//Fast Food-WIP
 		@SubscribeEvent
 		public static void onEatingFood(LivingEntityUseItemEvent.Start event) {
+			
 			//Fast Food-WIP
 			if(event.getItem().getItem().isEdible()) {
-				event.setDuration(16);
+				event.setDuration(2);
 			}
 			
 			//Arrow: Quickshot
