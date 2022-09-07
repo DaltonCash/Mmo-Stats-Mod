@@ -88,7 +88,7 @@ public class ClientEvents {
 		
 		
 		public static int dodgeCooldown = 80;
-		public static int eatCooldown = 128;
+		public static int eatCooldown = 128/(1 + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getMelonEaten()));
 		public static int invulnFrameDuration = 28;
 		public static int healAtHalfHealth = 24000;
 		public static int applesGiveChopSpeed = 0;
@@ -118,7 +118,9 @@ public class ClientEvents {
 			
 			if (dodgeCooldown < 80) dodgeCooldown++;
 			
-			if (eatCooldown < 128) eatCooldown++;
+			if (eatCooldown < 128/(1 + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getMelonEaten()))) {
+				eatCooldown++;
+			}
 			
 			if (invulnFrameDuration < 28) invulnFrameDuration++;
 			
@@ -217,7 +219,9 @@ public class ClientEvents {
 			
 			
 			if(event.getEntity().getType().equals(EntityType.PLAYER)) {
-				
+				int pumpkinPieEatenLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getPumpkinPieEaten());
+				int kelpEatenLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getKelpEaten());
+				event.setAmount((event.getAmount() - pumpkinPieEatenLevel) * (1 - ((kelpEatenLevel * 5) / 100f)));
 				if(ClientCapabilityData.isUpgradedDodgeRoll() > 0) {
 					if(invulnFrameDuration < 28) {
 						event.setCanceled(true);
@@ -248,8 +252,9 @@ public class ClientEvents {
 					if(event.getAmount() * (1 - (Math.max(event.getEntity().getArmorValue() / 5,
 							event.getEntity().getArmorValue() - ((4 * event.getAmount()) / 8))) / 25) + 1 > event.getEntity().getHealth()) {
 						if(ragnorokCooldown == 0) {
-							ragnorokDuration = 2400;
-							ragnorokCooldown = 3600;
+							int mushroomStewEatenLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getMushroomStewEaten());
+							ragnorokDuration = (int) (2400 * (1 + (((mushroomStewEatenLevel) * (mushroomStewEatenLevel)) / 100f)));
+							ragnorokCooldown = 36000;
 							if(ragnorokDuration > 0) {
 								event.setCanceled(true);
 							}
@@ -283,7 +288,8 @@ public class ClientEvents {
 		public static void onTakingKnockback(LivingKnockBackEvent event) {
 			if(ClientCapabilityData.isUpgradedStableFooting() > 0) {
 				if(event.getEntity().getType().equals(EntityType.PLAYER)) {
-					event.setStrength((event.getOriginalStrength() * 3) / 4);
+					int potatoesEatenLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getPotatoEaten());
+					event.setStrength((event.getOriginalStrength() * 3) / (4 + potatoesEatenLevel));
 				}
 			}
 		}
@@ -294,7 +300,7 @@ public class ClientEvents {
 			
 			if(event.getItemStack().isEdible()) {
 				if(event.getEntity().getFoodData().getFoodLevel() >= 20) {
-					if(eatCooldown >= 128) {
+					if(eatCooldown >= 128/(1 + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getMelonEaten()))) {
 						event.getEntity().eat(event.getLevel(), event.getItemStack());
 						ModMessages.sendToServer(new EatFoodWhileFullC2SPacket());
 						Item item = event.getItemStack().getItem();
@@ -335,7 +341,6 @@ public class ClientEvents {
 						if(item.equals(Items.COD) || item.equals(Items.COOKED_COD) || 
 							item.equals(Items.SALMON) || item.equals(Items.COOKED_SALMON) ||
 							item.equals(Items.TROPICAL_FISH) || item.equals(Items.PUFFERFISH)) {
-							System.out.println("fish time");
 							ModMessages.sendToServer(new FishEatenC2SPacket());
 						}
 						if(item.equals(Items.GLOW_BERRIES)) {
@@ -449,7 +454,6 @@ public class ClientEvents {
 					if(item.equals(Items.COD) || item.equals(Items.COOKED_COD) || 
 						item.equals(Items.SALMON) || item.equals(Items.COOKED_SALMON) ||
 						item.equals(Items.TROPICAL_FISH) || item.equals(Items.PUFFERFISH)) {
-						System.out.println("fish time");
 						ModMessages.sendToServer(new FishEatenC2SPacket());
 					}
 					if(item.equals(Items.GLOW_BERRIES)) {
@@ -522,8 +526,10 @@ public class ClientEvents {
 		public static void onEatingFood(LivingEntityUseItemEvent.Start event) {
 			
 			//Fast Food-WIP
+			//eat duration should = (32 / fastfoodlevel) - melonsEaten
 			if(event.getItem().getItem().isEdible()) {
-				event.setDuration(2);
+				int eatDuration = 32/(1 + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getMelonEaten()));
+				event.setDuration(eatDuration);
 			}
 			
 			//Arrow: Quickshot
@@ -583,8 +589,17 @@ public class ClientEvents {
 		public static void onBreakBlock(BlockEvent.BreakEvent event) {
 			if (ExpYieldList.getMiningBlocks().contains(event.getState().getBlock())) {
 				blockevent = event;
-				if (ClientCapabilityData.getPlayerMiningLevel() / 500.0 >= Math.random()) {
+				int goldMinedLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getGoldMined());
+				double rand =  Math.random();
+				double fortuneChance = (ClientCapabilityData.getPlayerMiningLevel() * (1 + ((goldMinedLevel * goldMinedLevel * goldMinedLevel * goldMinedLevel) / 100f))) / 500.0;
+				System.out.println("fortune chance " + fortuneChance);
+				System.out.println("rand " + rand);
+				System.out.println("gold " + goldMinedLevel);
+				System.out.println("mining " + ClientCapabilityData.getPlayerMiningLevel());
+				while(fortuneChance >= rand){
 					ModMessages.sendToServer(new AdditionalFortuneProcC2SPacket());
+					fortuneChance -= 1;
+					System.out.println("fortune given");
 				}
 			}
 		}

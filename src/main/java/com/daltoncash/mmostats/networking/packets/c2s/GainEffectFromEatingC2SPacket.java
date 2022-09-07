@@ -3,6 +3,8 @@ package com.daltoncash.mmostats.networking.packets.c2s;
 import java.util.List;
 import java.util.function.Supplier;
 
+import com.daltoncash.mmostats.capabilities.ClientCapabilityData;
+
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -30,6 +32,9 @@ public class GainEffectFromEatingC2SPacket {
 		NetworkEvent.Context context = supplier.get();
 		context.enqueueWork(() -> {
 			ServerPlayer player = context.getSender();
+			int speedDuration = 60 * (1 + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getCookiesEaten()));
+			int regenDuration = 20;
+			
 			int regenStrength = 1;
 			int speedStrength = 1;
 			Item foodInHand = null;
@@ -57,10 +62,10 @@ public class GainEffectFromEatingC2SPacket {
 				
 			}
 			//if(player has the upgrade for this)
-			player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 60, speedStrength));
+			player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, speedDuration, speedStrength));
 			
 			//if(player has the upgrade for this)
-			player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 20, regenStrength));
+			player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, regenDuration, regenStrength));
 			//if player has upgrade
 			player.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 180, foodInHand.getFoodProperties(new ItemStack(foodInHand), player).getNutrition()/4 - 1));
 		});

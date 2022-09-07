@@ -2,6 +2,7 @@ package com.daltoncash.mmostats.networking.packets.c2s;
 
 import java.util.function.Supplier;
 
+import com.daltoncash.mmostats.capabilities.ClientCapabilityData;
 import com.daltoncash.mmostats.events.ClientEvents.ClientForgeEvents;
 
 import net.minecraft.network.FriendlyByteBuf;
@@ -37,17 +38,19 @@ public class EntityDropsAnArrowC2SPacket {
 	         double x = ClientForgeEvents.clientEntity.position().x;
 	         double y = ClientForgeEvents.clientEntity.position().y;
 	         double z = ClientForgeEvents.clientEntity.position().z;
-	         
+	         int porkchopEatenLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getPorkEaten());
+	         int hunterUpgradeLevel = ClientCapabilityData.isUpgradedHunter();
+	         int meatToDrop = porkchopEatenLevel + hunterUpgradeLevel;
 	         if(entity.getType().equals(EntityType.COW)) {
-	        	 level.addFreshEntity(new ItemEntity(level, x, y, z, new ItemStack(Items.BEEF, 2)));
+	        	 level.addFreshEntity(new ItemEntity(level, x, y, z, new ItemStack(Items.BEEF, meatToDrop * 2)));
 	         }else if(entity.getType().equals(EntityType.SHEEP)) {
-	        	 level.addFreshEntity(new ItemEntity(level, x, y, z, new ItemStack(Items.MUTTON, 2))); 
+	        	 level.addFreshEntity(new ItemEntity(level, x, y, z, new ItemStack(Items.MUTTON, meatToDrop * 2))); 
 	         }else if(entity.getType().equals(EntityType.PIG)) {
-	        	 level.addFreshEntity(new ItemEntity(level, x, y, z, new ItemStack(Items.PORKCHOP, 2))); 
+	        	 level.addFreshEntity(new ItemEntity(level, x, y, z, new ItemStack(Items.PORKCHOP, meatToDrop * 2))); 
 	         }else if(entity.getType().equals(EntityType.RABBIT)) {
-	        	 level.addFreshEntity(new ItemEntity(level, x, y, z, new ItemStack(Items.RABBIT, 1))); 
+	        	 level.addFreshEntity(new ItemEntity(level, x, y, z, new ItemStack(Items.RABBIT, meatToDrop * 1))); 
 	         }else if(entity.getType().equals(EntityType.CHICKEN)) {
-	        	 level.addFreshEntity(new ItemEntity(level, x, y, z, new ItemStack(Items.CHICKEN, 1))); 
+	        	 level.addFreshEntity(new ItemEntity(level, x, y, z, new ItemStack(Items.CHICKEN, meatToDrop * 1))); 
 	         }else {
 	         level.addFreshEntity(new ItemEntity(level, x, y, z, new ItemStack(Items.ARROW)));
 	         }

@@ -2,6 +2,7 @@ package com.daltoncash.mmostats.networking.packets.c2s;
 
 import java.util.function.Supplier;
 
+import com.daltoncash.mmostats.capabilities.ClientCapabilityData;
 import com.daltoncash.mmostats.capabilities.playerlevel.stats.mana.PlayerManaProvider;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.s2c.ManaDataSyncS2CPacket;
@@ -32,7 +33,8 @@ public class GainNightVisionC2SPacket {
 			ServerPlayer player = context.getSender();
 			player.getCapability(PlayerManaProvider.PLAYER_MANA).ifPresent(mana -> {
 				mana.subMana(10);
-				player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 1200));
+				int glowstoneMinedLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getGlowstoneMined());
+				player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 1200 * (1 + (glowstoneMinedLevel))));
 				ModMessages.sendToPlayer(new ManaDataSyncS2CPacket(mana.getMana()), player);
 			});
 		});

@@ -318,20 +318,26 @@ public class ModEvents {
 		event.setPhase(EventPriority.LOWEST);
 		if (!event.getLevel().isClientSide()) {
 			if (event.getEntity() instanceof ServerPlayer player) {
+				int goldApplesEatenLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getGoldApplesEaten());
+				int beefEatenLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getBeefEaten());
+				int redstoneMinedLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getRedstoneMined());
+				int diamondMinedLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getDiamondMined());
+				
 				
 				//(base hp + base hp modifiers) * (perc hp modifiers)
 				//(base + leveluphp + obsidian) * (coal + oak + goldapples)
 				player.getAttribute(Attributes.MAX_HEALTH).setBaseValue((20 + 
 						(ClientCapabilityData.getPlayerHealth() * 2) +
-						(ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getCoalMined())))
+						(goldApplesEatenLevel))
 						//WIP
-						//(ClientCapabilityData.getPlayerHealth())
+						//(obsidianMinedLevel)
 						);
 				player.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(.1 + 
 						(ClientCapabilityData.getPlayerAgility() / 200f) + 
-						(ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getRedstoneMined()) / 200f));
+						(redstoneMinedLevel / 200f));
 				
-				player.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(1);
+				player.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(1 + 
+						diamondMinedLevel + beefEatenLevel);
 			}
 		}
 	}

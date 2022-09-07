@@ -53,6 +53,7 @@ import com.daltoncash.mmostats.networking.packets.c2s.swordsUpgrades.RightClickU
 import com.daltoncash.mmostats.networking.packets.c2s.swordsUpgrades.ShieldBashUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.swordsUpgrades.SweetSpotSwordsUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainNightVisionC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.HealFromRottenFleshTotalC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.SpawnArrowOnPlayerC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.EntityDropsAnArrowC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainEffectFromEatingC2SPacket;
@@ -263,6 +264,11 @@ public class ModMessages {
 			.decoder(SpawnArrowOnPlayerC2SPacket::new)
 			.encoder(SpawnArrowOnPlayerC2SPacket::toBytes)
 			.consumerMainThread(SpawnArrowOnPlayerC2SPacket::handle)
+			.add();
+		 net.messageBuilder(HealFromRottenFleshTotalC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(HealFromRottenFleshTotalC2SPacket::new)
+			.encoder(HealFromRottenFleshTotalC2SPacket::toBytes)
+			.consumerMainThread(HealFromRottenFleshTotalC2SPacket::handle)
 			.add();
         
 //-----------C2S--Skills---------------------------------------------------------------------------------
