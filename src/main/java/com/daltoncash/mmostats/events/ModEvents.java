@@ -36,6 +36,24 @@ import com.daltoncash.mmostats.capabilities.chopping.upgrades.HighGroundUpgrade;
 import com.daltoncash.mmostats.capabilities.chopping.upgrades.HighGroundUpgradeProvider;
 import com.daltoncash.mmostats.capabilities.chopping.upgrades.StrongArmsUpgrade;
 import com.daltoncash.mmostats.capabilities.chopping.upgrades.StrongArmsUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.chopping.upgrades.logsChopped.AcaciaChopped;
+import com.daltoncash.mmostats.capabilities.chopping.upgrades.logsChopped.AcaciaChoppedProvider;
+import com.daltoncash.mmostats.capabilities.chopping.upgrades.logsChopped.BirchChopped;
+import com.daltoncash.mmostats.capabilities.chopping.upgrades.logsChopped.BirchChoppedProvider;
+import com.daltoncash.mmostats.capabilities.chopping.upgrades.logsChopped.CrimsonStemChopped;
+import com.daltoncash.mmostats.capabilities.chopping.upgrades.logsChopped.CrimsonStemChoppedProvider;
+import com.daltoncash.mmostats.capabilities.chopping.upgrades.logsChopped.DarkOakChopped;
+import com.daltoncash.mmostats.capabilities.chopping.upgrades.logsChopped.DarkOakChoppedProvider;
+import com.daltoncash.mmostats.capabilities.chopping.upgrades.logsChopped.JungleChopped;
+import com.daltoncash.mmostats.capabilities.chopping.upgrades.logsChopped.JungleChoppedProvider;
+import com.daltoncash.mmostats.capabilities.chopping.upgrades.logsChopped.MangroveChopped;
+import com.daltoncash.mmostats.capabilities.chopping.upgrades.logsChopped.MangroveChoppedProvider;
+import com.daltoncash.mmostats.capabilities.chopping.upgrades.logsChopped.OakChopped;
+import com.daltoncash.mmostats.capabilities.chopping.upgrades.logsChopped.OakChoppedProvider;
+import com.daltoncash.mmostats.capabilities.chopping.upgrades.logsChopped.SpruceChopped;
+import com.daltoncash.mmostats.capabilities.chopping.upgrades.logsChopped.SpruceChoppedProvider;
+import com.daltoncash.mmostats.capabilities.chopping.upgrades.logsChopped.WarpedStemChopped;
+import com.daltoncash.mmostats.capabilities.chopping.upgrades.logsChopped.WarpedStemChoppedProvider;
 import com.daltoncash.mmostats.capabilities.combat.PlayerCombatExp;
 import com.daltoncash.mmostats.capabilities.combat.PlayerCombatExpProvider;
 import com.daltoncash.mmostats.capabilities.combat.PlayerCombatLevel;
@@ -209,6 +227,15 @@ import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.HardwoodUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.HighGroundUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.StrongArmsUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.totals.AcaciaChoppedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.totals.BirchChoppedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.totals.CrimsonStemChoppedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.totals.DarkOakChoppedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.totals.JungleChoppedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.totals.MangroveChoppedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.totals.OakChoppedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.totals.SpruceChoppedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.totals.WarpedStemChoppedDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.DodgeRollUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.FreeArrowsUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.OvercomeUpgradeDataSyncS2CPacket;
@@ -723,6 +750,44 @@ public class ModEvents {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "spider_eye_eaten"),
 						new SpiderEyeEatenProvider());
 			}
+			
+			//Logs--Chopped---------------------
+			if (!event.getObject().getCapability(AcaciaChoppedProvider.TOTAL).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "acacia_chopped"),
+						new AcaciaChoppedProvider());
+			}
+			if (!event.getObject().getCapability(BirchChoppedProvider.TOTAL).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "birch_chopped"),
+						new BirchChoppedProvider());
+			}
+			if (!event.getObject().getCapability(CrimsonStemChoppedProvider.TOTAL).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "crimson_stem_chopped"),
+						new CrimsonStemChoppedProvider());
+			}
+			if (!event.getObject().getCapability(DarkOakChoppedProvider.TOTAL).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "dark_oak_chopped"),
+						new DarkOakChoppedProvider());
+			}
+			if (!event.getObject().getCapability(JungleChoppedProvider.TOTAL).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "jungle_chopped"),
+						new JungleChoppedProvider());
+			}
+			if (!event.getObject().getCapability(MangroveChoppedProvider.TOTAL).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "mangrove_chopped"),
+						new MangroveChoppedProvider());
+			}
+			if (!event.getObject().getCapability(OakChoppedProvider.TOTAL).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "oak_chopped"),
+						new OakChoppedProvider());
+			}
+			if (!event.getObject().getCapability(SpruceChoppedProvider.TOTAL).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "spruce_chopped"),
+						new SpruceChoppedProvider());
+			}
+			if (!event.getObject().getCapability(WarpedStemChoppedProvider.TOTAL).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "warped_stem_chopped"),
+						new WarpedStemChoppedProvider());
+			}
 		}
 	}
 	
@@ -1201,6 +1266,52 @@ public class ModEvents {
 					newStore.copyFrom(oldStore);
 				});
 			});
+			//Logs--Chopped------------------------------------------
+			event.getOriginal().getCapability(AcaciaChoppedProvider.TOTAL).ifPresent(oldStore -> {
+				event.getEntity().getCapability(AcaciaChoppedProvider.TOTAL).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(BirchChoppedProvider.TOTAL).ifPresent(oldStore -> {
+				event.getEntity().getCapability(BirchChoppedProvider.TOTAL).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(CrimsonStemChoppedProvider.TOTAL).ifPresent(oldStore -> {
+				event.getEntity().getCapability(CrimsonStemChoppedProvider.TOTAL).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(DarkOakChoppedProvider.TOTAL).ifPresent(oldStore -> {
+				event.getEntity().getCapability(DarkOakChoppedProvider.TOTAL).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(JungleChoppedProvider.TOTAL).ifPresent(oldStore -> {
+				event.getEntity().getCapability(JungleChoppedProvider.TOTAL).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(MangroveChoppedProvider.TOTAL).ifPresent(oldStore -> {
+				event.getEntity().getCapability(MangroveChoppedProvider.TOTAL).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(OakChoppedProvider.TOTAL).ifPresent(oldStore -> {
+				event.getEntity().getCapability(OakChoppedProvider.TOTAL).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(SpruceChoppedProvider.TOTAL).ifPresent(oldStore -> {
+				event.getEntity().getCapability(SpruceChoppedProvider.TOTAL).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(WarpedStemChoppedProvider.TOTAL).ifPresent(oldStore -> {
+				event.getEntity().getCapability(WarpedStemChoppedProvider.TOTAL).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
 		}
 	}
 
@@ -1313,8 +1424,18 @@ public class ModEvents {
 		event.register(RawFoodEaten.class);
 		event.register(RottenFleshEaten.class);
 		event.register(SpiderEyeEaten.class);
+		
+		//Logs Chopped
+		event.register(AcaciaChopped.class);	
+		event.register(BirchChopped.class);
+		event.register(CrimsonStemChopped.class);
+		event.register(DarkOakChopped.class);
+		event.register(JungleChopped.class);
+		event.register(MangroveChopped.class);
+		event.register(OakChopped.class);
+		event.register(SpruceChopped.class);
+		event.register(WarpedStemChopped.class);
 	}
-
 	//Applies Capabilities to the player on joining the world.
 	@SubscribeEvent
 	public static void onPlayerJoinWorld(EntityJoinLevelEvent event) {
@@ -1601,6 +1722,34 @@ public class ModEvents {
 				});
 				player.getCapability(SpiderEyeEatenProvider.SUM).ifPresent(sum -> {
 					ModMessages.sendToPlayer(new SpiderEyeEatenDataSyncS2CPacket(sum.getSum()), player);
+				});
+				//Logs--Chopped
+				player.getCapability(AcaciaChoppedProvider.TOTAL).ifPresent(sum -> {
+					ModMessages.sendToPlayer(new AcaciaChoppedDataSyncS2CPacket(sum.getSum()), player);
+				});
+				player.getCapability(BirchChoppedProvider.TOTAL).ifPresent(sum -> {
+					ModMessages.sendToPlayer(new BirchChoppedDataSyncS2CPacket(sum.getSum()), player);
+				});
+				player.getCapability(CrimsonStemChoppedProvider.TOTAL).ifPresent(sum -> {
+					ModMessages.sendToPlayer(new CrimsonStemChoppedDataSyncS2CPacket(sum.getSum()), player);
+				});
+				player.getCapability(DarkOakChoppedProvider.TOTAL).ifPresent(sum -> {
+					ModMessages.sendToPlayer(new DarkOakChoppedDataSyncS2CPacket(sum.getSum()), player);
+				});
+				player.getCapability(JungleChoppedProvider.TOTAL).ifPresent(sum -> {
+					ModMessages.sendToPlayer(new JungleChoppedDataSyncS2CPacket(sum.getSum()), player);
+				});
+				player.getCapability(MangroveChoppedProvider.TOTAL).ifPresent(sum -> {
+					ModMessages.sendToPlayer(new MangroveChoppedDataSyncS2CPacket(sum.getSum()), player);
+				});
+				player.getCapability(OakChoppedProvider.TOTAL).ifPresent(sum -> {
+					ModMessages.sendToPlayer(new OakChoppedDataSyncS2CPacket(sum.getSum()), player);
+				});
+				player.getCapability(SpruceChoppedProvider.TOTAL).ifPresent(sum -> {
+					ModMessages.sendToPlayer(new SpruceChoppedDataSyncS2CPacket(sum.getSum()), player);
+				});
+				player.getCapability(WarpedStemChoppedProvider.TOTAL).ifPresent(sum -> {
+					ModMessages.sendToPlayer(new WarpedStemChoppedDataSyncS2CPacket(sum.getSum()), player);
 				});
 			}
 		}

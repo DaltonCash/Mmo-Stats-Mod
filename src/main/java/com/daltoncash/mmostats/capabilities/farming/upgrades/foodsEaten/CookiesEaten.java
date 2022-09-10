@@ -1,8 +1,8 @@
 package com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten;
 
-import com.daltoncash.mmostats.capabilities.SumCapability;
+import com.daltoncash.mmostats.capabilities.TotalsCapability;
 
-public class CookiesEaten extends SumCapability{
+public class CookiesEaten extends TotalsCapability{
 	
 	public CookiesEaten() {
 		this.setNbtString("cookies_eaten");

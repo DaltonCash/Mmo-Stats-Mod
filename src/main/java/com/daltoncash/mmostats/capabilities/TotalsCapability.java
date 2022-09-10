@@ -2,15 +2,15 @@ package com.daltoncash.mmostats.capabilities;
 
 import net.minecraft.nbt.CompoundTag;
 
-public class SumCapability {
+public class TotalsCapability {
 	private int sum;
 	private String nbtString;
 
-	protected SumCapability(String nbtString){
+	protected TotalsCapability(String nbtString){
 		this.nbtString = nbtString;
 	}
 	
-	public SumCapability() {
+	public TotalsCapability() {
 	}
 
 	public int getSum() {
@@ -25,7 +25,7 @@ public class SumCapability {
 		this.sum += sum;
 	}
 
-	public void copyFrom(SumCapability source) {
+	public void copyFrom(TotalsCapability source) {
 		this.sum = source.sum;
 	}
 	public void saveNBTData(CompoundTag nbt) {

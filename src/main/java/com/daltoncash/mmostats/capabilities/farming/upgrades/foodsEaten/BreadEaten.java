@@ -1,8 +1,8 @@
 package com.daltoncash.mmostats.capabilities.farming.upgrades.foodsEaten;
 
-import com.daltoncash.mmostats.capabilities.SumCapability;
+import com.daltoncash.mmostats.capabilities.TotalsCapability;
 
-public class BreadEaten extends SumCapability{
+public class BreadEaten extends TotalsCapability{
 	
 	public BreadEaten() {
 		this.setNbtString("bread_eaten");

@@ -103,7 +103,17 @@ public class ClientCapabilityData {
 	private static int rawFoodEaten;
 	private static int rottenFleshEaten;
 	private static int spiderEyeEaten;
-
+	//Logs Chopped
+	private static int AcaciaChopped;
+	private static int BirchChopped;
+	private static int CrimsonStemChopped;
+	private static int DarkOakChopped;
+	private static int JungleChopped;
+	private static int MangroveChopped;
+	private static int OakChopped;
+	private static int SpruceChopped;
+	private static int WarpedStemChopped;
+	
 	public static int getTotalsLevel(int total) {
 		int i = 64;
 		int j = 0;
@@ -853,6 +863,78 @@ public class ClientCapabilityData {
 
 	public static void setSpiderEyeEaten(int spiderEyeEaten) {
 		ClientCapabilityData.spiderEyeEaten = spiderEyeEaten;
+	}
+
+	public static int getAcaciaChopped() {
+		return AcaciaChopped;
+	}
+
+	public static void setAcaciaChopped(int acaciaChopped) {
+		AcaciaChopped = acaciaChopped;
+	}
+
+	public static int getBirchChopped() {
+		return BirchChopped;
+	}
+
+	public static void setBirchChopped(int birchChopped) {
+		BirchChopped = birchChopped;
+	}
+
+	public static int getCrimsonStemChopped() {
+		return CrimsonStemChopped;
+	}
+
+	public static void setCrimsonStemChopped(int crimsonStemChopped) {
+		CrimsonStemChopped = crimsonStemChopped;
+	}
+
+	public static int getDarkOakChopped() {
+		return DarkOakChopped;
+	}
+
+	public static void setDarkOakChopped(int darkOakChopped) {
+		DarkOakChopped = darkOakChopped;
+	}
+
+	public static int getJungleChopped() {
+		return JungleChopped;
+	}
+
+	public static void setJungleChopped(int jungleChopped) {
+		JungleChopped = jungleChopped;
+	}
+
+	public static int getMangroveChopped() {
+		return MangroveChopped;
+	}
+
+	public static void setMangroveChopped(int mangroveChopped) {
+		MangroveChopped = mangroveChopped;
+	}
+
+	public static int getOakChopped() {
+		return OakChopped;
+	}
+
+	public static void setOakChopped(int oakChopped) {
+		OakChopped = oakChopped;
+	}
+
+	public static int getSpruceChopped() {
+		return SpruceChopped;
+	}
+
+	public static void setSpruceChopped(int spruceChopped) {
+		SpruceChopped = spruceChopped;
+	}
+
+	public static int getWarpedStemChopped() {
+		return WarpedStemChopped;
+	}
+
+	public static void setWarpedStemChopped(int warpedStemChopped) {
+		WarpedStemChopped = warpedStemChopped;
 	}
 
 }

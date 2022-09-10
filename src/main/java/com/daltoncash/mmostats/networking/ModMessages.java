@@ -70,6 +70,15 @@ import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.GrannySmi
 import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.HardwoodUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.HighGroundUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.StrongArmsUpgradeC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.totals.AcaciaChoppedC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.totals.BirchChoppedC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.totals.CrimsonStemChoppedC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.totals.DarkOakChoppedC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.totals.JungleChoppedC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.totals.MangroveChoppedC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.totals.OakChoppedC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.totals.SpruceChoppedC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.totals.WarpedStemChoppedC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.combatUpgrades.DodgeRollUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.combatUpgrades.FreeArrowsUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.combatUpgrades.OvercomeUpgradeC2SPacket;
@@ -136,6 +145,14 @@ import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.HardwoodUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.HighGroundUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.StrongArmsUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.totals.AcaciaChoppedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.totals.BirchChoppedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.totals.CrimsonStemChoppedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.totals.DarkOakChoppedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.totals.JungleChoppedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.totals.MangroveChoppedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.totals.OakChoppedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.totals.SpruceChoppedDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.DodgeRollUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.FreeArrowsUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.OvercomeUpgradeDataSyncS2CPacket;
@@ -1226,7 +1243,99 @@ public class ModMessages {
  			.consumerMainThread(SpiderEyeEatenDataSyncS2CPacket::handle)
  			.add();
         
+        //Logs--Chopped-----C2S------------------
+        net.messageBuilder(AcaciaChoppedC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(AcaciaChoppedC2SPacket::new)
+			.encoder(AcaciaChoppedC2SPacket::toBytes)
+			.consumerMainThread(AcaciaChoppedC2SPacket::handle)
+			.add();
+        net.messageBuilder(BirchChoppedC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(BirchChoppedC2SPacket::new)
+			.encoder(BirchChoppedC2SPacket::toBytes)
+			.consumerMainThread(BirchChoppedC2SPacket::handle)
+			.add();
+        net.messageBuilder(CrimsonStemChoppedC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(CrimsonStemChoppedC2SPacket::new)
+			.encoder(CrimsonStemChoppedC2SPacket::toBytes)
+			.consumerMainThread(CrimsonStemChoppedC2SPacket::handle)
+			.add();
+        net.messageBuilder(DarkOakChoppedC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(DarkOakChoppedC2SPacket::new)
+			.encoder(DarkOakChoppedC2SPacket::toBytes)
+			.consumerMainThread(DarkOakChoppedC2SPacket::handle)
+			.add();
+        net.messageBuilder(JungleChoppedC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(JungleChoppedC2SPacket::new)
+			.encoder(JungleChoppedC2SPacket::toBytes)
+			.consumerMainThread(JungleChoppedC2SPacket::handle)
+			.add();
+        net.messageBuilder(MangroveChoppedC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(MangroveChoppedC2SPacket::new)
+			.encoder(MangroveChoppedC2SPacket::toBytes)
+			.consumerMainThread(MangroveChoppedC2SPacket::handle)
+			.add();
+        net.messageBuilder(OakChoppedC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(OakChoppedC2SPacket::new)
+			.encoder(OakChoppedC2SPacket::toBytes)
+			.consumerMainThread(OakChoppedC2SPacket::handle)
+			.add();
+        net.messageBuilder(SpruceChoppedC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(SpruceChoppedC2SPacket::new)
+			.encoder(SpruceChoppedC2SPacket::toBytes)
+			.consumerMainThread(SpruceChoppedC2SPacket::handle)
+			.add();
+        net.messageBuilder(WarpedStemChoppedC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(WarpedStemChoppedC2SPacket::new)
+			.encoder(WarpedStemChoppedC2SPacket::toBytes)
+			.consumerMainThread(WarpedStemChoppedC2SPacket::handle)
+			.add();
         
+        //Logs--Chopped------S2C
+        net.messageBuilder(AcaciaChoppedDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+			.decoder(AcaciaChoppedDataSyncS2CPacket::new)
+			.encoder(AcaciaChoppedDataSyncS2CPacket::toBytes)
+			.consumerMainThread(AcaciaChoppedDataSyncS2CPacket::handle)
+			.add();
+        net.messageBuilder(BirchChoppedDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+			.decoder(BirchChoppedDataSyncS2CPacket::new)
+			.encoder(BirchChoppedDataSyncS2CPacket::toBytes)
+			.consumerMainThread(BirchChoppedDataSyncS2CPacket::handle)
+			.add();
+        net.messageBuilder(CrimsonStemChoppedDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+			.decoder(CrimsonStemChoppedDataSyncS2CPacket::new)
+			.encoder(CrimsonStemChoppedDataSyncS2CPacket::toBytes)
+			.consumerMainThread(CrimsonStemChoppedDataSyncS2CPacket::handle)
+			.add();
+        net.messageBuilder(DarkOakChoppedDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+			.decoder(DarkOakChoppedDataSyncS2CPacket::new)
+			.encoder(DarkOakChoppedDataSyncS2CPacket::toBytes)
+			.consumerMainThread(DarkOakChoppedDataSyncS2CPacket::handle)
+			.add();
+        net.messageBuilder(JungleChoppedDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+			.decoder(JungleChoppedDataSyncS2CPacket::new)
+			.encoder(JungleChoppedDataSyncS2CPacket::toBytes)
+			.consumerMainThread(JungleChoppedDataSyncS2CPacket::handle)
+			.add();
+        net.messageBuilder(MangroveChoppedDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+			.decoder(MangroveChoppedDataSyncS2CPacket::new)
+			.encoder(MangroveChoppedDataSyncS2CPacket::toBytes)
+			.consumerMainThread(MangroveChoppedDataSyncS2CPacket::handle)
+			.add();
+        net.messageBuilder(OakChoppedDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+			.decoder(OakChoppedDataSyncS2CPacket::new)
+			.encoder(OakChoppedDataSyncS2CPacket::toBytes)
+			.consumerMainThread(OakChoppedDataSyncS2CPacket::handle)
+			.add();
+        net.messageBuilder(SpruceChoppedDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+			.decoder(SpruceChoppedDataSyncS2CPacket::new)
+			.encoder(SpruceChoppedDataSyncS2CPacket::toBytes)
+			.consumerMainThread(SpruceChoppedDataSyncS2CPacket::handle)
+			.add();
+        net.messageBuilder(WarpedStemChoppedC2SPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+			.decoder(WarpedStemChoppedC2SPacket::new)
+			.encoder(WarpedStemChoppedC2SPacket::toBytes)
+			.consumerMainThread(WarpedStemChoppedC2SPacket::handle)
+			.add();
         
         
         
