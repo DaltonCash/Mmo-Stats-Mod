@@ -42,83 +42,69 @@ public class UpgradeMenu extends Screen {
 			"textures/gui/skill_exp_bubble.png");
 	private final ResourceLocation SKILL_EXP = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/skill_exp_exp.png");
-
 	public UpgradeMenu(Component p_96550_) {
 		super(p_96550_);
 	}
-
+	private int buttonW = this.width / 8;
+	private int buttonH = this.height / 5;
+	private Button miningButton;
+	private Button archeryButton;
+	private Button choppingButton;
+	private Button combatButton;
+	private Button farmingButton;
 	@Override
 	public final void init() {
+		addWidgets();
+	}
+
+	private void addWidgets() {
+		buttonW = this.width / 8;
+		buttonH = this.height / 5;
 		
-		// addRenderableWidget(new Button(10,10,100,100, Component.literal("" +
-		// ClientCapabilityData.getPlayerMiningExp()), UpgradeMenu::onPressMining));
+		
 		addRenderableWidget(new Button(20, 200, 100, 100,
 				Component.literal("reset capabilities: " + ClientCapabilityData.getPlayerMiningLevel()),
 				UpgradeMenu::onPressReset));
 		
-		//ImageButton mining = 
-		addRenderableWidget(new ImageButton((this.width / 7) * 1, (this.height / 6) * 1, this.width / 11, this.height / 8, 0, 0, this.height / 8 - 1,
-				MINING_TEXTURE, this.width / 11, this.height / 8, UpgradeMenu::onPressMining));
+		miningButton = addRenderableWidget(new ImageButton((this.width * 1) / 7, (this.height * 1) / 6, buttonW, buttonH, 0, 0, buttonH - 1,
+				MINING_TEXTURE, buttonW, buttonH, UpgradeMenu::onPressMining));
 		
-		addRenderableWidget(new ImageButton((this.width / 7) * 2, (this.height / 6) * 1, 100, 100, 0, 0, 99,
-				ARCHERY_TEXTURE, 100, 100, UpgradeMenu::onPressArchery));
+		archeryButton = addRenderableWidget(new ImageButton((this.width * 2) / 7, (this.height * 3) / 6, buttonW, buttonH, 0, 0, buttonH - 1,
+				ARCHERY_TEXTURE, buttonW, buttonH, UpgradeMenu::onPressArchery));
 		
-		addRenderableWidget(new ImageButton((this.width / 7) * 3, (this.height / 6) * 1, 100, 100, 0, 0, 99,
-				CHOPPING_TEXTURE, 100, 100, UpgradeMenu::onPressChopping));
+		choppingButton = addRenderableWidget(new ImageButton((this.width * 3) / 7, (this.height * 1) / 6, buttonW, buttonH, 0, 0, buttonH - 1,
+				CHOPPING_TEXTURE, buttonW, buttonH, UpgradeMenu::onPressChopping));
 		
-		addRenderableWidget(new ImageButton((this.width / 7) * 4, (this.height / 6) * 1, 100, 100, 0, 0, 99,
-				COMBAT_TEXTURE, 100, 100, UpgradeMenu::onPressCombat));
+		combatButton = addRenderableWidget(new ImageButton((this.width * 4) / 7, (this.height * 3) / 6, buttonW, buttonH, 0, 0, buttonH - 1,
+				COMBAT_TEXTURE, buttonW, buttonH, UpgradeMenu::onPressCombat));
 		
-		addRenderableWidget(new ImageButton((this.width / 7) * 5, (this.height / 6) * 1, 100, 100, 0, 0, 99,
-				FARMING_TEXTURE, 100, 100, UpgradeMenu::onPressFarming));
-
-		float percentEXP = (float) 100 * (ClientCapabilityData.getPlayerMiningExp() / (ClientCapabilityData.getPlayerMiningLevel() * 40 + 400));
-		int imageNumber = (int) percentEXP / 5;
-		//WIP: REMOVE BELOW
-		System.out.println("width: " + this.width);
-		System.out.println("height: " + this.height);
-		
-		int skillLevel = ClientCapabilityData.getPlayerMiningLevel();
-		int skillExp = ClientCapabilityData.getPlayerMiningExp();
-		int a = (skillLevel * 40) + 400;
-		int b = (skillExp * 25) / a;
-		System.out.println(b);
-		//WIP: REMOVE ABOVE
-		renderExpBar(imageNumber);
-	}
-
-	private void renderExpBar(int num)
-	{
-		/*
-		String location = "textures/gui/exp_bar_" + num + ".png";
-		ResourceLocation Rendered_Texture = new ResourceLocation(MmoStatsMod.MODID, location);
-		addRenderableWidget(new ImageButton((this.width / 6) * 1, (this.height / 6) * 1, 100, 100, 0, 0, 0,
-				, 100, 100, UpgradeMenu::onPressMining));
-		*/
-		
-
+		farmingButton = addRenderableWidget(new ImageButton((this.width * 5) / 7, (this.height * 1) / 6, buttonW, buttonH, 0, 0, buttonH - 1,
+				FARMING_TEXTURE, buttonW, buttonH, UpgradeMenu::onPressFarming));
 	}
 
 
 	private static void onPressReset(Button button) {
 		ModMessages.sendToServer(new ResetCapabilityDataC2SPacket());
-
 	}
 
 	private static void onPressMining(Button button) {
 		Minecraft.getInstance().setScreen(new MiningMenu(Component.literal("mining")));
 	}
+	
 	private static void onPressArchery(Button button) {
-		Minecraft.getInstance().setScreen(new ArcheryMenu(Component.literal("mining")));
+		Minecraft.getInstance().setScreen(new ArcheryMenu(Component.literal("archery")));
 	}
+	
 	private static void onPressChopping(Button button) {
 		Minecraft.getInstance().setScreen(new ChoppingMenu(Component.literal("chopping")));
 	}
+	
 	private static void onPressCombat(Button button) {
-		Minecraft.getInstance().setScreen(new CombatMenu(Component.literal("mining")));
+		Minecraft.getInstance().setScreen(new CombatMenu(Component.literal("combat")));
 	}
+	
 	private static void onPressFarming(Button button) {
-		Minecraft.getInstance().setScreen(new FarmingMenu(Component.literal("mining")));
+		Minecraft.getInstance().setScreen(new FarmingMenu(Component.literal("farming")));
 	}
 
 	protected void renderBackground(PoseStack poseStack, float pPartialTick, int mouseX, int mouseY) {
@@ -128,77 +114,62 @@ public class UpgradeMenu extends Screen {
 		this.blit(poseStack, 0, 0, 00, 00, this.width, this.height);
 	}
 
-	public void render(PoseStack poseStack, int p_96563_, int p_96564_, float p_96565_) {
-		renderBackground(poseStack, 1.0f, p_96563_, p_96564_);
+	public void render(PoseStack poseStack, int p1, int p2, float p3) {
+		renderBackground(poseStack, 1.0f, p1, p2);
 		for (Widget widget : this.renderables) {
-			widget.render(poseStack, p_96563_, p_96564_, p_96565_);
+			widget.render(poseStack, p1, p2, p3);
 		}
+		int bubbleOffsetW = (buttonW * 3) / 4;
+		int bubbleOffsetH = (buttonH * 3) / 4;
+		//Chopping Exp Bubble
+		renderExpBubble(poseStack, p1, p2, p3, 
+				ClientCapabilityData.getPlayerChoppingExp(), 
+				ClientCapabilityData.getPlayerChoppingLevel(),
+				choppingButton.x + bubbleOffsetW,
+				choppingButton.y + bubbleOffsetH);
+		//Farming Exp Bubble
+		renderExpBubble(poseStack, p1, p2, p3, 
+				ClientCapabilityData.getPlayerFarmingExp(), 
+				ClientCapabilityData.getPlayerFarmingLevel(),
+				farmingButton.x + bubbleOffsetW,
+				farmingButton.y + bubbleOffsetH);
+		//Combat Exp Bubble
+		renderExpBubble(poseStack, p1, p2, p3, 
+				ClientCapabilityData.getPlayerCombatExp(), 
+				ClientCapabilityData.getPlayerCombatLevel(),
+				combatButton.x + bubbleOffsetW,
+				combatButton.y + bubbleOffsetH);
+		//Archery Exp Bubble
+		renderExpBubble(poseStack, p1, p2, p3, 
+				ClientCapabilityData.getPlayerArcheryExp(), 
+				ClientCapabilityData.getPlayerArcheryLevel(),
+				archeryButton.x + bubbleOffsetW,
+				archeryButton.y + bubbleOffsetH);
 		
 		
+	}
+	
+	private void renderExpBubble(PoseStack poseStack, int p1, int p2, float p3,
+			int skillExp, int skillLevel, int x, int y) {
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		int skillLevel = ClientCapabilityData.getPlayerMiningLevel();
-		int skillExp = ClientCapabilityData.getPlayerMiningExp();
-		int a = (skillLevel * 40) + 400;
-		int b = (skillExp * 31) / a;
-		int x = this.width / 30;
-		int y = this.height / 20;
-		
-		if(b > 31) {
-			b = 31;
-		}
-		
+		int w = this.width / 45;
+		int h = this.height / 30;
+		int a = (skillExp * 30) / ((skillLevel * 40) + 400);
+		if(a > 30) a = 30;
 		
 		
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		RenderSystem.setShaderTexture(0, SKILL_EXP);
-		GuiComponent.blit(poseStack, 200, y + ((y * (31 - b)) / 31) + 1, 0, 
-				y - ((y * b) / 31), x, (y * b) / 31, x, y);
-			
-		
-		
-		
-		
-		
+		GuiComponent.blit(new PoseStack(), x, y + ((h * (30 - a)) / 30), 0, 
+				h - ((h * a) / 30), w, (h * a) / 30, w, h);
+		int b = 0;
+		if((h * (30 - a)) % 30 > 0) b = 1;
 		
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		RenderSystem.setShaderTexture(0, SKILL_BUBBLE);
-		GuiComponent.blit(poseStack, 200, y, 0, 0,  x, y, x, y);
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	}
-	
-	public void renderExpBubble(PoseStack poseStack, int p_96563_, int p_96564_, float p_96565_) {
-		
+		GuiComponent.blit(new PoseStack(), x, y - b , 0, 0,  w, h, w, h);
 	}
 
 	@Override
