@@ -592,14 +592,9 @@ public class ClientEvents {
 				int goldMinedLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getGoldMined());
 				double rand =  Math.random();
 				double fortuneChance = (ClientCapabilityData.getPlayerMiningLevel() * (1 + ((goldMinedLevel * goldMinedLevel * goldMinedLevel * goldMinedLevel) / 100f))) / 500.0;
-				System.out.println("fortune chance " + fortuneChance);
-				System.out.println("rand " + rand);
-				System.out.println("gold " + goldMinedLevel);
-				System.out.println("mining " + ClientCapabilityData.getPlayerMiningLevel());
 				while(fortuneChance >= rand){
 					ModMessages.sendToServer(new AdditionalFortuneProcC2SPacket());
 					fortuneChance -= 1;
-					System.out.println("fortune given");
 				}
 			}
 		}

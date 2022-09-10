@@ -13,6 +13,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Widget;
@@ -37,8 +38,10 @@ public class UpgradeMenu extends Screen {
 			"textures/gui/test_buttons/combat.png");
 	private final ResourceLocation FARMING_TEXTURE = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/test_buttons/farming.png");
-
-	//private final ResourceLocation EXP_BAR = new ResourceLocation(MmoStatsMod.MODID, "textures/gui/exp_bar_0.png");
+	private final ResourceLocation SKILL_BUBBLE = new ResourceLocation(MmoStatsMod.MODID,
+			"textures/gui/skill_exp_bubble.png");
+	private final ResourceLocation SKILL_EXP = new ResourceLocation(MmoStatsMod.MODID,
+			"textures/gui/skill_exp_exp.png");
 
 	public UpgradeMenu(Component p_96550_) {
 		super(p_96550_);
@@ -54,8 +57,8 @@ public class UpgradeMenu extends Screen {
 				UpgradeMenu::onPressReset));
 		
 		//ImageButton mining = 
-		addRenderableWidget(new ImageButton((this.width / 7) * 1, (this.height / 6) * 1, 100, 100, 0, 0, 99,
-				MINING_TEXTURE, 100, 100, UpgradeMenu::onPressMining));
+		addRenderableWidget(new ImageButton((this.width / 7) * 1, (this.height / 6) * 1, this.width / 11, this.height / 8, 0, 0, this.height / 8 - 1,
+				MINING_TEXTURE, this.width / 11, this.height / 8, UpgradeMenu::onPressMining));
 		
 		addRenderableWidget(new ImageButton((this.width / 7) * 2, (this.height / 6) * 1, 100, 100, 0, 0, 99,
 				ARCHERY_TEXTURE, 100, 100, UpgradeMenu::onPressArchery));
@@ -71,7 +74,16 @@ public class UpgradeMenu extends Screen {
 
 		float percentEXP = (float) 100 * (ClientCapabilityData.getPlayerMiningExp() / (ClientCapabilityData.getPlayerMiningLevel() * 40 + 400));
 		int imageNumber = (int) percentEXP / 5;
-
+		//WIP: REMOVE BELOW
+		System.out.println("width: " + this.width);
+		System.out.println("height: " + this.height);
+		
+		int skillLevel = ClientCapabilityData.getPlayerMiningLevel();
+		int skillExp = ClientCapabilityData.getPlayerMiningExp();
+		int a = (skillLevel * 40) + 400;
+		int b = (skillExp * 25) / a;
+		System.out.println(b);
+		//WIP: REMOVE ABOVE
 		renderExpBar(imageNumber);
 	}
 
@@ -116,11 +128,77 @@ public class UpgradeMenu extends Screen {
 		this.blit(poseStack, 0, 0, 00, 00, this.width, this.height);
 	}
 
-	public void render(PoseStack p_96562_, int p_96563_, int p_96564_, float p_96565_) {
-		renderBackground(p_96562_, 1.0f, p_96563_, p_96564_);
+	public void render(PoseStack poseStack, int p_96563_, int p_96564_, float p_96565_) {
+		renderBackground(poseStack, 1.0f, p_96563_, p_96564_);
 		for (Widget widget : this.renderables) {
-			widget.render(p_96562_, p_96563_, p_96564_, p_96565_);
+			widget.render(poseStack, p_96563_, p_96564_, p_96565_);
 		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		int skillLevel = ClientCapabilityData.getPlayerMiningLevel();
+		int skillExp = ClientCapabilityData.getPlayerMiningExp();
+		int a = (skillLevel * 40) + 400;
+		int b = (skillExp * 31) / a;
+		int x = this.width / 30;
+		int y = this.height / 20;
+		
+		if(b > 31) {
+			b = 31;
+		}
+		
+		
+		
+		RenderSystem.setShader(GameRenderer::getPositionTexShader);
+		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+		RenderSystem.setShaderTexture(0, SKILL_EXP);
+		GuiComponent.blit(poseStack, 200, y + ((y * (31 - b)) / 31) + 1, 0, 
+				y - ((y * b) / 31), x, (y * b) / 31, x, y);
+			
+		
+		
+		
+		
+		
+		
+		RenderSystem.setShader(GameRenderer::getPositionTexShader);
+		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+		RenderSystem.setShaderTexture(0, SKILL_BUBBLE);
+		GuiComponent.blit(poseStack, 200, y, 0, 0,  x, y, x, y);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+	
+	public void renderExpBubble(PoseStack poseStack, int p_96563_, int p_96564_, float p_96565_) {
+		
 	}
 
 	@Override
