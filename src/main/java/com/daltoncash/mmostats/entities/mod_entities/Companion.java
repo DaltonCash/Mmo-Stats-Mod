@@ -90,7 +90,7 @@ public class Companion extends Animal implements IAnimatable{
 	    }
 
 	    protected float getSoundVolume() {
-	        return 0.2F;
+	        return 1.0F;
 	    }
 
 	    @Override

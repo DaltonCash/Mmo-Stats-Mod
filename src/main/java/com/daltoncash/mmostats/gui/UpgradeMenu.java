@@ -121,6 +121,12 @@ public class UpgradeMenu extends Screen {
 		}
 		int bubbleOffsetW = (buttonW * 3) / 4;
 		int bubbleOffsetH = (buttonH * 3) / 4;
+		//Mining Exp Bubble
+				renderExpBubble(poseStack, p1, p2, p3, 
+				ClientCapabilityData.getPlayerMiningExp(), 
+				ClientCapabilityData.getPlayerMiningLevel(),
+				miningButton.x + bubbleOffsetW,
+				miningButton.y + bubbleOffsetH);
 		//Chopping Exp Bubble
 		renderExpBubble(poseStack, p1, p2, p3, 
 				ClientCapabilityData.getPlayerChoppingExp(), 

@@ -39,11 +39,14 @@ import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.
 import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.RottenFleshEatenC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.SpiderEyeEatenC2SPacket;
 import com.daltoncash.mmostats.util.KeyBinding;
+import com.ibm.icu.text.TimeZoneFormat.Style;
 import com.mojang.logging.LogUtils;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
@@ -52,6 +55,9 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.OfferFlowerGoal;
+import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -60,7 +66,11 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraftforge.client.event.RenderNameTagEvent;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.EntityEvent;
+import net.minecraftforge.event.entity.living.AnimalTameEvent;
+import net.minecraftforge.event.entity.living.BabyEntitySpawnEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -76,6 +86,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 
@@ -620,8 +631,79 @@ public class ClientEvents {
 				
 			}
 		}
+		//WIP BELOW
+		@SubscribeEvent
+		public static void animaltaming(AnimalTameEvent event) {
+			Set<WrappedGoal> goals = event.getAnimal().goalSelector.getAvailableGoals();
+			System.out.println(goals.toString());
+			for(WrappedGoal goal : goals) {
+				System.out.println(goal.getGoal());
+			}
+			System.out.println(event.getTamer());
+		}
 		
+		@SubscribeEvent
+		public static void onbreeding(RenderNameTagEvent event) {
+			if(ExpYieldList.getCombatEntities().contains(event.getEntity().getType())){
+				event.getEntity().setCustomName(
+						Component.literal(getDisplayName(event.getEntity().getType().toShortString().toLowerCase())).withStyle(ChatFormatting.GOLD).append
+						(getDisplayHealth(event.getEntity())));
+				
+			}
+			event.getEntity().setCustomNameVisible(true);
+		}
+		
+		private static String getDisplayName(String entity) {
+			String displayName = "";
+			int i = 1;
+			for(char ch : entity.toCharArray()) {
+				if(i == 1) {
+					displayName += Character.toUpperCase(ch);
+					i--;
+				}else if(ch == '_') {
+					i++;
+					displayName += ' ';
+				}else {
+					displayName += ch;
+				}
+			}
+			
+			return displayName;
+		}
+		
+		private static MutableComponent getDisplayHealth(Entity entity) {
+			String healthDisplay = "[";
+			LivingEntity aliveEntity = (LivingEntity) entity;
+			float entityHealth = aliveEntity.getHealth();
+			float entityMaxHealth = (float) aliveEntity.getAttribute(Attributes.MAX_HEALTH).getValue();
+			float percentHealth = (entityHealth * 10) / entityMaxHealth;
+			for(int i = 0; i < 10; i++) {
+				if(percentHealth > i) {
+					healthDisplay += "■";
+				}else {
+					healthDisplay += "-";
+				}
+			}
+			healthDisplay += "]";
+			if(percentHealth > 5) {
+				return Component.literal(healthDisplay).withStyle(ChatFormatting.GREEN);
+			}else if(percentHealth > 2.5) {
+				return Component.literal(healthDisplay).withStyle(ChatFormatting.YELLOW);
+			}else {
+				return Component.literal(healthDisplay).withStyle(ChatFormatting.RED);
+			}
+			
+		}
 
+		@SubscribeEvent
+		public static void onbreeding(BabyEntitySpawnEvent event) {
+			System.out.println(event.getCausedByPlayer());
+			if(event.getCausedByPlayer() != null) {
+				System.out.println("ayo this working");
+				
+			}
+		}
+		//WIP ABOVE
 		//This method defines what happens when a modded keybinding is pressed.
 		@SuppressWarnings("resource")
 		@SubscribeEvent

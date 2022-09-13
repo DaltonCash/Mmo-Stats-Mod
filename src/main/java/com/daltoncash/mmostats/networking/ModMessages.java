@@ -153,6 +153,7 @@ import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.totals.MangroveChoppedDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.totals.OakChoppedDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.totals.SpruceChoppedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.totals.WarpedStemChoppedDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.DodgeRollUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.FreeArrowsUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.OvercomeUpgradeDataSyncS2CPacket;
@@ -1331,10 +1332,10 @@ public class ModMessages {
 			.encoder(SpruceChoppedDataSyncS2CPacket::toBytes)
 			.consumerMainThread(SpruceChoppedDataSyncS2CPacket::handle)
 			.add();
-        net.messageBuilder(WarpedStemChoppedC2SPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
-			.decoder(WarpedStemChoppedC2SPacket::new)
-			.encoder(WarpedStemChoppedC2SPacket::toBytes)
-			.consumerMainThread(WarpedStemChoppedC2SPacket::handle)
+        net.messageBuilder(WarpedStemChoppedDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+			.decoder(WarpedStemChoppedDataSyncS2CPacket::new)
+			.encoder(WarpedStemChoppedDataSyncS2CPacket::toBytes)
+			.consumerMainThread(WarpedStemChoppedDataSyncS2CPacket::handle)
 			.add();
         
         

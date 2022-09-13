@@ -3,6 +3,9 @@ package com.daltoncash.mmostats.events;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.daltoncash.mmostats.entities.ModEntityTypes;
+import com.daltoncash.mmostats.entities.mod_entities.Companion;
+
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -105,6 +108,7 @@ public class ExpYieldList {
 		list.add(EntityType.BAT);
 		list.add(EntityType.CHICKEN);
 		list.add(EntityType.COD);
+		list.add(ModEntityTypes.COMPANION.get());
 		list.add(EntityType.COW);
 		list.add(EntityType.DONKEY);
 		list.add(EntityType.FOX);
