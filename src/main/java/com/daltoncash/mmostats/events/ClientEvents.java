@@ -57,6 +57,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.OfferFlowerGoal;
+import net.minecraft.world.entity.ai.goal.SitWhenOrderedToGoal;
 import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -75,6 +76,7 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.entity.living.ShieldBlockEvent;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
@@ -633,7 +635,7 @@ public class ClientEvents {
 		}
 		//WIP BELOW
 		@SubscribeEvent
-		public static void animaltaming(AnimalTameEvent event) {
+		public static void onTamingAnimal(AnimalTameEvent event) {
 			Set<WrappedGoal> goals = event.getAnimal().goalSelector.getAvailableGoals();
 			System.out.println(goals.toString());
 			for(WrappedGoal goal : goals) {
@@ -643,14 +645,13 @@ public class ClientEvents {
 		}
 		
 		@SubscribeEvent
-		public static void onbreeding(RenderNameTagEvent event) {
-			if(ExpYieldList.getCombatEntities().contains(event.getEntity().getType())){
+		public static void onSpawningGiveEntitiesCustomName(LivingSpawnEvent event) {
+			if(!event.getEntity().goalSelector.getAvailableGoals().isEmpty()){
 				event.getEntity().setCustomName(
 						Component.literal(getDisplayName(event.getEntity().getType().toShortString().toLowerCase())).withStyle(ChatFormatting.GOLD).append
 						(getDisplayHealth(event.getEntity())));
-				
+				event.getEntity().setCustomNameVisible(true);
 			}
-			event.getEntity().setCustomNameVisible(true);
 		}
 		
 		private static String getDisplayName(String entity) {
@@ -696,10 +697,10 @@ public class ClientEvents {
 		}
 
 		@SubscribeEvent
-		public static void onbreeding(BabyEntitySpawnEvent event) {
+		public static void onBreedingAnimal(BabyEntitySpawnEvent event) {
 			System.out.println(event.getCausedByPlayer());
 			if(event.getCausedByPlayer() != null) {
-				System.out.println("ayo this working");
+				System.out.println("Bred by player.");
 				
 			}
 		}
