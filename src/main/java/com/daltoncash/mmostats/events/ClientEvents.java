@@ -11,6 +11,7 @@ import com.daltoncash.mmostats.networking.packets.c2s.EatFoodWhileFullC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainEffectFromEatingC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.magicAbilities.SpawnNatureMagnetItemC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.SpawnTntC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.taming.SpawnTamedBeeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainNightVisionC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.SpawnArrowOnPlayerC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.ApplesEatenC2SPacket;
@@ -45,20 +46,26 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.Entity.RemovalReason;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.FollowOwnerGoal;
 import net.minecraft.world.entity.ai.goal.OfferFlowerGoal;
 import net.minecraft.world.entity.ai.goal.SitWhenOrderedToGoal;
 import net.minecraft.world.entity.ai.goal.WrappedGoal;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -80,11 +87,15 @@ import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.entity.living.ShieldBlockEvent;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.entity.player.PlayerEvent.HarvestCheck;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteractSpecific;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickItem;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
@@ -108,6 +119,8 @@ public class ClientEvents {
 		public static int extendediframes = 0;
 		public static int ragnorokDuration = 0;
 		public static int ragnorokCooldown = 0;
+		public static BlockPos tamedPosition;
+		public static Entity animalToBeTamedAndKilled;
 		//WIP1
 		//farming sweet berry bushes:
 		//use event RightClickBlock in PlayerInteractEvent in PlayerEvent in Living Event
@@ -635,9 +648,27 @@ public class ClientEvents {
 		}
 		//WIP BELOW
 		@SubscribeEvent
+		public static void onTamingBee(EntityInteract event) {
+			if(event.getSide().equals(LogicalSide.CLIENT)) {
+				if(event.getTarget().getType().equals(EntityType.BEE)){
+					if(event.getItemStack().getItem().equals(Items.HONEYCOMB)) {
+						tamedPosition = event.getTarget().blockPosition();
+						animalToBeTamedAndKilled = event.getTarget();
+						ModMessages.sendToServer(new SpawnTamedBeeC2SPacket());
+						event.getTarget().setInvulnerable(false);
+						event.getTarget().remove(RemovalReason.DISCARDED);
+						System.out.println("hrm");
+						
+					}
+				}
+			}
+		}
+		
+		@SubscribeEvent
 		public static void onTamingAnimal(AnimalTameEvent event) {
 			Set<WrappedGoal> goals = event.getAnimal().goalSelector.getAvailableGoals();
 			System.out.println(goals.toString());
+			
 			for(WrappedGoal goal : goals) {
 				System.out.println(goal.getGoal());
 			}

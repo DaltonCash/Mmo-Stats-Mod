@@ -52,6 +52,7 @@ import com.daltoncash.mmostats.networking.packets.c2s.swordsUpgrades.PerfectTimi
 import com.daltoncash.mmostats.networking.packets.c2s.swordsUpgrades.RightClickUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.swordsUpgrades.ShieldBashUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.swordsUpgrades.SweetSpotSwordsUpgradeC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.taming.SpawnTamedBeeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainNightVisionC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.HealFromRottenFleshTotalC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.SpawnArrowOnPlayerC2SPacket;
@@ -254,25 +255,25 @@ public class ModMessages {
         */
 //----------C2S---MISC-----------------------------------------------------------------------      
         net.messageBuilder(AdditionalFortuneProcC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-		.decoder(AdditionalFortuneProcC2SPacket::new)
-		.encoder(AdditionalFortuneProcC2SPacket::toBytes)
-		.consumerMainThread(AdditionalFortuneProcC2SPacket::handle)
-		.add();
+			.decoder(AdditionalFortuneProcC2SPacket::new)
+			.encoder(AdditionalFortuneProcC2SPacket::toBytes)
+			.consumerMainThread(AdditionalFortuneProcC2SPacket::handle)
+			.add();
         net.messageBuilder(EatFoodWhileFullC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-		.decoder(EatFoodWhileFullC2SPacket::new)
-		.encoder(EatFoodWhileFullC2SPacket::toBytes)
-		.consumerMainThread(EatFoodWhileFullC2SPacket::handle)
-		.add();
+			.decoder(EatFoodWhileFullC2SPacket::new)
+			.encoder(EatFoodWhileFullC2SPacket::toBytes)
+			.consumerMainThread(EatFoodWhileFullC2SPacket::handle)
+			.add();
         net.messageBuilder(SpawnTntC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-		.decoder(SpawnTntC2SPacket::new)
-		.encoder(SpawnTntC2SPacket::toBytes)
-		.consumerMainThread(SpawnTntC2SPacket::handle)
-		.add();
+			.decoder(SpawnTntC2SPacket::new)
+			.encoder(SpawnTntC2SPacket::toBytes)
+			.consumerMainThread(SpawnTntC2SPacket::handle)
+			.add();
 		net.messageBuilder(GainEffectFromEatingC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-		.decoder(GainEffectFromEatingC2SPacket::new)
-		.encoder(GainEffectFromEatingC2SPacket::toBytes)
-		.consumerMainThread(GainEffectFromEatingC2SPacket::handle)
-		.add();
+			.decoder(GainEffectFromEatingC2SPacket::new)
+			.encoder(GainEffectFromEatingC2SPacket::toBytes)
+			.consumerMainThread(GainEffectFromEatingC2SPacket::handle)
+			.add();
 		 net.messageBuilder(EntityDropsAnArrowC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
 			.decoder(EntityDropsAnArrowC2SPacket::new)
 			.encoder(EntityDropsAnArrowC2SPacket::toBytes)
@@ -287,6 +288,11 @@ public class ModMessages {
 			.decoder(HealFromRottenFleshTotalC2SPacket::new)
 			.encoder(HealFromRottenFleshTotalC2SPacket::toBytes)
 			.consumerMainThread(HealFromRottenFleshTotalC2SPacket::handle)
+			.add();
+		 net.messageBuilder(SpawnTamedBeeC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(SpawnTamedBeeC2SPacket::new)
+			.encoder(SpawnTamedBeeC2SPacket::toBytes)
+			.consumerMainThread(SpawnTamedBeeC2SPacket::handle)
 			.add();
         
 //-----------C2S--Skills---------------------------------------------------------------------------------
