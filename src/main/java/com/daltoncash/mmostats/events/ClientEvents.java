@@ -55,6 +55,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -65,10 +66,14 @@ import net.minecraft.world.entity.ai.goal.FollowOwnerGoal;
 import net.minecraft.world.entity.ai.goal.OfferFlowerGoal;
 import net.minecraft.world.entity.ai.goal.SitWhenOrderedToGoal;
 import net.minecraft.world.entity.ai.goal.WrappedGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.monster.AbstractSkeleton;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.ExplosionDamageCalculator;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
@@ -77,6 +82,7 @@ import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.client.event.RenderNameTagEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityEvent;
+import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.AnimalTameEvent;
 import net.minecraftforge.event.entity.living.BabyEntitySpawnEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -181,14 +187,17 @@ public class ClientEvents {
 		//Event for Arrows and Eggs hitting an entity
 		@SubscribeEvent
 		public static void onProjectileHit(LivingAttackEvent event) {
+			
 			if(event.getSource().getEntity() != null) {
 				if(event.getSource().getEntity().getType().equals(EntityType.PLAYER)) {
-					Entity player = event.getSource().getEntity();
+					Player player = (Player)event.getSource().getEntity();
 					LivingEntity entity = event.getEntity();
 					//Egger
 					if(ClientCapabilityData.isUpgradedEgger() > 0) {
 						if(event.getSource().getDirectEntity().getType().equals(EntityType.EGG)) {
-							entity.setHealth(entity.getHealth() - 2);
+							entity.level.explode(null, DamageSource.playerAttack(player), (ExplosionDamageCalculator)null, entity.getX(), entity.getEyeY() + 1, entity.getZ(), 50f * ClientCapabilityData.isUpgradedEgger(), false, Explosion.BlockInteraction.NONE);
+							
+							
 						}
 					}
 					
@@ -646,7 +655,7 @@ public class ClientEvents {
 				
 			}
 		}
-		//WIP BELOW
+		//WIP BELOW----------------------------------------------------------------
 		@SubscribeEvent
 		public static void onTamingBee(EntityInteract event) {
 			if(event.getSide().equals(LogicalSide.CLIENT)) {
@@ -655,10 +664,7 @@ public class ClientEvents {
 						tamedPosition = event.getTarget().blockPosition();
 						animalToBeTamedAndKilled = event.getTarget();
 						ModMessages.sendToServer(new SpawnTamedBeeC2SPacket());
-						event.getTarget().setInvulnerable(false);
-						event.getTarget().remove(RemovalReason.DISCARDED);
-						System.out.println("hrm");
-						
+						//event.getTarget().remove(RemovalReason.DISCARDED);
 					}
 				}
 			}
@@ -729,12 +735,34 @@ public class ClientEvents {
 
 		@SubscribeEvent
 		public static void onBreedingAnimal(BabyEntitySpawnEvent event) {
+			System.out.println(event.getChild().getAge());
 			System.out.println(event.getCausedByPlayer());
 			if(event.getCausedByPlayer() != null) {
 				System.out.println("Bred by player.");
 				
 			}
+			if(event.getChild().getType().equals(EntityType.CHICKEN)) {
+				System.out.println("age: " + event.getChild().getAge());
+				event.getChild().setAge(0);
+				System.out.println("age: " + event.getChild().getAge());
+			}
 		}
+		/*
+		@SubscribeEvent
+		public static void onSpawningChickenWithEgg(LivingSpawnEvent event) {
+			
+			if(event.getEntity().getType().equals(EntityType.CHICKEN)){
+				event.getEntity().targetSelector.addGoal(-1, new NearestAttackableTargetGoal<>(event.getEntity(), AbstractSkeleton.class, false));
+				if(((AgeableMob) event.getEntity()).getAge() == -23900) {
+					for(WrappedGoal goal : event.getEntity().targetSelector.getAvailableGoals()) {
+						System.out.println(goal.getGoal());
+					}
+					System.out.println(((AgeableMob) event.getEntity()).getAge());
+					System.out.println("chick has been spawned");
+				}
+			}
+		}
+		*/
 		//WIP ABOVE
 		//This method defines what happens when a modded keybinding is pressed.
 		@SuppressWarnings("resource")
@@ -778,7 +806,7 @@ public class ClientEvents {
 			}
 		}
 		
-		//This class registers keybindings and gui overlays to the mos bus.
+		//This class registers keybindings and gui overlays to the mod bus.
 		@Mod.EventBusSubscriber(modid = MmoStatsMod.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 		public static class ClientModBusEvents {
 

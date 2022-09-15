@@ -7,6 +7,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
@@ -26,10 +27,10 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 
-public class Companion extends Animal implements IAnimatable{
+public class Companion extends TamableAnimal implements IAnimatable{
 	 	private AnimationFactory factory = new AnimationFactory(this);
 
-	    public Companion(EntityType<? extends Animal> entityType, Level level) {
+	    public Companion(EntityType<? extends TamableAnimal> entityType, Level level) {
 	        super(entityType, level);
 	    }
 	    
@@ -62,10 +63,12 @@ public class Companion extends Animal implements IAnimatable{
 	    protected void registerGoals() {
 	        this.goalSelector.addGoal(1, new FloatGoal(this));
 	        this.goalSelector.addGoal(2, new PanicGoal(this, 1.25D));
-	        this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 8.0F));
-	        this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
-	        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
-	        this.targetSelector.addGoal(6, (new HurtByTargetGoal(this)).setAlertOthers());
+	        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 8.0F));
+	        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
+	        this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
+	        this.targetSelector.addGoal(7, (new HurtByTargetGoal(this)).setAlertOthers());
+	        //new goals
+	        this.goalSelector.addGoal(3, new FollowOwnerGoal((this), 3.0D, 4.0F, 3.99F, false));
 	    }
 
 	    @Override
