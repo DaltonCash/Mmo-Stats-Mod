@@ -1,0 +1,247 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.tamed_frog.walk": {
+			"loop": true,
+			"animation_length": 1.5,
+			"bones": {
+				"RightArm": {
+					"rotation": {
+						"0.125": {
+							"pre": [-35, 0, 0],
+							"post": [-35, 0, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"0.2917": {
+							"post": [0, 0, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"0.875": {
+							"post": [0, 0, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"1.25": {
+							"post": [-30, 0, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"1.5": [-35, 0, 0]
+					},
+					"position": {
+						"0.125": {
+							"pre": [0, 1, -3],
+							"post": [0, 1, -3],
+							"lerp_mode": "catmullrom"
+						},
+						"0.2917": {
+							"post": [0, 0, -3],
+							"lerp_mode": "catmullrom"
+						},
+						"0.875": {
+							"post": [0, 0, 2],
+							"lerp_mode": "catmullrom"
+						},
+						"1.25": {
+							"post": [0, 1, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"1.5": [0, 1, -3]
+					}
+				},
+				"LeftArm": {
+					"rotation": {
+						"0.0": {
+							"post": [-35, 0, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"0.1667": {
+							"post": [0, 0, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"0.75": {
+							"post": [0, 0, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"1.125": {
+							"post": [-30, 0, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"1.5": [-35, 0, 0]
+					},
+					"position": {
+						"0.0": {
+							"post": [0, 1, -3],
+							"lerp_mode": "catmullrom"
+						},
+						"0.1667": {
+							"post": [0, 0, -3],
+							"lerp_mode": "catmullrom"
+						},
+						"0.75": {
+							"post": [0, 0, 2],
+							"lerp_mode": "catmullrom"
+						},
+						"1.125": {
+							"post": [0, 1, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"1.5": [0, 1, -3]
+					}
+				},
+				"FullBody": {
+					"rotation": {
+						"0.0": [0, 0, 0],
+						"0.2917": {
+							"pre": [-8.53538, -0.0644, 0.57568],
+							"post": [-8.53538, -0.0644, 0.57568],
+							"lerp_mode": "catmullrom"
+						},
+						"0.4167": {
+							"post": [6.84, 0, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"0.625": {
+							"post": [6.20565, 0.83114, -7.43015],
+							"lerp_mode": "catmullrom"
+						},
+						"0.9167": {
+							"post": [0, 0, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"1.125": {
+							"post": [-3.29, -0.8311, 7.4302],
+							"lerp_mode": "catmullrom"
+						},
+						"1.4583": [-7.5, 0, 0]
+					},
+					"position": [0, 1, 0],
+					"scale": 1
+				},
+				"legs": {
+					"rotation": {
+						"0.0": {
+							"post": [0, 0, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"0.5": {
+							"post": [17.5, 0, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"1.5": [0, 0, 0]
+					},
+					"position": {
+						"0.0": {
+							"post": [0, 1, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"0.2083": {
+							"post": [0, -1, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"0.5833": {
+							"post": [0, 1, 0],
+							"lerp_mode": "catmullrom"
+						}
+					}
+				},
+				"all": {
+					"position": {
+						"0.0417": [0, 0, 0],
+						"0.2917": [0, 0, 0],
+						"0.875": [0, 1, 0],
+						"1.5": [0, 0, 0]
+					}
+				}
+			}
+		},
+		"animation.tamed_frog.idle": {
+			"loop": true,
+			"animation_length": 3,
+			"bones": {
+				"FullBody": {
+					"scale": {
+						"0.0": {
+							"post": [1, 1, 1],
+							"lerp_mode": "catmullrom"
+						},
+						"0.75": {
+							"post": [1.05, 1.05, 1.05],
+							"lerp_mode": "catmullrom"
+						},
+						"1.5": {
+							"post": [1, 1, 1],
+							"lerp_mode": "catmullrom"
+						},
+						"2.25": {
+							"post": [0.95, 0.95, 0.95],
+							"lerp_mode": "catmullrom"
+						},
+						"3.0": {
+							"post": [1, 1, 1],
+							"lerp_mode": "catmullrom"
+						}
+					}
+				},
+				"Throat": {
+					"scale": {
+						"1.7083": [1, 1, 1],
+						"2.375": [1.25, 1.25, 1.25],
+						"2.6667": [1, 1, 1]
+					}
+				}
+			}
+		},
+		"animation.tamed_frog.scratch_eye": {
+			"loop": true,
+			"animation_length": 3,
+			"bones": {
+				"FullBody": {
+					"rotation": {
+						"0.0": [0, 0, 0],
+						"0.75": [17.5, 0, 0],
+						"1.5": [17.5, 0, 0],
+						"2.25": [0, 0, 0]
+					},
+					"scale": {
+						"0.0": {
+							"post": [1, 1, 1],
+							"lerp_mode": "catmullrom"
+						},
+						"0.75": {
+							"post": [1.05, 1.05, 1.05],
+							"lerp_mode": "catmullrom"
+						},
+						"1.5": {
+							"post": [1, 1, 1],
+							"lerp_mode": "catmullrom"
+						},
+						"2.25": {
+							"post": [0.95, 0.95, 0.95],
+							"lerp_mode": "catmullrom"
+						},
+						"3.0": {
+							"post": [1, 1, 1],
+							"lerp_mode": "catmullrom"
+						}
+					}
+				},
+				"Throat": {
+					"scale": {
+						"1.7083": [1, 1, 1],
+						"2.375": [1.25, 1.25, 1.25],
+						"2.6667": [1, 1, 1]
+					}
+				},
+				"RightArm": {
+					"rotation": {
+						"0.25": [0, 0, 0],
+						"0.5": [1.64711, 50.66102, 50.80757],
+						"0.9167": [-66.79, -13.83, -5.85],
+						"1.2917": [-66.75283, 13.0592, 5.53147],
+						"1.5": [-66.78912, -13.83447, -5.85463],
+						"2.0": [0, 0, 0]
+					}
+				}
+			}
+		}
+	}
+}

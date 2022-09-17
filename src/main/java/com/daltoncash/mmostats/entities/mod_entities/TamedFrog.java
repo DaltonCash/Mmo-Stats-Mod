@@ -1,5 +1,10 @@
 package com.daltoncash.mmostats.entities.mod_entities;
 
+import java.util.UUID;
+import java.util.function.Predicate;
+
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -24,18 +29,25 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.FollowOwnerGoal;
+import net.minecraft.world.entity.ai.goal.LeapAtTargetGoal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.PanicGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.SitWhenOrderedToGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.ai.goal.target.NonTameRandomTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.OwnerHurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.OwnerHurtTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.Turtle;
+import net.minecraft.world.entity.animal.frog.Frog;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.animal.horse.Llama;
-import net.minecraft.world.entity.monster.AbstractSkeleton;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.player.Player;
@@ -47,12 +59,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-
-import java.util.UUID;
-import java.util.function.Predicate;
-
-import org.jetbrains.annotations.Nullable;
-
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -61,10 +67,10 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class Companion extends TamableAnimal implements IAnimatable, NeutralMob {
+public class TamedFrog extends TamableAnimal implements IAnimatable, NeutralMob {
 	private AnimationFactory factory = new AnimationFactory(this);
-	 private static final EntityDataAccessor<Boolean> DATA_INTERESTED_ID = SynchedEntityData.defineId(Companion.class, EntityDataSerializers.BOOLEAN);
-	   private static final EntityDataAccessor<Integer> DATA_REMAINING_ANGER_TIME = SynchedEntityData.defineId(Companion.class, EntityDataSerializers.INT);
+	 private static final EntityDataAccessor<Boolean> DATA_INTERESTED_ID = SynchedEntityData.defineId(TamedFrog.class, EntityDataSerializers.BOOLEAN);
+	   private static final EntityDataAccessor<Integer> DATA_REMAINING_ANGER_TIME = SynchedEntityData.defineId(TamedFrog.class, EntityDataSerializers.INT);
 	   public static final Predicate<LivingEntity> PREY_SELECTOR = (p_30437_) -> {
 	      EntityType<?> entitytype = p_30437_.getType();
 	      return entitytype == EntityType.SHEEP || entitytype == EntityType.RABBIT || entitytype == EntityType.FOX;
@@ -77,7 +83,7 @@ public class Companion extends TamableAnimal implements IAnimatable, NeutralMob 
 	   @Nullable
 	   private UUID persistentAngerTarget;
 	   
-	   public Companion(EntityType<? extends Companion> p_30369_, Level p_30370_) {
+	   public TamedFrog(EntityType<? extends TamedFrog> p_30369_, Level p_30370_) {
 		      super(p_30369_, p_30370_);
 		      this.setTame(false);
 		      this.setPathfindingMalus(BlockPathTypes.POWDER_SNOW, -1.0F);
@@ -91,21 +97,25 @@ public class Companion extends TamableAnimal implements IAnimatable, NeutralMob 
 					// the "predicate" method
 					.add(Attributes.MOVEMENT_SPEED, 0.3f).build();
 		}
+	   
 	   private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
 			if (event.isMoving()) {
-				event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.companion.walk", true));
+				event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.tamed_frog.walk", true));
+				
 				return PlayState.CONTINUE;
+				
 			} else {
-				event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.companion.idle", true));
+				event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.tamed_frog.scratch_eye", true));
 				return PlayState.CONTINUE;
 			}
 	   }
 	   
+	   
 	   protected void registerGoals() {
 	      this.goalSelector.addGoal(1, new FloatGoal(this));
-	      this.goalSelector.addGoal(1, new Companion.CompanionPanicGoal(1.5D));
+	      this.goalSelector.addGoal(1, new TamedFrog.TamedFrogPanicGoal(1.5D));
 	      this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
-	      this.goalSelector.addGoal(3, new Companion.CompanionAvoidEntityGoal<>(this, Llama.class, 24.0F, 1.5D, 1.5D));
+	      this.goalSelector.addGoal(3, new TamedFrog.TamedFrogAvoidEntityGoal<>(this, Llama.class, 24.0F, 1.5D, 1.5D));
 	      this.goalSelector.addGoal(4, new LeapAtTargetGoal(this, 0.4F));
 	      this.goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.0D, true));
 	      this.goalSelector.addGoal(6, new FollowOwnerGoal(this, 1.0D, 10.0F, 2.0F, false));
@@ -293,9 +303,9 @@ public class Companion extends TamableAnimal implements IAnimatable, NeutralMob 
 
 	   public boolean wantsToAttack(LivingEntity p_30389_, LivingEntity p_30390_) {
 	      if (!(p_30389_ instanceof Creeper) && !(p_30389_ instanceof Ghast)) {
-	         if (p_30389_ instanceof Companion) {
-	            Companion Companion = (Companion)p_30389_;
-	            return !Companion.isTame() || Companion.getOwner() != p_30390_;
+	         if (p_30389_ instanceof TamedFrog) {
+	            TamedFrog TamedFrog = (TamedFrog)p_30389_;
+	            return !TamedFrog.isTame() || TamedFrog.getOwner() != p_30390_;
 	         } else if (p_30389_ instanceof Player && p_30390_ instanceof Player && !((Player)p_30390_).canHarmPlayer((Player)p_30389_)) {
 	            return false;
 	         } else if (p_30389_ instanceof AbstractHorse && ((AbstractHorse)p_30389_).isTamed()) {
@@ -308,40 +318,40 @@ public class Companion extends TamableAnimal implements IAnimatable, NeutralMob 
 	      }
 	   }
 
-	   class CompanionAvoidEntityGoal<T extends LivingEntity> extends AvoidEntityGoal<T> {
-	      private final Companion Companion;
+	   class TamedFrogAvoidEntityGoal<T extends LivingEntity> extends AvoidEntityGoal<T> {
+	      private final TamedFrog TamedFrog;
 
-	      public CompanionAvoidEntityGoal(Companion p_30454_, Class<T> p_30455_, float p_30456_, double p_30457_, double p_30458_) {
+	      public TamedFrogAvoidEntityGoal(TamedFrog p_30454_, Class<T> p_30455_, float p_30456_, double p_30457_, double p_30458_) {
 	         super(p_30454_, p_30455_, p_30456_, p_30457_, p_30458_);
-	         this.Companion = p_30454_;
+	         this.TamedFrog = p_30454_;
 	      }
 
 	      public boolean canUse() {
 	         if (super.canUse() && this.toAvoid instanceof Llama) {
-	            return !this.Companion.isTame() && this.avoidLlama((Llama)this.toAvoid);
+	            return !this.TamedFrog.isTame() && this.avoidLlama((Llama)this.toAvoid);
 	         } else {
 	            return false;
 	         }
 	      }
 
 	      private boolean avoidLlama(Llama p_30461_) {
-	         return p_30461_.getStrength() >= Companion.this.random.nextInt(5);
+	         return p_30461_.getStrength() >= TamedFrog.this.random.nextInt(5);
 	      }
 
 	      public void start() {
-	         Companion.this.setTarget((LivingEntity)null);
+	         TamedFrog.this.setTarget((LivingEntity)null);
 	         super.start();
 	      }
 
 	      public void tick() {
-	         Companion.this.setTarget((LivingEntity)null);
+	         TamedFrog.this.setTarget((LivingEntity)null);
 	         super.tick();
 	      }
 	   }
 
-	   class CompanionPanicGoal extends PanicGoal {
-	      public CompanionPanicGoal(double p_203124_) {
-	         super(Companion.this, p_203124_);
+	   class TamedFrogPanicGoal extends PanicGoal {
+	      public TamedFrogPanicGoal(double p_203124_) {
+	         super(TamedFrog.this, p_203124_);
 	      }
 
 	      protected boolean shouldPanic() {
@@ -351,7 +361,7 @@ public class Companion extends TamableAnimal implements IAnimatable, NeutralMob 
 
 	@Override
 	public void registerControllers(AnimationData data) {
-		data.addAnimationController(new AnimationController<Companion>(this, "controller", 0, this::predicate));
+		data.addAnimationController(new AnimationController<TamedFrog>(this, "controller", 0, this::predicate));
 		
 	}
 

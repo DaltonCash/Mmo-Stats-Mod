@@ -8,7 +8,6 @@ import com.daltoncash.mmostats.events.ClientEvents.ClientForgeEvents;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity.RemovalReason;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.TamableAnimal;
@@ -33,7 +32,10 @@ public class SpawnTamedBeeC2SPacket {
 	            // HERE WE ARE ON THE SERVER!
 	            ServerPlayer player = context.getSender();
 	            ServerLevel level = player.getLevel();
-
+	            System.out.println("About to spawn...");
+	            ModEntityTypes.TAMEDFROG.get().spawn(level, null, player, ClientForgeEvents.tamedPosition, 
+	            		MobSpawnType.COMMAND, true, false);
+	            System.out.println("Should be spawned");
 	            ((TamableAnimal) ModEntityTypes.COMPANION.get().spawn(level, null, player, ClientForgeEvents.tamedPosition, 
 	            		MobSpawnType.COMMAND, true, false)).tame(player);
 	            ClientForgeEvents.animalToBeTamedAndKilled.remove(RemovalReason.DISCARDED);

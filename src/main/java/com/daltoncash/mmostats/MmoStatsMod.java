@@ -3,6 +3,7 @@ package com.daltoncash.mmostats;
 
 import com.daltoncash.mmostats.entities.ModEntityTypes;
 import com.daltoncash.mmostats.entities.client.CompanionRenderer;
+import com.daltoncash.mmostats.entities.client.TamedFrogRenderer;
 import com.daltoncash.mmostats.item.ModItems;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.mojang.logging.LogUtils;
@@ -95,6 +96,7 @@ public class MmoStatsMod {
 		public static void onClientSetup(FMLClientSetupEvent event) {
 			// Some client setup code
 			EntityRenderers.register(ModEntityTypes.COMPANION.get(), CompanionRenderer::new);
+			EntityRenderers.register(ModEntityTypes.TAMEDFROG.get(), TamedFrogRenderer::new);
 			LOGGER.info("HELLO FROM CLIENT SETUP");
 			LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
 		}
