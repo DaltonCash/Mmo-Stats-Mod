@@ -53,6 +53,7 @@ import com.daltoncash.mmostats.networking.packets.c2s.swordsUpgrades.RightClickU
 import com.daltoncash.mmostats.networking.packets.c2s.swordsUpgrades.ShieldBashUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.swordsUpgrades.SweetSpotSwordsUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.taming.SpawnTamedBeeC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.taming.SpawnTamedFrogC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainNightVisionC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.HealFromRottenFleshTotalC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.SpawnArrowOnPlayerC2SPacket;
@@ -294,7 +295,12 @@ public class ModMessages {
 			.encoder(SpawnTamedBeeC2SPacket::toBytes)
 			.consumerMainThread(SpawnTamedBeeC2SPacket::handle)
 			.add();
-        
+		net.messageBuilder(SpawnTamedFrogC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+			.decoder(SpawnTamedFrogC2SPacket::new)
+			.encoder(SpawnTamedFrogC2SPacket::toBytes)
+			.consumerMainThread(SpawnTamedFrogC2SPacket::handle)
+			.add();
+			
 //-----------C2S--Skills---------------------------------------------------------------------------------
 		 net.messageBuilder(GainPlayerLevelC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
 				.decoder(GainPlayerLevelC2SPacket::new)

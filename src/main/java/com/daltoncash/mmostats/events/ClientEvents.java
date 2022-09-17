@@ -12,6 +12,7 @@ import com.daltoncash.mmostats.networking.packets.c2s.GainEffectFromEatingC2SPac
 import com.daltoncash.mmostats.networking.packets.c2s.magicAbilities.SpawnNatureMagnetItemC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.SpawnTntC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.taming.SpawnTamedBeeC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.taming.SpawnTamedFrogC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainNightVisionC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.SpawnArrowOnPlayerC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.ApplesEatenC2SPacket;
@@ -40,7 +41,6 @@ import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.
 import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.RottenFleshEatenC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.SpiderEyeEatenC2SPacket;
 import com.daltoncash.mmostats.util.KeyBinding;
-import com.ibm.icu.text.TimeZoneFormat.Style;
 import com.mojang.logging.LogUtils;
 
 import net.minecraft.ChatFormatting;
@@ -55,20 +55,11 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.Entity.RemovalReason;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.FollowOwnerGoal;
-import net.minecraft.world.entity.ai.goal.OfferFlowerGoal;
-import net.minecraft.world.entity.ai.goal.SitWhenOrderedToGoal;
 import net.minecraft.world.entity.ai.goal.WrappedGoal;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.monster.AbstractSkeleton;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -79,10 +70,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
-import net.minecraftforge.client.event.RenderNameTagEvent;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityEvent;
-import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.AnimalTameEvent;
 import net.minecraftforge.event.entity.living.BabyEntitySpawnEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -93,11 +81,9 @@ import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.entity.living.ShieldBlockEvent;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.entity.player.PlayerEvent.HarvestCheck;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteractSpecific;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickItem;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -664,7 +650,13 @@ public class ClientEvents {
 						tamedPosition = event.getTarget().blockPosition();
 						animalToBeTamedAndKilled = event.getTarget();
 						ModMessages.sendToServer(new SpawnTamedBeeC2SPacket());
-						//event.getTarget().remove(RemovalReason.DISCARDED);
+					}
+				}
+				if(event.getTarget().getType().equals(EntityType.FROG)){
+					if(event.getItemStack().getItem().equals(Items.STICK)) {
+						tamedPosition = event.getTarget().blockPosition();
+						animalToBeTamedAndKilled = event.getTarget();
+						ModMessages.sendToServer(new SpawnTamedFrogC2SPacket());
 					}
 				}
 			}
@@ -683,12 +675,12 @@ public class ClientEvents {
 		
 		@SubscribeEvent
 		public static void onSpawningGiveEntitiesCustomName(LivingSpawnEvent event) {
-			if(!event.getEntity().goalSelector.getAvailableGoals().isEmpty()){
+			
 				event.getEntity().setCustomName(
 						Component.literal(getDisplayName(event.getEntity().getType().toShortString().toLowerCase())).withStyle(ChatFormatting.GOLD).append
 						(getDisplayHealth(event.getEntity())));
 				event.getEntity().setCustomNameVisible(true);
-			}
+			
 		}
 		
 		private static String getDisplayName(String entity) {

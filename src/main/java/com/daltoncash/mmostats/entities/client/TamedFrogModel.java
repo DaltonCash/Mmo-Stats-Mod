@@ -10,12 +10,12 @@ public class TamedFrogModel extends AnimatedGeoModel<TamedFrog>{
 
 	@Override
 	public ResourceLocation getAnimationResource(TamedFrog animatable) {
-		return new ResourceLocation(MmoStatsMod.MODID, "animations/tamed_frog.animation.json");
+		return new ResourceLocation(MmoStatsMod.MODID, "animations/frog.animation.json");
 	}
 
 	@Override
 	public ResourceLocation getModelResource(TamedFrog object) {
-		return new ResourceLocation(MmoStatsMod.MODID, "geo/tamed_frog.geo.json");
+		return new ResourceLocation(MmoStatsMod.MODID, "geo/frog.geo.json");
 	}
 
 	@Override

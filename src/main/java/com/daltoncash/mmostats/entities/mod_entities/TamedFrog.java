@@ -45,7 +45,6 @@ import net.minecraft.world.entity.ai.goal.target.OwnerHurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.OwnerHurtTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.frog.Frog;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.animal.horse.Llama;
 import net.minecraft.world.entity.monster.Creeper;
@@ -69,300 +68,328 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 public class TamedFrog extends TamableAnimal implements IAnimatable, NeutralMob {
 	private AnimationFactory factory = new AnimationFactory(this);
-	 private static final EntityDataAccessor<Boolean> DATA_INTERESTED_ID = SynchedEntityData.defineId(TamedFrog.class, EntityDataSerializers.BOOLEAN);
-	   private static final EntityDataAccessor<Integer> DATA_REMAINING_ANGER_TIME = SynchedEntityData.defineId(TamedFrog.class, EntityDataSerializers.INT);
-	   public static final Predicate<LivingEntity> PREY_SELECTOR = (p_30437_) -> {
-	      EntityType<?> entitytype = p_30437_.getType();
-	      return entitytype == EntityType.SHEEP || entitytype == EntityType.RABBIT || entitytype == EntityType.FOX;
-	   };
-	   private float interestedAngle;
-	   private float interestedAngleO;
-	   private float shakeAnim;
-	   private float shakeAnimO;
-	   private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);
-	   @Nullable
-	   private UUID persistentAngerTarget;
-	   
-	   public TamedFrog(EntityType<? extends TamedFrog> p_30369_, Level p_30370_) {
-		      super(p_30369_, p_30370_);
-		      this.setTame(false);
-		      this.setPathfindingMalus(BlockPathTypes.POWDER_SNOW, -1.0F);
-		      this.setPathfindingMalus(BlockPathTypes.DANGER_POWDER_SNOW, -1.0F);
-		   }
-	   
-	   public static AttributeSupplier setAttributes() {
-			return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 20.0D).add(Attributes.ATTACK_DAMAGE, 3.0f)
-					.add(Attributes.ATTACK_SPEED, 2.0f)
-					// float underneath this comment must be 0.135 or higher to trigger .isMoving in
-					// the "predicate" method
-					.add(Attributes.MOVEMENT_SPEED, 0.3f).build();
+	private static final EntityDataAccessor<Boolean> DATA_INTERESTED_ID = SynchedEntityData.defineId(TamedFrog.class,
+			EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Integer> DATA_REMAINING_ANGER_TIME = SynchedEntityData
+			.defineId(TamedFrog.class, EntityDataSerializers.INT);
+	public static final Predicate<LivingEntity> PREY_SELECTOR = (p_30437_) -> {
+		EntityType<?> entitytype = p_30437_.getType();
+		return entitytype == EntityType.SHEEP || entitytype == EntityType.RABBIT || entitytype == EntityType.FOX;
+	};
+	private float interestedAngle;
+	private float interestedAngleO;
+	private float shakeAnim;
+	private float shakeAnimO;
+	private int ticksToYawn;
+	private int ticksToItch;
+	private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);
+	@Nullable
+	private UUID persistentAngerTarget;
+
+	public TamedFrog(EntityType<? extends TamedFrog> p_30369_, Level p_30370_) {
+		super(p_30369_, p_30370_);
+		this.setTame(false);
+		this.setPathfindingMalus(BlockPathTypes.POWDER_SNOW, -1.0F);
+		this.setPathfindingMalus(BlockPathTypes.DANGER_POWDER_SNOW, -1.0F);
+	}
+
+	public static AttributeSupplier setAttributes() {
+		return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 20.0D).add(Attributes.ATTACK_DAMAGE, 3.0f)
+				.add(Attributes.ATTACK_SPEED, 2.0f)
+				// float underneath this comment must be 0.135 or higher to trigger .isMoving in
+				// the "predicate" method
+				.add(Attributes.MOVEMENT_SPEED, 0.3f).build();
+	}
+
+	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+		if (event.isMoving()) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.frog.walk", true));
+			ticksToYawn = 0;
+			return PlayState.CONTINUE;
+
+		} else if (ticksToYawn > 0) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.frog.yawn", true));
+			return PlayState.CONTINUE;
+		} else if (ticksToItch > 0) {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.frog.itch", true));
+			return PlayState.CONTINUE;
+		} else {
+
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.frog.idle", true));
+			return PlayState.CONTINUE;
 		}
-	   
-	   private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-			if (event.isMoving()) {
-				event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.tamed_frog.walk", true));
-				
-				return PlayState.CONTINUE;
-				
+	}
+
+	protected void registerGoals() {
+		this.goalSelector.addGoal(1, new FloatGoal(this));
+		this.goalSelector.addGoal(1, new TamedFrog.TamedFrogPanicGoal(1.5D));
+		this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
+		this.goalSelector.addGoal(3, new TamedFrog.TamedFrogAvoidEntityGoal<>(this, Llama.class, 24.0F, 1.5D, 1.5D));
+		this.goalSelector.addGoal(4, new LeapAtTargetGoal(this, 0.4F));
+		this.goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.0D, true));
+		this.goalSelector.addGoal(6, new FollowOwnerGoal(this, 1.6D, 10.0F, 2.0F, false));
+		this.goalSelector.addGoal(8, new WaterAvoidingRandomStrollGoal(this, 1.0D));
+		this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Player.class, 8.0F));
+		this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
+		this.targetSelector.addGoal(1, new OwnerHurtByTargetGoal(this));
+		this.targetSelector.addGoal(2, new OwnerHurtTargetGoal(this));
+		this.targetSelector.addGoal(3, (new HurtByTargetGoal(this)).setAlertOthers());
+		this.targetSelector.addGoal(4,
+				new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, this::isAngryAt));
+		this.targetSelector.addGoal(8, new ResetUniversalAngerTargetGoal<>(this, true));
+	}
+
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(DATA_INTERESTED_ID, false);
+		this.entityData.define(DATA_REMAINING_ANGER_TIME, 0);
+	}
+
+	protected void playStepSound(BlockPos p_30415_, BlockState p_30416_) {
+		this.playSound(SoundEvents.WARDEN_STEP, 0.15F, 1.0F);
+	}
+
+	public void addAdditionalSaveData(CompoundTag p_30418_) {
+		super.addAdditionalSaveData(p_30418_);
+		this.addPersistentAngerSaveData(p_30418_);
+	}
+
+	public void readAdditionalSaveData(CompoundTag p_30402_) {
+		super.readAdditionalSaveData(p_30402_);
+		this.readPersistentAngerSaveData(this.level, p_30402_);
+	}
+
+	protected SoundEvent getAmbientSound() {
+		if (this.isAngry()) {
+			return SoundEvents.ENDERMAN_AMBIENT;
+		} else if (this.random.nextInt(3) == 0) {
+			return this.isTame() && this.getHealth() < 10.0F ? SoundEvents.TNT_PRIMED : SoundEvents.WITCH_CELEBRATE;
+		} else {
+			return SoundEvents.FOX_AMBIENT;
+		}
+	}
+
+	protected SoundEvent getHurtSound(DamageSource p_30424_) {
+		return SoundEvents.ENDERMAN_HURT;
+	}
+
+	protected SoundEvent getDeathSound() {
+		return SoundEvents.STRAY_DEATH;
+	}
+
+	protected float getSoundVolume() {
+		return 0.4F;
+	}
+
+	public void aiStep() {
+		super.aiStep();
+
+		if (!this.level.isClientSide) {
+			this.updatePersistentAnger((ServerLevel) this.level, true);
+		}
+
+	}
+
+	public void tick() {
+		super.tick();
+		if (this.isAlive()) {
+			this.interestedAngleO = this.interestedAngle;
+			if (this.isInterested()) {
+				this.interestedAngle += (1.0F - this.interestedAngle) * 0.4F;
 			} else {
-				event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.tamed_frog.scratch_eye", true));
-				return PlayState.CONTINUE;
+				this.interestedAngle += (0.0F - this.interestedAngle) * 0.4F;
 			}
-	   }
-	   
-	   
-	   protected void registerGoals() {
-	      this.goalSelector.addGoal(1, new FloatGoal(this));
-	      this.goalSelector.addGoal(1, new TamedFrog.TamedFrogPanicGoal(1.5D));
-	      this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
-	      this.goalSelector.addGoal(3, new TamedFrog.TamedFrogAvoidEntityGoal<>(this, Llama.class, 24.0F, 1.5D, 1.5D));
-	      this.goalSelector.addGoal(4, new LeapAtTargetGoal(this, 0.4F));
-	      this.goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.0D, true));
-	      this.goalSelector.addGoal(6, new FollowOwnerGoal(this, 1.0D, 10.0F, 2.0F, false));
-	      this.goalSelector.addGoal(8, new WaterAvoidingRandomStrollGoal(this, 1.0D));
-	      this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Player.class, 8.0F));
-	      this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
-	      this.targetSelector.addGoal(1, new OwnerHurtByTargetGoal(this));
-	      this.targetSelector.addGoal(2, new OwnerHurtTargetGoal(this));
-	      this.targetSelector.addGoal(3, (new HurtByTargetGoal(this)).setAlertOthers());
-	      this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, this::isAngryAt));
-	      this.targetSelector.addGoal(8, new ResetUniversalAngerTargetGoal<>(this, true));
-	   }
+		}
+		if (Math.random() >= .99 && ticksToYawn == 0 && ticksToItch == 0) {
+			if (Math.random() > .5) {
+				ticksToItch = 50;
+			} else {
+				ticksToYawn = 90;
+			}
+		}
+		if (ticksToItch > 0) {
+			ticksToItch--;
+		}
+		if (ticksToYawn > 0) {
+			ticksToYawn--;
+		}
+	}
 
-	   protected void defineSynchedData() {
-	      super.defineSynchedData();
-	      this.entityData.define(DATA_INTERESTED_ID, false);
-	      this.entityData.define(DATA_REMAINING_ANGER_TIME, 0);
-	   }
+	public void die(DamageSource p_30384_) {
+		super.die(p_30384_);
+	}
 
-	   protected void playStepSound(BlockPos p_30415_, BlockState p_30416_) {
-	      this.playSound(SoundEvents.WARDEN_STEP, 0.15F, 1.0F);
-	   }
+	public float getBodyRollAngle(float p_30433_, float p_30434_) {
+		float f = (Mth.lerp(p_30433_, this.shakeAnimO, this.shakeAnim) + p_30434_) / 1.8F;
+		if (f < 0.0F) {
+			f = 0.0F;
+		} else if (f > 1.0F) {
+			f = 1.0F;
+		}
 
-	   public void addAdditionalSaveData(CompoundTag p_30418_) {
-	      super.addAdditionalSaveData(p_30418_);
-	      this.addPersistentAngerSaveData(p_30418_);
-	   }
+		return Mth.sin(f * (float) Math.PI) * Mth.sin(f * (float) Math.PI * 11.0F) * 0.15F * (float) Math.PI;
+	}
 
-	   public void readAdditionalSaveData(CompoundTag p_30402_) {
-	      super.readAdditionalSaveData(p_30402_);
-	      this.readPersistentAngerSaveData(this.level, p_30402_);
-	   }
+	public float getHeadRollAngle(float p_30449_) {
+		return Mth.lerp(p_30449_, this.interestedAngleO, this.interestedAngle) * 0.15F * (float) Math.PI;
+	}
 
-	   protected SoundEvent getAmbientSound() {
-	      if (this.isAngry()) {
-	         return SoundEvents.ENDERMAN_AMBIENT;
-	      } else if (this.random.nextInt(3) == 0) {
-	         return this.isTame() && this.getHealth() < 10.0F ? SoundEvents.TNT_PRIMED : SoundEvents.WITCH_CELEBRATE;
-	      } else {
-	         return SoundEvents.FOX_AMBIENT;
-	      }
-	   }
+	protected float getStandingEyeHeight(Pose p_30409_, EntityDimensions p_30410_) {
+		return p_30410_.height * 0.8F;
+	}
 
-	   protected SoundEvent getHurtSound(DamageSource p_30424_) {
-	      return SoundEvents.ENDERMAN_HURT;
-	   }
+	public int getMaxHeadXRot() {
+		return this.isInSittingPose() ? 20 : super.getMaxHeadXRot();
+	}
 
-	   protected SoundEvent getDeathSound() {
-	      return SoundEvents.STRAY_DEATH;
-	   }
+	public boolean hurt(DamageSource p_30386_, float p_30387_) {
+		if (this.isInvulnerableTo(p_30386_)) {
+			return false;
+		} else {
+			Entity entity = p_30386_.getEntity();
+			if (entity != null && !(entity instanceof Player) && !(entity instanceof AbstractArrow)) {
+				p_30387_ = (p_30387_ + 1.0F) / 2.0F;
+			}
+			return super.hurt(p_30386_, p_30387_);
+		}
+	}
 
-	   protected float getSoundVolume() {
-	      return 0.4F;
-	   }
+	public boolean doHurtTarget(Entity p_30372_) {
+		boolean flag = p_30372_.hurt(DamageSource.mobAttack(this),
+				(float) ((int) this.getAttributeValue(Attributes.ATTACK_DAMAGE)));
+		if (flag) {
+			this.doEnchantDamageEffects(this, p_30372_);
+		}
+		return flag;
+	}
 
-	   public void aiStep() {
-	      super.aiStep();
+	public InteractionResult mobInteract(Player p_30412_, InteractionHand p_30413_) {
+		ItemStack itemstack = p_30412_.getItemInHand(p_30413_);
+		if (this.level.isClientSide) {
+			boolean flag = this.isOwnedBy(p_30412_) || this.isTame()
+					|| itemstack.is(Items.BONE) && !this.isTame() && !this.isAngry();
+			return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
+		} else {
+			if (this.isTame()) {
+				if (this.isFood(itemstack) && this.getHealth() < this.getMaxHealth()) {
+					if (!p_30412_.getAbilities().instabuild) {
+						itemstack.shrink(1);
+					}
+					this.heal((float) itemstack.getFoodProperties(this).getNutrition());
+					this.gameEvent(GameEvent.EAT, this);
+					return InteractionResult.SUCCESS;
+				}
+			}
+			return super.mobInteract(p_30412_, p_30413_);
+		}
+	}
 
-	      if (!this.level.isClientSide) {
-	         this.updatePersistentAnger((ServerLevel)this.level, true);
-	      }
+	public void handleEntityEvent(byte p_30379_) {
+		super.handleEntityEvent(p_30379_);
+	}
 
-	   }
+	public boolean isFood(ItemStack p_30440_) {
+		Item item = p_30440_.getItem();
+		return item.isEdible() && p_30440_.getFoodProperties(this).isMeat();
+	}
 
-	   public void tick() {
-	      super.tick();
-	      if (this.isAlive()) {
-	         this.interestedAngleO = this.interestedAngle;
-	         if (this.isInterested()) {
-	            this.interestedAngle += (1.0F - this.interestedAngle) * 0.4F;
-	         } else {
-	            this.interestedAngle += (0.0F - this.interestedAngle) * 0.4F;
-	         }
-	      }
-	   }
+	public int getMaxSpawnClusterSize() {
+		return 8;
+	}
 
-	   public void die(DamageSource p_30384_) {
-	      super.die(p_30384_);
-	   }
+	public int getRemainingPersistentAngerTime() {
+		return this.entityData.get(DATA_REMAINING_ANGER_TIME);
+	}
 
-	   public float getBodyRollAngle(float p_30433_, float p_30434_) {
-	      float f = (Mth.lerp(p_30433_, this.shakeAnimO, this.shakeAnim) + p_30434_) / 1.8F;
-	      if (f < 0.0F) {
-	         f = 0.0F;
-	      } else if (f > 1.0F) {
-	         f = 1.0F;
-	      }
+	public void setRemainingPersistentAngerTime(int p_30404_) {
+		this.entityData.set(DATA_REMAINING_ANGER_TIME, p_30404_);
+	}
 
-	      return Mth.sin(f * (float)Math.PI) * Mth.sin(f * (float)Math.PI * 11.0F) * 0.15F * (float)Math.PI;
-	   }
+	public void startPersistentAngerTimer() {
+		this.setRemainingPersistentAngerTime(PERSISTENT_ANGER_TIME.sample(this.random));
+	}
 
-	   public float getHeadRollAngle(float p_30449_) {
-	      return Mth.lerp(p_30449_, this.interestedAngleO, this.interestedAngle) * 0.15F * (float)Math.PI;
-	   }
+	@Nullable
+	public UUID getPersistentAngerTarget() {
+		return this.persistentAngerTarget;
+	}
 
-	   protected float getStandingEyeHeight(Pose p_30409_, EntityDimensions p_30410_) {
-	      return p_30410_.height * 0.8F;
-	   }
+	public void setPersistentAngerTarget(@Nullable UUID p_30400_) {
+		this.persistentAngerTarget = p_30400_;
+	}
 
-	   public int getMaxHeadXRot() {
-	      return this.isInSittingPose() ? 20 : super.getMaxHeadXRot();
-	   }
+	public void setIsInterested(boolean p_30445_) {
+		this.entityData.set(DATA_INTERESTED_ID, p_30445_);
+	}
 
-	   public boolean hurt(DamageSource p_30386_, float p_30387_) {
-	      if (this.isInvulnerableTo(p_30386_)) {
-	         return false;
-	      } else {
-	         Entity entity = p_30386_.getEntity();
-	         if (entity != null && !(entity instanceof Player) && !(entity instanceof AbstractArrow)) {
-	            p_30387_ = (p_30387_ + 1.0F) / 2.0F;
-	         }
-	         return super.hurt(p_30386_, p_30387_);
-	      }
-	   }
+	public boolean isInterested() {
+		return this.entityData.get(DATA_INTERESTED_ID);
+	}
 
-	   public boolean doHurtTarget(Entity p_30372_) {
-	      boolean flag = p_30372_.hurt(DamageSource.mobAttack(this), (float)((int)this.getAttributeValue(Attributes.ATTACK_DAMAGE)));
-	      if (flag) {
-	         this.doEnchantDamageEffects(this, p_30372_);
-	      }
-	      return flag;
-	   }
+	public boolean wantsToAttack(LivingEntity p_30389_, LivingEntity p_30390_) {
+		if (!(p_30389_ instanceof Creeper) && !(p_30389_ instanceof Ghast)) {
+			if (p_30389_ instanceof TamedFrog) {
+				TamedFrog TamedFrog = (TamedFrog) p_30389_;
+				return !TamedFrog.isTame() || TamedFrog.getOwner() != p_30390_;
+			} else if (p_30389_ instanceof Player && p_30390_ instanceof Player
+					&& !((Player) p_30390_).canHarmPlayer((Player) p_30389_)) {
+				return false;
+			} else if (p_30389_ instanceof AbstractHorse && ((AbstractHorse) p_30389_).isTamed()) {
+				return false;
+			} else {
+				return !(p_30389_ instanceof TamableAnimal) || !((TamableAnimal) p_30389_).isTame();
+			}
+		} else {
+			return false;
+		}
+	}
 
-	   public InteractionResult mobInteract(Player p_30412_, InteractionHand p_30413_) {
-	      ItemStack itemstack = p_30412_.getItemInHand(p_30413_);
-	      if (this.level.isClientSide) {
-	         boolean flag = this.isOwnedBy(p_30412_) || this.isTame() || itemstack.is(Items.BONE) && !this.isTame() && !this.isAngry();
-	         return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
-	      } else {
-	         if (this.isTame()) {
-	            if (this.isFood(itemstack) && this.getHealth() < this.getMaxHealth()) {
-	               if (!p_30412_.getAbilities().instabuild) {
-	                  itemstack.shrink(1);
-	               }
-	               this.heal((float)itemstack.getFoodProperties(this).getNutrition());
-	               this.gameEvent(GameEvent.EAT, this);
-	               return InteractionResult.SUCCESS;
-	            } 
-	         }
-	         return super.mobInteract(p_30412_, p_30413_);
-	      }
-	   }
+	class TamedFrogAvoidEntityGoal<T extends LivingEntity> extends AvoidEntityGoal<T> {
+		private final TamedFrog TamedFrog;
 
-	   public void handleEntityEvent(byte p_30379_) {
-	         super.handleEntityEvent(p_30379_);
-	   }
-	   
-	   public boolean isFood(ItemStack p_30440_) {
-	      Item item = p_30440_.getItem();
-	      return item.isEdible() && p_30440_.getFoodProperties(this).isMeat();
-	   }
+		public TamedFrogAvoidEntityGoal(TamedFrog p_30454_, Class<T> p_30455_, float p_30456_, double p_30457_,
+				double p_30458_) {
+			super(p_30454_, p_30455_, p_30456_, p_30457_, p_30458_);
+			this.TamedFrog = p_30454_;
+		}
 
-	   public int getMaxSpawnClusterSize() {
-	      return 8;
-	   }
+		public boolean canUse() {
+			if (super.canUse() && this.toAvoid instanceof Llama) {
+				return !this.TamedFrog.isTame() && this.avoidLlama((Llama) this.toAvoid);
+			} else {
+				return false;
+			}
+		}
 
-	   public int getRemainingPersistentAngerTime() {
-	      return this.entityData.get(DATA_REMAINING_ANGER_TIME);
-	   }
+		private boolean avoidLlama(Llama p_30461_) {
+			return p_30461_.getStrength() >= TamedFrog.this.random.nextInt(5);
+		}
 
-	   public void setRemainingPersistentAngerTime(int p_30404_) {
-	      this.entityData.set(DATA_REMAINING_ANGER_TIME, p_30404_);
-	   }
+		public void start() {
+			TamedFrog.this.setTarget((LivingEntity) null);
+			super.start();
+		}
 
-	   public void startPersistentAngerTimer() {
-	      this.setRemainingPersistentAngerTime(PERSISTENT_ANGER_TIME.sample(this.random));
-	   }
+		public void tick() {
+			TamedFrog.this.setTarget((LivingEntity) null);
+			super.tick();
+		}
+	}
 
-	   @Nullable
-	   public UUID getPersistentAngerTarget() {
-	      return this.persistentAngerTarget;
-	   }
+	class TamedFrogPanicGoal extends PanicGoal {
+		public TamedFrogPanicGoal(double p_203124_) {
+			super(TamedFrog.this, p_203124_);
+		}
 
-	   public void setPersistentAngerTarget(@Nullable UUID p_30400_) {
-	      this.persistentAngerTarget = p_30400_;
-	   }
-
-	   public void setIsInterested(boolean p_30445_) {
-	      this.entityData.set(DATA_INTERESTED_ID, p_30445_);
-	   }
-
-	   public boolean isInterested() {
-	      return this.entityData.get(DATA_INTERESTED_ID);
-	   }
-
-	   public boolean wantsToAttack(LivingEntity p_30389_, LivingEntity p_30390_) {
-	      if (!(p_30389_ instanceof Creeper) && !(p_30389_ instanceof Ghast)) {
-	         if (p_30389_ instanceof TamedFrog) {
-	            TamedFrog TamedFrog = (TamedFrog)p_30389_;
-	            return !TamedFrog.isTame() || TamedFrog.getOwner() != p_30390_;
-	         } else if (p_30389_ instanceof Player && p_30390_ instanceof Player && !((Player)p_30390_).canHarmPlayer((Player)p_30389_)) {
-	            return false;
-	         } else if (p_30389_ instanceof AbstractHorse && ((AbstractHorse)p_30389_).isTamed()) {
-	            return false;
-	         } else {
-	            return !(p_30389_ instanceof TamableAnimal) || !((TamableAnimal)p_30389_).isTame();
-	         }
-	      } else {
-	         return false;
-	      }
-	   }
-
-	   class TamedFrogAvoidEntityGoal<T extends LivingEntity> extends AvoidEntityGoal<T> {
-	      private final TamedFrog TamedFrog;
-
-	      public TamedFrogAvoidEntityGoal(TamedFrog p_30454_, Class<T> p_30455_, float p_30456_, double p_30457_, double p_30458_) {
-	         super(p_30454_, p_30455_, p_30456_, p_30457_, p_30458_);
-	         this.TamedFrog = p_30454_;
-	      }
-
-	      public boolean canUse() {
-	         if (super.canUse() && this.toAvoid instanceof Llama) {
-	            return !this.TamedFrog.isTame() && this.avoidLlama((Llama)this.toAvoid);
-	         } else {
-	            return false;
-	         }
-	      }
-
-	      private boolean avoidLlama(Llama p_30461_) {
-	         return p_30461_.getStrength() >= TamedFrog.this.random.nextInt(5);
-	      }
-
-	      public void start() {
-	         TamedFrog.this.setTarget((LivingEntity)null);
-	         super.start();
-	      }
-
-	      public void tick() {
-	         TamedFrog.this.setTarget((LivingEntity)null);
-	         super.tick();
-	      }
-	   }
-
-	   class TamedFrogPanicGoal extends PanicGoal {
-	      public TamedFrogPanicGoal(double p_203124_) {
-	         super(TamedFrog.this, p_203124_);
-	      }
-
-	      protected boolean shouldPanic() {
-	         return this.mob.isFreezing() || this.mob.isOnFire();
-	      }
-	   }
+		protected boolean shouldPanic() {
+			return this.mob.isFreezing() || this.mob.isOnFire();
+		}
+	}
 
 	@Override
 	public void registerControllers(AnimationData data) {
-		data.addAnimationController(new AnimationController<TamedFrog>(this, "controller", 0, this::predicate));
-		
+		data.addAnimationController(new AnimationController<TamedFrog>(this, "frog_controller", 0, this::predicate));
+
 	}
 
 	@Override

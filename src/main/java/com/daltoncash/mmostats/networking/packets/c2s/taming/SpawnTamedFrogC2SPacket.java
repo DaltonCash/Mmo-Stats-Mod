@@ -8,19 +8,20 @@ import com.daltoncash.mmostats.events.ClientEvents.ClientForgeEvents;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.Entity.RemovalReason;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.Entity.RemovalReason;
 import net.minecraftforge.network.NetworkEvent;
 
-public class SpawnTamedBeeC2SPacket {
-	public SpawnTamedBeeC2SPacket() {
+public class SpawnTamedFrogC2SPacket {
 
-	}
+	public SpawnTamedFrogC2SPacket() {
 
-	public SpawnTamedBeeC2SPacket(FriendlyByteBuf buf) {
+		}
 
-	}
+	public SpawnTamedFrogC2SPacket(FriendlyByteBuf buf) {
+
+		}
 
 	public void toBytes(FriendlyByteBuf buf) {
 
@@ -32,10 +33,10 @@ public class SpawnTamedBeeC2SPacket {
 			// HERE WE ARE ON THE SERVER!
 			ServerPlayer player = context.getSender();
 			ServerLevel level = player.getLevel();
-			((TamableAnimal) ModEntityTypes.COMPANION.get().spawn(level, null, player, ClientForgeEvents.tamedPosition,
+			((TamableAnimal) ModEntityTypes.TAMEDFROG.get().spawn(level, null, player, ClientForgeEvents.tamedPosition,
 					MobSpawnType.COMMAND, true, false)).tame(player);
 			ClientForgeEvents.animalToBeTamedAndKilled.remove(RemovalReason.DISCARDED);
-
+			
 		});
 
 		return true;

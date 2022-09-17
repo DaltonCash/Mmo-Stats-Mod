@@ -20,9 +20,9 @@ public class ModEntityTypes {
 			() -> EntityType.Builder.of(Companion::new, MobCategory.CREATURE).sized(0.8f, 0.6f)
 					.build(new ResourceLocation(MmoStatsMod.MODID, "companion").toString()));
 
-	public static final RegistryObject<EntityType<TamedFrog>> TAMEDFROG = Entities.register("tamedfrog",
+	public static final RegistryObject<EntityType<TamedFrog>> TAMEDFROG = Entities.register("tamed_frog",
 			() -> EntityType.Builder.of(TamedFrog::new, MobCategory.CREATURE).sized(0.8f, 0.6f)
-					.build(new ResourceLocation(MmoStatsMod.MODID, "tamedfrog").toString()));
+					.build(new ResourceLocation(MmoStatsMod.MODID, "tamed_frog").toString()));
 
 	public static void register(IEventBus eventBus) {
 		Entities.register(eventBus);
