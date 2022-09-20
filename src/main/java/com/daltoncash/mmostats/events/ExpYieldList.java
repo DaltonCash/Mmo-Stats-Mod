@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.daltoncash.mmostats.entities.ModEntityTypes;
-import com.daltoncash.mmostats.entities.mod_entities.Companion;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Block;
