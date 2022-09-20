@@ -28,7 +28,7 @@ public class TamedTurtleRenderer extends GeoEntityRenderer<TamedTurtle> {
     public RenderType getRenderType(TamedTurtle animatable, float partialTicks, PoseStack stack,
                                     MultiBufferSource renderTypeBuffer, VertexConsumer vertexBuilder, int packedLightIn,
                                     ResourceLocation textureLocation) {
-        stack.scale(2.8F, 2.8F, 2.8F);
+        stack.scale(0.8F, 0.8F, 0.8F);
         return super.getRenderType(animatable, partialTicks, stack, renderTypeBuffer, vertexBuilder, packedLightIn, textureLocation);
     }
 }
