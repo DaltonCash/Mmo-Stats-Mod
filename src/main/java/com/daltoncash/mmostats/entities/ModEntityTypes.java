@@ -2,7 +2,9 @@ package com.daltoncash.mmostats.entities;
 
 import com.daltoncash.mmostats.MmoStatsMod;
 import com.daltoncash.mmostats.entities.mod_entities.Companion;
+import com.daltoncash.mmostats.entities.mod_entities.TamedBee;
 import com.daltoncash.mmostats.entities.mod_entities.TamedFrog;
+import com.daltoncash.mmostats.entities.mod_entities.TamedGoat;
 import com.daltoncash.mmostats.entities.mod_entities.TamedLlama;
 import com.daltoncash.mmostats.entities.mod_entities.TamedTurtle;
 
@@ -33,6 +35,14 @@ public class ModEntityTypes {
 	public static final RegistryObject<EntityType<TamedTurtle>> TURTLE = Entities.register("tamed_turtle",
 			() -> EntityType.Builder.of(TamedTurtle::new, MobCategory.CREATURE).sized(0.8f, 0.6f)
 					.build(new ResourceLocation(MmoStatsMod.MODID, "tamed_turtle").toString()));
+	
+	public static final RegistryObject<EntityType<TamedGoat>> GOAT = Entities.register("tamed_goat",
+			() -> EntityType.Builder.of(TamedGoat::new, MobCategory.CREATURE).sized(0.8f, 0.6f)
+					.build(new ResourceLocation(MmoStatsMod.MODID, "tamed_goat").toString()));
+	
+	public static final RegistryObject<EntityType<TamedBee>> BEE = Entities.register("tamed_bee",
+			() -> EntityType.Builder.of(TamedBee::new, MobCategory.CREATURE).sized(0.8f, 0.6f)
+					.build(new ResourceLocation(MmoStatsMod.MODID, "tamed_bee").toString()));
 
 	public static void register(IEventBus eventBus) {
 		Entities.register(eventBus);

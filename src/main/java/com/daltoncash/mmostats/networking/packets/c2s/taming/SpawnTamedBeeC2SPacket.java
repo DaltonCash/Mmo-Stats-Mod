@@ -32,7 +32,7 @@ public class SpawnTamedBeeC2SPacket {
 			// HERE WE ARE ON THE SERVER!
 			ServerPlayer player = context.getSender();
 			ServerLevel level = player.getLevel();
-			((TamableAnimal) ModEntityTypes.COMPANION.get().spawn(level, null, player, ClientForgeEvents.tamedPosition,
+			((TamableAnimal) ModEntityTypes.BEE.get().spawn(level, null, player, ClientForgeEvents.tamedPosition,
 					MobSpawnType.COMMAND, true, false)).tame(player);
 			ClientForgeEvents.animalToBeTamedAndKilled.remove(RemovalReason.DISCARDED);
 

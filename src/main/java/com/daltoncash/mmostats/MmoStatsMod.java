@@ -2,10 +2,12 @@ package com.daltoncash.mmostats;
 
 
 import com.daltoncash.mmostats.entities.ModEntityTypes;
-import com.daltoncash.mmostats.entities.client.CompanionRenderer;
-import com.daltoncash.mmostats.entities.client.TamedFrogRenderer;
-import com.daltoncash.mmostats.entities.client.TamedLlamaRenderer;
-import com.daltoncash.mmostats.entities.client.TamedTurtleRenderer;
+import com.daltoncash.mmostats.entities.client.bee.TamedBeeRenderer;
+import com.daltoncash.mmostats.entities.client.companion.CompanionRenderer;
+import com.daltoncash.mmostats.entities.client.frog.TamedFrogRenderer;
+import com.daltoncash.mmostats.entities.client.goat.TamedGoatRenderer;
+import com.daltoncash.mmostats.entities.client.llama.TamedLlamaRenderer;
+import com.daltoncash.mmostats.entities.client.turtle.TamedTurtleRenderer;
 import com.daltoncash.mmostats.item.ModItems;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.mojang.logging.LogUtils;
@@ -101,6 +103,8 @@ public class MmoStatsMod {
 			EntityRenderers.register(ModEntityTypes.TAMEDFROG.get(), TamedFrogRenderer::new);
 			EntityRenderers.register(ModEntityTypes.LLAMA.get(), TamedLlamaRenderer::new);
 			EntityRenderers.register(ModEntityTypes.TURTLE.get(), TamedTurtleRenderer::new);
+			EntityRenderers.register(ModEntityTypes.GOAT.get(), TamedGoatRenderer::new);
+			EntityRenderers.register(ModEntityTypes.BEE.get(), TamedBeeRenderer::new);
 			LOGGER.info("HELLO FROM CLIENT SETUP");
 			LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
 		}

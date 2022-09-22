@@ -1,6 +1,6 @@
-package com.daltoncash.mmostats.entities.client;
+package com.daltoncash.mmostats.entities.client.bee;
 
-import com.daltoncash.mmostats.entities.mod_entities.TamedFrog;
+import com.daltoncash.mmostats.entities.mod_entities.TamedBee;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
@@ -10,22 +10,22 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
-public class TamedFrogRenderer extends GeoEntityRenderer<TamedFrog> {
+public class TamedBeeRenderer extends GeoEntityRenderer<TamedBee> {
 	
-	TamedFrogModel tamedFrogModel = new TamedFrogModel();
+	TamedBeeModel tamedBeeModel = new TamedBeeModel();
 	
-    public TamedFrogRenderer(EntityRendererProvider.Context renderManager) {
-        super(renderManager, new TamedFrogModel());
+    public TamedBeeRenderer(EntityRendererProvider.Context renderManager) {
+        super(renderManager, new TamedBeeModel());
         this.shadowRadius = 0.3f;
     }
 
     @Override
-    public ResourceLocation getTextureLocation(TamedFrog instance) {
-        return tamedFrogModel.getTextureResource(instance);
+    public ResourceLocation getTextureLocation(TamedBee instance) {
+        return tamedBeeModel.getTextureResource(instance);
     }
 
     @Override
-    public RenderType getRenderType(TamedFrog animatable, float partialTicks, PoseStack stack,
+    public RenderType getRenderType(TamedBee animatable, float partialTicks, PoseStack stack,
                                     MultiBufferSource renderTypeBuffer, VertexConsumer vertexBuilder, int packedLightIn,
                                     ResourceLocation textureLocation) {
         stack.scale(0.8F, 0.8F, 0.8F);

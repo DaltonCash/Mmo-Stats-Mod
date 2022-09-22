@@ -1,4 +1,4 @@
-package com.daltoncash.mmostats.entities.client;
+package com.daltoncash.mmostats.entities.client.turtle;
 
 import com.daltoncash.mmostats.MmoStatsMod;
 import com.daltoncash.mmostats.entities.mod_entities.TamedTurtle;

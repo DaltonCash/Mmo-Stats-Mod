@@ -1,6 +1,6 @@
-package com.daltoncash.mmostats.entities.client;
+package com.daltoncash.mmostats.entities.client.llama;
 
-import com.daltoncash.mmostats.entities.mod_entities.TamedTurtle;
+import com.daltoncash.mmostats.entities.mod_entities.TamedLlama;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
@@ -10,22 +10,22 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
-public class TamedTurtleRenderer extends GeoEntityRenderer<TamedTurtle> {
+public class TamedLlamaRenderer extends GeoEntityRenderer<TamedLlama> {
 	
-	TamedTurtleModel tamedTurtleModel = new TamedTurtleModel();
+	TamedLlamaModel tamedLlamaModel = new TamedLlamaModel();
 	
-    public TamedTurtleRenderer(EntityRendererProvider.Context renderManager) {
-        super(renderManager, new TamedTurtleModel());
-        this.shadowRadius = 0.3f;
+    public TamedLlamaRenderer(EntityRendererProvider.Context renderManager) {
+        super(renderManager, new TamedLlamaModel());
+        this.shadowRadius = 1f;
     }
 
     @Override
-    public ResourceLocation getTextureLocation(TamedTurtle instance) {
-        return tamedTurtleModel.getTextureResource(instance);
+    public ResourceLocation getTextureLocation(TamedLlama instance) {
+        return tamedLlamaModel.getTextureResource(instance);
     }
 
     @Override
-    public RenderType getRenderType(TamedTurtle animatable, float partialTicks, PoseStack stack,
+    public RenderType getRenderType(TamedLlama animatable, float partialTicks, PoseStack stack,
                                     MultiBufferSource renderTypeBuffer, VertexConsumer vertexBuilder, int packedLightIn,
                                     ResourceLocation textureLocation) {
         stack.scale(0.8F, 0.8F, 0.8F);
