@@ -4,6 +4,7 @@ public class ClientCapabilityData {
 	//Core Levels
 	private static int playerExp;
 	private static int playerLevel;
+	private static int playerUpgradePoints;
 	private static int playerHealth;
 	private static int playerHealthExp;
 	private static int playerAgility;
@@ -953,6 +954,14 @@ public class ClientCapabilityData {
 
 	public static void setUpgradedInsatiable(int isUpgradedInsatiable) {
 		ClientCapabilityData.isUpgradedInsatiable = isUpgradedInsatiable;
+	}
+
+	public static int getPlayerUpgradePoints() {
+		return playerUpgradePoints;
+	}
+
+	public static void setPlayerUpgradePoints(int playerUpgradePoints) {
+		ClientCapabilityData.playerUpgradePoints = playerUpgradePoints;
 	}
 
 }

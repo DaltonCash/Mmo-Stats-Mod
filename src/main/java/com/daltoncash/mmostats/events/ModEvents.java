@@ -182,6 +182,8 @@ import com.daltoncash.mmostats.capabilities.playerlevel.PlayerLevel;
 import com.daltoncash.mmostats.capabilities.playerlevel.PlayerLevelExp;
 import com.daltoncash.mmostats.capabilities.playerlevel.PlayerLevelExpProvider;
 import com.daltoncash.mmostats.capabilities.playerlevel.PlayerLevelProvider;
+import com.daltoncash.mmostats.capabilities.playerlevel.PlayerUpgradePoints;
+import com.daltoncash.mmostats.capabilities.playerlevel.PlayerUpgradePointsProvider;
 import com.daltoncash.mmostats.capabilities.playerlevel.stats.mana.PlayerMana;
 import com.daltoncash.mmostats.capabilities.playerlevel.stats.mana.PlayerManaProvider;
 import com.daltoncash.mmostats.capabilities.swords.PlayerSwordsExp;
@@ -214,6 +216,7 @@ import com.daltoncash.mmostats.networking.packets.s2c.skills.MiningExpDataSyncS2
 import com.daltoncash.mmostats.networking.packets.s2c.skills.MiningLevelDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.PlayerLevelDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.PlayerLevelExpDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.skills.PlayerUpgradePointsDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.SwordsExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.SwordsLevelDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.magic.MagicExpDataSyncS2CPacket;
@@ -388,6 +391,10 @@ public class ModEvents {
 			if (!event.getObject().getCapability(PlayerLevelExpProvider.PLAYER_LEVEL_EXP).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "playerlevelexpproperties"),
 						new PlayerLevelExpProvider());
+			}
+			if (!event.getObject().getCapability(PlayerUpgradePointsProvider.PLAYER_UPGRADE_POINTS).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "playerupgradepointsproperties"),
+						new PlayerUpgradePointsProvider());
 			}
 			if (!event.getObject().getCapability(PlayerManaProvider.PLAYER_MANA).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "manaproperties"),
@@ -823,6 +830,11 @@ public class ModEvents {
 			});
 			event.getOriginal().getCapability(PlayerLevelExpProvider.PLAYER_LEVEL_EXP).ifPresent(oldStore -> {
 				event.getEntity().getCapability(PlayerLevelExpProvider.PLAYER_LEVEL_EXP).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(PlayerUpgradePointsProvider.PLAYER_UPGRADE_POINTS).ifPresent(oldStore -> {
+				event.getEntity().getCapability(PlayerUpgradePointsProvider.PLAYER_UPGRADE_POINTS).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
@@ -1346,6 +1358,7 @@ public class ModEvents {
 		//Core Skills
 		event.register(PlayerLevel.class);
 		event.register(PlayerLevelExp.class);
+		event.register(PlayerUpgradePoints.class);
 		event.register(PlayerMana.class);
 		event.register(PlayerMiningLevel.class);
 		event.register(PlayerMiningExp.class);
@@ -1474,6 +1487,9 @@ public class ModEvents {
 				});
 				player.getCapability(PlayerLevelExpProvider.PLAYER_LEVEL_EXP).ifPresent(playerLevelExp -> {
 					ModMessages.sendToPlayer(new PlayerLevelExpDataSyncS2CPacket(playerLevelExp.getLevelExp()), player);
+				});
+				player.getCapability(PlayerUpgradePointsProvider.PLAYER_UPGRADE_POINTS).ifPresent(playerUpgradePoints -> {
+					ModMessages.sendToPlayer(new PlayerUpgradePointsDataSyncS2CPacket(playerUpgradePoints.getPlayerUpgradePoints()), player);
 				});
 				player.getCapability(PlayerManaProvider.PLAYER_MANA).ifPresent(mana -> {
 					ModMessages.sendToPlayer(new ManaDataSyncS2CPacket(mana.getMana()), player);
