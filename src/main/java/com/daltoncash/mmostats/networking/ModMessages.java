@@ -89,6 +89,8 @@ import com.daltoncash.mmostats.networking.packets.c2s.combatUpgrades.StableFooti
 import com.daltoncash.mmostats.networking.packets.c2s.combatUpgrades.TakeStanceUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.CarnivoreUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.EggerUpgradeC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.FastFoodUpgradeC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.InsatiableUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.SugarRushUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.WellFedUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.ApplesEatenC2SPacket;
@@ -164,6 +166,8 @@ import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.St
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.TakeStanceUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.CarnivoreUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.EggerUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.FastFoodUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.InsatiableUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.SugarRushUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.WellFedUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.ApplesEatenDataSyncS2CPacket;
@@ -230,7 +234,7 @@ public class ModMessages {
         return packetId++;
     }
 
-    public static void register() {
+	public static void register() {
         SimpleChannel net = NetworkRegistry.ChannelBuilder
                 .named(new ResourceLocation(MmoStatsMod.MODID, "messages"))
                 .networkProtocolVersion(() -> "1.0")
@@ -239,21 +243,7 @@ public class ModMessages {
                 .simpleChannel();
 
         INSTANCE = net;
-        //Idea for shortening the length of this class:
-        //Add all of the packets to the c2sPackets list and add them to the SimpleChannel net
-        /*
-        List<Class> c2sPackets = new ArrayList<>();
         
-        for(Class packet : c2sPackets) {
-        	Class<?> packetClass = packet.getClass();
-        	
-        	net.messageBuilder(packetClass, id(), NetworkDirection.PLAY_TO_SERVER)
-				.decoder(packet :: new)
-				.encoder(packetClass::toBytes)
-				.consumerMainThread(packetClass::handle)
-				.add();
-        }
-        */
 //----------C2S---MISC-----------------------------------------------------------------------      
         net.messageBuilder(AdditionalFortuneProcC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
 			.decoder(AdditionalFortuneProcC2SPacket::new)
@@ -642,7 +632,16 @@ public class ModMessages {
 		.encoder(WellFedUpgradeC2SPacket::toBytes)
 		.consumerMainThread(WellFedUpgradeC2SPacket::handle)
 		.add();
-        
+        net.messageBuilder(FastFoodUpgradeC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+		.decoder(FastFoodUpgradeC2SPacket::new)
+		.encoder(FastFoodUpgradeC2SPacket::toBytes)
+		.consumerMainThread(FastFoodUpgradeC2SPacket::handle)
+		.add();
+        net.messageBuilder(InsatiableUpgradeC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+		.decoder(InsatiableUpgradeC2SPacket::new)
+		.encoder(InsatiableUpgradeC2SPacket::toBytes)
+		.consumerMainThread(InsatiableUpgradeC2SPacket::handle)
+		.add();
         //Mining
         net.messageBuilder(UpgradeJunkBlocksDropExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
 		.decoder(UpgradeJunkBlocksDropExpC2SPacket::new)
@@ -812,6 +811,16 @@ public class ModMessages {
 		.decoder(SugarRushUpgradeDataSyncS2CPacket::new)
 		.encoder(SugarRushUpgradeDataSyncS2CPacket::toBytes)
 		.consumerMainThread(SugarRushUpgradeDataSyncS2CPacket::handle)
+		.add();
+        net.messageBuilder(FastFoodUpgradeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+		.decoder(FastFoodUpgradeDataSyncS2CPacket::new)
+		.encoder(FastFoodUpgradeDataSyncS2CPacket::toBytes)
+		.consumerMainThread(FastFoodUpgradeDataSyncS2CPacket::handle)
+		.add();
+        net.messageBuilder(InsatiableUpgradeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+		.decoder(InsatiableUpgradeDataSyncS2CPacket::new)
+		.encoder(InsatiableUpgradeDataSyncS2CPacket::toBytes)
+		.consumerMainThread(InsatiableUpgradeDataSyncS2CPacket::handle)
 		.add();
         net.messageBuilder(WellFedUpgradeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
 		.decoder(WellFedUpgradeDataSyncS2CPacket::new)

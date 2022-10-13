@@ -78,6 +78,10 @@ import com.daltoncash.mmostats.capabilities.farming.upgrades.CarnivoreUpgrade;
 import com.daltoncash.mmostats.capabilities.farming.upgrades.CarnivoreUpgradeProvider;
 import com.daltoncash.mmostats.capabilities.farming.upgrades.EggerUpgrade;
 import com.daltoncash.mmostats.capabilities.farming.upgrades.EggerUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.FastFoodUpgrade;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.FastFoodUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.InsatiableUpgrade;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.InsatiableUpgradeProvider;
 import com.daltoncash.mmostats.capabilities.farming.upgrades.SugarRushUpgrade;
 import com.daltoncash.mmostats.capabilities.farming.upgrades.SugarRushUpgradeProvider;
 import com.daltoncash.mmostats.capabilities.farming.upgrades.WellFedUpgrade;
@@ -244,6 +248,8 @@ import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.St
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.TakeStanceUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.CarnivoreUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.EggerUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.FastFoodUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.InsatiableUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.SugarRushUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.WellFedUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.ApplesEatenDataSyncS2CPacket;
@@ -546,6 +552,14 @@ public class ModEvents {
 			if (!event.getObject().getCapability(WellFedUpgradeProvider.IS_UPGRADED).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "wellfedupgradeproperties"),
 						new WellFedUpgradeProvider());
+			}
+			if (!event.getObject().getCapability(FastFoodUpgradeProvider.IS_UPGRADED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "fastfoodupgradeproperties"),
+						new FastFoodUpgradeProvider());
+			}
+			if (!event.getObject().getCapability(InsatiableUpgradeProvider.IS_UPGRADED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "insatiableupgradeproperties"),
+						new InsatiableUpgradeProvider());
 			}
 			
 			//Mining Upgrades
@@ -1014,6 +1028,16 @@ public class ModEvents {
 					newStore.copyFrom(oldStore);
 				});
 			});
+			event.getOriginal().getCapability(FastFoodUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
+				event.getEntity().getCapability(FastFoodUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(InsatiableUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
+				event.getEntity().getCapability(InsatiableUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
 			
 			//-------------------------Mining----Upgrades-----------------------
 			
@@ -1368,6 +1392,8 @@ public class ModEvents {
 		event.register(EggerUpgrade.class);
 		event.register(SugarRushUpgrade.class);
 		event.register(WellFedUpgrade.class);
+		event.register(InsatiableUpgrade.class);
+		event.register(FastFoodUpgrade.class);
 		
 		//Mining Upgrades
 		event.register(JunkBlocksDropExpUpgrade.class);
@@ -1570,6 +1596,12 @@ public class ModEvents {
 				});
 				player.getCapability(WellFedUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
 					ModMessages.sendToPlayer(new WellFedUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
+				});
+				player.getCapability(FastFoodUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+					ModMessages.sendToPlayer(new FastFoodUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
+				});
+				player.getCapability(InsatiableUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+					ModMessages.sendToPlayer(new InsatiableUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 				});
 				
 				//----Mining--Upgrades------

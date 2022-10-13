@@ -51,6 +51,8 @@ public class ClientCapabilityData {
 	private static int isUpgradedEgger;
 	private static int isUpgradedSugarRush;
 	private static int isUpgradedWellFed;
+	private static int isUpgradedFastFood;
+	private static int isUpgradedInsatiable;
 	//swords
 	private static int isUpgradedCritastic;
 	private static int isUpgradedFleshWound;
@@ -935,6 +937,22 @@ public class ClientCapabilityData {
 
 	public static void setWarpedStemChopped(int warpedStemChopped) {
 		WarpedStemChopped = warpedStemChopped;
+	}
+
+	public static int getIsUpgradedFastFood() {
+		return isUpgradedFastFood;
+	}
+
+	public static void setUpgradedFastFood(int isUpgradedFastFood) {
+		ClientCapabilityData.isUpgradedFastFood = isUpgradedFastFood;
+	}
+
+	public static int getIsUpgradedInsatiable() {
+		return isUpgradedInsatiable;
+	}
+
+	public static void setUpgradedInsatiable(int isUpgradedInsatiable) {
+		ClientCapabilityData.isUpgradedInsatiable = isUpgradedInsatiable;
 	}
 
 }
