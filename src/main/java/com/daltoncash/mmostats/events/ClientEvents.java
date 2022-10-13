@@ -176,6 +176,7 @@ public class ClientEvents {
 			
 			if(event.getSource().getEntity() != null) {
 				if(event.getSource().getEntity().getType().equals(EntityType.PLAYER)) {
+					
 					Player player = (Player)event.getSource().getEntity();
 					LivingEntity entity = event.getEntity();
 					//Egger
@@ -188,26 +189,34 @@ public class ClientEvents {
 					}
 					
 					if(event.getSource().getDirectEntity().getType().equals(EntityType.ARROW)) {
+						//Archery Passive:
+						float damageFromArcheryLevel = ClientCapabilityData.getPlayerArcheryLevel() / 500.0f;
+						float moddedDamageToAdd = event.getAmount() * damageFromArcheryLevel;
+						
+						entity.hurt(event.getSource(), moddedDamageToAdd);
+						
+						float totalDamageAfterModded = event.getAmount() + moddedDamageToAdd;
+						
 						
 						//Arrow: Insecurity
 						if(ClientCapabilityData.isUpgradedInsecurity() > 0) {
 							if(entity.getType().equals(EntityType.SKELETON) || entity.getType().equals(EntityType.BLAZE) ||
 									entity.getType().equals(EntityType.STRAY) || entity.getType().equals(EntityType.GHAST)) {
-								entity.setHealth(Math.max(entity.getHealth() - (event.getAmount()/3), 0));
+								entity.hurt(event.getSource(), totalDamageAfterModded/3);
 							}
 						}
 						
 						//Arrow: Sniper
 						if(ClientCapabilityData.isUpgradedSniper() > 0) {
 							if(player.distanceTo(entity) > 25) {
-								entity.setHealth(Math.max(entity.getHealth() - (event.getAmount()/3), 0));
+								entity.hurt(event.getSource(), totalDamageAfterModded/3);
 							}
 						}
 						
 						//Arrow: Headshot
 						if(ClientCapabilityData.isUpgradedSweetSpotArchery() > 0) {
 							if(event.getSource().getSourcePosition().y >= event.getEntity().getEyePosition().y - 0.2) {
-								event.getEntity().setHealth(Math.max(event.getEntity().getHealth() - (event.getAmount()/3), 0));
+								entity.hurt(event.getSource(), totalDamageAfterModded/3);
 							}
 						}
 					}
@@ -607,12 +616,26 @@ public class ClientEvents {
 		}
 		// Check for Passive Ability Double Drops
 		@SubscribeEvent
-		public static void onBreakBlock(BlockEvent.BreakEvent event) {
+		public static void onBreakBlockRollForFortune(BlockEvent.BreakEvent event) {
 			if (ExpYieldList.getMiningBlocks().contains(event.getState().getBlock())) {
 				blockevent = event;
 				int goldMinedLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getGoldMined());
+				double goldMinedEffectiveness = 
+						(1 + ((goldMinedLevel * goldMinedLevel * goldMinedLevel * goldMinedLevel) / 100f)) / 500.0;
 				double rand =  Math.random();
-				double fortuneChance = (ClientCapabilityData.getPlayerMiningLevel() * (1 + ((goldMinedLevel * goldMinedLevel * goldMinedLevel * goldMinedLevel) / 100f))) / 500.0;
+				double fortuneChance = (ClientCapabilityData.getPlayerMiningLevel() * goldMinedEffectiveness);
+				while(fortuneChance >= rand){
+					ModMessages.sendToServer(new AdditionalFortuneProcC2SPacket());
+					fortuneChance -= 1;
+				}
+			}
+			if (ExpYieldList.getChoppingBlocks().contains(event.getState().getBlock())) {
+				blockevent = event;
+				int goldMinedLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getGoldMined());
+				double goldMinedEffectiveness = 
+						(1 + ((goldMinedLevel * goldMinedLevel * goldMinedLevel * goldMinedLevel) / 100f)) / 500.0;
+				double rand =  Math.random();
+				double fortuneChance = (ClientCapabilityData.getPlayerChoppingLevel() * goldMinedEffectiveness);
 				while(fortuneChance >= rand){
 					ModMessages.sendToServer(new AdditionalFortuneProcC2SPacket());
 					fortuneChance -= 1;

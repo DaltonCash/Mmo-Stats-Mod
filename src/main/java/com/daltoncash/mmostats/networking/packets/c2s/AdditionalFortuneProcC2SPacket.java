@@ -40,7 +40,7 @@ public class AdditionalFortuneProcC2SPacket {
 			BlockEvent event = ClientForgeEvents.blockevent;
 			Map<Enchantment, Integer> map = player.getItemInHand(InteractionHand.MAIN_HAND).getAllEnchantments();
 			List<ItemStack> drops = Block.getDrops(event.getState(), level, event.getPos(), null);
-
+	
 			// Takes the player's item's enchants and finds if it has fortune.
 			// It then applies Minecraft's fortune equation to find correct drops to add to
 			// player's inventory.
@@ -99,7 +99,8 @@ public class AdditionalFortuneProcC2SPacket {
 						}
 					}
 				}
-				// Applies when player has no fortune.
+				
+			// Applies when player has no fortune.
 			} else {
 				for (ItemStack item : drops) {
 					item.setCount(item.getCount() * 1);
