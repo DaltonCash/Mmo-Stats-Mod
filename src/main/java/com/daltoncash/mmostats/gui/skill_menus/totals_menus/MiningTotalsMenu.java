@@ -51,7 +51,7 @@ public class MiningTotalsMenu extends Screen {
 		DescriptionPanel eatenPanel = new DescriptionPanel(this.minecraft, (this.width * 3) / 10 ,
 				(this.height * 9) / 10, 25, (this.width * 7) / 20);
 		List<String> eatenList = new ArrayList<>();
-		eatenList.add("Eaten");
+		eatenList.add("Mined");
 		eatenList.add("=====");
 		eatenList.add(ClientCapabilityData.getCoalMined() + "");
 		eatenList.add(ClientCapabilityData.getCopperMined() + "");
