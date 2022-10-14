@@ -61,7 +61,7 @@ public class UpgradeMenu extends Screen {
 		buttonW = this.width / 8;
 		buttonH = this.height / 5;
 		
-		addRenderableWidget(new Button(this.width / 3, buttonH / 8, this.width / 3, 20,
+		addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
 				Component.literal("Upgrades Unspent: " + ClientCapabilityData.getPlayerUpgradePoints()),
 				UpgradeMenu::onPressDoNothing));
 		

@@ -38,9 +38,6 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.util.Size2i;
 
 public class ArcheryMenu extends Screen {
-	public Widget ancientDebris;
-	// private OptionsList list;
-	// protected final Options options;
 	private final ResourceLocation bgtexture = new ResourceLocation(MmoStatsMod.MODID, "textures/gui/cobble_bg-2.png");
 
 	//Textures to appear bright if upgraded:
@@ -95,6 +92,15 @@ public class ArcheryMenu extends Screen {
 	private static final String sweetSpot = "pewpew";
 	private static final String unabated = "pewdiepie";
 
+	
+	private static Button efficientMarksmanButton;
+	private static Button hunterButton;
+	private static Button insecurityButton;
+	private static Button leftClickButton;
+	private static Button quickshotButton;
+	private static Button sniperButton;
+	private static Button sweetSpotButton;
+	private static Button unabatedButton;
 	private static DescriptionPanel upgradeDescription;
 
 	public ArcheryMenu(Component p_96550_) {
@@ -104,74 +110,78 @@ public class ArcheryMenu extends Screen {
 	@Override
 	public final void init() {
 
+		addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
+				Component.literal("Upgrades Unspent: " + ClientCapabilityData.getPlayerUpgradePoints()),
+				ArcheryMenu::onPressDoNothing));
+		
 		if(ClientCapabilityData.isUpgradedEfficientMarksman() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 1, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+			efficientMarksmanButton = addRenderableWidget(new ImageButton((this.width / 18) * 1, (this.height / 6) * 2, 50, 50, 0, 0, 99,
 					upgradeTexture1, 50, 50, ArcheryMenu::onPressToggleEfficientMarksman));	
 		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 1, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+			efficientMarksmanButton = addRenderableWidget(new ImageButton((this.width / 18) * 1, (this.height / 6) * 2, 50, 50, 0, 0, 99,
 					upgradeTexture1Dark, 50, 50, ArcheryMenu::onPressToggleEfficientMarksman));	
 		}
 		
 		
 		if(ClientCapabilityData.isUpgradedHunter() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 3, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+			hunterButton = addRenderableWidget(new ImageButton((this.width / 18) * 3, (this.height / 6) * 2, 50, 50, 0, 0, 99,
 					upgradeTexture2, 50, 50, ArcheryMenu::onPressToggleHunter));
 		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 3, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+			hunterButton = addRenderableWidget(new ImageButton((this.width / 18) * 3, (this.height / 6) * 2, 50, 50, 0, 0, 99,
 					upgradeTexture2Dark, 50, 50, ArcheryMenu::onPressToggleHunter));
 		}
 		
 		
 		if(ClientCapabilityData.isUpgradedInsecurity() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 5, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+			insecurityButton = addRenderableWidget(new ImageButton((this.width / 18) * 5, (this.height / 6) * 2, 50, 50, 0, 0, 99,
 					upgradeTexture3, 50, 50, ArcheryMenu::onPressToggleInsecurity));
 		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 5, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+			insecurityButton = addRenderableWidget(new ImageButton((this.width / 18) * 5, (this.height / 6) * 2, 50, 50, 0, 0, 99,
 					upgradeTexture3Dark, 50, 50, ArcheryMenu::onPressToggleInsecurity));
 		}
 		
 		
 		if(ClientCapabilityData.isUpgradedLeftClick() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 7, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+			leftClickButton = addRenderableWidget(new ImageButton((this.width / 18) * 7, (this.height / 6) * 2, 50, 50, 0, 0, 99,
 					upgradeTexture4, 50, 50, ArcheryMenu::onPressToggleLeftClick));
 		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 7, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+			leftClickButton = addRenderableWidget(new ImageButton((this.width / 18) * 7, (this.height / 6) * 2, 50, 50, 0, 0, 99,
 					upgradeTexture4Dark, 50, 50, ArcheryMenu::onPressToggleLeftClick));
 		}
 		
 		
 		if(ClientCapabilityData.isUpgradedQuickshot() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 9, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+			quickshotButton = addRenderableWidget(new ImageButton((this.width / 18) * 9, (this.height / 6) * 2, 50, 50, 0, 0, 99,
 					upgradeTexture5, 50, 50, ArcheryMenu::onPressToggleQuickshot));
 		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 9, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+			quickshotButton = addRenderableWidget(new ImageButton((this.width / 18) * 9, (this.height / 6) * 2, 50, 50, 0, 0, 99,
 					upgradeTexture5Dark, 50, 50, ArcheryMenu::onPressToggleQuickshot));
 		}
 		
 		
 		if(ClientCapabilityData.isUpgradedSniper() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 2, (this.height / 6) * 3, 50, 50, 0, 0, 99,
+			sniperButton = addRenderableWidget(new ImageButton((this.width / 18) * 2, (this.height / 6) * 3, 50, 50, 0, 0, 99,
 					upgradeTexture6, 50, 50, ArcheryMenu::onPressToggleSniper));
 		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 2, (this.height / 6) * 3, 50, 50, 0, 0, 99,
+			sniperButton = addRenderableWidget(new ImageButton((this.width / 18) * 2, (this.height / 6) * 3, 50, 50, 0, 0, 99,
 					upgradeTexture6Dark, 50, 50, ArcheryMenu::onPressToggleSniper));
 		}
 		
 		
 		if(ClientCapabilityData.isUpgradedSweetSpotArchery() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 4, (this.height / 6) * 3, 50, 50, 0, 0, 99,
+			sweetSpotButton = addRenderableWidget(new ImageButton((this.width / 18) * 4, (this.height / 6) * 3, 50, 50, 0, 0, 99,
 					upgradeTexture7, 50, 50, ArcheryMenu::onPressToggleSweetSpot));
 		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 4, (this.height / 6) * 3, 50, 50, 0, 0, 99,
+			sweetSpotButton = addRenderableWidget(new ImageButton((this.width / 18) * 4, (this.height / 6) * 3, 50, 50, 0, 0, 99,
 					upgradeTexture7Dark, 50, 50, ArcheryMenu::onPressToggleSweetSpot));
 		}
 		
 		
 		if(ClientCapabilityData.isUpgradedUnabated() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 6, (this.height / 6) * 3, 50, 50, 0, 0, 99,
+			unabatedButton = addRenderableWidget(new ImageButton((this.width / 18) * 6, (this.height / 6) * 3, 50, 50, 0, 0, 99,
 					upgradeTexture8, 50, 50, ArcheryMenu::onPressToggleUnabated));
 		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 6, (this.height / 6) * 3, 50, 50, 0, 0, 99,
+			unabatedButton = addRenderableWidget(new ImageButton((this.width / 18) * 6, (this.height / 6) * 3, 50, 50, 0, 0, 99,
 					upgradeTexture8Dark, 50, 50, ArcheryMenu::onPressToggleUnabated));
 		}
 		
@@ -190,7 +200,78 @@ public class ArcheryMenu extends Screen {
 		lines.add("Select Upgrade.");
 		upgradeDescription.setInfo(lines, null, null);
 	}
-
+	public void tick() {
+		if(ClientCapabilityData.isUpgradedEfficientMarksman() > 0) {
+			efficientMarksmanButton = addRenderableWidget(new ImageButton((this.width / 18) * 1, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+					upgradeTexture1, 50, 50, ArcheryMenu::onPressToggleEfficientMarksman));	
+		}else {
+			efficientMarksmanButton = addRenderableWidget(new ImageButton((this.width / 18) * 1, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+					upgradeTexture1Dark, 50, 50, ArcheryMenu::onPressToggleEfficientMarksman));	
+		}
+		
+		
+		if(ClientCapabilityData.isUpgradedHunter() > 0) {
+			hunterButton = addRenderableWidget(new ImageButton((this.width / 18) * 3, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+					upgradeTexture2, 50, 50, ArcheryMenu::onPressToggleHunter));
+		}else {
+			hunterButton = addRenderableWidget(new ImageButton((this.width / 18) * 3, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+					upgradeTexture2Dark, 50, 50, ArcheryMenu::onPressToggleHunter));
+		}
+		
+		
+		if(ClientCapabilityData.isUpgradedInsecurity() > 0) {
+			insecurityButton = addRenderableWidget(new ImageButton((this.width / 18) * 5, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+					upgradeTexture3, 50, 50, ArcheryMenu::onPressToggleInsecurity));
+		}else {
+			insecurityButton = addRenderableWidget(new ImageButton((this.width / 18) * 5, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+					upgradeTexture3Dark, 50, 50, ArcheryMenu::onPressToggleInsecurity));
+		}
+		
+		
+		if(ClientCapabilityData.isUpgradedLeftClick() > 0) {
+			leftClickButton = addRenderableWidget(new ImageButton((this.width / 18) * 7, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+					upgradeTexture4, 50, 50, ArcheryMenu::onPressToggleLeftClick));
+		}else {
+			leftClickButton = addRenderableWidget(new ImageButton((this.width / 18) * 7, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+					upgradeTexture4Dark, 50, 50, ArcheryMenu::onPressToggleLeftClick));
+		}
+		
+		
+		if(ClientCapabilityData.isUpgradedQuickshot() > 0) {
+			quickshotButton = addRenderableWidget(new ImageButton((this.width / 18) * 9, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+					upgradeTexture5, 50, 50, ArcheryMenu::onPressToggleQuickshot));
+		}else {
+			quickshotButton = addRenderableWidget(new ImageButton((this.width / 18) * 9, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+					upgradeTexture5Dark, 50, 50, ArcheryMenu::onPressToggleQuickshot));
+		}
+		
+		
+		if(ClientCapabilityData.isUpgradedSniper() > 0) {
+			sniperButton = addRenderableWidget(new ImageButton((this.width / 18) * 2, (this.height / 6) * 3, 50, 50, 0, 0, 99,
+					upgradeTexture6, 50, 50, ArcheryMenu::onPressToggleSniper));
+		}else {
+			sniperButton = addRenderableWidget(new ImageButton((this.width / 18) * 2, (this.height / 6) * 3, 50, 50, 0, 0, 99,
+					upgradeTexture6Dark, 50, 50, ArcheryMenu::onPressToggleSniper));
+		}
+		
+		
+		if(ClientCapabilityData.isUpgradedSweetSpotArchery() > 0) {
+			sweetSpotButton = addRenderableWidget(new ImageButton((this.width / 18) * 4, (this.height / 6) * 3, 50, 50, 0, 0, 99,
+					upgradeTexture7, 50, 50, ArcheryMenu::onPressToggleSweetSpot));
+		}else {
+			sweetSpotButton = addRenderableWidget(new ImageButton((this.width / 18) * 4, (this.height / 6) * 3, 50, 50, 0, 0, 99,
+					upgradeTexture7Dark, 50, 50, ArcheryMenu::onPressToggleSweetSpot));
+		}
+		
+		
+		if(ClientCapabilityData.isUpgradedUnabated() > 0) {
+			unabatedButton = addRenderableWidget(new ImageButton((this.width / 18) * 6, (this.height / 6) * 3, 50, 50, 0, 0, 99,
+					upgradeTexture8, 50, 50, ArcheryMenu::onPressToggleUnabated));
+		}else {
+			unabatedButton = addRenderableWidget(new ImageButton((this.width / 18) * 6, (this.height / 6) * 3, 50, 50, 0, 0, 99,
+					upgradeTexture8Dark, 50, 50, ArcheryMenu::onPressToggleUnabated));
+		}
+	   }
 	private static void onPressToggleEfficientMarksman(Button button) {
 		upgradeString = efficientMarksman;
 		updateCache();
@@ -236,34 +317,39 @@ public class ArcheryMenu extends Screen {
 	}
 
 	private static void onPressDoUpgrade(Button button) {
-		switch (upgradeString) {
-		case efficientMarksman:
-			ModMessages.sendToServer(new EfficientMarksmanUpgradeC2SPacket());
-			break;
-		case hunter:
-			ModMessages.sendToServer(new HunterUpgradeC2SPacket());
-			break;
-		case insecurity:
-			ModMessages.sendToServer(new InsecurityUpgradeC2SPacket());
-			break;
-		case leftClick:
-			ModMessages.sendToServer(new LeftClickUpgradeC2SPacket());
-			break;
-		case quickshot:
-			ModMessages.sendToServer(new QuickshotUpgradeC2SPacket());
-			break;
-		case sniper:
-			ModMessages.sendToServer(new SniperUpgradeC2SPacket());
-			break;
-		case sweetSpot:
-			ModMessages.sendToServer(new SweetSpotArcheryUpgradeC2SPacket());
-			break;
-		case unabated:
-			ModMessages.sendToServer(new UnabatedUpgradeC2SPacket());
-			break;
+		if(ClientCapabilityData.getPlayerUpgradePoints() > 0) {
+			switch (upgradeString) {
+			case efficientMarksman:
+				ModMessages.sendToServer(new EfficientMarksmanUpgradeC2SPacket());
+				break;
+			case hunter:
+				ModMessages.sendToServer(new HunterUpgradeC2SPacket());
+				break;
+			case insecurity:
+				ModMessages.sendToServer(new InsecurityUpgradeC2SPacket());
+				break;
+			case leftClick:
+				ModMessages.sendToServer(new LeftClickUpgradeC2SPacket());
+				break;
+			case quickshot:
+				ModMessages.sendToServer(new QuickshotUpgradeC2SPacket());
+				break;
+			case sniper:
+				ModMessages.sendToServer(new SniperUpgradeC2SPacket());
+				break;
+			case sweetSpot:
+				ModMessages.sendToServer(new SweetSpotArcheryUpgradeC2SPacket());
+				break;
+			case unabated:
+				ModMessages.sendToServer(new UnabatedUpgradeC2SPacket());
+				break;
+			}
+			
+			Minecraft.getInstance().setScreen(new ArcheryMenu(Component.literal("mining")));
 		}
 		
-		Minecraft.getInstance().setScreen(new ArcheryMenu(Component.literal("mining")));
+		
+		
 	}
 
 	private static void updateCache() {
@@ -355,8 +441,6 @@ public class ArcheryMenu extends Screen {
 				RenderSystem.enableBlend();
 				RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 				RenderSystem.setShaderTexture(0, logoPath);
-				// Draw the logo image inscribed in a rectangle with width entryWidth (minus
-				// some padding) and height 50
 				int headerHeight = 50;
 				ScreenUtils.blitInscribed(poseStack, left + 20, relativeY, width - (20 * 2), headerHeight,
 						logoDims.width, logoDims.height, false, true);
