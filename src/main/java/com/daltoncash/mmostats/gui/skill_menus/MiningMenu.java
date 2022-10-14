@@ -78,7 +78,7 @@ public class MiningMenu extends Screen {
 	@Override
 	public final void init() {
 
-		addRenderableWidget(new Button(this.width/13 * 6, this.height/13 * 6, 50, 50, 
+		addRenderableWidget(new Button(this.width / 5 * 2, this.height / 40 * 35, this.width / 5, 20, 
 				Component.literal("Mining Totals"), MiningMenu::onPressShowTotals));
 		
 		addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
@@ -376,50 +376,6 @@ public class MiningMenu extends Screen {
 		public void updateNarration(NarrationElementOutput p_169152_) {
 		}
 	}
-	/*	
-		
-		
-		addRenderableWidget(new ImageButton((this.width / 6) * 1, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-				upgradeTexture1, 50, 50, MiningMenu::onPressUpgradeJunk));
-		addRenderableWidget(new ImageButton((this.width / 6) * 3, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-				upgradeTexture2, 50, 50, MiningMenu::onPressUpgradeNoJunk));
-		addRenderableWidget(new ImageButton((this.width / 6) * 2, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-				upgradeTexture3, 50, 50, MiningMenu::onPressUpgradeNightVision));
-		addRenderableWidget(new ImageButton((this.width / 6) * 4, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-				upgradeTexture4, 50, 50, MiningMenu::onPressUpgradeObsidianBreaker));
-		
-		
-		addRenderableWidget(new ImageButton((this.width * 27) / 42, 0, this.width/10 * 9, this.height, 0, 0, 0,
-				descriptionBanner, (this.width * 40)/84, (this.height * 50)/49, MiningMenu::onPressDoNothing));
-		
-		
-		addRenderableWidget(new Button((this.width * 33) /40, (this.height * 35) / 40, (this.width * 100) / 840, 20, 
-				Component.literal("Upgrade"), MiningMenu::onPressDoNothing));
-		
-		
-	}
-	private static void onPressDoNothing(Button button) {
-		
-	}
-	private static void onPressShowTotals(Button button) {
-		 Minecraft.getInstance().setScreen(new MiningTotalsMenu(Component.literal("mining_totals")));
-	}
-	private static void onPressUpgradeJunk(Button button) {
-		ModMessages.sendToServer(new UpgradeJunkBlocksDropExpC2SPacket());
-	}
-
-	private static void onPressUpgradeNightVision(Button button) {
-		ModMessages.sendToServer(new UpgradeNightVisionC2SPacket());
-	}
-
-	private static void onPressUpgradeNoJunk(Button button) {
-		ModMessages.sendToServer(new UpgradeNoJunkBlocksC2SPacket());
-	}
-
-	private static void onPressUpgradeObsidianBreaker(Button button) {
-		ModMessages.sendToServer(new UpgradeObsidianBreakerC2SPacket());
-	}
-	*/
 	/*
 	//----------blocks mined buttons---------------
 	ancientDebris = addRenderableWidget(new Button(0, this.height / 16 * 1, 100, 20, 

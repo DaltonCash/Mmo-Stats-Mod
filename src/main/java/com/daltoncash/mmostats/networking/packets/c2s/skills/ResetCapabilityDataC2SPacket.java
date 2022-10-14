@@ -13,8 +13,20 @@ import com.daltoncash.mmostats.capabilities.archery.upgrades.SniperUpgradeProvid
 import com.daltoncash.mmostats.capabilities.archery.upgrades.SweetSpotArcheryUpgradeProvider;
 import com.daltoncash.mmostats.capabilities.archery.upgrades.UnabatedUpgradeProvider;
 import com.daltoncash.mmostats.capabilities.chopping.PlayerChoppingLevelProvider;
+import com.daltoncash.mmostats.capabilities.chopping.upgrades.GrannySmithUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.chopping.upgrades.HardwoodUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.chopping.upgrades.StrongArmsUpgradeProvider;
 import com.daltoncash.mmostats.capabilities.combat.PlayerCombatLevelProvider;
+import com.daltoncash.mmostats.capabilities.combat.upgrades.DodgeRollUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.combat.upgrades.FreeArrowsUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.combat.upgrades.OvercomeUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.combat.upgrades.RagnorokUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.combat.upgrades.TakeStanceUpgradeProvider;
 import com.daltoncash.mmostats.capabilities.farming.PlayerFarmingLevelProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.CarnivoreUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.EggerUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.SugarRushUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.farming.upgrades.WellFedUpgradeProvider;
 import com.daltoncash.mmostats.capabilities.mining.PlayerMiningExpProvider;
 import com.daltoncash.mmostats.capabilities.mining.PlayerMiningLevelProvider;
 import com.daltoncash.mmostats.capabilities.mining.upgrades.JunkBlocksDropExpUpgradeProvider;
@@ -45,6 +57,18 @@ import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.S
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.SniperUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.SweetSpotArcheryUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.UnabatedUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.GrannySmithUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.HardwoodUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.StrongArmsUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.DodgeRollUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.FreeArrowsUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.OvercomeUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.RagnorokUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.TakeStanceUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.CarnivoreUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.EggerUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.SugarRushUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.WellFedUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.JunkBlocksDropExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.NightVisionDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.NoJunkBlocksDataSyncS2CPacket;
@@ -170,6 +194,60 @@ public class ResetCapabilityDataC2SPacket {
 			player.getCapability(UnabatedUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
 				isUpgraded.setUpgradeLevel(0);
 				ModMessages.sendToPlayer(new UnabatedUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
+			});
+			
+			//Chopping Upgrades
+			player.getCapability(GrannySmithUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+				isUpgraded.setUpgradeLevel(0);
+				ModMessages.sendToPlayer(new GrannySmithUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
+			});
+			player.getCapability(HardwoodUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+				isUpgraded.setUpgradeLevel(0);
+				ModMessages.sendToPlayer(new HardwoodUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
+			});
+			player.getCapability(StrongArmsUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+				isUpgraded.setUpgradeLevel(0);
+				ModMessages.sendToPlayer(new StrongArmsUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
+			});
+			
+			//Combat Upgrades
+			player.getCapability(DodgeRollUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+				isUpgraded.setUpgradeLevel(0);
+				ModMessages.sendToPlayer(new DodgeRollUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
+			});
+			player.getCapability(FreeArrowsUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+				isUpgraded.setUpgradeLevel(0);
+				ModMessages.sendToPlayer(new FreeArrowsUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
+			});
+			player.getCapability(OvercomeUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+				isUpgraded.setUpgradeLevel(0);
+				ModMessages.sendToPlayer(new OvercomeUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
+			});
+			player.getCapability(RagnorokUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+				isUpgraded.setUpgradeLevel(0);
+				ModMessages.sendToPlayer(new RagnorokUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
+			});
+			player.getCapability(TakeStanceUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+				isUpgraded.setUpgradeLevel(0);
+				ModMessages.sendToPlayer(new TakeStanceUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
+			});
+			
+			//Farming Upgrades
+			player.getCapability(CarnivoreUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+				isUpgraded.setUpgradeLevel(0);
+				ModMessages.sendToPlayer(new CarnivoreUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
+			});
+			player.getCapability(EggerUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+				isUpgraded.setUpgradeLevel(0);
+				ModMessages.sendToPlayer(new EggerUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
+			});
+			player.getCapability(SugarRushUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+				isUpgraded.setUpgradeLevel(0);
+				ModMessages.sendToPlayer(new SugarRushUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
+			});
+			player.getCapability(WellFedUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+				isUpgraded.setUpgradeLevel(0);
+				ModMessages.sendToPlayer(new WellFedUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 			});
 			
 		});
