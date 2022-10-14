@@ -43,6 +43,7 @@ public class ArcheryMenu extends Screen {
 	// protected final Options options;
 	private final ResourceLocation bgtexture = new ResourceLocation(MmoStatsMod.MODID, "textures/gui/cobble_bg-2.png");
 
+	//Textures to appear bright if upgraded:
 	private final ResourceLocation upgradeTexture1 = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/buttons/archery_buttons/efficient_marksman_button.png");
 	private final ResourceLocation upgradeTexture2 = new ResourceLocation(MmoStatsMod.MODID,
@@ -60,6 +61,7 @@ public class ArcheryMenu extends Screen {
 	private final ResourceLocation upgradeTexture8 = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/buttons/archery_buttons/unabated_button.png");
 	
+	//Textures to appear dark if not upgraded:
 	private final ResourceLocation upgradeTexture1Dark = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/buttons/archery_buttons/efficient_marksman_button_dark.png");
 	private final ResourceLocation upgradeTexture2Dark = new ResourceLocation(MmoStatsMod.MODID,
@@ -77,7 +79,6 @@ public class ArcheryMenu extends Screen {
 	private final ResourceLocation upgradeTexture8Dark = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/buttons/archery_buttons/unabated_button_dark.png");
 	
-
 	private final ResourceLocation descriptionBanner = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/background/descstuff3.png");
 

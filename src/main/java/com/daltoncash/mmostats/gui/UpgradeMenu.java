@@ -61,6 +61,9 @@ public class UpgradeMenu extends Screen {
 		buttonW = this.width / 8;
 		buttonH = this.height / 5;
 		
+		addRenderableWidget(new Button(this.width / 3, buttonH / 8, this.width / 3, 20,
+				Component.literal("Upgrades Unspent: " + ClientCapabilityData.getPlayerUpgradePoints()),
+				UpgradeMenu::onPressDoNothing));
 		
 		addRenderableWidget(new Button(20, 200, 100, 100,
 				Component.literal("reset capabilities: " + ClientCapabilityData.getPlayerMiningLevel()),
@@ -82,7 +85,10 @@ public class UpgradeMenu extends Screen {
 				FARMING_TEXTURE, buttonW, buttonH, UpgradeMenu::onPressFarming));
 	}
 
-
+	private static void onPressDoNothing(Button button) {
+		
+	}
+	
 	private static void onPressReset(Button button) {
 		ModMessages.sendToServer(new ResetCapabilityDataC2SPacket());
 	}

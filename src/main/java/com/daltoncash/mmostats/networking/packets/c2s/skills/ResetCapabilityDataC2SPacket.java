@@ -3,7 +3,15 @@ package com.daltoncash.mmostats.networking.packets.c2s.skills;
 import java.util.function.Supplier;
 
 import com.daltoncash.mmostats.capabilities.archery.PlayerArcheryLevelProvider;
-import com.daltoncash.mmostats.capabilities.chopping.PlayerChoppingExpProvider;
+import com.daltoncash.mmostats.capabilities.archery.upgrades.EfficientMarksmanUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.archery.upgrades.HunterUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.archery.upgrades.InsecurityUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.archery.upgrades.LeftClickUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.archery.upgrades.QuickshotUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.archery.upgrades.SharpshooterUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.archery.upgrades.SniperUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.archery.upgrades.SweetSpotArcheryUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.archery.upgrades.UnabatedUpgradeProvider;
 import com.daltoncash.mmostats.capabilities.chopping.PlayerChoppingLevelProvider;
 import com.daltoncash.mmostats.capabilities.combat.PlayerCombatLevelProvider;
 import com.daltoncash.mmostats.capabilities.farming.PlayerFarmingLevelProvider;
@@ -16,13 +24,21 @@ import com.daltoncash.mmostats.capabilities.mining.upgrades.ObsidianBreakerUpgra
 import com.daltoncash.mmostats.capabilities.swords.PlayerSwordsLevelProvider;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.ArcheryLevelDataSyncS2CPacket;
-import com.daltoncash.mmostats.networking.packets.s2c.skills.ChoppingExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.ChoppingLevelDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.CombatLevelDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.FarmingLevelDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.MiningExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.MiningLevelDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.SwordsLevelDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.EfficientMarksmanUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.HunterUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.InsecurityUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.LeftClickUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.QuickshotUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.SharpshooterUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.SniperUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.SweetSpotArcheryUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.UnabatedUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.JunkBlocksDropExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.NightVisionDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.NoJunkBlocksDataSyncS2CPacket;
@@ -49,6 +65,7 @@ public class ResetCapabilityDataC2SPacket {
 		NetworkEvent.Context context = supplier.get();
 		context.enqueueWork(() -> {
 			ServerPlayer player = context.getSender();
+			//Skills
 			player.getCapability(PlayerMiningExpProvider.PLAYER_MINING_EXP).ifPresent(miningExp -> {
 				miningExp.subMiningExp(100000);
 				ModMessages.sendToPlayer(new MiningExpDataSyncS2CPacket(miningExp.getMiningExp()), player);
@@ -77,6 +94,7 @@ public class ResetCapabilityDataC2SPacket {
 				swordsLevel.subSwordsLevel(100);
 				ModMessages.sendToPlayer(new SwordsLevelDataSyncS2CPacket(swordsLevel.getSwordsLevel()), player);
 			});
+			//Mining Upgrades
 			player.getCapability(JunkBlocksDropExpUpgradeProvider.JUNK_BLOCKS_DROP_EXP).ifPresent(isUpgraded -> {
 				isUpgraded.setUpgradeLevel(0);
 				ModMessages.sendToPlayer(new JunkBlocksDropExpDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
@@ -93,9 +111,43 @@ public class ResetCapabilityDataC2SPacket {
 				isUpgraded.setUpgradeLevel(0);
 				ModMessages.sendToPlayer(new ObsidianBreakerDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 			});
-			player.getCapability(PlayerChoppingExpProvider.PLAYER_CHOPPING_EXP).ifPresent(choppingExp -> {
-				choppingExp.subChoppingExp(10000);
-				ModMessages.sendToPlayer(new ChoppingExpDataSyncS2CPacket(choppingExp.getChoppingExp()), player);
+			
+			//Archery Upgrades
+			player.getCapability(EfficientMarksmanUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+				isUpgraded.setUpgradeLevel(0);
+				ModMessages.sendToPlayer(new EfficientMarksmanUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
+			});
+			player.getCapability(HunterUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+				isUpgraded.setUpgradeLevel(0);
+				ModMessages.sendToPlayer(new HunterUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
+			});
+			player.getCapability(InsecurityUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+				isUpgraded.setUpgradeLevel(0);
+				ModMessages.sendToPlayer(new InsecurityUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
+			});
+			player.getCapability(LeftClickUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+				isUpgraded.setUpgradeLevel(0);
+				ModMessages.sendToPlayer(new LeftClickUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
+			});
+			player.getCapability(QuickshotUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+				isUpgraded.setUpgradeLevel(0);
+				ModMessages.sendToPlayer(new QuickshotUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
+			});
+			player.getCapability(SharpshooterUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+				isUpgraded.setUpgradeLevel(0);
+				ModMessages.sendToPlayer(new SharpshooterUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
+			});
+			player.getCapability(SniperUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+				isUpgraded.setUpgradeLevel(0);
+				ModMessages.sendToPlayer(new SniperUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
+			});
+			player.getCapability(SweetSpotArcheryUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+				isUpgraded.setUpgradeLevel(0);
+				ModMessages.sendToPlayer(new SweetSpotArcheryUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
+			});
+			player.getCapability(UnabatedUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+				isUpgraded.setUpgradeLevel(0);
+				ModMessages.sendToPlayer(new UnabatedUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 			});
 			
 		});

@@ -31,6 +31,7 @@ import com.daltoncash.mmostats.networking.packets.c2s.skills.GainMiningExpC2SPac
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainMiningLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainPlayerLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainPlayerLevelExpC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.GainPlayerUpgradePointsC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetArcheryExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetChoppingExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetCombatExpC2SPacket;
@@ -86,6 +87,7 @@ public class SkillEvents {
 				playerLevelExpToSub = (playerLevel * 5) + 25;
 				System.out.println("level up: " + (playerLevel + 1));
 				ModMessages.sendToServer(new GainPlayerLevelC2SPacket());
+				ModMessages.sendToServer(new GainPlayerUpgradePointsC2SPacket());
 				ModMessages.sendToServer(new ResetPlayerLevelExpC2SPacket());
 				levelUpOverLay();
 
