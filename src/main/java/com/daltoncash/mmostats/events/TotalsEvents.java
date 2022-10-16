@@ -35,31 +35,27 @@ public class TotalsEvents {
 				event.player.heal(event.player.getMaxHealth() / 20);
 				ModMessages.sendToServer(new HealFromRottenFleshTotalC2SPacket());
 				
-				regenFromRottenFlesh = (1000 * 5) / (4 +
-					ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getRottenFleshEaten()));
+				regenFromRottenFlesh = ModStats.getHealthRegenModifier();
 				
 			}
 		}
 		
 		@SubscribeEvent
 		public static void onCritalHitGiveTotalsBuff(CriticalHitEvent event) {
-			int ironMinedLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getIronMined());
-			event.setDamageModifier(1.5f * (0.1f * ironMinedLevel));
+			event.setDamageModifier(ModStats.getCritMultiplier());
 		}
 		@SubscribeEvent
 		public static void onGainingExpGiveTotalsBuff(PickupXp event) {
-			int lapisMinedLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getLapisMined());
-			carryExperience += event.getOrb().getValue() * (lapisMinedLevel * lapisMinedLevel) / 100f;
+			carryExperience += event.getOrb().getValue() * ModStats.getExpModifier();
 			if(carryExperience >= 1) {
 				event.getEntity().giveExperiencePoints((int)carryExperience);
-				carryExperience = carryExperience % 1;
+				carryExperience -= (int)carryExperience;
 			}
 		}
 		@SubscribeEvent
 		public static void onTakingFallDamageReduceDamage(LivingFallEvent event) {
 			if(event.getEntity().getType().equals(EntityType.PLAYER)) {
-				int chickenEatenLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getChickenEaten());
-				event.setDamageMultiplier(1 - (chickenEatenLevel * 5));
+				event.setDamageMultiplier(ModStats.getFallDamageModifier());
 			}
 		}
 	}

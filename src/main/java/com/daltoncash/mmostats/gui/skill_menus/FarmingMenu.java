@@ -65,10 +65,13 @@ public class FarmingMenu extends Screen {
 	private static final String egger = "egger: \n\n";
 	private static final String sugarRush = "sugarRush";
 	private static final String wellFed = "wellFed";
-
 	
 	private static DescriptionPanel upgradeDescription;
-
+	
+	private static int counter = 0;
+	private static Button upgradePoints;
+	private static Button temp;
+	
 	public FarmingMenu(Component p_96550_) {
 		super(p_96550_);
 	}
@@ -79,7 +82,7 @@ public class FarmingMenu extends Screen {
 		addRenderableWidget(new Button(this.width/13 * 6, this.height/13 * 6, 50, 50, 
 				Component.literal("Farming Totals"), FarmingMenu::onPressShowTotals));
 		
-		addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
+		upgradePoints = addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
 				Component.literal("Upgrades Unspent: " + ClientCapabilityData.getPlayerUpgradePoints()),
 				FarmingMenu::onPressDoNothing));
 		
@@ -132,9 +135,23 @@ public class FarmingMenu extends Screen {
 		List<String> lines = new ArrayList<>();
 		lines.add("Select Upgrade.");
 		upgradeDescription.setInfo(lines, null, null);
+		
 	}
 	
 	public void tick() {
+		counter++;
+		removeWidget(temp);
+		removeWidget(upgradePoints);
+		if(counter % 2 == 1) {
+			upgradePoints = addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
+					Component.literal("Upgrades Unspent: " + ClientCapabilityData.getPlayerUpgradePoints()),
+					FarmingMenu::onPressDoNothing));
+		}else {
+			temp = addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
+					Component.literal("Upgrades Unspent: " + ClientCapabilityData.getPlayerUpgradePoints()),
+					FarmingMenu::onPressDoNothing));
+		}
+		
 		if(ClientCapabilityData.isUpgradedCarnivore() > 0) {
 			addRenderableWidget(new ImageButton((this.width / 18) * 1, (this.height / 6) * 2, 50, 50, 0, 0, 99,
 					upgradeTexture1, 50, 50, FarmingMenu::onPressUpgradeCarnivore));	

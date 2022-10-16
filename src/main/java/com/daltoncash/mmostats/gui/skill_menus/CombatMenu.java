@@ -71,10 +71,13 @@ public class CombatMenu extends Screen {
 	private static final String overcome = "overcome";
 	private static final String ragnorok = "ragnorok";
 	private static final String takeStance = "takeStance";
-
 	
 	private static DescriptionPanel upgradeDescription;
 
+	private static int counter = 0;
+	private static Button upgradePoints;
+	private static Button temp;
+	
 	public CombatMenu(Component p_96550_) {
 		super(p_96550_);
 	}
@@ -85,7 +88,7 @@ public class CombatMenu extends Screen {
 		//addRenderableWidget(new Button(this.width/13 * 6, this.height/13 * 6, 50, 50, 
 				//Component.literal("Combat Totals"), CombatMenu::onPressShowTotals));
 		
-		addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
+		upgradePoints = addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
 				Component.literal("Upgrades Unspent: " + ClientCapabilityData.getPlayerUpgradePoints()),
 				CombatMenu::onPressDoNothing));
 		
@@ -150,6 +153,23 @@ public class CombatMenu extends Screen {
 	}
 	
 	public void tick() {
+		counter++;
+		removeWidget(temp);
+		removeWidget(upgradePoints);
+		if(counter % 2 == 1) {
+			upgradePoints = addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
+					Component.literal("Upgrades Unspent: " + ClientCapabilityData.getPlayerUpgradePoints()),
+					CombatMenu::onPressDoNothing));
+		}else {
+			temp = addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
+					Component.literal("Upgrades Unspent: " + ClientCapabilityData.getPlayerUpgradePoints()),
+					CombatMenu::onPressDoNothing));
+		}
+		
+		addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
+				Component.literal("Upgrades Unspent: " + ClientCapabilityData.getPlayerUpgradePoints()),
+				CombatMenu::onPressDoNothing));
+		
 		if(ClientCapabilityData.isUpgradedDodgeRoll() > 0) {
 			addRenderableWidget(new ImageButton((this.width / 18) * 1, (this.height / 6) * 2, 50, 50, 0, 0, 99,
 					upgradeTexture1, 50, 50, CombatMenu::onPressUpgradeDodgeRoll));	

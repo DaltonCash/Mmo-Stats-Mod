@@ -67,9 +67,12 @@ public class MiningMenu extends Screen {
 			+ "\n\nAlways works, even if No Junk Blocks is upgraded";
 	private static final String nightVision = "nightVision";
 	private static final String noJunkBlocks = "nojunk";
-
 	
 	private static DescriptionPanel upgradeDescription;
+	
+	private static int counter = 0;
+	private static Button upgradePoints;
+	private static Button temp;
 
 	public MiningMenu(Component p_96550_) {
 		super(p_96550_);
@@ -81,7 +84,7 @@ public class MiningMenu extends Screen {
 		addRenderableWidget(new Button(this.width / 5 * 2, this.height / 40 * 35, this.width / 5, 20, 
 				Component.literal("Mining Totals"), MiningMenu::onPressShowTotals));
 		
-		addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
+		upgradePoints = addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
 				Component.literal("Upgrades Unspent: " + ClientCapabilityData.getPlayerUpgradePoints()),
 				MiningMenu::onPressDoNothing));
 		
@@ -137,6 +140,23 @@ public class MiningMenu extends Screen {
 	}
 	
 	public void tick() {
+		counter++;
+		removeWidget(temp);
+		removeWidget(upgradePoints);
+		if(counter % 2 == 1) {
+			upgradePoints = addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
+					Component.literal("Upgrades Unspent: " + ClientCapabilityData.getPlayerUpgradePoints()),
+					MiningMenu::onPressDoNothing));
+		}else {
+			temp = addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
+					Component.literal("Upgrades Unspent: " + ClientCapabilityData.getPlayerUpgradePoints()),
+					MiningMenu::onPressDoNothing));
+		}
+		
+		addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
+				Component.literal("Upgrades Unspent: " + ClientCapabilityData.getPlayerUpgradePoints()),
+				MiningMenu::onPressDoNothing));
+		
 		if(ClientCapabilityData.isUpgradedObsidianBreaker() > 0) {
 			addRenderableWidget(new ImageButton((this.width / 18) * 1, (this.height / 6) * 2, 50, 50, 0, 0, 99,
 					upgradeTexture1, 50, 50, MiningMenu::onPressUpgradeObsidianBreaker));	

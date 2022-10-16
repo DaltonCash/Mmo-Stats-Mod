@@ -1,7 +1,12 @@
 package com.daltoncash.mmostats.gui;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import com.daltoncash.mmostats.MmoStatsMod;
 import com.daltoncash.mmostats.capabilities.ClientCapabilityData;
+import com.daltoncash.mmostats.events.ModStats;
 import com.daltoncash.mmostats.gui.skill_menus.ArcheryMenu;
 import com.daltoncash.mmostats.gui.skill_menus.ChoppingMenu;
 import com.daltoncash.mmostats.gui.skill_menus.CombatMenu;
@@ -11,21 +16,28 @@ import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetCapabilityDataC2SPacket;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.Tesselator;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Widget;
+import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FormattedCharSequence;
+import net.minecraftforge.client.gui.ScreenUtils;
+import net.minecraftforge.client.gui.widget.ScrollPanel;
+import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.util.Size2i;
 
 public class UpgradeMenu extends Screen {
 
-	// private final ResourceLocation texture1 = new
-	// ResourceLocation(MmoStatsMod.MODID, "textures/gui/test_image.png");
 	private final ResourceLocation bgtexture = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/cobble_bg-2.png");
 	private final ResourceLocation MINING_TEXTURE = new ResourceLocation(MmoStatsMod.MODID,
@@ -42,6 +54,10 @@ public class UpgradeMenu extends Screen {
 			"textures/gui/skill_exp_bubble.png");
 	private final ResourceLocation SKILL_EXP = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/skill_exp_exp.png");
+	
+	private final ResourceLocation descriptionBanner = new ResourceLocation(MmoStatsMod.MODID,
+			"textures/gui/background/descstuff3.png");
+	
 	public UpgradeMenu(Component p_96550_) {
 		super(p_96550_);
 	}
@@ -83,6 +99,35 @@ public class UpgradeMenu extends Screen {
 		
 		farmingButton = addRenderableWidget(new ImageButton((this.width * 5) / 7, (this.height * 1) / 6, buttonW, buttonH, 0, 0, buttonH - 1,
 				FARMING_TEXTURE, buttonW, buttonH, UpgradeMenu::onPressFarming));
+		
+		addRenderableWidget(new ImageButton((this.width * 27) / 42, 0, (this.width * 91) / 256, this.height, 0, 0, 0,
+				descriptionBanner, (this.width * 20) / 56, (this.height * 50) / 49,
+				UpgradeMenu::onPressDoNothing)).active = false;
+		
+		DescriptionPanel statlist = new DescriptionPanel(this.minecraft, (this.width * 57) / 256,
+				this.height - (this.height * 27) / 64, this.height - ((this.height * 100) / 128));
+		this.addRenderableWidget(statlist);
+		List<String> lines = new ArrayList<>();
+		lines.add("--Stats--");
+		lines.add("Health: 20 + " + (ModStats.getHealth() - 20));
+		lines.add("Additional Regen: 5% max hp per " + (ModStats.getHealthRegenModifier() / 4) + " ticks");
+		lines.add("Flat Damage Reduction: " + ModStats.getFlatArmorModifier());
+		lines.add("Percent Damage Reduc: " + (ModStats.getArmorModifier() * 100));
+		lines.add("Additional Melee Damage: " + (ModStats.getDamage() - 1));
+		lines.add("Critical Strike Multiplier: 1.5 + " + (ModStats.getCritMultiplier() - 1.5));
+		lines.add("Additional Movespeed: " + (int)((ModStats.getMoveSpeed() - .1) * 1000) + "%");
+		lines.add("Lucky Modifier: " + ModStats.getLuckyModifier());
+		lines.add("Fall Damage Reduc: " + ModStats.getFallDamageModifier());
+		lines.add("Knockback Reduc: " + ModStats.getKnockbackModifier());
+		lines.add("Experience Orb Boost: " + ModStats.getExpModifier() * 100 + "%");
+		lines.add("    ");
+		lines.add("Mining Exp Boost: " + (ModStats.getMiningModifier() - 1) * 100 + "%");
+		lines.add("Chopping Exp Boost: " + (ModStats.getChoppingModifier() - 1) * 100 + "%");
+		lines.add("Farming Exp Boost: " + (ModStats.getFarmingModifier() - 1) * 100 + "%");
+		lines.add("Combat Exp Boost: " + (ModStats.getCombatModifier() - 1) * 100 + "%");
+		lines.add("Archery Exp Boost: " + (ModStats.getArcheryModifier() - 1) * 100 + "%");
+		lines.add("Taming Exp Boost: " + (ModStats.getTamingModifier() - 1) * 100 + "%");
+		statlist.setInfo(lines, null, null);
 	}
 
 	private static void onPressDoNothing(Button button) {
@@ -187,5 +232,124 @@ public class UpgradeMenu extends Screen {
 	@Override
 	public boolean isPauseScreen() {
 		return true;
+	}
+	
+	class DescriptionPanel extends ScrollPanel {
+		private ResourceLocation logoPath;
+		private Size2i logoDims = new Size2i(0, 0);
+		private List<FormattedCharSequence> lines = Collections.emptyList();
+
+		@SuppressWarnings("resource")
+		DescriptionPanel(Minecraft mcIn, int widthIn, int heightIn, int topIn) {
+			super(mcIn, widthIn, heightIn, topIn, (Minecraft.getInstance().screen.width * 91) / 128);
+		}
+
+		void setInfo(List<String> lines, ResourceLocation logoPath, Size2i logoDims) {
+			this.logoPath = logoPath;
+			this.logoDims = logoDims;
+			this.lines = resizeContent(lines);
+		}
+
+		private List<FormattedCharSequence> resizeContent(List<String> lines) {
+			List<FormattedCharSequence> ret = new ArrayList<>();
+			for (String line : lines) {
+				if (line == null) {
+					ret.add(null);
+					continue;
+				}
+
+				Component chat = ForgeHooks.newChatWithLinks(line, false);
+				int maxTextLength = this.width - 40;
+				if (maxTextLength >= 0) {
+					ret.addAll(Language.getInstance()
+							.getVisualOrder(font.getSplitter().splitLines(chat, maxTextLength, Style.EMPTY)));
+				}
+			}
+			return ret;
+		}
+
+		@Override
+		public int getContentHeight() {
+			int height = 50;
+			height += (lines.size() * font.lineHeight);
+			if (height < this.bottom - this.top - 8)
+				height = this.bottom - this.top - 8;
+			return height;
+		}
+
+		@Override
+		protected int getScrollAmount() {
+			return font.lineHeight * 3;
+		}
+
+		@Override
+		protected void drawPanel(PoseStack poseStack, int entryRight, int relativeY, Tesselator tess, int mouseX,
+				int mouseY) {
+			if (logoPath != null) {
+				RenderSystem.setShader(GameRenderer::getPositionTexShader);
+				RenderSystem.enableBlend();
+				RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+				RenderSystem.setShaderTexture(0, logoPath);
+				int headerHeight = 50;
+				ScreenUtils.blitInscribed(poseStack, left + 20, relativeY, width - (20 * 2), headerHeight,
+						logoDims.width, logoDims.height, false, true);
+				relativeY += headerHeight + 20;
+			}
+
+			for (FormattedCharSequence line : lines) {
+				if (line != null) {
+					RenderSystem.enableBlend();
+					UpgradeMenu.this.font.drawShadow(poseStack, line, left + 20, relativeY, 0xFFFFFF);
+					RenderSystem.disableBlend();
+				}
+				relativeY += font.lineHeight;
+			}
+
+			final Style component = findTextLine(mouseX, mouseY);
+			if (component != null) {
+				UpgradeMenu.this.renderComponentHoverEffect(poseStack, component, mouseX, mouseY);
+			}
+		}
+
+		private Style findTextLine(final int mouseX, final int mouseY) {
+			if (!isMouseOver(mouseX, mouseY))
+				return null;
+
+			double offset = (mouseY - top) + border + scrollDistance + 1;
+			if (logoPath != null) {
+				offset -= 50;
+			}
+			if (offset <= 0)
+				return null;
+
+			int lineIdx = (int) (offset / font.lineHeight);
+			if (lineIdx >= lines.size() || lineIdx < 1)
+				return null;
+
+			FormattedCharSequence line = lines.get(lineIdx - 1);
+			if (line != null) {
+				return font.getSplitter().componentStyleAtWidth(line, mouseX - left - border);
+			}
+			return null;
+		}
+
+		@Override
+		public boolean mouseClicked(final double mouseX, final double mouseY, final int button) {
+			final Style component = findTextLine((int) mouseX, (int) mouseY);
+			if (component != null) {
+				UpgradeMenu.this.handleComponentClicked(component);
+				return true;
+			}
+			return super.mouseClicked(mouseX, mouseY, button);
+		}
+
+		@Override
+		public NarrationPriority narrationPriority() {
+			return NarrationPriority.NONE;
+		}
+
+		@Override
+		public void updateNarration(NarrationElementOutput p_169152_) {
+		}
 	}
 }

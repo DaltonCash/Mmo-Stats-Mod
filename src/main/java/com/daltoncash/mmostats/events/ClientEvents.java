@@ -104,7 +104,7 @@ public class ClientEvents {
 		
 		
 		public static int dodgeCooldown = 80;
-		public static int eatCooldown = 128/(1 + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getMelonEaten()));
+		public static int eatCooldown = 128/ModStats.getEatCooldownReduction();
 		public static int invulnFrameDuration = 28;
 		public static int healAtHalfHealth = 24000;
 		public static int applesGiveChopSpeed = 0;
@@ -136,7 +136,7 @@ public class ClientEvents {
 			
 			if (dodgeCooldown < 80) dodgeCooldown++;
 			
-			if (eatCooldown < 128/(1 + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getMelonEaten()))) {
+			if (eatCooldown < 128/ModStats.getEatCooldownReduction()) {
 				eatCooldown++;
 			}
 			
@@ -182,9 +182,9 @@ public class ClientEvents {
 					//Egger
 					if(ClientCapabilityData.isUpgradedEgger() > 0) {
 						if(event.getSource().getDirectEntity().getType().equals(EntityType.EGG)) {
-							entity.level.explode(null, DamageSource.playerAttack(player), (ExplosionDamageCalculator)null, entity.getX(), entity.getEyeY() + 1, entity.getZ(), 50f * ClientCapabilityData.isUpgradedEgger(), false, Explosion.BlockInteraction.NONE);
-							
-							
+							entity.level.explode(null, DamageSource.playerAttack(player), 
+									(ExplosionDamageCalculator)null, entity.getX(), entity.getEyeY() + 1, entity.getZ(), 
+									50f * ClientCapabilityData.isUpgradedEgger(), false, Explosion.BlockInteraction.NONE);
 						}
 					}
 					
@@ -249,9 +249,7 @@ public class ClientEvents {
 			
 			
 			if(event.getEntity().getType().equals(EntityType.PLAYER)) {
-				int pumpkinPieEatenLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getPumpkinPieEaten());
-				int kelpEatenLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getKelpEaten());
-				event.setAmount((event.getAmount() - pumpkinPieEatenLevel) * (1 - ((kelpEatenLevel * 5) / 100f)));
+				event.setAmount(ModStats.getDamageTakenCalculation(event.getAmount()));
 				if(ClientCapabilityData.isUpgradedDodgeRoll() > 0) {
 					if(invulnFrameDuration < 28) {
 						event.setCanceled(true);
@@ -282,8 +280,7 @@ public class ClientEvents {
 					if(event.getAmount() * (1 - (Math.max(event.getEntity().getArmorValue() / 5,
 							event.getEntity().getArmorValue() - ((4 * event.getAmount()) / 8))) / 25) + 1 > event.getEntity().getHealth()) {
 						if(ragnorokCooldown == 0) {
-							int mushroomStewEatenLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getMushroomStewEaten());
-							ragnorokDuration = (int) (2400 * (1 + (((mushroomStewEatenLevel) * (mushroomStewEatenLevel)) / 100f)));
+							ragnorokDuration = ModStats.getRagnorokDuration();
 							ragnorokCooldown = 36000;
 							if(ragnorokDuration > 0) {
 								event.setCanceled(true);
@@ -316,11 +313,12 @@ public class ClientEvents {
 		//Combat: Stable Footing
 		@SubscribeEvent
 		public static void onTakingKnockback(LivingKnockBackEvent event) {
-			if(ClientCapabilityData.isUpgradedStableFooting() > 0) {
-				if(event.getEntity().getType().equals(EntityType.PLAYER)) {
-					int potatoesEatenLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getPotatoEaten());
-					event.setStrength((event.getOriginalStrength() * 3) / (4 + potatoesEatenLevel));
+			if(event.getEntity().getType().equals(EntityType.PLAYER)) {
+				if(ClientCapabilityData.isUpgradedStableFooting() > 0) {
+					event.setStrength(event.getStrength() * 3 / 4);
 				}
+				event.setStrength(ModStats.getKnockbackCalculation(event.getStrength()));
+				
 			}
 		}
 		
@@ -330,7 +328,7 @@ public class ClientEvents {
 			
 			if(event.getItemStack().isEdible()) {
 				if(event.getEntity().getFoodData().getFoodLevel() >= 20) {
-					if(eatCooldown >= 128/(1 + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getMelonEaten()))) {
+					if(eatCooldown >= 128/(ModStats.getEatCooldownReduction())) {
 						event.getEntity().eat(event.getLevel(), event.getItemStack());
 						ModMessages.sendToServer(new EatFoodWhileFullC2SPacket());
 						Item item = event.getItemStack().getItem();
@@ -556,10 +554,8 @@ public class ClientEvents {
 		public static void onEatingFood(LivingEntityUseItemEvent.Start event) {
 			
 			//Fast Food-WIP
-			//eat duration should = (32 / fastfoodlevel) - melonsEaten
 			if(event.getItem().getItem().isEdible()) {
-				int eatDuration = 32/(1 + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getMelonEaten()));
-				event.setDuration(eatDuration);
+				event.setDuration(ModStats.getEatDuration());
 			}
 			
 			//Arrow: Quickshot
@@ -618,27 +614,23 @@ public class ClientEvents {
 		@SubscribeEvent
 		public static void onBreakBlockRollForFortune(BlockEvent.BreakEvent event) {
 			if (ExpYieldList.getMiningBlocks().contains(event.getState().getBlock())) {
+				
 				blockevent = event;
-				int goldMinedLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getGoldMined());
-				double goldMinedEffectiveness = 
-						(1 + ((goldMinedLevel * goldMinedLevel * goldMinedLevel * goldMinedLevel) / 100f)) / 500.0;
 				double rand =  Math.random();
-				double fortuneChance = (ClientCapabilityData.getPlayerMiningLevel() * goldMinedEffectiveness);
-				while(fortuneChance >= rand){
+				
+				while(ModStats.getMiningFortuneCalculation() >= rand){
 					ModMessages.sendToServer(new AdditionalFortuneProcC2SPacket());
-					fortuneChance -= 1;
+					rand++;
 				}
 			}
 			if (ExpYieldList.getChoppingBlocks().contains(event.getState().getBlock())) {
+				
 				blockevent = event;
-				int goldMinedLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getGoldMined());
-				double goldMinedEffectiveness = 
-						(1 + ((goldMinedLevel * goldMinedLevel * goldMinedLevel * goldMinedLevel) / 100f)) / 500.0;
 				double rand =  Math.random();
-				double fortuneChance = (ClientCapabilityData.getPlayerChoppingLevel() * goldMinedEffectiveness);
-				while(fortuneChance >= rand){
+				
+				while(ModStats.getChoppingFortuneCalculation() >= rand){
 					ModMessages.sendToServer(new AdditionalFortuneProcC2SPacket());
-					fortuneChance -= 1;
+					rand++;
 				}
 			}
 		}
@@ -700,8 +692,8 @@ public class ClientEvents {
 		public static void onSpawningGiveEntitiesCustomName(LivingSpawnEvent event) {
 			
 				event.getEntity().setCustomName(
-						Component.literal(getDisplayName(event.getEntity().getType().toShortString().toLowerCase())).withStyle(ChatFormatting.GOLD).append
-						(getDisplayHealth(event.getEntity())));
+						Component.literal(getDisplayName(event.getEntity().getType().toShortString().toLowerCase()))
+						.withStyle(ChatFormatting.GOLD).append(getDisplayHealth(event.getEntity())));
 				event.getEntity().setCustomNameVisible(true);
 			
 		}

@@ -91,9 +91,12 @@ public class ArcheryMenu extends Screen {
 	private static final String sniper = "pew";
 	private static final String sweetSpot = "pewpew";
 	private static final String unabated = "pewdiepie";
-
 	
 	private static DescriptionPanel upgradeDescription;
+	
+	private static int counter = 0;
+	private static Button upgradePoints;
+	private static Button temp;
 
 	public ArcheryMenu(Component p_96550_) {
 		super(p_96550_);
@@ -102,7 +105,7 @@ public class ArcheryMenu extends Screen {
 	@Override
 	public final void init() {
 
-		addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
+		upgradePoints = addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
 				Component.literal("Upgrades Unspent: " + ClientCapabilityData.getPlayerUpgradePoints()),
 				ArcheryMenu::onPressDoNothing));
 		
@@ -193,6 +196,23 @@ public class ArcheryMenu extends Screen {
 		upgradeDescription.setInfo(lines, null, null);
 	}
 	public void tick() {
+		counter++;
+		removeWidget(temp);
+		removeWidget(upgradePoints);
+		if(counter % 2 == 1) {
+			upgradePoints = addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
+					Component.literal("Upgrades Unspent: " + ClientCapabilityData.getPlayerUpgradePoints()),
+					ArcheryMenu::onPressDoNothing));
+		}else {
+			temp = addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
+					Component.literal("Upgrades Unspent: " + ClientCapabilityData.getPlayerUpgradePoints()),
+					ArcheryMenu::onPressDoNothing));
+		}
+		
+		addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
+				Component.literal("Upgrades Unspent: " + ClientCapabilityData.getPlayerUpgradePoints()),
+				ArcheryMenu::onPressDoNothing));
+		
 		if(ClientCapabilityData.isUpgradedEfficientMarksman() > 0) {
 			addRenderableWidget(new ImageButton((this.width / 18) * 1, (this.height / 6) * 2, 50, 50, 0, 0, 99,
 					upgradeTexture1, 50, 50, ArcheryMenu::onPressToggleEfficientMarksman));	

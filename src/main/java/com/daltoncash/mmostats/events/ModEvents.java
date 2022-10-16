@@ -1,7 +1,6 @@
 package com.daltoncash.mmostats.events;
 
 import com.daltoncash.mmostats.MmoStatsMod;
-import com.daltoncash.mmostats.capabilities.ClientCapabilityData;
 import com.daltoncash.mmostats.capabilities.archery.PlayerArcheryExp;
 import com.daltoncash.mmostats.capabilities.archery.PlayerArcheryExpProvider;
 import com.daltoncash.mmostats.capabilities.archery.PlayerArcheryLevel;
@@ -354,26 +353,9 @@ public class ModEvents {
 		event.setPhase(EventPriority.LOWEST);
 		if (!event.getLevel().isClientSide()) {
 			if (event.getEntity() instanceof ServerPlayer player) {
-				int goldApplesEatenLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getGoldApplesEaten());
-				int beefEatenLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getBeefEaten());
-				int redstoneMinedLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getRedstoneMined());
-				int diamondMinedLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getDiamondMined());
-				
-				
-				//(base hp + base hp modifiers) * (perc hp modifiers)
-				//(base + leveluphp + obsidian) * (coal + oak + goldapples)
-				player.getAttribute(Attributes.MAX_HEALTH).setBaseValue((20 + 
-						(ClientCapabilityData.getPlayerHealth() * 2) +
-						(goldApplesEatenLevel))
-						//WIP
-						//(obsidianMinedLevel)
-						);
-				player.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(.1 + 
-						(ClientCapabilityData.getPlayerAgility() / 200f) + 
-						(redstoneMinedLevel / 200f));
-				
-				player.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(1 + 
-						diamondMinedLevel + beefEatenLevel);
+				player.getAttribute(Attributes.MAX_HEALTH).setBaseValue(ModStats.getHealth());
+				player.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ModStats.getMoveSpeed());
+				player.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(ModStats.getDamage());
 			}
 		}
 	}

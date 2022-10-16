@@ -2,8 +2,8 @@ package com.daltoncash.mmostats.networking.packets.c2s.skills;
 
 import java.util.function.Supplier;
 
-import com.daltoncash.mmostats.capabilities.ClientCapabilityData;
 import com.daltoncash.mmostats.capabilities.archery.PlayerArcheryExpProvider;
+import com.daltoncash.mmostats.events.ModStats;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.ArcheryExpDataSyncS2CPacket;
 
@@ -30,9 +30,7 @@ public class GainArcheryExpC2SPacket {
 		context.enqueueWork(() -> {
 			ServerPlayer player = context.getSender();
 			player.getCapability(PlayerArcheryExpProvider.PLAYER_ARCHERY_EXP).ifPresent(archeryExp -> {
-				int quartzTotalsLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getQuartzMined());
-				int goldenCarrotTotalsLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getGoldenCarrotsEaten());
-				archeryExp.addArcheryExp(Math.round(50 * (1 + (quartzTotalsLevel * goldenCarrotTotalsLevel) / 100f)));
+				archeryExp.addArcheryExp(Math.round(50 * ModStats.getArcheryModifier()));
 				ModMessages.sendToPlayer(new ArcheryExpDataSyncS2CPacket(archeryExp.getArcheryExp()), player);
 			});
 		});

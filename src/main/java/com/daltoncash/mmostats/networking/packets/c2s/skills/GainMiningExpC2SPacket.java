@@ -2,8 +2,8 @@ package com.daltoncash.mmostats.networking.packets.c2s.skills;
 
 import java.util.function.Supplier;
 
-import com.daltoncash.mmostats.capabilities.ClientCapabilityData;
 import com.daltoncash.mmostats.capabilities.mining.PlayerMiningExpProvider;
+import com.daltoncash.mmostats.events.ModStats;
 import com.daltoncash.mmostats.events.SkillEvents.SkillForgeEvents;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.MiningExpDataSyncS2CPacket;
@@ -31,9 +31,7 @@ public class GainMiningExpC2SPacket {
 		context.enqueueWork(() -> {
 			ServerPlayer player = context.getSender();
 			player.getCapability(PlayerMiningExpProvider.PLAYER_MINING_EXP).ifPresent(miningExp -> {
-				int coalTotalsLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getCoalMined());
-				int glowBerriesTotalsLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getGlowBerriesEaten());
-				miningExp.addMiningExp(Math.round(SkillForgeEvents.expToAdd * (1 + ((coalTotalsLevel * glowBerriesTotalsLevel) / 100f))));
+				miningExp.addMiningExp(Math.round(SkillForgeEvents.expToAdd * ModStats.getMiningModifier()));
 				ModMessages.sendToPlayer(new MiningExpDataSyncS2CPacket(miningExp.getMiningExp()), player);
 			});
 		});
