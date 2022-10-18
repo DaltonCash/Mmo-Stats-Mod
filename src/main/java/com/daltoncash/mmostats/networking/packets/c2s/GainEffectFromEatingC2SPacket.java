@@ -32,8 +32,8 @@ public class GainEffectFromEatingC2SPacket {
 		NetworkEvent.Context context = supplier.get();
 		context.enqueueWork(() -> {
 			ServerPlayer player = context.getSender();
-			int speedDuration = 60 * (1 + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getCookiesEaten()));
-			int regenDuration = 20;
+			int speedDuration = 10 * (1 + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getCookiesEaten()));
+			int regenDuration = 3;
 			
 			int regenStrength = 1;
 			int speedStrength = 1;
@@ -53,19 +53,21 @@ public class GainEffectFromEatingC2SPacket {
 					Items.COOKIE, Items.BREAD, Items.PUMPKIN_PIE);
 			
 			if(meatItems.contains(foodInHand)) {
-				speedStrength = 3;
+				speedStrength = 1;
 				regenStrength = 2;
 			}
 			if(sugarItems.contains(foodInHand)) {
-				speedStrength = 10;
+				speedStrength = 3;
 				regenStrength = Math.max(regenStrength, 1);
 				
 			}
-			//if(player has the upgrade for this)
-			player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, speedDuration, speedStrength));
+			if(ClientCapabilityData.isUpgradedSugarRush() > 0) {
+				player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, speedDuration, speedStrength + ClientCapabilityData.isUpgradedSugarRush()));
+			}
+			if(ClientCapabilityData.isUpgradedCarnivore() > 0) {
+				player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, regenDuration, regenStrength * ClientCapabilityData.isUpgradedCarnivore()));
+			}
 			
-			//if(player has the upgrade for this)
-			player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, regenDuration, regenStrength));
 			//if player has upgrade
 			player.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 180, foodInHand.getFoodProperties(new ItemStack(foodInHand), player).getNutrition()/4 - 1));
 		});

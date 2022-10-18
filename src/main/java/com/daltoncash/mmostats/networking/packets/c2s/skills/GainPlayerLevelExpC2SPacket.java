@@ -32,7 +32,7 @@ public class GainPlayerLevelExpC2SPacket {
 			ServerPlayer player = context.getSender();
 			player.getCapability(PlayerLevelExpProvider.PLAYER_LEVEL_EXP).ifPresent(playerExp -> {
 				playerExp.addLevelExp(SkillForgeEvents.playerLevelExpToAdd);
-				System.out.println("playerExp Added! in packets. Current playerExp: " + ClientCapabilityData.getPlayerExp() + "PlayerLeveL: " + ClientCapabilityData.getPlayerLevel());
+				System.out.println("playerExp Added! in packets. Current playerExp: " + ClientCapabilityData.getPlayerExp() + " PlayerLevel: " + ClientCapabilityData.getPlayerLevel());
 				ModMessages.sendToPlayer(new PlayerLevelExpDataSyncS2CPacket(playerExp.getLevelExp()), player);
 			});
 		});

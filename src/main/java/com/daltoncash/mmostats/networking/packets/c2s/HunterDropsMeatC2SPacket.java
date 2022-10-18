@@ -15,12 +15,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.network.NetworkEvent;
 
-public class EntityDropsAnArrowC2SPacket {
-	 public EntityDropsAnArrowC2SPacket() {
+public class HunterDropsMeatC2SPacket {
+	 public HunterDropsMeatC2SPacket() {
 
 	 }
 
-	 public EntityDropsAnArrowC2SPacket(FriendlyByteBuf buf) {
+	 public HunterDropsMeatC2SPacket(FriendlyByteBuf buf) {
 
 	 }
 
@@ -40,7 +40,7 @@ public class EntityDropsAnArrowC2SPacket {
 	         double z = ClientForgeEvents.clientEntity.position().z;
 	         int porkchopEatenLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getPorkEaten());
 	         int hunterUpgradeLevel = ClientCapabilityData.isUpgradedHunter();
-	         int meatToDrop = porkchopEatenLevel + hunterUpgradeLevel;
+	         int meatToDrop = hunterUpgradeLevel > 0 ? porkchopEatenLevel + hunterUpgradeLevel : 0;
 	         if(entity.getType().equals(EntityType.COW)) {
 	        	 level.addFreshEntity(new ItemEntity(level, x, y, z, new ItemStack(Items.BEEF, meatToDrop * 2)));
 	         }else if(entity.getType().equals(EntityType.SHEEP)) {
@@ -52,7 +52,11 @@ public class EntityDropsAnArrowC2SPacket {
 	         }else if(entity.getType().equals(EntityType.CHICKEN)) {
 	        	 level.addFreshEntity(new ItemEntity(level, x, y, z, new ItemStack(Items.CHICKEN, meatToDrop * 1))); 
 	         }else {
-	         level.addFreshEntity(new ItemEntity(level, x, y, z, new ItemStack(Items.ARROW)));
+	        	 int efficientMarksmanLevel = ClientCapabilityData.isUpgradedEfficientMarksman();
+	        	 while(efficientMarksmanLevel > 0){
+	        		 level.addFreshEntity(new ItemEntity(level, x, y, z, new ItemStack(Items.ARROW)));
+	        		 efficientMarksmanLevel--;
+	        	 }
 	         }
 	     });
 

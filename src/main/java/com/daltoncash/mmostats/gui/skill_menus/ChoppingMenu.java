@@ -56,9 +56,9 @@ public class ChoppingMenu extends Screen {
 			"textures/gui/background/descstuff3.png");
 
 	private static String upgradeString = "";
-	private static final String grannySmith = "grannySmith";
-	private static final String hardWood = "hardWood: \n\n";
-	private static final String strongArms = "strongArms";
+	private static final String grannySmith = "GrannySmith: \n\nGain Swiftness(2/3/4) effect for 60 seconds when eating an apple.";
+	private static final String hardWood = "Hardwood: \n\nWhen an attack would make you have less than 25% max hp, gain 20%/ 40%/ 60% max hp.";
+	private static final String strongArms = "Lumber Jacked: \n\nDeal 10%/ 20%/ 30% more damage with axes.";
 	
 	private static DescriptionPanel upgradeDescription;
 	

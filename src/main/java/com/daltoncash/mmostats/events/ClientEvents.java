@@ -80,7 +80,6 @@ import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.entity.living.ShieldBlockEvent;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.entity.player.PlayerEvent.HarvestCheck;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
@@ -193,7 +192,8 @@ public class ClientEvents {
 						float damageFromArcheryLevel = ClientCapabilityData.getPlayerArcheryLevel() / 500.0f;
 						float moddedDamageToAdd = event.getAmount() * damageFromArcheryLevel;
 						
-						entity.hurt(event.getSource(), moddedDamageToAdd);
+						
+						entity.hurt(new DamageSource("Archery skill"), moddedDamageToAdd * moddedDamageToAdd);
 						
 						float totalDamageAfterModded = event.getAmount() + moddedDamageToAdd;
 						
@@ -236,17 +236,6 @@ public class ClientEvents {
 		//Blocking Damage taken during dodge roll
 		@SubscribeEvent
 		public static void onPlayerGettingHit(LivingHurtEvent event) {
-			if(event.getSource().getEntity() != null) {
-				if(event.getSource().getEntity().getType().equals(EntityType.PLAYER)) {
-					if(ragnorokDuration > 0) {
-						if(event.getSource().getEntity().isAlive()) {
-							LivingEntity entity = (LivingEntity) event.getSource().getEntity();
-							entity.heal(2);
-						}
-					}
-				}
-			}
-			
 			
 			if(event.getEntity().getType().equals(EntityType.PLAYER)) {
 				event.setAmount(ModStats.getDamageTakenCalculation(event.getAmount()));
@@ -289,26 +278,27 @@ public class ClientEvents {
 					}
 				}
 			}
-		}
-		
-		//Chopping gives axe damage
-		@SubscribeEvent
-		public static void onAttackingEnemy(AttackEntityEvent event) {
-			List<Item> axes = List.of(Items.NETHERITE_AXE, Items.DIAMOND_AXE, Items.GOLDEN_AXE,
-					Items.IRON_AXE, Items.STONE_AXE, Items.WOODEN_AXE);
-			
-			if(event.getEntity().getType().equals(EntityType.PLAYER)) {
-				if(axes.contains(event.getEntity().getItemInHand(InteractionHand.MAIN_HAND).getItem())){
-					if(event.getTarget().isAlive()) {
-						LivingEntity entity = (LivingEntity) event.getTarget();
-						entity.setHealth(entity.getHealth() - 2);
-					
+			if(event.getSource().getEntity() != null) {
+				if(event.getSource().getEntity().getType().equals(EntityType.PLAYER)) {
+					if(ragnorokDuration > 0) {
+						if(event.getSource().getEntity().isAlive()) {
+							LivingEntity entity = (LivingEntity) event.getSource().getEntity();
+							entity.heal(2);
+						}
 					}
+				}
+				//WIP - Chopping upgrade to increase damage with axes
+				if(event.getSource().getDirectEntity().getType().equals(EntityType.PLAYER)) {
+					List<Item> axes = List.of(Items.NETHERITE_AXE, Items.DIAMOND_AXE, Items.GOLDEN_AXE,
+							Items.IRON_AXE, Items.STONE_AXE, Items.WOODEN_AXE);
+					if(axes.contains(((LivingEntity) event.getSource().getDirectEntity()).getItemInHand(InteractionHand.MAIN_HAND).getItem())){
+						event.setAmount(event.getAmount() + ((event.getAmount() * 1) / 3));
+					}
+					//Final calculation for damage dealt.
+					event.setAmount(ModStats.getDamageDealtCalculation(event.getAmount()));
 				}
 			}
 		}
-		
-		
 		
 		//Combat: Stable Footing
 		@SubscribeEvent
@@ -318,7 +308,6 @@ public class ClientEvents {
 					event.setStrength(event.getStrength() * 3 / 4);
 				}
 				event.setStrength(ModStats.getKnockbackCalculation(event.getStrength()));
-				
 			}
 		}
 		

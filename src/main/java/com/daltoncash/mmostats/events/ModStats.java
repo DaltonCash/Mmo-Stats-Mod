@@ -29,11 +29,17 @@ public class ModStats {
 		return (diamondMinedLevel * kelpEatenLevel * darkOakChoppedLevel) / ((diamondMinedLevel * kelpEatenLevel * darkOakChoppedLevel) + 100f);
 	}
 	
-	public static double getDamage() {
+	public static int getFlatDamage() {
 		int beefEatenLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getBeefEaten());
 		int ancientDebrisMinedLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getAncientDebrisMined());
 		return 1 + beefEatenLevel + ancientDebrisMinedLevel;
 	}
+	
+	public static float getPercentIncreaseDamage() {
+			
+		return 1 + ClientCapabilityData.getPlayerCombatLevel()  / 500;
+	}
+	
 	
 	public static float getCritMultiplier() {
 		int emeraldMinedLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getEmeraldMined());
@@ -122,16 +128,20 @@ public class ModStats {
 	
 	public static double getMiningFortuneCalculation() {
 		
-		return ClientCapabilityData.getPlayerMiningLevel() * getLuckyModifier() / 500;
+		return (ClientCapabilityData.getPlayerMiningLevel() * getLuckyModifier()) / 500;
 	}
 	
 	public static double getChoppingFortuneCalculation() {
 		
-		return ClientCapabilityData.getPlayerChoppingLevel() * getLuckyModifier() / 500;
+		return (ClientCapabilityData.getPlayerChoppingLevel() * getLuckyModifier()) / 500;
 	}
 	
 	public static float getDamageTakenCalculation(float damage) {
 		return Math.max(0, (damage - getFlatArmorModifier()) * (1 - (getArmorModifier() / (getArmorModifier() + 100))));
+	}
+	
+	public static float getDamageDealtCalculation(float damage) {
+		return (damage + getFlatDamage()) * getPercentIncreaseDamage();
 	}
 	
 	public static float getKnockbackCalculation(float amount) {

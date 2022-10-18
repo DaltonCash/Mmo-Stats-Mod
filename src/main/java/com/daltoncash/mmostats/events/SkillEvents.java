@@ -5,7 +5,16 @@ import org.slf4j.Logger;
 import com.daltoncash.mmostats.MmoStatsMod;
 import com.daltoncash.mmostats.capabilities.ClientCapabilityData;
 import com.daltoncash.mmostats.networking.ModMessages;
-import com.daltoncash.mmostats.networking.packets.c2s.EntityDropsAnArrowC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.HunterDropsMeatC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.totals.AcaciaChoppedC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.totals.BirchChoppedC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.totals.CrimsonStemChoppedC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.totals.DarkOakChoppedC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.totals.JungleChoppedC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.totals.MangroveChoppedC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.totals.OakChoppedC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.totals.SpruceChoppedC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.totals.WarpedStemChoppedC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.AncientDebrisMinedC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.CoalMinedC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.CopperMinedC2SPacket;
@@ -159,6 +168,7 @@ public class SkillEvents {
 						|| block.equals(Blocks.MANGROVE_LOG) || block.equals(Blocks.DARK_OAK_LOG)
 						|| block.equals(Blocks.CRIMSON_STEM) || block.equals(Blocks.WARPED_STEM)) {
 					expToAdd = 50;
+					addToChoppingTotal(block);
 				} else if (block.equals(Blocks.OAK_LEAVES) || block.equals(Blocks.BIRCH_LEAVES)
 						|| block.equals(Blocks.SPRUCE_LEAVES) || block.equals(Blocks.JUNGLE_LEAVES)
 						|| block.equals(Blocks.ACACIA_LEAVES) || block.equals(Blocks.MANGROVE_LEAVES)
@@ -187,6 +197,32 @@ public class SkillEvents {
 				LOGGER.info("{} has chopped {}(Player ChoppingExp: {})", event.getPlayer().getScoreboardName(),
 						event.getState().getBlock().asItem(), choppingExp + expToAdd);
 			}
+		}
+		
+		private static void addToChoppingTotal(Block block) {
+			LOGGER.info("ye we good fam");
+			if(block.equals(Blocks.OAK_LOG)) {
+				ModMessages.sendToServer(new OakChoppedC2SPacket());
+			}else if(block.equals(Blocks.BIRCH_LOG)) {
+				ModMessages.sendToServer(new BirchChoppedC2SPacket());
+			}else if(block.equals(Blocks.SPRUCE_LOG)) {
+				ModMessages.sendToServer(new SpruceChoppedC2SPacket());
+			}else if(block.equals(Blocks.JUNGLE_LOG)) {
+				ModMessages.sendToServer(new JungleChoppedC2SPacket());
+			}else if(block.equals(Blocks.ACACIA_LOG)) {
+				ModMessages.sendToServer(new AcaciaChoppedC2SPacket());
+			}else if(block.equals(Blocks.MANGROVE_LOG)) {
+				ModMessages.sendToServer(new MangroveChoppedC2SPacket());
+			}else if(block.equals(Blocks.DARK_OAK_LOG)) {
+				ModMessages.sendToServer(new DarkOakChoppedC2SPacket());
+			}else if(block.equals(Blocks.CRIMSON_STEM)) {
+				ModMessages.sendToServer(new CrimsonStemChoppedC2SPacket());
+			}else if(block.equals(Blocks.WARPED_STEM)) {
+				ModMessages.sendToServer(new WarpedStemChoppedC2SPacket());
+			}else {
+				LOGGER.info("Unexpected call to addToChoppingTotal method");
+			}
+				
 		}
 
 		// LivingDeathEvent is an event that triggers when an entity dies.
@@ -271,7 +307,7 @@ public class SkillEvents {
 								combatExp + expToAdd);
 						// Archery: Efficient Marksman
 						clientEntity = event.getEntity();
-						ModMessages.sendToServer(new EntityDropsAnArrowC2SPacket());
+						ModMessages.sendToServer(new HunterDropsMeatC2SPacket());
 					}
 				}
 			}

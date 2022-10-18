@@ -52,17 +52,17 @@ public class ChoppingTotalsMenu extends Screen {
 		List<String> eatenList = new ArrayList<>();
 		eatenList.add("Chopped");
 		eatenList.add("=====");
-		eatenList.add(ClientCapabilityData.getApplesEaten() + "");
-		eatenList.add(ClientCapabilityData.getBeefEaten() + "");
-		eatenList.add(ClientCapabilityData.getBeetrootEaten() + "");
+		eatenList.add(ClientCapabilityData.getOakChopped() + "");
+		eatenList.add(ClientCapabilityData.getSpruceChopped() + "");
+		eatenList.add(ClientCapabilityData.getBirchChopped() + "");
 		eatenList.add("------------------");
-		eatenList.add(ClientCapabilityData.getBreadEaten() + "");
-		eatenList.add(ClientCapabilityData.getCakeEaten() + "");
-		eatenList.add(ClientCapabilityData.getCarrotsEaten() + "");
+		eatenList.add(ClientCapabilityData.getJungleChopped() + "");
+		eatenList.add(ClientCapabilityData.getAcaciaChopped() + "");
+		eatenList.add(ClientCapabilityData.getDarkOakChopped() + "");
 		eatenList.add("------------------");
-		eatenList.add(ClientCapabilityData.getChickenEaten() + "");
-		eatenList.add(ClientCapabilityData.getCookiesEaten() + "");
-		eatenList.add(ClientCapabilityData.getFishEaten() + "");
+		eatenList.add(ClientCapabilityData.getMangroveChopped() + "");
+		eatenList.add(ClientCapabilityData.getCrimsonStemChopped() + "");
+		eatenList.add(ClientCapabilityData.getWarpedStemChopped() + "");
 		
 		DescriptionPanel toLevelPanel = new DescriptionPanel(this.minecraft, (this.width * 3) / 10 ,
 				(this.height * 9) / 10, 25, (this.width * 13) / 20);

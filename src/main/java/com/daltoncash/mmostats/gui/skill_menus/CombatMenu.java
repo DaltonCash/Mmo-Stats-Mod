@@ -66,11 +66,13 @@ public class CombatMenu extends Screen {
 			"textures/gui/background/descstuff3.png");
 
 	private static String upgradeString = "";
-	private static final String dodgeRoll = "dodgeRoll";
-	private static final String freeArrows = "freeArrows:";
-	private static final String overcome = "overcome";
-	private static final String ragnorok = "ragnorok";
-	private static final String takeStance = "takeStance";
+	private static final String dodgeRoll = "Dodge Roll: \n\nUse 'C' to roll in the direction you are moving in. "
+			+ "\nAlso, gain invulnerability frames while rolling.";
+	private static final String freeArrows = "Critical Acclaim: \n\nWhen blocking an arrow with shield, gain 33% / 66% / 100% chance to steal the arrow.";
+	private static final String overcome = "Overcome: \n\nIncreases duration of i-frames when taking damage(2x / 3x / 4x).";
+	private static final String ragnorok = "Ragnorok: \n\nAvoid death when losing more health than available. "
+			+ "\n When this effect occurs, gain 2% / 4% / 6% max hp on-hit for 5 seconds. 5 minute cooldown.";
+	private static final String takeStance = "Immovable: \n\nTake 10% / 20% / 25% less knockback from entities.";
 	
 	private static DescriptionPanel upgradeDescription;
 

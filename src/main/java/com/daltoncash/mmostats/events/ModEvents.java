@@ -355,7 +355,7 @@ public class ModEvents {
 			if (event.getEntity() instanceof ServerPlayer player) {
 				player.getAttribute(Attributes.MAX_HEALTH).setBaseValue(ModStats.getHealth());
 				player.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ModStats.getMoveSpeed());
-				player.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(ModStats.getDamage());
+				player.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(ModStats.getFlatDamage());
 			}
 		}
 	}

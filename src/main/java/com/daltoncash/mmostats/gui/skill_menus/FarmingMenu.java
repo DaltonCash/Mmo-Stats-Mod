@@ -61,10 +61,13 @@ public class FarmingMenu extends Screen {
 			"textures/gui/background/descstuff3.png");
 
 	private static String upgradeString = "";
-	private static final String carnivore = "carnivore";
-	private static final String egger = "egger: \n\n";
-	private static final String sugarRush = "sugarRush";
-	private static final String wellFed = "wellFed";
+	private static final String carnivore = "Carnivore: \n\nWhen eating meat, gain regeneration effect 2/4/6 for 3 seconds."
+			+ "\nOtherwise, gain regeneration effect 1/2/3.";
+	private static final String egger = "Eggsplosions: \n\nEggs explode on contact with an entity, dealing damage to all entities around."
+			+ "\n Explosion radius: 1/2/3 meters.";
+	private static final String sugarRush = "Sugar Rush: \n\nWhen eating sweets, gain swiftness effect 3/4/5 for 10 seconds."
+			+ "\nOtherwise, gain swiftness effect 1/2/3.";
+	private static final String wellFed = "Well Fed: \n\nHaving a full hunger bar grants 10% / 15% / 20% breaking speed.";
 	
 	private static DescriptionPanel upgradeDescription;
 	

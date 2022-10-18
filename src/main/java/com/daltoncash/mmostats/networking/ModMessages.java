@@ -59,7 +59,7 @@ import com.daltoncash.mmostats.networking.packets.c2s.taming.SpawnTamedFrogC2SPa
 import com.daltoncash.mmostats.networking.packets.c2s.GainNightVisionC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.HealFromRottenFleshTotalC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.SpawnArrowOnPlayerC2SPacket;
-import com.daltoncash.mmostats.networking.packets.c2s.EntityDropsAnArrowC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.HunterDropsMeatC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainEffectFromEatingC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.archeryUpgrades.EfficientMarksmanUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.archeryUpgrades.HunterUpgradeC2SPacket;
@@ -268,10 +268,10 @@ public class ModMessages {
 				.encoder(GainEffectFromEatingC2SPacket::toBytes)
 				.consumerMainThread(GainEffectFromEatingC2SPacket::handle)
 				.add();
-		 net.messageBuilder(EntityDropsAnArrowC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-				.decoder(EntityDropsAnArrowC2SPacket::new)
-				.encoder(EntityDropsAnArrowC2SPacket::toBytes)
-				.consumerMainThread(EntityDropsAnArrowC2SPacket::handle)
+		 net.messageBuilder(HunterDropsMeatC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+				.decoder(HunterDropsMeatC2SPacket::new)
+				.encoder(HunterDropsMeatC2SPacket::toBytes)
+				.consumerMainThread(HunterDropsMeatC2SPacket::handle)
 				.add();
 		 net.messageBuilder(SpawnArrowOnPlayerC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
 				.decoder(SpawnArrowOnPlayerC2SPacket::new)

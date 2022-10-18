@@ -80,17 +80,17 @@ public class ArcheryMenu extends Screen {
 			"textures/gui/background/descstuff3.png");
 
 	private static String upgradeString = "";
-	private static final String efficientMarksman = "does something";
+	private static final String efficientMarksman = "Efficient Marksman: \n\nEnemies drop 1/2/3 arrow(s) when killed.";
 	private static final String hunter = "Hunter: \n\nDeal 1.5/2/3x damage to animals. "
 			+ "\n\nAlso, animals always drop 1/2/3x their average food drops in addition to normal drops"
 			+ "\n\nE.g., at level 1, chickens will drop 1 and 1 raw chicken(2 total) "
 			+ "and pigs will drop 2 and 1-3 raw pork\n(3-5 total).";
-	private static final String insecurity = "does another thing";
-	private static final String leftClick = "ayo this man nutting";
-	private static final String quickshot = "quickfire coom";
-	private static final String sniper = "pew";
-	private static final String sweetSpot = "pewpew";
-	private static final String unabated = "pewdiepie";
+	private static final String insecurity = "Insecurity: \n\nDeal 33%/67%/100% more projectile damage to enemies who also fire projectiles";
+	private static final String leftClick = "Shotgun Shot: \n\nLeft click to use, fires 8 arrows in a cone in front of you.";
+	private static final String quickshot = "Quick Draw: \n\nTake less time to draw an arrow.";
+	private static final String sniper = "Sniper: \n\nDeal 10%/ 20%/ 30% more damage to entities for every 15 tiles they are away from your location.";
+	private static final String sweetSpot = "Boom, Headshot: \n\nDeal 20%/ 40%/50% more damage to entities when they are shot in the head.";
+	private static final String unabated = "Unabated: \n\nGain speed when drawing your bow.";
 	
 	private static DescriptionPanel upgradeDescription;
 	
