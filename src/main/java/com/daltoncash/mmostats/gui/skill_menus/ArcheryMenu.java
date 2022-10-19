@@ -94,9 +94,17 @@ public class ArcheryMenu extends Screen {
 	
 	private static DescriptionPanel upgradeDescription;
 	
-	private static int counter = 0;
-	private static Button upgradePoints;
-	private static Button temp;
+	private static Button upgradePointsButton;
+	
+	private static int efficientMarksmanLVL = ClientCapabilityData.isUpgradedEfficientMarksman();
+	private static int hunterLVL = ClientCapabilityData.isUpgradedHunter();
+	private static int insecurityLVL = ClientCapabilityData.isUpgradedInsecurity();
+	private static int shotgunLVL = ClientCapabilityData.isUpgradedLeftClick();
+	private static int quickshotLVL = ClientCapabilityData.isUpgradedQuickshot();
+	private static int sniperLVL = ClientCapabilityData.isUpgradedSniper();
+	private static int sweetSpotLVL = ClientCapabilityData.isUpgradedSweetSpotArchery();
+	private static int unabatedLVL = ClientCapabilityData.isUpgradedUnabated();
+	private static int upgradePoints = ClientCapabilityData.getPlayerUpgradePoints();
 
 	public ArcheryMenu(Component p_96550_) {
 		super(p_96550_);
@@ -104,90 +112,109 @@ public class ArcheryMenu extends Screen {
 
 	@Override
 	public final void init() {
-
-		upgradePoints = addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
+		upgradeString = "";
+		removeWidget(upgradePointsButton);
+		
+		upgradePointsButton = addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
 				Component.literal("Upgrades Unspent: " + ClientCapabilityData.getPlayerUpgradePoints()),
-				ArcheryMenu::onPressDoNothing));
-		
-		if(ClientCapabilityData.isUpgradedEfficientMarksman() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 1, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture1, 50, 50, ArcheryMenu::onPressToggleEfficientMarksman));	
-		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 1, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture1Dark, 50, 50, ArcheryMenu::onPressToggleEfficientMarksman));	
-		}
+				button -> {}));
 		
 		
-		if(ClientCapabilityData.isUpgradedHunter() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 3, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture2, 50, 50, ArcheryMenu::onPressToggleHunter));
-		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 3, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture2Dark, 50, 50, ArcheryMenu::onPressToggleHunter));
-		}
-		
-		
-		if(ClientCapabilityData.isUpgradedInsecurity() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 5, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture3, 50, 50, ArcheryMenu::onPressToggleInsecurity));
-		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 5, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture3Dark, 50, 50, ArcheryMenu::onPressToggleInsecurity));
-		}
-		
-		
-		if(ClientCapabilityData.isUpgradedLeftClick() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 7, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture4, 50, 50, ArcheryMenu::onPressToggleLeftClick));
-		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 7, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture4Dark, 50, 50, ArcheryMenu::onPressToggleLeftClick));
-		}
-		
-		
-		if(ClientCapabilityData.isUpgradedQuickshot() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 9, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture5, 50, 50, ArcheryMenu::onPressToggleQuickshot));
-		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 9, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture5Dark, 50, 50, ArcheryMenu::onPressToggleQuickshot));
-		}
-		
-		
-		if(ClientCapabilityData.isUpgradedSniper() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 2, (this.height / 6) * 3, 50, 50, 0, 0, 99,
-					upgradeTexture6, 50, 50, ArcheryMenu::onPressToggleSniper));
-		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 2, (this.height / 6) * 3, 50, 50, 0, 0, 99,
-					upgradeTexture6Dark, 50, 50, ArcheryMenu::onPressToggleSniper));
-		}
-		
-		
-		if(ClientCapabilityData.isUpgradedSweetSpotArchery() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 4, (this.height / 6) * 3, 50, 50, 0, 0, 99,
-					upgradeTexture7, 50, 50, ArcheryMenu::onPressToggleSweetSpot));
-		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 4, (this.height / 6) * 3, 50, 50, 0, 0, 99,
-					upgradeTexture7Dark, 50, 50, ArcheryMenu::onPressToggleSweetSpot));
-		}
-		
-		
-		if(ClientCapabilityData.isUpgradedUnabated() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 6, (this.height / 6) * 3, 50, 50, 0, 0, 99,
-					upgradeTexture8, 50, 50, ArcheryMenu::onPressToggleUnabated));
-		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 6, (this.height / 6) * 3, 50, 50, 0, 0, 99,
-					upgradeTexture8Dark, 50, 50, ArcheryMenu::onPressToggleUnabated));
-		}
+		addRenderableWidget(new ImageButton((this.width / 18) * 1, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+				efficientMarksmanLVL > 0 ? upgradeTexture1 : upgradeTexture1Dark, 50, 50, ArcheryMenu::onPressToggleEfficientMarksman,
+						new Button.OnTooltip() {
+		     		public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+		     			Component component = Component.literal("Current Upgrade Level: " + efficientMarksmanLVL);
+		     			ArcheryMenu.this.renderTooltip(p_169459_, ArcheryMenu.this.minecraft.font.split(component, Math.max(ArcheryMenu.this.width / 2 - 43, 170)), int1, int2);
+		     		}
+				},
+				Component.empty()));			
+			
+			
+		addRenderableWidget(new ImageButton((this.width / 18) * 3, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+				hunterLVL > 0 ? upgradeTexture2 : upgradeTexture2Dark, 50, 50, ArcheryMenu::onPressToggleHunter,
+						new Button.OnTooltip() {
+		     		public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+		     			Component component = Component.literal("Current Upgrade Level: " + hunterLVL);
+		     			ArcheryMenu.this.renderTooltip(p_169459_, ArcheryMenu.this.minecraft.font.split(component, Math.max(ArcheryMenu.this.width / 2 - 43, 170)), int1, int2);
+		     		}
+				},
+				Component.empty()));		
+			
+			
+		addRenderableWidget(new ImageButton((this.width / 18) * 5, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+				insecurityLVL > 0 ? upgradeTexture3 : upgradeTexture3Dark, 50, 50, ArcheryMenu::onPressToggleInsecurity,
+						new Button.OnTooltip() {
+		     		public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+		     			Component component = Component.literal("Current Upgrade Level: " + insecurityLVL);
+		     			ArcheryMenu.this.renderTooltip(p_169459_, ArcheryMenu.this.minecraft.font.split(component, Math.max(ArcheryMenu.this.width / 2 - 43, 170)), int1, int2);
+		     		}
+				},
+				Component.empty()));		
+			
+			
+		addRenderableWidget(new ImageButton((this.width / 18) * 7, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+				shotgunLVL > 0 ? upgradeTexture4 : upgradeTexture4Dark, 50, 50, ArcheryMenu::onPressToggleLeftClick,
+						new Button.OnTooltip() {
+		     		public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+		     			Component component = Component.literal("Current Upgrade Level: " + shotgunLVL);
+		     			ArcheryMenu.this.renderTooltip(p_169459_, ArcheryMenu.this.minecraft.font.split(component, Math.max(ArcheryMenu.this.width / 2 - 43, 170)), int1, int2);
+		     		}
+				},
+				Component.empty()));		
+			
+			
+		addRenderableWidget(new ImageButton((this.width / 18) * 9, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+				quickshotLVL > 0 ? upgradeTexture5 : upgradeTexture5Dark, 50, 50, ArcheryMenu::onPressToggleQuickshot,
+						new Button.OnTooltip() {
+		     		public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+		     			Component component = Component.literal("Current Upgrade Level: " + quickshotLVL);
+		     			ArcheryMenu.this.renderTooltip(p_169459_, ArcheryMenu.this.minecraft.font.split(component, Math.max(ArcheryMenu.this.width / 2 - 43, 170)), int1, int2);
+		     		}
+				},
+				Component.empty()));		
+			
+			
+		addRenderableWidget(new ImageButton((this.width / 18) * 2, (this.height / 6) * 3, 50, 50, 0, 0, 99,
+				sniperLVL > 0 ? upgradeTexture6 : upgradeTexture6Dark, 50, 50, ArcheryMenu::onPressToggleSniper,
+						new Button.OnTooltip() {
+		     		public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+		     			Component component = Component.literal("Current Upgrade Level: " + sniperLVL);
+		     			ArcheryMenu.this.renderTooltip(p_169459_, ArcheryMenu.this.minecraft.font.split(component, Math.max(ArcheryMenu.this.width / 2 - 43, 170)), int1, int2);
+		     		}
+				},
+				Component.empty()));		
+			
+			
+		addRenderableWidget(new ImageButton((this.width / 18) * 4, (this.height / 6) * 3, 50, 50, 0, 0, 99,
+				sweetSpotLVL > 0 ? upgradeTexture7 : upgradeTexture7Dark, 50, 50, ArcheryMenu::onPressToggleSweetSpot,
+						new Button.OnTooltip() {
+		     		public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+		     			Component component = Component.literal("Current Upgrade Level: " + sweetSpotLVL);
+		     			ArcheryMenu.this.renderTooltip(p_169459_, ArcheryMenu.this.minecraft.font.split(component, Math.max(ArcheryMenu.this.width / 2 - 43, 170)), int1, int2);
+		     		}
+				},
+				Component.empty()));		
+			
+			
+		addRenderableWidget(new ImageButton((this.width / 18) * 6, (this.height / 6) * 3, 50, 50, 0, 0, 99,
+				unabatedLVL > 0 ? upgradeTexture8 : upgradeTexture8Dark, 50, 50, ArcheryMenu::onPressToggleUnabated,
+						new Button.OnTooltip() {
+		     		public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+		     			Component component = Component.literal("Current Upgrade Level: " + unabatedLVL);
+		     			ArcheryMenu.this.renderTooltip(p_169459_, ArcheryMenu.this.minecraft.font.split(component, Math.max(ArcheryMenu.this.width / 2 - 43, 170)), int1, int2);
+		     		}
+				},
+				Component.empty()));		
 		
 
 		addRenderableWidget(new ImageButton((this.width * 27) / 42, 0, (this.width * 91) / 256, this.height, 0, 0, 0,
-				descriptionBanner, (this.width * 20) / 56, (this.height * 50) / 49,
-				ArcheryMenu::onPressDoNothing)).active = false;
+				descriptionBanner, (this.width * 20) / 56, (this.height * 50) / 49, button -> {})).active = false;
 
 		addRenderableWidget(new Button((this.width * 195) / 256, (this.height * 34) / 40, (this.width * 100) / 840, 20,
 				Component.literal("Upgrade"), ArcheryMenu::onPressDoUpgrade));
 
+		removeWidget(upgradeDescription);
 		upgradeDescription = new DescriptionPanel(this.minecraft, (this.width * 57) / 256,
 				this.height - (this.height * 27) / 64, this.height - ((this.height * 100) / 128));
 		this.addRenderableWidget(upgradeDescription);
@@ -195,95 +222,32 @@ public class ArcheryMenu extends Screen {
 		lines.add("Select Upgrade.");
 		upgradeDescription.setInfo(lines, null, null);
 	}
+	
 	public void tick() {
-		counter++;
-		removeWidget(temp);
-		removeWidget(upgradePoints);
-		if(counter % 2 == 1) {
-			upgradePoints = addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
-					Component.literal("Upgrades Unspent: " + ClientCapabilityData.getPlayerUpgradePoints()),
-					ArcheryMenu::onPressDoNothing));
-		}else {
-			temp = addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
-					Component.literal("Upgrades Unspent: " + ClientCapabilityData.getPlayerUpgradePoints()),
-					ArcheryMenu::onPressDoNothing));
-		}
-		
-		addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
-				Component.literal("Upgrades Unspent: " + ClientCapabilityData.getPlayerUpgradePoints()),
-				ArcheryMenu::onPressDoNothing));
-		
-		if(ClientCapabilityData.isUpgradedEfficientMarksman() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 1, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture1, 50, 50, ArcheryMenu::onPressToggleEfficientMarksman));	
-		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 1, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture1Dark, 50, 50, ArcheryMenu::onPressToggleEfficientMarksman));	
-		}
-		
-		
-		if(ClientCapabilityData.isUpgradedHunter() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 3, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture2, 50, 50, ArcheryMenu::onPressToggleHunter));
-		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 3, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture2Dark, 50, 50, ArcheryMenu::onPressToggleHunter));
-		}
-		
-		
-		if(ClientCapabilityData.isUpgradedInsecurity() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 5, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture3, 50, 50, ArcheryMenu::onPressToggleInsecurity));
-		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 5, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture3Dark, 50, 50, ArcheryMenu::onPressToggleInsecurity));
-		}
-		
-		
-		if(ClientCapabilityData.isUpgradedLeftClick() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 7, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture4, 50, 50, ArcheryMenu::onPressToggleLeftClick));
-		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 7, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture4Dark, 50, 50, ArcheryMenu::onPressToggleLeftClick));
-		}
-		
-		
-		if(ClientCapabilityData.isUpgradedQuickshot() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 9, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture5, 50, 50, ArcheryMenu::onPressToggleQuickshot));
-		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 9, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture5Dark, 50, 50, ArcheryMenu::onPressToggleQuickshot));
-		}
-		
-		
-		if(ClientCapabilityData.isUpgradedSniper() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 2, (this.height / 6) * 3, 50, 50, 0, 0, 99,
-					upgradeTexture6, 50, 50, ArcheryMenu::onPressToggleSniper));
-		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 2, (this.height / 6) * 3, 50, 50, 0, 0, 99,
-					upgradeTexture6Dark, 50, 50, ArcheryMenu::onPressToggleSniper));
-		}
-		
-		
-		if(ClientCapabilityData.isUpgradedSweetSpotArchery() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 4, (this.height / 6) * 3, 50, 50, 0, 0, 99,
-					upgradeTexture7, 50, 50, ArcheryMenu::onPressToggleSweetSpot));
-		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 4, (this.height / 6) * 3, 50, 50, 0, 0, 99,
-					upgradeTexture7Dark, 50, 50, ArcheryMenu::onPressToggleSweetSpot));
-		}
-		
-		
-		if(ClientCapabilityData.isUpgradedUnabated() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 6, (this.height / 6) * 3, 50, 50, 0, 0, 99,
-					upgradeTexture8, 50, 50, ArcheryMenu::onPressToggleUnabated));
-		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 6, (this.height / 6) * 3, 50, 50, 0, 0, 99,
-					upgradeTexture8Dark, 50, 50, ArcheryMenu::onPressToggleUnabated));
-		}
-	   }
+		if(efficientMarksmanLVL != ClientCapabilityData.isUpgradedEfficientMarksman() 	||
+				hunterLVL != ClientCapabilityData.isUpgradedHunter()  					||
+				insecurityLVL != ClientCapabilityData.isUpgradedInsecurity()       		||
+				shotgunLVL != ClientCapabilityData.isUpgradedLeftClick()      			||
+				quickshotLVL != ClientCapabilityData.isUpgradedQuickshot() 				||
+				sniperLVL != ClientCapabilityData.isUpgradedSniper()  					||
+				sweetSpotLVL != ClientCapabilityData.isUpgradedSweetSpotArchery()       ||
+				unabatedLVL != ClientCapabilityData.isUpgradedUnabated()      			||
+				upgradePoints != ClientCapabilityData.getPlayerUpgradePoints()) {
+				
+					efficientMarksmanLVL = ClientCapabilityData.isUpgradedEfficientMarksman();
+					hunterLVL = ClientCapabilityData.isUpgradedHunter();
+					insecurityLVL = ClientCapabilityData.isUpgradedInsecurity();
+					shotgunLVL = ClientCapabilityData.isUpgradedLeftClick();
+					quickshotLVL = ClientCapabilityData.isUpgradedQuickshot();
+					sniperLVL = ClientCapabilityData.isUpgradedSniper();
+					sweetSpotLVL = ClientCapabilityData.isUpgradedSweetSpotArchery();
+					unabatedLVL = ClientCapabilityData.isUpgradedUnabated();
+					upgradePoints = ClientCapabilityData.getPlayerUpgradePoints();
+					
+					init();
+			}
+	}
+	
 	private static void onPressToggleEfficientMarksman(Button button) {
 		upgradeString = efficientMarksman;
 		updateCache();
@@ -324,12 +288,8 @@ public class ArcheryMenu extends Screen {
 		updateCache();
 	}
 
-	private static void onPressDoNothing(Button button) {
-
-	}
-
 	private static void onPressDoUpgrade(Button button) {
-		if(ClientCapabilityData.getPlayerUpgradePoints() > 0) {
+		if(upgradePoints > 0) {
 			switch (upgradeString) {
 			case efficientMarksman:
 				ModMessages.sendToServer(new EfficientMarksmanUpgradeC2SPacket());
@@ -356,12 +316,7 @@ public class ArcheryMenu extends Screen {
 				ModMessages.sendToServer(new UnabatedUpgradeC2SPacket());
 				break;
 			}
-			
-			Minecraft.getInstance().setScreen(new ArcheryMenu(Component.literal("mining")));
 		}
-		
-		
-		
 	}
 
 	private static void updateCache() {

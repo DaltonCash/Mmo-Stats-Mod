@@ -55,7 +55,7 @@ public class TotalsEvents {
 		@SubscribeEvent
 		public static void onTakingFallDamageReduceDamage(LivingFallEvent event) {
 			if(event.getEntity().getType().equals(EntityType.PLAYER)) {
-				event.setDamageMultiplier(ModStats.getFallDamageModifier());
+				event.setDamageMultiplier(event.getDamageMultiplier() - ModStats.getFallDamageModifier());
 			}
 		}
 	}

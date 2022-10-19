@@ -75,10 +75,15 @@ public class CombatMenu extends Screen {
 	private static final String takeStance = "Immovable: \n\nTake 10% / 20% / 25% less knockback from entities.";
 	
 	private static DescriptionPanel upgradeDescription;
-
-	private static int counter = 0;
-	private static Button upgradePoints;
-	private static Button temp;
+	
+	private static Button upgradePointsButton;
+	
+	private static int dodgelRollLVL = ClientCapabilityData.isUpgradedDodgeRoll();
+	private static int freeArrowsLVL = ClientCapabilityData.isUpgradedFreeArrows();
+	private static int overcomeLVL = ClientCapabilityData.isUpgradedOvercome();
+	private static int ragnorokLVL = ClientCapabilityData.isUpgradedRagnorok();
+	private static int takeStanceLVL = ClientCapabilityData.isUpgradedTakeStance();
+	private static int upgradePoints = ClientCapabilityData.getPlayerUpgradePoints();
 	
 	public CombatMenu(Component p_96550_) {
 		super(p_96550_);
@@ -86,66 +91,82 @@ public class CombatMenu extends Screen {
 
 	@Override
 	public final void init() {
-
+		
+		upgradeString = "";
+		
 		//addRenderableWidget(new Button(this.width/13 * 6, this.height/13 * 6, 50, 50, 
 				//Component.literal("Combat Totals"), CombatMenu::onPressShowTotals));
 		
-		upgradePoints = addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
+		removeWidget(upgradePointsButton);
+		
+		upgradePointsButton = addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
 				Component.literal("Upgrades Unspent: " + ClientCapabilityData.getPlayerUpgradePoints()),
-				CombatMenu::onPressDoNothing));
-		
-		if(ClientCapabilityData.isUpgradedDodgeRoll() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 1, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture1, 50, 50, CombatMenu::onPressUpgradeDodgeRoll));	
-		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 1, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture1Dark, 50, 50, CombatMenu::onPressUpgradeDodgeRoll));	
-		}
+				button -> {}));
 		
 		
-		if(ClientCapabilityData.isUpgradedFreeArrows() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 3, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture2, 50, 50, CombatMenu::onPressUpgradeFreeArrows));
-		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 3, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture2Dark, 50, 50, CombatMenu::onPressUpgradeFreeArrows));
-		}
-		
-		
-		if(ClientCapabilityData.isUpgradedOvercome() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 5, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture3, 50, 50, CombatMenu::onPressUpgradeOvercome));
-		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 5, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture3Dark, 50, 50, CombatMenu::onPressUpgradeOvercome));
-		}
-		
-		
-		if(ClientCapabilityData.isUpgradedRagnorok() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 7, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture4, 50, 50, CombatMenu::onPressUpgradeRagnorok));
-		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 7, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture4Dark, 50, 50, CombatMenu::onPressUpgradeRagnorok));
-		}
-		
-		
-		if(ClientCapabilityData.isUpgradedTakeStance() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 9, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture5, 50, 50, CombatMenu::onPressUpgradeTakeStance));
-		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 9, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture5Dark, 50, 50, CombatMenu::onPressUpgradeTakeStance));
-		}
+		addRenderableWidget(new ImageButton((this.width / 18) * 1, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+				dodgelRollLVL > 0 ? upgradeTexture1 : upgradeTexture1Dark, 50, 50, CombatMenu::onPressUpgradeDodgeRoll,
+						new Button.OnTooltip() {
+		     		public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+		     			Component component = Component.literal("Current Upgrade Level: " + dodgelRollLVL);
+		     			CombatMenu.this.renderTooltip(p_169459_, CombatMenu.this.minecraft.font.split(component, Math.max(CombatMenu.this.width / 2 - 43, 170)), int1, int2);
+		     		}
+				},
+				Component.empty()));		
+
+			
+		addRenderableWidget(new ImageButton((this.width / 18) * 3, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+				freeArrowsLVL > 0 ? upgradeTexture2 : upgradeTexture2Dark, 50, 50, CombatMenu::onPressUpgradeFreeArrows,
+						new Button.OnTooltip() {
+		     		public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+		     			Component component = Component.literal("Current Upgrade Level: " + freeArrowsLVL);
+		     			CombatMenu.this.renderTooltip(p_169459_, CombatMenu.this.minecraft.font.split(component, Math.max(CombatMenu.this.width / 2 - 43, 170)), int1, int2);
+		     		}
+				},
+				Component.empty()));		
+
+			
+		addRenderableWidget(new ImageButton((this.width / 18) * 5, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+				overcomeLVL > 0 ? upgradeTexture3 : upgradeTexture3Dark, 50, 50, CombatMenu::onPressUpgradeOvercome,
+						new Button.OnTooltip() {
+		     		public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+		     			Component component = Component.literal("Current Upgrade Level: " + overcomeLVL);
+		     			CombatMenu.this.renderTooltip(p_169459_, CombatMenu.this.minecraft.font.split(component, Math.max(CombatMenu.this.width / 2 - 43, 170)), int1, int2);
+		     		}
+				},
+				Component.empty()));		
+			
+			
+		addRenderableWidget(new ImageButton((this.width / 18) * 7, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+				ragnorokLVL > 0 ? upgradeTexture4 : upgradeTexture4Dark, 50, 50, CombatMenu::onPressUpgradeRagnorok,
+						new Button.OnTooltip() {
+		     		public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+		     			Component component = Component.literal("Current Upgrade Level: " + ragnorokLVL);
+		     			CombatMenu.this.renderTooltip(p_169459_, CombatMenu.this.minecraft.font.split(component, Math.max(CombatMenu.this.width / 2 - 43, 170)), int1, int2);
+		     		}
+				},
+				Component.empty()));		
+			
+			
+		addRenderableWidget(new ImageButton((this.width / 18) * 9, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+				takeStanceLVL > 0 ? upgradeTexture5 : upgradeTexture5Dark, 50, 50, CombatMenu::onPressUpgradeTakeStance,
+						new Button.OnTooltip() {
+		     		public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+		     			Component component = Component.literal("Current Upgrade Level: " + takeStanceLVL);
+		     			CombatMenu.this.renderTooltip(p_169459_, CombatMenu.this.minecraft.font.split(component, Math.max(CombatMenu.this.width / 2 - 43, 170)), int1, int2);
+		     		}
+				},
+				Component.empty()));		
+			
 		
 
 		addRenderableWidget(new ImageButton((this.width * 27) / 42, 0, (this.width * 91) / 256, this.height, 0, 0, 0,
-				descriptionBanner, (this.width * 20) / 56, (this.height * 50) / 49,
-				CombatMenu::onPressDoNothing)).active = false;
+				descriptionBanner, (this.width * 20) / 56, (this.height * 50) / 49, button -> {})).active = false;
 
 		addRenderableWidget(new Button((this.width * 195) / 256, (this.height * 34) / 40, (this.width * 100) / 840, 20,
 				Component.literal("Upgrade"), CombatMenu::onPressDoUpgrade));
 
+		removeWidget(upgradeDescription);
 		upgradeDescription = new DescriptionPanel(this.minecraft, (this.width * 57) / 256,
 				this.height - (this.height * 27) / 64, this.height - ((this.height * 100) / 128));
 		this.addRenderableWidget(upgradeDescription);
@@ -155,66 +176,22 @@ public class CombatMenu extends Screen {
 	}
 	
 	public void tick() {
-		counter++;
-		removeWidget(temp);
-		removeWidget(upgradePoints);
-		if(counter % 2 == 1) {
-			upgradePoints = addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
-					Component.literal("Upgrades Unspent: " + ClientCapabilityData.getPlayerUpgradePoints()),
-					CombatMenu::onPressDoNothing));
-		}else {
-			temp = addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
-					Component.literal("Upgrades Unspent: " + ClientCapabilityData.getPlayerUpgradePoints()),
-					CombatMenu::onPressDoNothing));
-		}
-		
-		addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
-				Component.literal("Upgrades Unspent: " + ClientCapabilityData.getPlayerUpgradePoints()),
-				CombatMenu::onPressDoNothing));
-		
-		if(ClientCapabilityData.isUpgradedDodgeRoll() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 1, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture1, 50, 50, CombatMenu::onPressUpgradeDodgeRoll));	
-		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 1, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture1Dark, 50, 50, CombatMenu::onPressUpgradeDodgeRoll));	
-		}
-		
-		
-		if(ClientCapabilityData.isUpgradedFreeArrows() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 3, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture2, 50, 50, CombatMenu::onPressUpgradeFreeArrows));
-		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 3, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture2Dark, 50, 50, CombatMenu::onPressUpgradeFreeArrows));
-		}
-		
-		
-		if(ClientCapabilityData.isUpgradedOvercome() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 5, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture3, 50, 50, CombatMenu::onPressUpgradeOvercome));
-		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 5, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture3Dark, 50, 50, CombatMenu::onPressUpgradeOvercome));
-		}
-		
-		
-		if(ClientCapabilityData.isUpgradedRagnorok() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 7, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture4, 50, 50, CombatMenu::onPressUpgradeRagnorok));
-		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 7, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture4Dark, 50, 50, CombatMenu::onPressUpgradeRagnorok));
-		}
-		
-		
-		if(ClientCapabilityData.isUpgradedTakeStance() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 9, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture5, 50, 50, CombatMenu::onPressUpgradeTakeStance));
-		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 9, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture5Dark, 50, 50, CombatMenu::onPressUpgradeTakeStance));
-		}
+		if(dodgelRollLVL != ClientCapabilityData.isUpgradedDodgeRoll() 		 ||
+				freeArrowsLVL != ClientCapabilityData.isUpgradedFreeArrows() ||
+				overcomeLVL != ClientCapabilityData.isUpgradedOvercome()     ||
+				ragnorokLVL != ClientCapabilityData.isUpgradedRagnorok()     ||
+				takeStanceLVL != ClientCapabilityData.isUpgradedTakeStance() ||
+				upgradePoints != ClientCapabilityData.getPlayerUpgradePoints()) {
+				
+					dodgelRollLVL = ClientCapabilityData.isUpgradedDodgeRoll();
+					freeArrowsLVL = ClientCapabilityData.isUpgradedFreeArrows();
+					overcomeLVL = ClientCapabilityData.isUpgradedOvercome();
+					ragnorokLVL = ClientCapabilityData.isUpgradedRagnorok();
+					takeStanceLVL = ClientCapabilityData.isUpgradedTakeStance();
+					upgradePoints = ClientCapabilityData.getPlayerUpgradePoints();
+					
+					init();
+			}
 	}
 	//WIP\/
 	//private static void onPressShowTotals(Button button) {
@@ -245,12 +222,8 @@ public class CombatMenu extends Screen {
 		updateCache();
 	}
 
-	private static void onPressDoNothing(Button button) {
-
-	}
-
 	private static void onPressDoUpgrade(Button button) {
-		if(ClientCapabilityData.getPlayerUpgradePoints() > 0) {
+		if(upgradePoints > 0) {
 			switch (upgradeString) {
 			case dodgeRoll:
 				ModMessages.sendToServer(new DodgeRollUpgradeC2SPacket());
@@ -268,12 +241,7 @@ public class CombatMenu extends Screen {
 				ModMessages.sendToServer(new TakeStanceUpgradeC2SPacket());
 				break;
 			}
-			
-			Minecraft.getInstance().setScreen(new CombatMenu(Component.literal("combat")));
 		}
-		
-		
-		
 	}
 
 	private static void updateCache() {

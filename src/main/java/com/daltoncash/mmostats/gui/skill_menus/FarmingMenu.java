@@ -46,7 +46,12 @@ public class FarmingMenu extends Screen {
 			"textures/gui/buttons/farming_buttons/sugar_rush_button.png");
 	private final ResourceLocation upgradeTexture4 = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/buttons/farming_buttons/well_fed_button.png");
-	
+	/*
+	private final ResourceLocation upgradeTexture5 = new ResourceLocation(MmoStatsMod.MODID,
+			"textures/gui/buttons/farming_buttons/insatiable_button.png");
+	private final ResourceLocation upgradeTexture6 = new ResourceLocation(MmoStatsMod.MODID,
+			"textures/gui/buttons/farming_buttons/fast_food_button.png");
+			*/
 	//Textures to appear dark if not upgraded:
 	private final ResourceLocation upgradeTexture1Dark = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/buttons/farming_buttons/carnivore_button_dark.png");
@@ -56,7 +61,12 @@ public class FarmingMenu extends Screen {
 			"textures/gui/buttons/farming_buttons/sugar_rush_button_dark.png");
 	private final ResourceLocation upgradeTexture4Dark = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/buttons/farming_buttons/well_fed_button_dark.png");
-	
+	/*
+	private final ResourceLocation upgradeTexture5Dark = new ResourceLocation(MmoStatsMod.MODID,
+			"textures/gui/buttons/farming_buttons/insatiable_button_dark.png");
+	private final ResourceLocation upgradeTexture6Dark = new ResourceLocation(MmoStatsMod.MODID,
+			"textures/gui/buttons/farming_buttons/fast_food_button_dark.png");
+	*/
 	private final ResourceLocation descriptionBanner = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/background/descstuff3.png");
 
@@ -71,9 +81,13 @@ public class FarmingMenu extends Screen {
 	
 	private static DescriptionPanel upgradeDescription;
 	
-	private static int counter = 0;
-	private static Button upgradePoints;
-	private static Button temp;
+	private static int carnivoreLVL = ClientCapabilityData.isUpgradedCarnivore();
+	private static int eggerLVL = ClientCapabilityData.isUpgradedEgger();
+	private static int sugarRushLVL = ClientCapabilityData.isUpgradedSugarRush();
+	private static int wellFedLVL = ClientCapabilityData.isUpgradedWellFed();
+	private static int upgradePoints = ClientCapabilityData.getPlayerUpgradePoints();
+	
+	private static Button upgradePointsButton;
 	
 	public FarmingMenu(Component p_96550_) {
 		super(p_96550_);
@@ -85,109 +99,96 @@ public class FarmingMenu extends Screen {
 		addRenderableWidget(new Button(this.width/13 * 6, this.height/13 * 6, 50, 50, 
 				Component.literal("Farming Totals"), FarmingMenu::onPressShowTotals));
 		
-		upgradePoints = addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
+		upgradeString = "";
+		
+		removeWidget(upgradePointsButton);
+		
+		upgradePointsButton = addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
 				Component.literal("Upgrades Unspent: " + ClientCapabilityData.getPlayerUpgradePoints()),
-				FarmingMenu::onPressDoNothing));
-		
-		if(ClientCapabilityData.isUpgradedCarnivore() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 1, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture1, 50, 50, FarmingMenu::onPressUpgradeCarnivore));	
-		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 1, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture1Dark, 50, 50, FarmingMenu::onPressUpgradeCarnivore));	
-		}
+				button -> {}));
 		
 		
-		if(ClientCapabilityData.isUpgradedEgger() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 3, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture2, 50, 50, FarmingMenu::onPressUpgradeEgger));
-		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 3, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture2Dark, 50, 50, FarmingMenu::onPressUpgradeEgger));
-		}
+		addRenderableWidget(new ImageButton((this.width / 18) * 1, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+				carnivoreLVL > 0 ? upgradeTexture1 : upgradeTexture1Dark, 50, 50, FarmingMenu::onPressUpgradeCarnivore,
+						new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("Current Upgrade Level: " + carnivoreLVL);
+	     				FarmingMenu.this.renderTooltip(p_169459_, FarmingMenu.this.minecraft.font.split(component, Math.max(FarmingMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				},
+				Component.empty()));			
 		
 		
-		if(ClientCapabilityData.isUpgradedSugarRush() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 5, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture3, 50, 50, FarmingMenu::onPressUpgradeSugarRush));
-		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 5, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture3Dark, 50, 50, FarmingMenu::onPressUpgradeSugarRush));
-		}
 		
 		
-		if(ClientCapabilityData.isUpgradedWellFed() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 7, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture4, 50, 50, FarmingMenu::onPressUpgradeWellFed));
-		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 7, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture4Dark, 50, 50, FarmingMenu::onPressUpgradeWellFed));
-		}
+		addRenderableWidget(new ImageButton((this.width / 18) * 3, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+				eggerLVL > 0 ? upgradeTexture2 : upgradeTexture2Dark, 50, 50, FarmingMenu::onPressUpgradeEgger,
+						new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("Current Upgrade Level: " + eggerLVL);
+	     				FarmingMenu.this.renderTooltip(p_169459_, FarmingMenu.this.minecraft.font.split(component, Math.max(FarmingMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				},
+				Component.empty()));		
+		
+		
+		
+		
+		addRenderableWidget(new ImageButton((this.width / 18) * 5, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+				sugarRushLVL > 0 ? upgradeTexture3 : upgradeTexture3Dark, 50, 50, FarmingMenu::onPressUpgradeSugarRush,
+						new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("Current Upgrade Level: " + sugarRushLVL);
+	     				FarmingMenu.this.renderTooltip(p_169459_, FarmingMenu.this.minecraft.font.split(component, Math.max(FarmingMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				},
+				Component.empty()));		
+		
+		
+		
+	
+		addRenderableWidget(new ImageButton((this.width / 18) * 7, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+				wellFedLVL > 0 ? upgradeTexture4 : upgradeTexture4Dark, 50, 50, FarmingMenu::onPressUpgradeWellFed,
+						new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("Current Upgrade Level: " + wellFedLVL);
+	     				FarmingMenu.this.renderTooltip(p_169459_, FarmingMenu.this.minecraft.font.split(component, Math.max(FarmingMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				},
+				Component.empty()));		
+		
 		
 
 		addRenderableWidget(new ImageButton((this.width * 27) / 42, 0, (this.width * 91) / 256, this.height, 0, 0, 0,
 				descriptionBanner, (this.width * 20) / 56, (this.height * 50) / 49,
-				FarmingMenu::onPressDoNothing)).active = false;
+				button -> {})).active = false;
 
 		addRenderableWidget(new Button((this.width * 195) / 256, (this.height * 34) / 40, (this.width * 100) / 840, 20,
 				Component.literal("Upgrade"), FarmingMenu::onPressDoUpgrade));
 
+		removeWidget(upgradeDescription);
 		upgradeDescription = new DescriptionPanel(this.minecraft, (this.width * 57) / 256,
 				this.height - (this.height * 27) / 64, this.height - ((this.height * 100) / 128));
 		this.addRenderableWidget(upgradeDescription);
 		List<String> lines = new ArrayList<>();
 		lines.add("Select Upgrade.");
 		upgradeDescription.setInfo(lines, null, null);
-		
 	}
 	
 	public void tick() {
-		counter++;
-		removeWidget(temp);
-		removeWidget(upgradePoints);
-		if(counter % 2 == 1) {
-			upgradePoints = addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
-					Component.literal("Upgrades Unspent: " + ClientCapabilityData.getPlayerUpgradePoints()),
-					FarmingMenu::onPressDoNothing));
-		}else {
-			temp = addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
-					Component.literal("Upgrades Unspent: " + ClientCapabilityData.getPlayerUpgradePoints()),
-					FarmingMenu::onPressDoNothing));
-		}
-		
-		if(ClientCapabilityData.isUpgradedCarnivore() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 1, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture1, 50, 50, FarmingMenu::onPressUpgradeCarnivore));	
-		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 1, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture1Dark, 50, 50, FarmingMenu::onPressUpgradeCarnivore));	
-		}
-		
-		
-		if(ClientCapabilityData.isUpgradedEgger() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 3, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture2, 50, 50, FarmingMenu::onPressUpgradeEgger));
-		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 3, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture2Dark, 50, 50, FarmingMenu::onPressUpgradeEgger));
-		}
-		
-		
-		if(ClientCapabilityData.isUpgradedSugarRush() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 5, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture3, 50, 50, FarmingMenu::onPressUpgradeSugarRush));
-		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 5, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture3Dark, 50, 50, FarmingMenu::onPressUpgradeSugarRush));
-		}
-		
-		
-		if(ClientCapabilityData.isUpgradedWellFed() > 0) {
-			addRenderableWidget(new ImageButton((this.width / 18) * 7, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture4, 50, 50, FarmingMenu::onPressUpgradeWellFed));
-		}else {
-			addRenderableWidget(new ImageButton((this.width / 18) * 7, (this.height / 6) * 2, 50, 50, 0, 0, 99,
-					upgradeTexture4Dark, 50, 50, FarmingMenu::onPressUpgradeWellFed));
+		if(carnivoreLVL != ClientCapabilityData.isUpgradedCarnivore()   ||
+				eggerLVL != ClientCapabilityData.isUpgradedEgger()||
+				sugarRushLVL != ClientCapabilityData.isUpgradedSugarRush()  ||
+				wellFedLVL != ClientCapabilityData.isUpgradedWellFed()   ||
+				upgradePoints != ClientCapabilityData.getPlayerUpgradePoints()) {
+				
+					carnivoreLVL = ClientCapabilityData.isUpgradedCarnivore();
+					eggerLVL = ClientCapabilityData.isUpgradedEgger();
+					sugarRushLVL = ClientCapabilityData.isUpgradedSugarRush();
+					wellFedLVL = ClientCapabilityData.isUpgradedWellFed();
+					upgradePoints = ClientCapabilityData.getPlayerUpgradePoints();
+					
+					init();
 		}
 	}
 	
@@ -214,13 +215,9 @@ public class FarmingMenu extends Screen {
 		upgradeString = wellFed;
 		updateCache();
 	}
-	
-	private static void onPressDoNothing(Button button) {
-
-	}
 
 	private static void onPressDoUpgrade(Button button) {
-		if(ClientCapabilityData.getPlayerUpgradePoints() > 0) {
+		if(upgradePoints > 0) {
 			switch (upgradeString) {
 			case carnivore:
 				ModMessages.sendToServer(new CarnivoreUpgradeC2SPacket());
@@ -235,12 +232,7 @@ public class FarmingMenu extends Screen {
 				ModMessages.sendToServer(new WellFedUpgradeC2SPacket());
 				break;
 			}
-			
-			Minecraft.getInstance().setScreen(new FarmingMenu(Component.literal("farming")));
-		}
-		
-		
-		
+		}	
 	}
 
 	private static void updateCache() {

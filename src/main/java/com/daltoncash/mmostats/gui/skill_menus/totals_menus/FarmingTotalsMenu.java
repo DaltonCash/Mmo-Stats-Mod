@@ -11,7 +11,9 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
@@ -40,8 +42,244 @@ public class FarmingTotalsMenu extends Screen {
 	@Override
 	public final void init() {
 		
-		DescriptionPanel foodPanel = new DescriptionPanel(this.minecraft, (this.width * 3) / 10 ,
-				(this.height * 9) / 10, 25, (this.width * 1) / 20);
+		addRenderableWidget(new Button(10, this.height * 2 / 16, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getApplesEaten()) + " Apples"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		addRenderableWidget(new Button(140, this.height * 2 / 16, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getBeefEaten()) + " Beef"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		addRenderableWidget(new Button(10, this.height * 3 / 16, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getBeetrootEaten()) + " Beetroot"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		addRenderableWidget(new Button(140, this.height * 3 / 16, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getBreadEaten()) + " Bread"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		addRenderableWidget(new Button(10, this.height * 4 / 16, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getCakeEaten()) + " Cake"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		addRenderableWidget(new Button(140, this.height * 4 / 16, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getCarrotsEaten()) + " Carrots"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		addRenderableWidget(new Button(10, this.height * 5 / 16, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getChickenEaten()) + " Chicken"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		addRenderableWidget(new Button(140, this.height * 5 / 16, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getCookiesEaten()) + " Cookies"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		addRenderableWidget(new Button(10, this.height * 6 / 16, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getFishEaten()) + " Fish"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		addRenderableWidget(new Button(140, this.height * 6 / 16, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getGlowBerriesEaten()) + " Glow Berry"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		addRenderableWidget(new Button(10, this.height * 7 / 16, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getGoldApplesEaten()) + " Gold Apples"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT").withStyle(ChatFormatting.DARK_RED).withStyle(ChatFormatting.OBFUSCATED);
+	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		addRenderableWidget(new Button(140, this.height * 7 / 16, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getGoldenCarrotsEaten()) + " Gold Carrots"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		addRenderableWidget(new Button(10, this.height * 8 / 16, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getHoneyEaten()) + " Honey Bottles"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		addRenderableWidget(new Button(140, this.height * 8 / 16, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getKelpEaten()) + " Kelp"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		addRenderableWidget(new Button(10, this.height * 9 / 16, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getMelonEaten()) + " Melon Slices"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		addRenderableWidget(new Button(140, this.height * 9 / 16, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getMushroomStewEaten()) + " Mush. Stew"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		addRenderableWidget(new Button(10, this.height * 10 / 16, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getMuttonEaten()) + " Mutton"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		addRenderableWidget(new Button(140, this.height * 10 / 16, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getPoisonousPotatoEaten()) + " Poi. Potato"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		addRenderableWidget(new Button(10, this.height * 11 / 16, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getPorkEaten()) + " Pork"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		addRenderableWidget(new Button(140, this.height * 11 / 16, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getPotatoEaten()) + " Potato"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		addRenderableWidget(new Button(10, this.height * 12 / 16, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getPufferfishEaten()) + " Pufferfish"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		addRenderableWidget(new Button(140, this.height * 12 / 16, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getRabbitEaten()) + " Rabbit"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		addRenderableWidget(new Button(10, this.height * 13 / 16, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getPumpkinPieEaten()) + " Pumpkin Pie"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		addRenderableWidget(new Button(140, this.height * 13 / 16, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getPufferfishEaten()) + " Pufferfish"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		addRenderableWidget(new Button(10, this.height * 14 / 16, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getRottenFleshEaten()) + " Rotten Flesh"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		addRenderableWidget(new Button(140, this.height * 14 / 16, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getSpiderEyeEaten()) + " Spider Eyes"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		
+		
+		DescriptionPanel foodPanel = new DescriptionPanel(this.minecraft, (this.width * 1) / 5 ,
+				(this.height * 9) / 10, 25, (this.width * 2) / 5);
 		List<String> foodList = List.of("Food","====", 
 				"Apples", "Beef", "Beetroot", "------------------",
 				"Bread", "Cake","Carrots", "------------------", 
@@ -53,8 +291,8 @@ public class FarmingTotalsMenu extends Screen {
 				"Pumpkin Pie", "Rabbit", "Raw Meats", "------------------", 
 				"Rotten Flesh", "Spider Eyes");
 		
-		DescriptionPanel eatenPanel = new DescriptionPanel(this.minecraft, (this.width * 3) / 10 ,
-				(this.height * 9) / 10, 25, (this.width * 7) / 20);
+		DescriptionPanel eatenPanel = new DescriptionPanel(this.minecraft, (this.width * 1) / 5 ,
+				(this.height * 9) / 10, 25, (this.width * 3) / 5);
 		List<String> eatenList = new ArrayList<>();
 		eatenList.add("Eaten");
 		eatenList.add("=====");
@@ -93,8 +331,8 @@ public class FarmingTotalsMenu extends Screen {
 		eatenList.add(ClientCapabilityData.getRottenFleshEaten() + "");
 		eatenList.add(ClientCapabilityData.getSpiderEyeEaten() + "");
 		
-		DescriptionPanel toLevelPanel = new DescriptionPanel(this.minecraft, (this.width * 3) / 10 ,
-				(this.height * 9) / 10, 25, (this.width * 13) / 20);
+		DescriptionPanel toLevelPanel = new DescriptionPanel(this.minecraft, (this.width * 1) / 5 ,
+				(this.height * 9) / 10, 25, (this.width * 4) / 5);
 		List<String> toLevelList = new ArrayList<>();
 		toLevelList.add("To Level");
 		toLevelList.add("========");

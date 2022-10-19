@@ -92,8 +92,8 @@ public class SkillEvents {
 		private static void PlayerLevelCheck(int playerLevelExpBeingAdded) {
 			int playerLevel = ClientCapabilityData.getPlayerLevel();
 			int playerLevelExp = ClientCapabilityData.getPlayerExp() + playerLevelExpBeingAdded;
-			if (playerLevelExp > (playerLevel * 5) + 25) {
-				playerLevelExpToSub = (playerLevel * 5) + 25;
+			if (playerLevelExp > 25) {
+				playerLevelExpToSub = 25;
 				System.out.println("level up: " + (playerLevel + 1));
 				ModMessages.sendToServer(new GainPlayerLevelC2SPacket());
 				ModMessages.sendToServer(new GainPlayerUpgradePointsC2SPacket());

@@ -13,6 +13,7 @@ import com.daltoncash.mmostats.gui.skill_menus.CombatMenu;
 import com.daltoncash.mmostats.gui.skill_menus.FarmingMenu;
 import com.daltoncash.mmostats.gui.skill_menus.MiningMenu;
 import com.daltoncash.mmostats.networking.ModMessages;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.GainPlayerUpgradePointsC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetCapabilityDataC2SPacket;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -155,7 +156,7 @@ public class UpgradeMenu extends Screen {
 	}
 
 	private static void onPressDoNothing(Button button) {
-		
+		ModMessages.sendToServer(new GainPlayerUpgradePointsC2SPacket());
 	}
 	
 	private static void onPressReset(Button button) {

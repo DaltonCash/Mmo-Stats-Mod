@@ -12,6 +12,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
@@ -39,17 +40,126 @@ public class MiningTotalsMenu extends Screen {
 	
 	@Override
 	public final void init() {
+
+		//----------blocks mined buttons---------------
+		addRenderableWidget(new Button(5, this.height / 16 * 1, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getAncientDebrisMined()) + " Ancient Debris"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				MiningTotalsMenu.this.renderTooltip(p_169459_, MiningTotalsMenu.this.minecraft.font.split(component, Math.max(MiningTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
 		
-		DescriptionPanel foodPanel = new DescriptionPanel(this.minecraft, (this.width * 3) / 10 ,
-				(this.height * 9) / 10, 25, (this.width * 1) / 20);
-		List<String> foodList = List.of("Food","====", 
+		addRenderableWidget(new Button(5, this.height / 16 * 2, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getCoalMined()) + " Coal"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				MiningTotalsMenu.this.renderTooltip(p_169459_, MiningTotalsMenu.this.minecraft.font.split(component, Math.max(MiningTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		addRenderableWidget(new Button(5, this.height / 16 * 3, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getCopperMined()) + " Copper"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				MiningTotalsMenu.this.renderTooltip(p_169459_, MiningTotalsMenu.this.minecraft.font.split(component, Math.max(MiningTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		addRenderableWidget(new Button(5, this.height / 16 * 4, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getDiamondMined()) + " Diamond"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				MiningTotalsMenu.this.renderTooltip(p_169459_, MiningTotalsMenu.this.minecraft.font.split(component, Math.max(MiningTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		addRenderableWidget(new Button(5, this.height / 16 * 5, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getEmeraldMined()) + " Emerald"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				MiningTotalsMenu.this.renderTooltip(p_169459_, MiningTotalsMenu.this.minecraft.font.split(component, Math.max(MiningTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		addRenderableWidget(new Button(5, this.height / 16 * 6, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getGlowstoneMined()) + " Glowstone"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				MiningTotalsMenu.this.renderTooltip(p_169459_, MiningTotalsMenu.this.minecraft.font.split(component, Math.max(MiningTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		addRenderableWidget(new Button(5, this.height / 16 * 7, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getGoldMined()) + " Gold"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				MiningTotalsMenu.this.renderTooltip(p_169459_, MiningTotalsMenu.this.minecraft.font.split(component, Math.max(MiningTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		addRenderableWidget(new Button(5, this.height / 16 * 8, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getIronMined()) + " Iron"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				MiningTotalsMenu.this.renderTooltip(p_169459_, MiningTotalsMenu.this.minecraft.font.split(component, Math.max(MiningTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		addRenderableWidget(new Button(5, this.height / 16 * 9, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getLapisMined()) + " Lapis"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				MiningTotalsMenu.this.renderTooltip(p_169459_, MiningTotalsMenu.this.minecraft.font.split(component, Math.max(MiningTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		addRenderableWidget(new Button(5, this.height / 16 * 10, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getNetherGoldMined()) + " Nether Gold"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				MiningTotalsMenu.this.renderTooltip(p_169459_, MiningTotalsMenu.this.minecraft.font.split(component, Math.max(MiningTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		addRenderableWidget(new Button(5, this.height / 16 * 11, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getQuartzMined()) + " Quartz"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				MiningTotalsMenu.this.renderTooltip(p_169459_, MiningTotalsMenu.this.minecraft.font.split(component, Math.max(MiningTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		addRenderableWidget(new Button(5, this.height / 16 * 12, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getRedstoneMined()) + " Redstone"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				MiningTotalsMenu.this.renderTooltip(p_169459_, MiningTotalsMenu.this.minecraft.font.split(component, Math.max(MiningTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+				
+		DescriptionPanel foodPanel = new DescriptionPanel(this.minecraft, (this.width * 1) / 4 ,
+				(this.height * 9) / 10, 25, (this.width * 1) / 4);
+		List<String> foodList = List.of("Ore","====", 
 				"Coal", "Copper", "Iron", "------------------",
 				"Gold", "Lapis","Redstone", "------------------", 
 				"Diamond", "Obsidian", "Emerald", "------------------", 
 				"Glowstone", "Quartz", "Ancient Debris");
 		
-		DescriptionPanel eatenPanel = new DescriptionPanel(this.minecraft, (this.width * 3) / 10 ,
-				(this.height * 9) / 10, 25, (this.width * 7) / 20);
+		DescriptionPanel eatenPanel = new DescriptionPanel(this.minecraft, (this.width * 1) / 4 ,
+				(this.height * 9) / 10, 25, (this.width * 2) / 4);
 		List<String> eatenList = new ArrayList<>();
 		eatenList.add("Mined");
 		eatenList.add("=====");
@@ -69,8 +179,8 @@ public class MiningTotalsMenu extends Screen {
 		eatenList.add(ClientCapabilityData.getQuartzMined() + "");
 		eatenList.add(ClientCapabilityData.getAncientDebrisMined() + "");
 		
-		DescriptionPanel toLevelPanel = new DescriptionPanel(this.minecraft, (this.width * 3) / 10 ,
-				(this.height * 9) / 10, 25, (this.width * 13) / 20);
+		DescriptionPanel toLevelPanel = new DescriptionPanel(this.minecraft, (this.width * 1) / 4 ,
+				(this.height * 9) / 10, 25, (this.width * 15) / 20);
 		List<String> toLevelList = new ArrayList<>();
 		toLevelList.add("To Level");
 		toLevelList.add("========");

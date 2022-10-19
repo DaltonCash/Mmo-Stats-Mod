@@ -12,6 +12,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
@@ -40,15 +41,89 @@ public class ChoppingTotalsMenu extends Screen {
 	@Override
 	public final void init() {
 		
-		DescriptionPanel foodPanel = new DescriptionPanel(this.minecraft, (this.width * 3) / 10 ,
-				(this.height * 9) / 10, 25, (this.width * 1) / 20);
+		addRenderableWidget(new Button(10, this.height / 16 * 1, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getOakChopped()) + " Oak"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				ChoppingTotalsMenu.this.renderTooltip(p_169459_, ChoppingTotalsMenu.this.minecraft.font.split(component, Math.max(ChoppingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		addRenderableWidget(new Button(10, this.height / 16 * 2, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getSpruceChopped()) + " Spruce"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				ChoppingTotalsMenu.this.renderTooltip(p_169459_, ChoppingTotalsMenu.this.minecraft.font.split(component, Math.max(ChoppingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		addRenderableWidget(new Button(10, this.height / 16 * 3, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getBirchChopped()) + " Birch"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				ChoppingTotalsMenu.this.renderTooltip(p_169459_, ChoppingTotalsMenu.this.minecraft.font.split(component, Math.max(ChoppingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		addRenderableWidget(new Button(10, this.height / 16 * 4, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getJungleChopped()) + " Jungle"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				ChoppingTotalsMenu.this.renderTooltip(p_169459_, ChoppingTotalsMenu.this.minecraft.font.split(component, Math.max(ChoppingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		addRenderableWidget(new Button(10, this.height / 16 * 5, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getAcaciaChopped()) + " Acacia"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				ChoppingTotalsMenu.this.renderTooltip(p_169459_, ChoppingTotalsMenu.this.minecraft.font.split(component, Math.max(ChoppingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		addRenderableWidget(new Button(10, this.height / 16 * 6, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getDarkOakChopped()) + " Dark Oak"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				ChoppingTotalsMenu.this.renderTooltip(p_169459_, ChoppingTotalsMenu.this.minecraft.font.split(component, Math.max(ChoppingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		addRenderableWidget(new Button(10, this.height / 16 * 7, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getMangroveChopped()) + " Mangrove"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				ChoppingTotalsMenu.this.renderTooltip(p_169459_, ChoppingTotalsMenu.this.minecraft.font.split(component, Math.max(ChoppingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		addRenderableWidget(new Button(10, this.height / 16 * 8, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getCrimsonStemChopped()) + " Crimson"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				ChoppingTotalsMenu.this.renderTooltip(p_169459_, ChoppingTotalsMenu.this.minecraft.font.split(component, Math.max(ChoppingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		addRenderableWidget(new Button(10, this.height / 16 * 9, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getWarpedStemChopped()) + " Warped"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("BOTTOM TEXT");
+	     				ChoppingTotalsMenu.this.renderTooltip(p_169459_, ChoppingTotalsMenu.this.minecraft.font.split(component, Math.max(ChoppingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
+		
+		DescriptionPanel foodPanel = new DescriptionPanel(this.minecraft, (this.width * 1) / 4 ,
+				(this.height * 9) / 10, 25, (this.width * 1) / 4);
 		List<String> foodList = List.of("Wood","====",
 				"Oak Logs", "Spruce Logs", "Birch Logs", "------------------",
 				"Jungle Logs", "Acacia Logs","Dark Oak Logs", "------------------",
 				"Mangrove Logs", "Crimson Stems", "Warped Stems");
 		
-		DescriptionPanel eatenPanel = new DescriptionPanel(this.minecraft, (this.width * 3) / 10 ,
-				(this.height * 9) / 10, 25, (this.width * 7) / 20);
+		DescriptionPanel eatenPanel = new DescriptionPanel(this.minecraft, (this.width * 1) / 4 ,
+				(this.height * 9) / 10, 25, (this.width * 2) / 4);
 		List<String> eatenList = new ArrayList<>();
 		eatenList.add("Chopped");
 		eatenList.add("=====");
@@ -64,8 +139,8 @@ public class ChoppingTotalsMenu extends Screen {
 		eatenList.add(ClientCapabilityData.getCrimsonStemChopped() + "");
 		eatenList.add(ClientCapabilityData.getWarpedStemChopped() + "");
 		
-		DescriptionPanel toLevelPanel = new DescriptionPanel(this.minecraft, (this.width * 3) / 10 ,
-				(this.height * 9) / 10, 25, (this.width * 13) / 20);
+		DescriptionPanel toLevelPanel = new DescriptionPanel(this.minecraft, (this.width * 1) / 4 ,
+				(this.height * 9) / 10, 25, (this.width * 3) / 4);
 		List<String> toLevelList = new ArrayList<>();
 		toLevelList.add("To Level");
 		toLevelList.add("========");
