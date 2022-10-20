@@ -46,7 +46,7 @@ public class MiningTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getAncientDebrisMined()) + " Ancient Debris"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("Increases flat damage by 1 per level. Additive with the level of Beef");
 	     				MiningTotalsMenu.this.renderTooltip(p_169459_, MiningTotalsMenu.this.minecraft.font.split(component, Math.max(MiningTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -55,7 +55,7 @@ public class MiningTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getCoalMined()) + " Coal"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("Increases Mining Exp gained by 1% per level. Multiplied by the level of Glow Berries.");
 	     				MiningTotalsMenu.this.renderTooltip(p_169459_, MiningTotalsMenu.this.minecraft.font.split(component, Math.max(MiningTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -64,7 +64,7 @@ public class MiningTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getCopperMined()) + " Copper"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("Increases Farming Exp gained by 1% per level. Multiplied by the level of Birch and Bread.");
 	     				MiningTotalsMenu.this.renderTooltip(p_169459_, MiningTotalsMenu.this.minecraft.font.split(component, Math.max(MiningTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -73,8 +73,9 @@ public class MiningTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getDiamondMined()) + " Diamond"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
-	     				MiningTotalsMenu.this.renderTooltip(p_169459_, MiningTotalsMenu.this.minecraft.font.split(component, Math.max(MiningTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     				Component component = Component.literal("Reduces % damage taken by entities in an equation as follows: "
+	     						+ "\n\n     (Diamond * Kelp * Dark Oak) " + "\n   -------------------------  "+ " ((Diamond * Kelp * Dark Oak) + 100)");
+	     				MiningTotalsMenu.this.renderTooltip(p_169459_, MiningTotalsMenu.this.minecraft.font.split(component, Math.max(175, 170)), int1, int2);
 	     			}
 				}));
 		
@@ -82,7 +83,7 @@ public class MiningTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getEmeraldMined()) + " Emerald"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("Increases crit damage by +50% per level.");
 	     				MiningTotalsMenu.this.renderTooltip(p_169459_, MiningTotalsMenu.this.minecraft.font.split(component, Math.max(MiningTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -91,7 +92,7 @@ public class MiningTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getGlowstoneMined()) + " Glowstone"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("Increases the duration of the Mining Upgrade, 'Night Vision', by 50% per level.");
 	     				MiningTotalsMenu.this.renderTooltip(p_169459_, MiningTotalsMenu.this.minecraft.font.split(component, Math.max(MiningTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -100,7 +101,7 @@ public class MiningTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getGoldMined()) + " Gold"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("Additively increases the chance of double drops from mining and chopping by 5% per level. Any percent over 100% garuntees double drops with a chance for triple drops. Excess of 200% makes a chance for quadruple drops, etc.");
 	     				MiningTotalsMenu.this.renderTooltip(p_169459_, MiningTotalsMenu.this.minecraft.font.split(component, Math.max(MiningTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -109,7 +110,7 @@ public class MiningTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getIronMined()) + " Iron"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("Increases Combat Exp gained by 1% per level. Multiplied by the level of Raw Meat.");
 	     				MiningTotalsMenu.this.renderTooltip(p_169459_, MiningTotalsMenu.this.minecraft.font.split(component, Math.max(MiningTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -118,7 +119,7 @@ public class MiningTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getLapisMined()) + " Lapis"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("Increases the amount of experience orbs gained by \n(Lapis LVL * Lapis LVL) % ");
 	     				MiningTotalsMenu.this.renderTooltip(p_169459_, MiningTotalsMenu.this.minecraft.font.split(component, Math.max(MiningTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -127,7 +128,7 @@ public class MiningTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getNetherGoldMined()) + " Nether Gold"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("WIP");
 	     				MiningTotalsMenu.this.renderTooltip(p_169459_, MiningTotalsMenu.this.minecraft.font.split(component, Math.max(MiningTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -136,7 +137,7 @@ public class MiningTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getQuartzMined()) + " Quartz"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("Increases Archery Exp gained by 1% per level. Multiplied by the level of Golden Carrots.");
 	     				MiningTotalsMenu.this.renderTooltip(p_169459_, MiningTotalsMenu.this.minecraft.font.split(component, Math.max(MiningTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -145,7 +146,7 @@ public class MiningTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getRedstoneMined()) + " Redstone"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("Increases movespeed by .5% per level. Multiplied by Acacia level.");
 	     				MiningTotalsMenu.this.renderTooltip(p_169459_, MiningTotalsMenu.this.minecraft.font.split(component, Math.max(MiningTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));

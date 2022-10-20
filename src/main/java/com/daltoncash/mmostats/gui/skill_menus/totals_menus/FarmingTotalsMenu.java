@@ -46,7 +46,7 @@ public class FarmingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getApplesEaten()) + " Apples"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("Increases Chopping Exp gain by 1%. Muliplied by Copper Level.");
 	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -55,7 +55,7 @@ public class FarmingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getBeefEaten()) + " Beef"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("Increases flat damage by 1 per level. Additive with Ancient Debris level.");
 	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -64,7 +64,7 @@ public class FarmingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getBeetrootEaten()) + " Beetroot"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("WIP");
 	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -73,7 +73,7 @@ public class FarmingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getBreadEaten()) + " Bread"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("Increases Farming Exp gain by 1%. Multiplied by Copper and Birch levels.");
 	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -82,7 +82,7 @@ public class FarmingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getCakeEaten()) + " Cake"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("WIP");
 	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -91,7 +91,7 @@ public class FarmingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getCarrotsEaten()) + " Carrots"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("Increases Archery Exp gain by 1%. Multiplied by Quartz level.");
 	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -100,7 +100,8 @@ public class FarmingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getChickenEaten()) + " Chicken"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("Decreases % Fall Damage taken by the following equation: "
+	     						+ "\n\n     Chicken \n ----------- \n  Chicken + 4");
 	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -109,7 +110,7 @@ public class FarmingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getCookiesEaten()) + " Cookies"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("WIP");
 	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -118,7 +119,7 @@ public class FarmingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getFishEaten()) + " Fish"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("WIP");
 	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -127,7 +128,7 @@ public class FarmingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getGlowBerriesEaten()) + " Glow Berry"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("Increases Mining Exp gain by 1% per level. Multiplied by Coal level.");
 	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -136,7 +137,7 @@ public class FarmingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getGoldApplesEaten()) + " Gold Apples"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT").withStyle(ChatFormatting.DARK_RED).withStyle(ChatFormatting.OBFUSCATED);
+	     				Component component = Component.literal("Increases Max HP by 1% per level. Multiplied by Oak level.").withStyle(ChatFormatting.DARK_RED).withStyle(ChatFormatting.OBFUSCATED);
 	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -145,7 +146,7 @@ public class FarmingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getGoldenCarrotsEaten()) + " Gold Carrots"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("WIP - should increase arrow dmg");
 	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -154,7 +155,7 @@ public class FarmingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getHoneyEaten()) + " Honey Bottles"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("WIP");
 	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -163,8 +164,9 @@ public class FarmingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getKelpEaten()) + " Kelp"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
-	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     				Component component = Component.literal("Reduces % damage taken by entities in an equation as follows: \"\r\n"
+	     						+ "	     						+ \"\\n\\n     (Diamond * Kelp * Dark Oak) \" + \"\\n   -------------------------  \"+ \" ((Diamond * Kelp * Dark Oak) + 100)");
+	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(175, 170)), int1, int2);
 	     			}
 				}));
 		
@@ -172,7 +174,7 @@ public class FarmingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getMelonEaten()) + " Melon Slices"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("Reduces the time it takes to eat foodstuffs. WIP");
 	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -181,7 +183,7 @@ public class FarmingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getMushroomStewEaten()) + " Mush. Stew"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("Increases the duration of Ragnorok by 50% per level");
 	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -190,7 +192,7 @@ public class FarmingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getMuttonEaten()) + " Mutton"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("WIP");
 	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -199,7 +201,7 @@ public class FarmingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getPoisonousPotatoEaten()) + " Poi. Potato"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("WIP");
 	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -208,7 +210,7 @@ public class FarmingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getPorkEaten()) + " Pork"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("Increases efficiency of Archery Upgrade, 'Hunter'. increases the amount of meat an animal drops by +1 per level.");
 	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -217,7 +219,7 @@ public class FarmingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getPotatoEaten()) + " Potato"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("Reduces amount of knockback taken by the following equation:\n4 / (4 + Potato).");
 	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -226,7 +228,7 @@ public class FarmingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getPufferfishEaten()) + " Pufferfish"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("WIP");
 	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -235,7 +237,7 @@ public class FarmingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getRabbitEaten()) + " Rabbit"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("WIP");
 	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -244,16 +246,16 @@ public class FarmingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getPumpkinPieEaten()) + " Pumpkin Pie"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("Reduces damage taken by 1 half-heart per level.");
 	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
 		
 		addRenderableWidget(new Button(140, this.height * 13 / 16, 120, 20, 
-				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getPufferfishEaten()) + " Pufferfish"), 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getPufferfishEaten()) + " Raw Meat"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("Increases Combat Exp gain by 1% per level. Multiplied by Iron level.");
 	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -262,7 +264,8 @@ public class FarmingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getRottenFleshEaten()) + " Rotten Flesh"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("At level 1 Rotten Flesh, begin healing 5% max hp per 250 ticks. Higher levels decrease the time between heals by the following equation:"
+	     						+ "\n1250 / (4 + Rotten Flesh)");
 	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -271,7 +274,7 @@ public class FarmingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getSpiderEyeEaten()) + " Spider Eyes"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("WIP");
 	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));

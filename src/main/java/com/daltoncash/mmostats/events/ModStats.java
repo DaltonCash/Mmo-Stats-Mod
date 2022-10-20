@@ -15,7 +15,7 @@ public class ModStats {
 	}
 
 	public static int getHealthRegenModifier() {
-		return (1000 * 5) / (4 + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getRottenFleshEaten()));
+		return (5000) / (4 + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getRottenFleshEaten()));
 	}
 
 	public static float getFlatArmorModifier() {
@@ -83,9 +83,9 @@ public class ModStats {
 	}
 	
 	public static float getCombatModifier() {
-		int ironMintedLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getIronMined());
+		int ironMinedLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getIronMined());
 		int rawFoodsEatenLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getRawFoodEaten());
-		return 1 + ((ironMintedLevel * rawFoodsEatenLevel) / 100f);
+		return 1 + ((ironMinedLevel * rawFoodsEatenLevel) / 100f);
 	}
 
 	public static float getArcheryModifier() {
@@ -128,12 +128,11 @@ public class ModStats {
 	
 	public static double getMiningFortuneCalculation() {
 		
-		return (ClientCapabilityData.getPlayerMiningLevel() * getLuckyModifier()) / 500;
+		return (ClientCapabilityData.getPlayerMiningLevel() / 500f) * getLuckyModifier();
 	}
 	
 	public static double getChoppingFortuneCalculation() {
-		
-		return (ClientCapabilityData.getPlayerChoppingLevel() * getLuckyModifier()) / 500;
+		return (ClientCapabilityData.getPlayerChoppingLevel() / 500f) * getLuckyModifier();
 	}
 	
 	public static float getDamageTakenCalculation(float damage) {

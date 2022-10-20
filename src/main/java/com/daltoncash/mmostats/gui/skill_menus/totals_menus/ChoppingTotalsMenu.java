@@ -45,7 +45,7 @@ public class ChoppingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getOakChopped()) + " Oak"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("Increases % max health by 1% per level. Multiplied by Gold Apples Level.");
 	     				ChoppingTotalsMenu.this.renderTooltip(p_169459_, ChoppingTotalsMenu.this.minecraft.font.split(component, Math.max(ChoppingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -53,7 +53,7 @@ public class ChoppingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getSpruceChopped()) + " Spruce"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("WIP");
 	     				ChoppingTotalsMenu.this.renderTooltip(p_169459_, ChoppingTotalsMenu.this.minecraft.font.split(component, Math.max(ChoppingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -61,7 +61,7 @@ public class ChoppingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getBirchChopped()) + " Birch"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("Increases Farming Exp gain by 1% per level. Multiplied by Bread and Copper levels.");
 	     				ChoppingTotalsMenu.this.renderTooltip(p_169459_, ChoppingTotalsMenu.this.minecraft.font.split(component, Math.max(ChoppingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -69,7 +69,7 @@ public class ChoppingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getJungleChopped()) + " Jungle"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("Increases Chopping Exp gain by 1% per level. Multiplied by Apple level.");
 	     				ChoppingTotalsMenu.this.renderTooltip(p_169459_, ChoppingTotalsMenu.this.minecraft.font.split(component, Math.max(ChoppingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -77,7 +77,7 @@ public class ChoppingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getAcaciaChopped()) + " Acacia"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("Increases Movespeed by .5% per level. Multiplied by Redstone level.");
 	     				ChoppingTotalsMenu.this.renderTooltip(p_169459_, ChoppingTotalsMenu.this.minecraft.font.split(component, Math.max(ChoppingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -85,15 +85,16 @@ public class ChoppingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getDarkOakChopped()) + " Dark Oak"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
-	     				ChoppingTotalsMenu.this.renderTooltip(p_169459_, ChoppingTotalsMenu.this.minecraft.font.split(component, Math.max(ChoppingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     				Component component = Component.literal("Reduces % damage taken by entities in an equation as follows: \"\r\n"
+	     						+ "	     						+ \"\\n\\n     (Diamond * Kelp * Dark Oak) \" + \"\\n   -------------------------  \"+ \" ((Diamond * Kelp * Dark Oak) + 100)");
+	     				ChoppingTotalsMenu.this.renderTooltip(p_169459_, ChoppingTotalsMenu.this.minecraft.font.split(component, Math.max(175, 170)), int1, int2);
 	     			}
 				}));
 		addRenderableWidget(new Button(10, this.height / 16 * 7, 120, 20, 
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getMangroveChopped()) + " Mangrove"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("WIP");
 	     				ChoppingTotalsMenu.this.renderTooltip(p_169459_, ChoppingTotalsMenu.this.minecraft.font.split(component, Math.max(ChoppingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -101,7 +102,7 @@ public class ChoppingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getCrimsonStemChopped()) + " Crimson"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("WIP");
 	     				ChoppingTotalsMenu.this.renderTooltip(p_169459_, ChoppingTotalsMenu.this.minecraft.font.split(component, Math.max(ChoppingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -109,7 +110,7 @@ public class ChoppingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getWarpedStemChopped()) + " Warped"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("BOTTOM TEXT");
+	     				Component component = Component.literal("WIP");
 	     				ChoppingTotalsMenu.this.renderTooltip(p_169459_, ChoppingTotalsMenu.this.minecraft.font.split(component, Math.max(ChoppingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
