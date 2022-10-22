@@ -177,12 +177,18 @@ import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.QuartzMi
 import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.QuartzMinedProvider;
 import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.RedstoneMined;
 import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.RedstoneMinedProvider;
+import com.daltoncash.mmostats.capabilities.playerlevel.PlayerAttributePoints;
+import com.daltoncash.mmostats.capabilities.playerlevel.PlayerAttributePointsProvider;
 import com.daltoncash.mmostats.capabilities.playerlevel.PlayerLevel;
 import com.daltoncash.mmostats.capabilities.playerlevel.PlayerLevelExp;
 import com.daltoncash.mmostats.capabilities.playerlevel.PlayerLevelExpProvider;
 import com.daltoncash.mmostats.capabilities.playerlevel.PlayerLevelProvider;
 import com.daltoncash.mmostats.capabilities.playerlevel.PlayerUpgradePoints;
 import com.daltoncash.mmostats.capabilities.playerlevel.PlayerUpgradePointsProvider;
+import com.daltoncash.mmostats.capabilities.playerlevel.stats.agility.PlayerAgilityAttribute;
+import com.daltoncash.mmostats.capabilities.playerlevel.stats.agility.PlayerAgilityAttributeProvider;
+import com.daltoncash.mmostats.capabilities.playerlevel.stats.health.PlayerHealthAttribute;
+import com.daltoncash.mmostats.capabilities.playerlevel.stats.health.PlayerHealthAttributeProvider;
 import com.daltoncash.mmostats.capabilities.playerlevel.stats.mana.PlayerMana;
 import com.daltoncash.mmostats.capabilities.playerlevel.stats.mana.PlayerManaProvider;
 import com.daltoncash.mmostats.capabilities.swords.PlayerSwordsExp;
@@ -213,6 +219,9 @@ import com.daltoncash.mmostats.networking.packets.s2c.skills.FarmingExpDataSyncS
 import com.daltoncash.mmostats.networking.packets.s2c.skills.FarmingLevelDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.MiningExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.MiningLevelDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.skills.PlayerAgilityAttributeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.skills.PlayerAttributePointsDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.skills.PlayerHealthAttributeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.PlayerLevelDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.PlayerLevelExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.PlayerUpgradePointsDataSyncS2CPacket;
@@ -377,6 +386,18 @@ public class ModEvents {
 			if (!event.getObject().getCapability(PlayerUpgradePointsProvider.PLAYER_UPGRADE_POINTS).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "playerupgradepointsproperties"),
 						new PlayerUpgradePointsProvider());
+			}
+			if (!event.getObject().getCapability(PlayerAttributePointsProvider.PLAYER_ATTRIBUTE_POINTS).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "playerattributepointsproperties"),
+						new PlayerAttributePointsProvider());
+			}
+			if (!event.getObject().getCapability(PlayerHealthAttributeProvider.HEALTH_LEVEL).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "playerhealthattributeproperties"),
+						new PlayerHealthAttributeProvider());
+			}
+			if (!event.getObject().getCapability(PlayerAgilityAttributeProvider.AGILITY_LEVEL).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "playeragilityattributeproperties"),
+						new PlayerAgilityAttributeProvider());
 			}
 			if (!event.getObject().getCapability(PlayerManaProvider.PLAYER_MANA).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "manaproperties"),
@@ -817,6 +838,21 @@ public class ModEvents {
 			});
 			event.getOriginal().getCapability(PlayerUpgradePointsProvider.PLAYER_UPGRADE_POINTS).ifPresent(oldStore -> {
 				event.getEntity().getCapability(PlayerUpgradePointsProvider.PLAYER_UPGRADE_POINTS).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(PlayerAttributePointsProvider.PLAYER_ATTRIBUTE_POINTS).ifPresent(oldStore -> {
+				event.getEntity().getCapability(PlayerAttributePointsProvider.PLAYER_ATTRIBUTE_POINTS).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(PlayerHealthAttributeProvider.HEALTH_LEVEL).ifPresent(oldStore -> {
+				event.getEntity().getCapability(PlayerHealthAttributeProvider.HEALTH_LEVEL).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(PlayerAgilityAttributeProvider.AGILITY_LEVEL).ifPresent(oldStore -> {
+				event.getEntity().getCapability(PlayerAgilityAttributeProvider.AGILITY_LEVEL).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
@@ -1341,6 +1377,9 @@ public class ModEvents {
 		event.register(PlayerLevel.class);
 		event.register(PlayerLevelExp.class);
 		event.register(PlayerUpgradePoints.class);
+		event.register(PlayerAttributePoints.class);
+		event.register(PlayerHealthAttribute.class);
+		event.register(PlayerAgilityAttribute.class);
 		event.register(PlayerMana.class);
 		event.register(PlayerMiningLevel.class);
 		event.register(PlayerMiningExp.class);
@@ -1472,6 +1511,15 @@ public class ModEvents {
 				});
 				player.getCapability(PlayerUpgradePointsProvider.PLAYER_UPGRADE_POINTS).ifPresent(playerUpgradePoints -> {
 					ModMessages.sendToPlayer(new PlayerUpgradePointsDataSyncS2CPacket(playerUpgradePoints.getPlayerUpgradePoints()), player);
+				});
+				player.getCapability(PlayerAttributePointsProvider.PLAYER_ATTRIBUTE_POINTS).ifPresent(playerAttributePoints -> {
+					ModMessages.sendToPlayer(new PlayerAttributePointsDataSyncS2CPacket(playerAttributePoints.getPlayerAttributePoints()), player);
+				});
+				player.getCapability(PlayerHealthAttributeProvider.HEALTH_LEVEL).ifPresent(playerHealthAttribute -> {
+					ModMessages.sendToPlayer(new PlayerHealthAttributeDataSyncS2CPacket(playerHealthAttribute.getPlayerHealthAttribute()), player);
+				});
+				player.getCapability(PlayerAgilityAttributeProvider.AGILITY_LEVEL).ifPresent(playerAgilityAttribute -> {
+					ModMessages.sendToPlayer(new PlayerAgilityAttributeDataSyncS2CPacket(playerAgilityAttribute.getPlayerAgilityAttribute()), player);
 				});
 				player.getCapability(PlayerManaProvider.PLAYER_MANA).ifPresent(mana -> {
 					ModMessages.sendToPlayer(new ManaDataSyncS2CPacket(mana.getMana()), player);

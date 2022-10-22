@@ -32,6 +32,9 @@ import com.daltoncash.mmostats.networking.packets.c2s.skills.GainFarmingExpFromS
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainFarmingLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainMiningExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainMiningLevelC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.GainPlayerAgilityAttributeC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.GainPlayerAttributePointsC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.GainPlayerHealthAttributeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainPlayerLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainPlayerLevelExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainPlayerUpgradePointsC2SPacket;
@@ -45,6 +48,7 @@ import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetFarmingExpC2SP
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetMiningExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetPlayerLevelExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetSwordsExpC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.SpendPlayerAttributePointsC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.SpendPlayerUpgradePointsC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.magic.GainMagicExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.magic.GainMagicLevelC2SPacket;
@@ -132,6 +136,9 @@ import com.daltoncash.mmostats.networking.packets.s2c.skills.FarmingExpDataSyncS
 import com.daltoncash.mmostats.networking.packets.s2c.skills.FarmingLevelDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.MiningExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.MiningLevelDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.skills.PlayerAgilityAttributeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.skills.PlayerAttributePointsDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.skills.PlayerHealthAttributeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.PlayerLevelDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.PlayerLevelExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.PlayerUpgradePointsDataSyncS2CPacket;
@@ -315,6 +322,26 @@ public class ModMessages {
 				.encoder(SpendPlayerUpgradePointsC2SPacket::toBytes)
 				.consumerMainThread(SpendPlayerUpgradePointsC2SPacket::handle)
 				.add();
+		 net.messageBuilder(GainPlayerAttributePointsC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+				.decoder(GainPlayerAttributePointsC2SPacket::new)
+				.encoder(GainPlayerAttributePointsC2SPacket::toBytes)
+				.consumerMainThread(GainPlayerAttributePointsC2SPacket::handle)
+				.add();
+		 net.messageBuilder(SpendPlayerAttributePointsC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+				.decoder(SpendPlayerAttributePointsC2SPacket::new)
+				.encoder(SpendPlayerAttributePointsC2SPacket::toBytes)
+				.consumerMainThread(SpendPlayerAttributePointsC2SPacket::handle)
+				.add();
+		 net.messageBuilder(GainPlayerHealthAttributeC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+				.decoder(GainPlayerHealthAttributeC2SPacket::new)
+				.encoder(GainPlayerHealthAttributeC2SPacket::toBytes)
+				.consumerMainThread(GainPlayerHealthAttributeC2SPacket::handle)
+				.add();
+		 net.messageBuilder(GainPlayerAgilityAttributeC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+				.decoder(GainPlayerAgilityAttributeC2SPacket::new)
+				.encoder(GainPlayerAgilityAttributeC2SPacket::toBytes)
+				.consumerMainThread(GainPlayerAgilityAttributeC2SPacket::handle)
+				.add();
 		 net.messageBuilder(ResetPlayerLevelExpC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
 				.decoder(ResetPlayerLevelExpC2SPacket::new)
 				.encoder(ResetPlayerLevelExpC2SPacket::toBytes)
@@ -452,6 +479,21 @@ public class ModMessages {
 				.encoder(PlayerUpgradePointsDataSyncS2CPacket::toBytes)
 				.consumerMainThread(PlayerUpgradePointsDataSyncS2CPacket::handle)
 				.add();
+		net.messageBuilder(PlayerAttributePointsDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+				.decoder(PlayerAttributePointsDataSyncS2CPacket::new)
+				.encoder(PlayerAttributePointsDataSyncS2CPacket::toBytes)
+				.consumerMainThread(PlayerAttributePointsDataSyncS2CPacket::handle)
+				.add();		
+		net.messageBuilder(PlayerAgilityAttributeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+				.decoder(PlayerAgilityAttributeDataSyncS2CPacket::new)
+				.encoder(PlayerAgilityAttributeDataSyncS2CPacket::toBytes)
+				.consumerMainThread(PlayerAgilityAttributeDataSyncS2CPacket::handle)
+				.add();		
+		net.messageBuilder(PlayerHealthAttributeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+				.decoder(PlayerHealthAttributeDataSyncS2CPacket::new)
+				.encoder(PlayerHealthAttributeDataSyncS2CPacket::toBytes)
+				.consumerMainThread(PlayerHealthAttributeDataSyncS2CPacket::handle)
+				.add();		
         net.messageBuilder(ManaDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(ManaDataSyncS2CPacket::new)
                 .encoder(ManaDataSyncS2CPacket::toBytes)

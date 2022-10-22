@@ -13,8 +13,11 @@ import com.daltoncash.mmostats.gui.skill_menus.CombatMenu;
 import com.daltoncash.mmostats.gui.skill_menus.FarmingMenu;
 import com.daltoncash.mmostats.gui.skill_menus.MiningMenu;
 import com.daltoncash.mmostats.networking.ModMessages;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.GainPlayerAgilityAttributeC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.GainPlayerHealthAttributeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainPlayerUpgradePointsC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetCapabilityDataC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.SpendPlayerAttributePointsC2SPacket;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
@@ -85,6 +88,13 @@ public class UpgradeMenu extends Screen {
 		addRenderableWidget(new Button(20, 200, 100, 100,
 				Component.literal("reset capabilities: " + ClientCapabilityData.getPlayerMiningLevel()),
 				UpgradeMenu::onPressReset));
+		
+		addRenderableWidget(new Button((this.width * 1) / 5, ((this.height * 39) / 40) - 20, 100, 20,
+				Component.literal("Health: " + ClientCapabilityData.getPlayerHealth()),
+				UpgradeMenu::onPressUpgradeHealth));
+		addRenderableWidget(new Button((this.width * 2) / 5, ((this.height * 39) / 40) - 20, 100, 20,
+				Component.literal("Agility: " + ClientCapabilityData.getPlayerAgility()),
+				UpgradeMenu::onPressUpgradeAgility));
 		
 		miningButton = addRenderableWidget(new ImageButton((this.width * 1) / 7, (this.height * 1) / 6, buttonW, buttonH, 0, 0, buttonH - 1,
 				MINING_TEXTURE, buttonW, buttonH, UpgradeMenu::onPressMining));
@@ -181,6 +191,21 @@ public class UpgradeMenu extends Screen {
 	
 	private static void onPressFarming(Button button) {
 		Minecraft.getInstance().setScreen(new FarmingMenu(Component.literal("farming")));
+	}
+	
+	private static void onPressUpgradeHealth(Button button) {
+		if(ClientCapabilityData.getPlayerAttributePoints() > 0) {
+			ModMessages.sendToServer(new SpendPlayerAttributePointsC2SPacket());
+			ModMessages.sendToServer(new GainPlayerHealthAttributeC2SPacket());
+		}
+	}
+	
+	private static void onPressUpgradeAgility(Button button) {
+		if(ClientCapabilityData.getPlayerAttributePoints() > 0) {
+			System.out.println(ClientCapabilityData.getPlayerAttributePoints());
+			ModMessages.sendToServer(new SpendPlayerAttributePointsC2SPacket());
+			ModMessages.sendToServer(new GainPlayerAgilityAttributeC2SPacket());
+		}
 	}
 
 	protected void renderBackground(PoseStack poseStack, float pPartialTick, int mouseX, int mouseY) {

@@ -30,7 +30,6 @@ public class GainPlayerUpgradePointsC2SPacket {
 			ServerPlayer player = context.getSender();
 			player.getCapability(PlayerUpgradePointsProvider.PLAYER_UPGRADE_POINTS).ifPresent(playerUpgradePoints -> {
 				playerUpgradePoints.addPlayerUpgradePoints(1);
-				System.out.println("Gained an Upgrade Point");
 				ModMessages.sendToPlayer(new PlayerUpgradePointsDataSyncS2CPacket(playerUpgradePoints.getPlayerUpgradePoints()), player);
 			});
 		});

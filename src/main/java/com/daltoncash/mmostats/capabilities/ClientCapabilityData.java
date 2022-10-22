@@ -5,6 +5,7 @@ public class ClientCapabilityData {
 	private static int playerExp;
 	private static int playerLevel;
 	private static int playerUpgradePoints;
+	private static int playerAttributePoints;
 	private static int playerHealth;
 	private static int playerHealthExp;
 	private static int playerAgility;
@@ -962,6 +963,14 @@ public class ClientCapabilityData {
 
 	public static void setPlayerUpgradePoints(int playerUpgradePoints) {
 		ClientCapabilityData.playerUpgradePoints = playerUpgradePoints;
+	}
+
+	public static int getPlayerAttributePoints() {
+		return playerAttributePoints;
+	}
+
+	public static void setPlayerAttributePoints(int playerAttributePoints) {
+		ClientCapabilityData.playerAttributePoints = playerAttributePoints;
 	}
 
 }

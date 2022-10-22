@@ -38,6 +38,7 @@ import com.daltoncash.mmostats.networking.packets.c2s.skills.GainFarmingExpFromU
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainFarmingLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainMiningExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainMiningLevelC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.GainPlayerAttributePointsC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainPlayerLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainPlayerLevelExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainPlayerUpgradePointsC2SPacket;
@@ -51,6 +52,7 @@ import com.mojang.logging.LogUtils;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
@@ -76,11 +78,23 @@ public class SkillEvents {
 		public static int expToAdd = 0;
 		public static int playerLevelExpToSub = 0;
 		public static int playerLevelExpToAdd = 0;
-
 		public static int bowCooldown = 30;
+		
+		private static int counter;
 
 		@SubscribeEvent
 		public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
+			if(counter < 800) {
+				counter++;
+			}else {
+				counter = 0;
+			}
+			if(counter == 0) {
+				event.player.getAttribute(Attributes.MAX_HEALTH).setBaseValue(ModStats.getHealth());
+				event.player.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ModStats.getMoveSpeed());
+				System.out.println("checked");
+			}
+			
 			if (levelUpOverlayDuration > 0) levelUpOverlayDuration--;
 			
 			if (skillOverlayDuration > 0) skillOverlayDuration--;
@@ -94,12 +108,15 @@ public class SkillEvents {
 			int playerLevelExp = ClientCapabilityData.getPlayerExp() + playerLevelExpBeingAdded;
 			if (playerLevelExp > 25) {
 				playerLevelExpToSub = 25;
-				System.out.println("level up: " + (playerLevel + 1));
+				if(playerLevel % 2 == 1) {
+					LOGGER.info("Gained Attribute Point! Current: " + (ClientCapabilityData.getPlayerAttributePoints() + 1));
+					ModMessages.sendToServer(new GainPlayerAttributePointsC2SPacket());
+				}
+				LOGGER.info("Level up! Current Level: " + (playerLevel + 1));
 				ModMessages.sendToServer(new GainPlayerLevelC2SPacket());
 				ModMessages.sendToServer(new GainPlayerUpgradePointsC2SPacket());
 				ModMessages.sendToServer(new ResetPlayerLevelExpC2SPacket());
 				levelUpOverLay();
-
 			}
 		}
 

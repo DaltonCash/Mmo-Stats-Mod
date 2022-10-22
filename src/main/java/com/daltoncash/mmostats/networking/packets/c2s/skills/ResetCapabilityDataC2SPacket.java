@@ -33,9 +33,12 @@ import com.daltoncash.mmostats.capabilities.mining.upgrades.JunkBlocksDropExpUpg
 import com.daltoncash.mmostats.capabilities.mining.upgrades.NightVisionUpgradeProvider;
 import com.daltoncash.mmostats.capabilities.mining.upgrades.NoJunkBlocksUpgradeProvider;
 import com.daltoncash.mmostats.capabilities.mining.upgrades.ObsidianBreakerUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.playerlevel.PlayerAttributePointsProvider;
 import com.daltoncash.mmostats.capabilities.playerlevel.PlayerLevelExpProvider;
 import com.daltoncash.mmostats.capabilities.playerlevel.PlayerLevelProvider;
 import com.daltoncash.mmostats.capabilities.playerlevel.PlayerUpgradePointsProvider;
+import com.daltoncash.mmostats.capabilities.playerlevel.stats.agility.PlayerAgilityAttributeProvider;
+import com.daltoncash.mmostats.capabilities.playerlevel.stats.health.PlayerHealthAttributeProvider;
 import com.daltoncash.mmostats.capabilities.swords.PlayerSwordsLevelProvider;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.ArcheryLevelDataSyncS2CPacket;
@@ -44,6 +47,9 @@ import com.daltoncash.mmostats.networking.packets.s2c.skills.CombatLevelDataSync
 import com.daltoncash.mmostats.networking.packets.s2c.skills.FarmingLevelDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.MiningExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.MiningLevelDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.skills.PlayerAgilityAttributeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.skills.PlayerAttributePointsDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.skills.PlayerHealthAttributeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.PlayerLevelDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.PlayerLevelExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.PlayerUpgradePointsDataSyncS2CPacket;
@@ -95,7 +101,6 @@ public class ResetCapabilityDataC2SPacket {
 		NetworkEvent.Context context = supplier.get();
 		context.enqueueWork(() -> {
 			ServerPlayer player = context.getSender();
-			
 			//Resetting Upgrades
 			player.getCapability(PlayerUpgradePointsProvider.PLAYER_UPGRADE_POINTS).ifPresent(upgradePoints -> {
 				upgradePoints.subPlayerUpgradePoints(1000);
@@ -111,7 +116,18 @@ public class ResetCapabilityDataC2SPacket {
 				playerLevelExp.subLevelExp(1000);
 				ModMessages.sendToPlayer(new PlayerLevelExpDataSyncS2CPacket(playerLevelExp.getLevelExp()), player);
 			});
-			
+			player.getCapability(PlayerAttributePointsProvider.PLAYER_ATTRIBUTE_POINTS).ifPresent(playerAttributePoints -> {
+				playerAttributePoints.subPlayerAttributePoints(1000);
+				ModMessages.sendToPlayer(new PlayerAttributePointsDataSyncS2CPacket(playerAttributePoints.getPlayerAttributePoints()), player);
+			});
+			player.getCapability(PlayerHealthAttributeProvider.HEALTH_LEVEL).ifPresent(playerHealthAttribute -> {
+				playerHealthAttribute.subPlayerHealthAttribute(1000);
+				ModMessages.sendToPlayer(new PlayerHealthAttributeDataSyncS2CPacket(playerHealthAttribute.getPlayerHealthAttribute()), player);
+			});
+			player.getCapability(PlayerAgilityAttributeProvider.AGILITY_LEVEL).ifPresent(playerAgilityAttribute -> {
+				playerAgilityAttribute.subPlayerAgilityAttribute(1000);
+				ModMessages.sendToPlayer(new PlayerAgilityAttributeDataSyncS2CPacket(playerAgilityAttribute.getPlayerAgilityAttribute()), player);
+			});
 			player.getCapability(PlayerMiningExpProvider.PLAYER_MINING_EXP).ifPresent(miningExp -> {
 				miningExp.subMiningExp(100000);
 				ModMessages.sendToPlayer(new MiningExpDataSyncS2CPacket(miningExp.getMiningExp()), player);
