@@ -1,0 +1,264 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.divinetrader.idle": {
+			"loop": true,
+			"animation_length": 0.25,
+			"bones": {
+				"emerald": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [-5, 7, -10],
+							"easing": "linear"
+						}
+					}
+				},
+				"emerald2": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [-12, 9, -4],
+							"easing": "linear"
+						}
+					}
+				},
+				"emerald3": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [-11, 7, 4],
+							"easing": "linear"
+						}
+					}
+				},
+				"emerald4": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [-9, 4, 8],
+							"easing": "linear"
+						}
+					}
+				},
+				"emerald5": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [-2, 0, 13],
+							"easing": "linear"
+						}
+					}
+				},
+				"emerald6": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [8, -7, 9],
+							"easing": "linear"
+						}
+					}
+				},
+				"emerald7": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [13, -7, 2],
+							"easing": "linear"
+						}
+					}
+				},
+				"emerald8": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [9, -6, 0],
+							"easing": "linear"
+						}
+					}
+				},
+				"emerald9": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [9, -7, -7],
+							"easing": "linear"
+						}
+					}
+				},
+				"emerald10": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [0, 0, -15],
+							"easing": "linear"
+						}
+					}
+				},
+				"emerald11": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [-6, -3, -10],
+							"easing": "linear"
+						}
+					}
+				},
+				"emerald12": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [3, 5, -15],
+							"easing": "linear"
+						}
+					}
+				},
+				"emerald13": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [8, 5, -3],
+							"easing": "linear"
+						}
+					}
+				},
+				"emerald14": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [11, 6, 1],
+							"easing": "linear"
+						}
+					}
+				},
+				"emerald15": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [8, 5, 6],
+							"easing": "linear"
+						}
+					}
+				},
+				"emerald16": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [4, 2, 14],
+							"easing": "linear"
+						}
+					}
+				},
+				"emerald17": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [0, -7, 13],
+							"easing": "linear"
+						}
+					}
+				},
+				"emerald18": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [-12, -5, 3],
+							"easing": "linear"
+						}
+					}
+				},
+				"emerald19": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [-9, -7, 0],
+							"easing": "linear"
+						}
+					}
+				},
+				"emerald20": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [-12, -6, -3],
+							"easing": "linear"
+						}
+					}
+				},
+				"emerald21": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [5, 5, -6],
+							"easing": "linear"
+						}
+					}
+				}
+			}
+		},
+		"animation.divinetrader.float": {
+			"loop": true,
+			"animation_length": 1.5,
+			"bones": {
+				"bone": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.9583": {
+							"vector": [0, 2, 0],
+							"easing": "easeInOutBack"
+						},
+						"1.5": {
+							"vector": [0, 0, 0],
+							"easing": "easeInElastic"
+						}
+					}
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}

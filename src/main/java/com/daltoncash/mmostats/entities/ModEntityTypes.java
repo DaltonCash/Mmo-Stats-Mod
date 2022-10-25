@@ -1,12 +1,12 @@
 package com.daltoncash.mmostats.entities;
 
 import com.daltoncash.mmostats.MmoStatsMod;
-import com.daltoncash.mmostats.entities.mod_entities.Companion;
-import com.daltoncash.mmostats.entities.mod_entities.TamedBee;
-import com.daltoncash.mmostats.entities.mod_entities.TamedFrog;
-import com.daltoncash.mmostats.entities.mod_entities.TamedGoat;
-import com.daltoncash.mmostats.entities.mod_entities.TamedLlama;
-import com.daltoncash.mmostats.entities.mod_entities.TamedTurtle;
+import com.daltoncash.mmostats.entities.mod_entities.taming.Companion;
+import com.daltoncash.mmostats.entities.mod_entities.taming.TamedBee;
+import com.daltoncash.mmostats.entities.mod_entities.taming.TamedFrog;
+import com.daltoncash.mmostats.entities.mod_entities.taming.TamedGoat;
+import com.daltoncash.mmostats.entities.mod_entities.taming.TamedLlama;
+import com.daltoncash.mmostats.entities.mod_entities.taming.TamedTurtle;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;

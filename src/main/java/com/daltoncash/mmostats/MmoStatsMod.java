@@ -2,12 +2,12 @@ package com.daltoncash.mmostats;
 
 
 import com.daltoncash.mmostats.entities.ModEntityTypes;
-import com.daltoncash.mmostats.entities.client.bee.TamedBeeRenderer;
-import com.daltoncash.mmostats.entities.client.companion.CompanionRenderer;
-import com.daltoncash.mmostats.entities.client.frog.TamedFrogRenderer;
-import com.daltoncash.mmostats.entities.client.goat.TamedGoatRenderer;
-import com.daltoncash.mmostats.entities.client.llama.TamedLlamaRenderer;
-import com.daltoncash.mmostats.entities.client.turtle.TamedTurtleRenderer;
+import com.daltoncash.mmostats.entities.client.taming.bee.TamedBeeRenderer;
+import com.daltoncash.mmostats.entities.client.taming.companion.CompanionRenderer;
+import com.daltoncash.mmostats.entities.client.taming.frog.TamedFrogRenderer;
+import com.daltoncash.mmostats.entities.client.taming.goat.TamedGoatRenderer;
+import com.daltoncash.mmostats.entities.client.taming.llama.TamedLlamaRenderer;
+import com.daltoncash.mmostats.entities.client.taming.turtle.TamedTurtleRenderer;
 import com.daltoncash.mmostats.item.ModItems;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.mojang.logging.LogUtils;
