@@ -10,12 +10,12 @@ public class KingCoalModel extends AnimatedGeoModel<KingCoal>{
 
 	@Override
 	public ResourceLocation getAnimationResource(KingCoal animatable) {
-		return new ResourceLocation(MmoStatsMod.MODID, "animations/kingcoal.animation.json");
+		return new ResourceLocation(MmoStatsMod.MODID, "animations/enemies/kingcoal.animation.json");
 	}
 
 	@Override
 	public ResourceLocation getModelResource(KingCoal object) {
-		return new ResourceLocation(MmoStatsMod.MODID, "geo/kingcoal.geo.json");
+		return new ResourceLocation(MmoStatsMod.MODID, "geo/enemies/kingcoal.geo.json");
 	}
 
 	@Override

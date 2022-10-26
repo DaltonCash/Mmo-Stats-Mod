@@ -12,23 +12,23 @@ import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
 public class RedstoneRunnerRenderer extends GeoEntityRenderer<RedstoneRunner> {
 	
-	RedstoneRunnerModel tamedBeeModel = new RedstoneRunnerModel();
+	RedstoneRunnerModel model = new RedstoneRunnerModel();
 	
     public RedstoneRunnerRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new RedstoneRunnerModel());
-        this.shadowRadius = 0.3f;
+        this.shadowRadius = 0.7f;
     }
 
     @Override
     public ResourceLocation getTextureLocation(RedstoneRunner instance) {
-        return tamedBeeModel.getTextureResource(instance);
+        return model.getTextureResource(instance);
     }
 
     @Override
     public RenderType getRenderType(RedstoneRunner animatable, float partialTicks, PoseStack stack,
                                     MultiBufferSource renderTypeBuffer, VertexConsumer vertexBuilder, int packedLightIn,
                                     ResourceLocation textureLocation) {
-        stack.scale(0.8F, 0.8F, 0.8F);
+        stack.scale(1F, 1F, 1F);
         return super.getRenderType(animatable, partialTicks, stack, renderTypeBuffer, vertexBuilder, packedLightIn, textureLocation);
     }
 }

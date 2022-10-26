@@ -10,12 +10,12 @@ public class RedstoneRunnerModel extends AnimatedGeoModel<RedstoneRunner>{
 
 	@Override
 	public ResourceLocation getAnimationResource(RedstoneRunner animatable) {
-		return new ResourceLocation(MmoStatsMod.MODID, "animations/redstonerunner.animation.json");
+		return new ResourceLocation(MmoStatsMod.MODID, "animations/enemies/redstonerunner.animation.json");
 	}
 
 	@Override
 	public ResourceLocation getModelResource(RedstoneRunner object) {
-		return new ResourceLocation(MmoStatsMod.MODID, "geo/redstonerunner.geo.json");
+		return new ResourceLocation(MmoStatsMod.MODID, "geo/enemies/redstonerunner.geo.json");
 	}
 
 	@Override

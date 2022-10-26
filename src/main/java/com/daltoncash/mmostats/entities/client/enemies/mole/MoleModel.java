@@ -10,12 +10,12 @@ public class MoleModel extends AnimatedGeoModel<Mole>{
 
 	@Override
 	public ResourceLocation getAnimationResource(Mole animatable) {
-		return new ResourceLocation(MmoStatsMod.MODID, "animations/mole.animation.json");
+		return new ResourceLocation(MmoStatsMod.MODID, "animations/enemies/mole.animation.json");
 	}
 
 	@Override
 	public ResourceLocation getModelResource(Mole object) {
-		return new ResourceLocation(MmoStatsMod.MODID, "geo/mole.geo.json");
+		return new ResourceLocation(MmoStatsMod.MODID, "geo/enemies/mole.geo.json");
 	}
 
 	@Override

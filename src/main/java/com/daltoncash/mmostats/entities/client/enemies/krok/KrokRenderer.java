@@ -12,23 +12,23 @@ import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
 public class KrokRenderer extends GeoEntityRenderer<Krok> {
 	
-	KrokModel tamedBeeModel = new KrokModel();
+	KrokModel model = new KrokModel();
 	
     public KrokRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new KrokModel());
-        this.shadowRadius = 0.3f;
+        this.shadowRadius = 0.6f;
     }
 
     @Override
     public ResourceLocation getTextureLocation(Krok instance) {
-        return tamedBeeModel.getTextureResource(instance);
+        return model.getTextureResource(instance);
     }
 
     @Override
     public RenderType getRenderType(Krok animatable, float partialTicks, PoseStack stack,
                                     MultiBufferSource renderTypeBuffer, VertexConsumer vertexBuilder, int packedLightIn,
                                     ResourceLocation textureLocation) {
-        stack.scale(0.8F, 0.8F, 0.8F);
+        stack.scale(1.2F, 1.2F, 1.2F);
         return super.getRenderType(animatable, partialTicks, stack, renderTypeBuffer, vertexBuilder, packedLightIn, textureLocation);
     }
 }

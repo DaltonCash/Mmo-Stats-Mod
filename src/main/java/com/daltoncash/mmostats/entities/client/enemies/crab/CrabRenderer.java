@@ -12,7 +12,7 @@ import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
 public class CrabRenderer extends GeoEntityRenderer<Crab> {
 	
-	CrabModel tamedBeeModel = new CrabModel();
+	CrabModel model = new CrabModel();
 	
     public CrabRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new CrabModel());
@@ -21,14 +21,14 @@ public class CrabRenderer extends GeoEntityRenderer<Crab> {
 
     @Override
     public ResourceLocation getTextureLocation(Crab instance) {
-        return tamedBeeModel.getTextureResource(instance);
+        return model.getTextureResource(instance);
     }
 
     @Override
     public RenderType getRenderType(Crab animatable, float partialTicks, PoseStack stack,
                                     MultiBufferSource renderTypeBuffer, VertexConsumer vertexBuilder, int packedLightIn,
                                     ResourceLocation textureLocation) {
-        stack.scale(0.8F, 0.8F, 0.8F);
+        stack.scale(0.5F, 0.5F, 0.5F);
         return super.getRenderType(animatable, partialTicks, stack, renderTypeBuffer, vertexBuilder, packedLightIn, textureLocation);
     }
 }

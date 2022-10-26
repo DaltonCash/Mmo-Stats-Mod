@@ -1,7 +1,7 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.model.idle": {
+		"animation.rat.idle": {
 			"loop": true,
 			"animation_length": 0.5,
 			"bones": {
@@ -33,7 +33,7 @@
 				}
 			}
 		},
-		"animation.model.walk": {
+		"animation.rat.walk": {
 			"loop": true,
 			"animation_length": 0.5,
 			"bones": {

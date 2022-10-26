@@ -12,23 +12,23 @@ import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
 public class KingCoalRenderer extends GeoEntityRenderer<KingCoal> {
 	
-	KingCoalModel tamedBeeModel = new KingCoalModel();
+	KingCoalModel model = new KingCoalModel();
 	
     public KingCoalRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new KingCoalModel());
-        this.shadowRadius = 0.3f;
+        this.shadowRadius = 1f;
     }
 
     @Override
     public ResourceLocation getTextureLocation(KingCoal instance) {
-        return tamedBeeModel.getTextureResource(instance);
+        return model.getTextureResource(instance);
     }
 
     @Override
     public RenderType getRenderType(KingCoal animatable, float partialTicks, PoseStack stack,
                                     MultiBufferSource renderTypeBuffer, VertexConsumer vertexBuilder, int packedLightIn,
                                     ResourceLocation textureLocation) {
-        stack.scale(0.8F, 0.8F, 0.8F);
+        stack.scale(1F, 1F, 1F);
         return super.getRenderType(animatable, partialTicks, stack, renderTypeBuffer, vertexBuilder, packedLightIn, textureLocation);
     }
 }

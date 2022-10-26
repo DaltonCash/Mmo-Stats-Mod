@@ -12,7 +12,7 @@ import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
 public class MoleRenderer extends GeoEntityRenderer<Mole> {
 	
-	MoleModel tamedBeeModel = new MoleModel();
+	MoleModel model = new MoleModel();
 	
     public MoleRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new MoleModel());
@@ -21,14 +21,14 @@ public class MoleRenderer extends GeoEntityRenderer<Mole> {
 
     @Override
     public ResourceLocation getTextureLocation(Mole instance) {
-        return tamedBeeModel.getTextureResource(instance);
+        return model.getTextureResource(instance);
     }
 
     @Override
     public RenderType getRenderType(Mole animatable, float partialTicks, PoseStack stack,
                                     MultiBufferSource renderTypeBuffer, VertexConsumer vertexBuilder, int packedLightIn,
                                     ResourceLocation textureLocation) {
-        stack.scale(0.8F, 0.8F, 0.8F);
+        stack.scale(1F, 1F, 1F);
         return super.getRenderType(animatable, partialTicks, stack, renderTypeBuffer, vertexBuilder, packedLightIn, textureLocation);
     }
 }

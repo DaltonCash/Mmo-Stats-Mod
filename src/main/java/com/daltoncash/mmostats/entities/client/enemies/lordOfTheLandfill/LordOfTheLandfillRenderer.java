@@ -12,7 +12,7 @@ import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
 public class LordOfTheLandfillRenderer extends GeoEntityRenderer<LordOfTheLandfill> {
 	
-	LordOfTheLandfillModel tamedBeeModel = new LordOfTheLandfillModel();
+	LordOfTheLandfillModel model = new LordOfTheLandfillModel();
 	
     public LordOfTheLandfillRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new LordOfTheLandfillModel());
@@ -21,7 +21,7 @@ public class LordOfTheLandfillRenderer extends GeoEntityRenderer<LordOfTheLandfi
 
     @Override
     public ResourceLocation getTextureLocation(LordOfTheLandfill instance) {
-        return tamedBeeModel.getTextureResource(instance);
+        return model.getTextureResource(instance);
     }
 
     @Override

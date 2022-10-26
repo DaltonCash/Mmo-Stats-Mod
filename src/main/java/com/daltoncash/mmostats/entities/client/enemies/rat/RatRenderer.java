@@ -12,7 +12,7 @@ import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
 public class RatRenderer extends GeoEntityRenderer<Rat> {
 	
-	RatModel tamedBeeModel = new RatModel();
+	RatModel model = new RatModel();
 	
     public RatRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new RatModel());
@@ -21,7 +21,7 @@ public class RatRenderer extends GeoEntityRenderer<Rat> {
 
     @Override
     public ResourceLocation getTextureLocation(Rat instance) {
-        return tamedBeeModel.getTextureResource(instance);
+        return model.getTextureResource(instance);
     }
 
     @Override

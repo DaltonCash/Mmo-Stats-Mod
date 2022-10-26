@@ -10,12 +10,12 @@ public class BeetleModel extends AnimatedGeoModel<Beetle>{
 
 	@Override
 	public ResourceLocation getAnimationResource(Beetle animatable) {
-		return new ResourceLocation(MmoStatsMod.MODID, "animations/beetle.animation.json");
+		return new ResourceLocation(MmoStatsMod.MODID, "animations/enemies/beetle.animation.json");
 	}
 
 	@Override
 	public ResourceLocation getModelResource(Beetle object) {
-		return new ResourceLocation(MmoStatsMod.MODID, "geo/beetle.geo.json");
+		return new ResourceLocation(MmoStatsMod.MODID, "geo/enemies/beetle.geo.json");
 	}
 
 	@Override

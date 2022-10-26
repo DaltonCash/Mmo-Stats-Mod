@@ -10,12 +10,12 @@ public class LordOfTheLandfillModel extends AnimatedGeoModel<LordOfTheLandfill>{
 
 	@Override
 	public ResourceLocation getAnimationResource(LordOfTheLandfill animatable) {
-		return new ResourceLocation(MmoStatsMod.MODID, "animations/lordofthelandfill.animation.json");
+		return new ResourceLocation(MmoStatsMod.MODID, "animations/enemies/lordofthelandfill.animation.json");
 	}
 
 	@Override
 	public ResourceLocation getModelResource(LordOfTheLandfill object) {
-		return new ResourceLocation(MmoStatsMod.MODID, "geo/lordofthelandfill.geo.json");
+		return new ResourceLocation(MmoStatsMod.MODID, "geo/enemies/lordofthelandfill.geo.json");
 	}
 
 	@Override

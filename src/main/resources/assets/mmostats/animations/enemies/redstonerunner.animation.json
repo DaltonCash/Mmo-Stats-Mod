@@ -1,7 +1,7 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.redstonegolem.idle": {
+		"animation.redstonerunner.idle": {
 			"loop": true,
 			"animation_length": 2,
 			"bones": {
@@ -248,7 +248,7 @@
 				}
 			}
 		},
-		"animation.redstonegolem.walk": {
+		"animation.redstonerunner.walk": {
 			"loop": true,
 			"animation_length": 0.16667,
 			"bones": {
@@ -368,7 +368,7 @@
 				}
 			}
 		},
-		"animation.redstonegolem.alternate": {
+		"animation.redstonerunner.alternate": {
 			"loop": true,
 			"animation_length": 0.33333,
 			"bones": {

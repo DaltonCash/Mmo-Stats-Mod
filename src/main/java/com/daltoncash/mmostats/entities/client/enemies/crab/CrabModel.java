@@ -10,12 +10,12 @@ public class CrabModel extends AnimatedGeoModel<Crab>{
 
 	@Override
 	public ResourceLocation getAnimationResource(Crab animatable) {
-		return new ResourceLocation(MmoStatsMod.MODID, "animations/crab.animation.json");
+		return new ResourceLocation(MmoStatsMod.MODID, "animations/enemies/crab.animation.json");
 	}
 
 	@Override
 	public ResourceLocation getModelResource(Crab object) {
-		return new ResourceLocation(MmoStatsMod.MODID, "geo/crab.geo.json");
+		return new ResourceLocation(MmoStatsMod.MODID, "geo/enemies/crab.geo.json");
 	}
 
 	@Override

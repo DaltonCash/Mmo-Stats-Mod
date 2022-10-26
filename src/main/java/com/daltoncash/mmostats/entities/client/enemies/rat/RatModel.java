@@ -10,12 +10,12 @@ public class RatModel extends AnimatedGeoModel<Rat>{
 
 	@Override
 	public ResourceLocation getAnimationResource(Rat animatable) {
-		return new ResourceLocation(MmoStatsMod.MODID, "animations/rat.animation.json");
+		return new ResourceLocation(MmoStatsMod.MODID, "animations/enemies/rat.animation.json");
 	}
 
 	@Override
 	public ResourceLocation getModelResource(Rat object) {
-		return new ResourceLocation(MmoStatsMod.MODID, "geo/rat.geo.json");
+		return new ResourceLocation(MmoStatsMod.MODID, "geo/enemies/rat.geo.json");
 	}
 
 	@Override

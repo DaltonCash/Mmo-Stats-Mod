@@ -10,12 +10,12 @@ public class DivineTraderModel extends AnimatedGeoModel<DivineTrader>{
 
 	@Override
 	public ResourceLocation getAnimationResource(DivineTrader animatable) {
-		return new ResourceLocation(MmoStatsMod.MODID, "animations/divinetrader.animation.json");
+		return new ResourceLocation(MmoStatsMod.MODID, "animations/enemies/divinetrader.animation.json");
 	}
 
 	@Override
 	public ResourceLocation getModelResource(DivineTrader object) {
-		return new ResourceLocation(MmoStatsMod.MODID, "geo/divinetrader.geo.json");
+		return new ResourceLocation(MmoStatsMod.MODID, "geo/enemies/divinetrader.geo.json");
 	}
 
 	@Override

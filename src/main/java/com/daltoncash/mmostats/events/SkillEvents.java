@@ -92,7 +92,6 @@ public class SkillEvents {
 			if(counter == 0) {
 				event.player.getAttribute(Attributes.MAX_HEALTH).setBaseValue(ModStats.getHealth());
 				event.player.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ModStats.getMoveSpeed());
-				System.out.println("checked");
 			}
 			
 			if (levelUpOverlayDuration > 0) levelUpOverlayDuration--;

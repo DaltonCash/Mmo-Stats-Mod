@@ -10,12 +10,12 @@ public class ObsidianObserverModel extends AnimatedGeoModel<ObsidianObserver>{
 
 	@Override
 	public ResourceLocation getAnimationResource(ObsidianObserver animatable) {
-		return new ResourceLocation(MmoStatsMod.MODID, "animations/obsidianobserver.animation.json");
+		return new ResourceLocation(MmoStatsMod.MODID, "animations/enemies/obsidianobserver.animation.json");
 	}
 
 	@Override
 	public ResourceLocation getModelResource(ObsidianObserver object) {
-		return new ResourceLocation(MmoStatsMod.MODID, "geo/obsidianobserver.geo.json");
+		return new ResourceLocation(MmoStatsMod.MODID, "geo/enemies/obsidianobserver.geo.json");
 	}
 
 	@Override

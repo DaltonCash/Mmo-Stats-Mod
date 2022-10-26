@@ -12,23 +12,23 @@ import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
 public class BeetleRenderer extends GeoEntityRenderer<Beetle> {
 	
-	BeetleModel tamedBeeModel = new BeetleModel();
+	BeetleModel model = new BeetleModel();
 	
     public BeetleRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new BeetleModel());
-        this.shadowRadius = 0.3f;
+        this.shadowRadius = 0.7f;
     }
 
     @Override
     public ResourceLocation getTextureLocation(Beetle instance) {
-        return tamedBeeModel.getTextureResource(instance);
+        return model.getTextureResource(instance);
     }
 
     @Override
     public RenderType getRenderType(Beetle animatable, float partialTicks, PoseStack stack,
                                     MultiBufferSource renderTypeBuffer, VertexConsumer vertexBuilder, int packedLightIn,
                                     ResourceLocation textureLocation) {
-        stack.scale(0.8F, 0.8F, 0.8F);
+        stack.scale(0.6F, 0.6F, 0.6F);
         return super.getRenderType(animatable, partialTicks, stack, renderTypeBuffer, vertexBuilder, packedLightIn, textureLocation);
     }
 }

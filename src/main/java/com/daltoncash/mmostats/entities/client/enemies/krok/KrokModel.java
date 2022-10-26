@@ -10,12 +10,12 @@ public class KrokModel extends AnimatedGeoModel<Krok>{
 
 	@Override
 	public ResourceLocation getAnimationResource(Krok animatable) {
-		return new ResourceLocation(MmoStatsMod.MODID, "animations/krok.animation.json");
+		return new ResourceLocation(MmoStatsMod.MODID, "animations/enemies/krok.animation.json");
 	}
 
 	@Override
 	public ResourceLocation getModelResource(Krok object) {
-		return new ResourceLocation(MmoStatsMod.MODID, "geo/krok.geo.json");
+		return new ResourceLocation(MmoStatsMod.MODID, "geo/enemies/krok.geo.json");
 	}
 
 	@Override

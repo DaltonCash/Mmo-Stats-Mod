@@ -2,6 +2,16 @@ package com.daltoncash.mmostats;
 
 
 import com.daltoncash.mmostats.entities.ModEntityTypes;
+import com.daltoncash.mmostats.entities.client.enemies.beetle.BeetleRenderer;
+import com.daltoncash.mmostats.entities.client.enemies.crab.CrabRenderer;
+import com.daltoncash.mmostats.entities.client.enemies.divinetrader.DivineTraderRenderer;
+import com.daltoncash.mmostats.entities.client.enemies.kingCoal.KingCoalRenderer;
+import com.daltoncash.mmostats.entities.client.enemies.krok.KrokRenderer;
+import com.daltoncash.mmostats.entities.client.enemies.lordOfTheLandfill.LordOfTheLandfillRenderer;
+import com.daltoncash.mmostats.entities.client.enemies.mole.MoleRenderer;
+import com.daltoncash.mmostats.entities.client.enemies.obsidianobserver.ObsidianObserverRenderer;
+import com.daltoncash.mmostats.entities.client.enemies.rat.RatRenderer;
+import com.daltoncash.mmostats.entities.client.enemies.redstoneRunner.RedstoneRunnerRenderer;
 import com.daltoncash.mmostats.entities.client.taming.bee.TamedBeeRenderer;
 import com.daltoncash.mmostats.entities.client.taming.companion.CompanionRenderer;
 import com.daltoncash.mmostats.entities.client.taming.frog.TamedFrogRenderer;
@@ -14,11 +24,14 @@ import com.mojang.logging.LogUtils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -81,6 +94,38 @@ public class MmoStatsMod {
 	private void commonSetup(final FMLCommonSetupEvent event) {
 		
 		event.enqueueWork(() -> {
+			
+			SpawnPlacements.register(ModEntityTypes.BEETLE.get(), 
+					SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+					Monster::checkMonsterSpawnRules);
+			SpawnPlacements.register(ModEntityTypes.CRAB.get(), 
+					SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+					Monster::checkMonsterSpawnRules);
+			SpawnPlacements.register(ModEntityTypes.DIVINETRADER.get(), 
+					SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+					Monster::checkMonsterSpawnRules);
+			SpawnPlacements.register(ModEntityTypes.KINGCOAL.get(), 
+					SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+					Monster::checkMonsterSpawnRules);
+			SpawnPlacements.register(ModEntityTypes.KROK.get(), 
+					SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+					Monster::checkMonsterSpawnRules);
+			SpawnPlacements.register(ModEntityTypes.LORDOFTHELANDFILL.get(), 
+					SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+					Monster::checkMonsterSpawnRules);
+			SpawnPlacements.register(ModEntityTypes.MOLE.get(), 
+					SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+					Monster::checkMonsterSpawnRules);
+			SpawnPlacements.register(ModEntityTypes.OBSIDIANOBSERVER.get(), 
+					SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+					Monster::checkMonsterSpawnRules);
+			SpawnPlacements.register(ModEntityTypes.RAT.get(), 
+					SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+					Monster::checkMonsterSpawnRules);
+			SpawnPlacements.register(ModEntityTypes.REDSTONERUNNER.get(), 
+					SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+					Monster::checkMonsterSpawnRules);
+			
 			ModMessages.register();
 		});
 	}
@@ -105,6 +150,17 @@ public class MmoStatsMod {
 			EntityRenderers.register(ModEntityTypes.TURTLE.get(), TamedTurtleRenderer::new);
 			EntityRenderers.register(ModEntityTypes.GOAT.get(), TamedGoatRenderer::new);
 			EntityRenderers.register(ModEntityTypes.BEE.get(), TamedBeeRenderer::new);
+			
+			EntityRenderers.register(ModEntityTypes.BEETLE.get(), BeetleRenderer::new);
+			EntityRenderers.register(ModEntityTypes.CRAB.get(), CrabRenderer::new);
+			EntityRenderers.register(ModEntityTypes.DIVINETRADER.get(), DivineTraderRenderer::new);
+			EntityRenderers.register(ModEntityTypes.KINGCOAL.get(), KingCoalRenderer::new);
+			EntityRenderers.register(ModEntityTypes.KROK.get(), KrokRenderer::new);
+			EntityRenderers.register(ModEntityTypes.LORDOFTHELANDFILL.get(), LordOfTheLandfillRenderer::new);
+			EntityRenderers.register(ModEntityTypes.MOLE.get(), MoleRenderer::new);
+			EntityRenderers.register(ModEntityTypes.OBSIDIANOBSERVER.get(), ObsidianObserverRenderer::new);
+			EntityRenderers.register(ModEntityTypes.RAT.get(), RatRenderer::new);
+			EntityRenderers.register(ModEntityTypes.REDSTONERUNNER.get(), RedstoneRunnerRenderer::new);
 			LOGGER.info("HELLO FROM CLIENT SETUP");
 			LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
 		}
