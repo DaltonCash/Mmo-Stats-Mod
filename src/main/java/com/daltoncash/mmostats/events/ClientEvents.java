@@ -49,6 +49,7 @@ import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
@@ -624,27 +625,6 @@ public class ClientEvents {
 			}
 		}
 		
-		@SuppressWarnings("unused")
-		private static class LevelUpSound extends AbstractTickableSoundInstance {
-			
-
-			//Minecraft.getInstance().getSoundManager().play(new LevelUpSound());
-			protected LevelUpSound() {
-				super(Sounds.levelUp, SoundSource.AMBIENT, RandomSource.create());
-				this.looping = false;
-				LOGGER.info("Sound should be playing...");
-			}
-
-			/*
-			public static void play() {
-				Minecraft.getInstance().getSoundManager().play(new LevelUpSound());
-			}
-			 */
-			@Override
-			public void tick() {
-				
-			}
-		}
 		//WIP BELOW----------------------------------------------------------------
 		@SubscribeEvent
 		public static void onTamingBee(EntityInteract event) {

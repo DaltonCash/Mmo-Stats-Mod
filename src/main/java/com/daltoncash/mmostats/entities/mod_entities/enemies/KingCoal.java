@@ -1,11 +1,14 @@
 package com.daltoncash.mmostats.entities.mod_entities.enemies;
 
+import com.daltoncash.mmostats.common.handler.Sounds;
+
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.LeapAtTargetGoal;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
@@ -45,6 +48,10 @@ public class KingCoal extends Monster implements IAnimatable {
 	   	this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
 	   	this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
 	   	this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
+	}
+
+	public SoundEvent getAmbientSound() {
+		return Sounds.kingcoal.get();
 	}
 	
 	public int getExperienceReward() {

@@ -1,6 +1,7 @@
 package com.daltoncash.mmostats;
 
 
+import com.daltoncash.mmostats.common.handler.Sounds;
 import com.daltoncash.mmostats.entities.ModEntityTypes;
 import com.daltoncash.mmostats.entities.client.enemies.beetle.BeetleRenderer;
 import com.daltoncash.mmostats.entities.client.enemies.crab.CrabRenderer;
@@ -24,6 +25,7 @@ import com.mojang.logging.LogUtils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.item.BlockItem;
@@ -43,7 +45,14 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.NewRegistryEvent;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.Locale;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+
 import org.slf4j.Logger;
 import software.bernie.geckolib3.GeckoLib;
 
@@ -87,10 +96,14 @@ public class MmoStatsMod {
 		
 		//entities
 		ModEntityTypes.register(modEventBus);
-		
+
 		GeckoLib.initialize();
+		
+		Sounds.Sounds.register(modEventBus);
 	}
+
 	
+
 	private void commonSetup(final FMLCommonSetupEvent event) {
 		
 		event.enqueueWork(() -> {
@@ -165,4 +178,9 @@ public class MmoStatsMod {
 			LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
 		}
 	}
+	
+	public static ResourceLocation prefix(String name) {
+		return new ResourceLocation(MODID, name.toLowerCase(Locale.ROOT));
+	}
+	
 }

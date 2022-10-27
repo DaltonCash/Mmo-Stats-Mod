@@ -1,5 +1,8 @@
 package com.daltoncash.mmostats.entities.mod_entities.enemies;
 
+import com.daltoncash.mmostats.common.handler.Sounds;
+
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -44,6 +47,10 @@ public class Rat extends Monster implements IAnimatable {
 	   	this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
 	   	this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
 	}
+
+	//public SoundEvent getAmbientSound() {
+		//return Sounds.rat.get();
+	//}
 	
 	@Override
 	public void registerControllers(AnimationData data) {

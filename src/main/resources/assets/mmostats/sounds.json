@@ -1,0 +1,46 @@
+{
+  "levelup": {
+    "subtitle": "subtitles.mmostats.levelup",
+    "sounds": [ "mmostats:levelup" ]
+  },
+  "beetle": {
+    "subtitle": "mmostats.subtitle.beetle",
+    "sounds": [ "mmostats:beetle1" ]
+  },
+  "kingcoal": {
+    "subtitle": "mmostats.subtitle.kingcoal",
+    "sounds": [ "mmostats:kingcoal" ]
+  },
+  "krok": {
+    "subtitle": "mmostats.subtitle.krok",
+    "sounds": [ "mmostats:krok1", "mmostats:krok2", "mmostats:krok3" ]
+  },
+  "obsidianobserver": {
+    "subtitle": "mmostats.subtitle.obsidianobserver",
+    "sounds": [ "mmostats:obsidianobserver", "mmostats:obsidianobserver2" ]
+  },
+  "redstonerunner": {
+    "subtitle": "mmostats.subtitle.redstonerunner",
+    "sounds": [ "mmostats:redstonerunner" ]
+  },
+  "crab": {
+    "subtitle": "mmostats.subtitle.crab",
+    "sounds": [ "mmostats:snip1", "mmostats:snip2", "mmostats:snip3" ]
+  },
+  "rat": {
+    "subtitle": "mmostats.subtitle.rat",
+    "sounds": [ "mmostats:squeak" ]
+  },
+  "mole": {
+    "subtitle": "mmostats.subtitle.mole",
+    "sounds": [ "mmostats:squeak" ]
+  },
+  "lordofthelandfill": {
+    "subtitle": "mmostats.subtitle.lordofthelandfill",
+    "sounds": [ "mmostats:trash1", "mmostats:trash2", "mmostats:trash3"]
+  },
+  "divinetrader": {
+    "subtitle": "mmostats.subtitle.divinetrader",
+    "sounds": [ "mmostats:twinkle1", "mmostats:twinkle2", "mmostats:twinkle3"]
+  }
+}

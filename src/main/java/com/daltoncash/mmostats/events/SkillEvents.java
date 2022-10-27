@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 
 import com.daltoncash.mmostats.MmoStatsMod;
 import com.daltoncash.mmostats.capabilities.ClientCapabilityData;
+import com.daltoncash.mmostats.common.handler.Sounds;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.c2s.HunterDropsMeatC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.totals.AcaciaChoppedC2SPacket;
@@ -50,6 +51,8 @@ import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetMiningExpC2SPa
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetPlayerLevelExpC2SPacket;
 import com.mojang.logging.LogUtils;
 
+import net.minecraft.server.commands.PlaySoundCommand;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -84,7 +87,7 @@ public class SkillEvents {
 
 		@SubscribeEvent
 		public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-			if(counter < 800) {
+			if(counter < 1600) {
 				counter++;
 			}else {
 				counter = 0;
@@ -92,6 +95,8 @@ public class SkillEvents {
 			if(counter == 0) {
 				event.player.getAttribute(Attributes.MAX_HEALTH).setBaseValue(ModStats.getHealth());
 				event.player.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ModStats.getMoveSpeed());
+				event.player.playSound(Sounds.levelUp.get(), 1.0f, 1.0f);
+				System.out.println("Should be playing, could crash idk!!!");
 			}
 			
 			if (levelUpOverlayDuration > 0) levelUpOverlayDuration--;
