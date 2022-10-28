@@ -3,7 +3,12 @@ package com.daltoncash.mmostats.entities.mod_entities.enemies;
 import com.daltoncash.mmostats.common.handler.Sounds;
 
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -33,10 +38,13 @@ public class LordOfTheLandfill extends Monster implements IAnimatable {
 	}
 
 	public static AttributeSupplier setAttributes() {
-		return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 200.0D).add(Attributes.ATTACK_DAMAGE, 3.0f)
-				.add(Attributes.ATTACK_SPEED, 50.0f).add(Attributes.ATTACK_KNOCKBACK, 3f).add(Attributes.ARMOR, 10)
-				.add(Attributes.ARMOR_TOUGHNESS, 2)
-				.add(Attributes.MOVEMENT_SPEED, 0.6f).build();
+		return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 15.0D)
+				.add(Attributes.ATTACK_DAMAGE, 1.0f)
+				.add(Attributes.ATTACK_SPEED, 1.0f)
+				.add(Attributes.ATTACK_KNOCKBACK, 0.1f)
+				.add(Attributes.FOLLOW_RANGE, 35.0d)
+				.add(Attributes.ARMOR, 3)
+				.add(Attributes.MOVEMENT_SPEED, 0.22f).build();
 	}
 
 	protected void registerGoals() {
@@ -48,6 +56,31 @@ public class LordOfTheLandfill extends Monster implements IAnimatable {
 	   	this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
 	}
 
+	public boolean doHurtTarget(Entity p_32257_) {
+	      if (super.doHurtTarget(p_32257_)) {
+	         if (p_32257_ instanceof LivingEntity) {
+	            int i = 0;
+	            if (this.level.getDifficulty() == Difficulty.NORMAL) {
+	               i = 7;
+	            } else if (this.level.getDifficulty() == Difficulty.HARD) {
+	               i = 15;
+	            }
+
+	            if (i > 0) {
+	               ((LivingEntity)p_32257_).addEffect(new MobEffectInstance(MobEffects.POISON, i * 10, 3), this);
+	            }
+	         }
+
+	         return true;
+	      } else {
+	         return false;
+	      }
+	   }
+	
+	protected float getSoundVolume() {
+	      return 0.25F;
+	}
+	
 	public SoundEvent getAmbientSound() {
 		return Sounds.lordofthelandfill.get();
 	}

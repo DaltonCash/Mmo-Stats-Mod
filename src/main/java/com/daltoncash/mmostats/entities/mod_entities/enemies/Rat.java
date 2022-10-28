@@ -1,8 +1,5 @@
 package com.daltoncash.mmostats.entities.mod_entities.enemies;
 
-import com.daltoncash.mmostats.common.handler.Sounds;
-
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -33,10 +30,11 @@ public class Rat extends Monster implements IAnimatable {
 	}
 
 	public static AttributeSupplier setAttributes() {
-		return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 200.0D).add(Attributes.ATTACK_DAMAGE, 3.0f)
-				.add(Attributes.ATTACK_SPEED, 50.0f).add(Attributes.ATTACK_KNOCKBACK, 3f).add(Attributes.ARMOR, 10)
-				.add(Attributes.ARMOR_TOUGHNESS, 2)
-				.add(Attributes.MOVEMENT_SPEED, 0.6f).build();
+		return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 5.0D)
+				.add(Attributes.ATTACK_DAMAGE, 0.5f)
+				.add(Attributes.ATTACK_KNOCKBACK, 0.05f)
+				.add(Attributes.FOLLOW_RANGE, 35.0d)
+				.add(Attributes.MOVEMENT_SPEED, 0.33f).build();
 	}
 
 	protected void registerGoals() {

@@ -107,7 +107,6 @@ public class ExpYieldList {
 		list.add(EntityType.BAT);
 		list.add(EntityType.CHICKEN);
 		list.add(EntityType.COD);
-		list.add(ModEntityTypes.COMPANION.get());
 		list.add(EntityType.COW);
 		list.add(EntityType.DONKEY);
 		list.add(EntityType.FOX);
@@ -141,42 +140,53 @@ public class ExpYieldList {
 		list.add(EntityType.TRADER_LLAMA);
 		list.add(EntityType.WOLF);
 		//Hostile mobs(includes spiders)
-		list.add(EntityType.BLAZE);//
-		list.add(EntityType.CAVE_SPIDER);//
-		list.add(EntityType.CREEPER);//
-		list.add(EntityType.DROWNED);//
-		list.add(EntityType.ELDER_GUARDIAN);//
-		list.add(EntityType.ENDER_DRAGON);//
-		list.add(EntityType.ENDERMAN);//
-		list.add(EntityType.ENDERMITE);//
-		list.add(EntityType.EVOKER);//
-		list.add(EntityType.GHAST);//
-		list.add(EntityType.GUARDIAN);//
+		list.add(EntityType.BLAZE);
+		list.add(EntityType.CAVE_SPIDER);
+		list.add(EntityType.CREEPER);
+		list.add(EntityType.DROWNED);
+		list.add(EntityType.ELDER_GUARDIAN);
+		list.add(EntityType.ENDER_DRAGON);
+		list.add(EntityType.ENDERMAN);
+		list.add(EntityType.ENDERMITE);
+		list.add(EntityType.EVOKER);
+		list.add(EntityType.GHAST);
+		list.add(EntityType.GUARDIAN);
 		list.add(EntityType.HOGLIN);
-		list.add(EntityType.HUSK);//
-		list.add(EntityType.IRON_GOLEM);//
-		list.add(EntityType.MAGMA_CUBE);//
-		list.add(EntityType.PHANTOM);//
-		list.add(EntityType.PIGLIN);//
-		list.add(EntityType.PIGLIN_BRUTE);//
-		list.add(EntityType.PILLAGER);//
-		list.add(EntityType.RAVAGER);//
-		list.add(EntityType.SHULKER);//
-		list.add(EntityType.SILVERFISH);//
-		list.add(EntityType.SKELETON);//
-		list.add(EntityType.SLIME);//
-		list.add(EntityType.SPIDER);//
-		list.add(EntityType.STRAY);//
-		list.add(EntityType.VEX);//
-		list.add(EntityType.VINDICATOR);//
-		list.add(EntityType.WARDEN);//
-		list.add(EntityType.WITCH);//
-		list.add(EntityType.WITHER);//
-		list.add(EntityType.WITHER_SKELETON);//
-		list.add(EntityType.ZOGLIN);//
-		list.add(EntityType.ZOMBIE);//
-		list.add(EntityType.ZOMBIE_VILLAGER);//
-		list.add(EntityType.ZOMBIFIED_PIGLIN);//
+		list.add(EntityType.HUSK);
+		list.add(EntityType.IRON_GOLEM);
+		list.add(EntityType.MAGMA_CUBE);
+		list.add(EntityType.PHANTOM);
+		list.add(EntityType.PIGLIN);
+		list.add(EntityType.PIGLIN_BRUTE);
+		list.add(EntityType.PILLAGER);
+		list.add(EntityType.RAVAGER);
+		list.add(EntityType.SHULKER);
+		list.add(EntityType.SILVERFISH);
+		list.add(EntityType.SKELETON);
+		list.add(EntityType.SLIME);
+		list.add(EntityType.SPIDER);
+		list.add(EntityType.STRAY);
+		list.add(EntityType.VEX);
+		list.add(EntityType.VINDICATOR);
+		list.add(EntityType.WARDEN);
+		list.add(EntityType.WITCH);
+		list.add(EntityType.WITHER);
+		list.add(EntityType.WITHER_SKELETON);
+		list.add(EntityType.ZOGLIN);
+		list.add(EntityType.ZOMBIE);
+		list.add(EntityType.ZOMBIE_VILLAGER);
+		list.add(EntityType.ZOMBIFIED_PIGLIN);
+		//Modded entities
+		list.add(ModEntityTypes.BEETLE.get());
+		list.add(ModEntityTypes.CRAB.get());
+		list.add(ModEntityTypes.DIVINETRADER.get());
+		list.add(ModEntityTypes.KINGCOAL.get());
+		list.add(ModEntityTypes.KROK.get());
+		list.add(ModEntityTypes.LORDOFTHELANDFILL.get());
+		list.add(ModEntityTypes.MOLE.get());
+		list.add(ModEntityTypes.OBSIDIANOBSERVER.get());
+		list.add(ModEntityTypes.RAT.get());
+		list.add(ModEntityTypes.REDSTONERUNNER.get());
 		return list;
 	}
 }

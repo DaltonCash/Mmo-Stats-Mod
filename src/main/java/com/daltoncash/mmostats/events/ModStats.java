@@ -10,8 +10,9 @@ public class ModStats {
 	public static double getHealth() {
 		int goldApplesEatenLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getGoldApplesEaten());
 		int oakChoppedLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getOakChopped());
+		int obsidianMinedLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getObsidianMined());
 		int healthUpgrade = ClientCapabilityData.getPlayerHealth();
-		return (20 + healthUpgrade) * (1 + ((1 + goldApplesEatenLevel) * (1 + oakChoppedLevel)) / 100.0d);
+		return (20 + healthUpgrade + obsidianMinedLevel) * (1 + ((1 + goldApplesEatenLevel) * (1 + oakChoppedLevel)) / 100.0d);
 	}
 
 	public static int getHealthRegenModifier() {

@@ -33,9 +33,12 @@ public class Mole extends Monster implements IAnimatable {
 	}
 
 	public static AttributeSupplier setAttributes() {
-		return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 200.0D).add(Attributes.ATTACK_DAMAGE, 3.0f)
-				.add(Attributes.ATTACK_SPEED, 5.0f)
-				.add(Attributes.MOVEMENT_SPEED, 1f).build();
+		return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 10.0D)
+				.add(Attributes.ATTACK_DAMAGE, 1.0f)
+				.add(Attributes.ATTACK_KNOCKBACK, 0.2f)
+				.add(Attributes.FOLLOW_RANGE, 6.0d)
+				.add(Attributes.ARMOR, 10)
+				.add(Attributes.MOVEMENT_SPEED, 0.13f).build();
 	}
 
 	protected void registerGoals() {

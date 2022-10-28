@@ -19,6 +19,7 @@ import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.IronMinedC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.LapisMinedC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.NetherGoldMinedC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.ObsidianMinedC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.QuartzMinedC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.RedstoneMinedC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainArcheryExpC2SPacket;
@@ -87,12 +88,16 @@ import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.totals.Ma
 import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.totals.OakChoppedC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.totals.SpruceChoppedC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.totals.WarpedStemChoppedC2SPacket;
-import com.daltoncash.mmostats.networking.packets.c2s.combatUpgrades.DodgeRollUpgradeC2SPacket;
-import com.daltoncash.mmostats.networking.packets.c2s.combatUpgrades.FreeArrowsUpgradeC2SPacket;
-import com.daltoncash.mmostats.networking.packets.c2s.combatUpgrades.OvercomeUpgradeC2SPacket;
-import com.daltoncash.mmostats.networking.packets.c2s.combatUpgrades.RagnorokUpgradeC2SPacket;
-import com.daltoncash.mmostats.networking.packets.c2s.combatUpgrades.StableFootingUpgradeC2SPacket;
-import com.daltoncash.mmostats.networking.packets.c2s.combatUpgrades.TakeStanceUpgradeC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.combat.DivineTraderSlainC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.combat.KingCoalSlainC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.combat.ObsidianObserverSlainC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.combat.RedstoneRunnerSlainC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.combat.combatUpgrades.DodgeRollUpgradeC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.combat.combatUpgrades.FreeArrowsUpgradeC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.combat.combatUpgrades.OvercomeUpgradeC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.combat.combatUpgrades.RagnorokUpgradeC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.combat.combatUpgrades.StableFootingUpgradeC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.combat.combatUpgrades.TakeStanceUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.CarnivoreUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.EggerUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.FastFoodUpgradeC2SPacket;
@@ -220,6 +225,7 @@ import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.bl
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.IronMinedDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.LapisMinedDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.NetherGoldMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.ObsidianMinedDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.QuartzMinedDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.RedstoneMinedDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.swordsUpgrades.CritasticUpgradeDataSyncS2CPacket;
@@ -950,6 +956,11 @@ public class ModMessages {
 				.encoder(CoalMinedC2SPacket::toBytes)
 				.consumerMainThread(CoalMinedC2SPacket::handle)
 				.add();
+        net.messageBuilder(KingCoalSlainC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+				.decoder(KingCoalSlainC2SPacket::new)
+				.encoder(KingCoalSlainC2SPacket::toBytes)
+				.consumerMainThread(KingCoalSlainC2SPacket::handle)
+				.add();
         net.messageBuilder(CopperMinedC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
 				.decoder(CopperMinedC2SPacket::new)
 				.encoder(CopperMinedC2SPacket::toBytes)
@@ -964,6 +975,11 @@ public class ModMessages {
 				.decoder(EmeraldMinedC2SPacket::new)
 				.encoder(EmeraldMinedC2SPacket::toBytes)
 				.consumerMainThread(EmeraldMinedC2SPacket::handle)
+				.add();
+        net.messageBuilder(DivineTraderSlainC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+				.decoder(DivineTraderSlainC2SPacket::new)
+				.encoder(DivineTraderSlainC2SPacket::toBytes)
+				.consumerMainThread(DivineTraderSlainC2SPacket::handle)
 				.add();
         net.messageBuilder(GlowstoneMinedC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
 				.decoder(GlowstoneMinedC2SPacket::new)
@@ -990,6 +1006,16 @@ public class ModMessages {
 				.encoder(NetherGoldMinedC2SPacket::toBytes)
 				.consumerMainThread(NetherGoldMinedC2SPacket::handle)
 				.add();
+        net.messageBuilder(ObsidianMinedC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+				.decoder(ObsidianMinedC2SPacket::new)
+				.encoder(ObsidianMinedC2SPacket::toBytes)
+				.consumerMainThread(ObsidianMinedC2SPacket::handle)
+				.add();
+        net.messageBuilder(ObsidianObserverSlainC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+				.decoder(ObsidianObserverSlainC2SPacket::new)
+				.encoder(ObsidianObserverSlainC2SPacket::toBytes)
+				.consumerMainThread(ObsidianObserverSlainC2SPacket::handle)
+				.add();
         net.messageBuilder(QuartzMinedC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
 				.decoder(QuartzMinedC2SPacket::new)
 				.encoder(QuartzMinedC2SPacket::toBytes)
@@ -999,6 +1025,11 @@ public class ModMessages {
 				.decoder(RedstoneMinedC2SPacket::new)
 				.encoder(RedstoneMinedC2SPacket::toBytes)
 				.consumerMainThread(RedstoneMinedC2SPacket::handle)
+				.add();
+        net.messageBuilder(RedstoneRunnerSlainC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+				.decoder(RedstoneRunnerSlainC2SPacket::new)
+				.encoder(RedstoneRunnerSlainC2SPacket::toBytes)
+				.consumerMainThread(RedstoneRunnerSlainC2SPacket::handle)
 				.add();
 //-------------Blocks Mined S2C---------------------------------
         net.messageBuilder(AncientDebrisMinedDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
@@ -1050,6 +1081,11 @@ public class ModMessages {
 				.decoder(NetherGoldMinedDataSyncS2CPacket::new)
 				.encoder(NetherGoldMinedDataSyncS2CPacket::toBytes)
 				.consumerMainThread(NetherGoldMinedDataSyncS2CPacket::handle)
+				.add();
+        net.messageBuilder(ObsidianMinedDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+				.decoder(ObsidianMinedDataSyncS2CPacket::new)
+				.encoder(ObsidianMinedDataSyncS2CPacket::toBytes)
+				.consumerMainThread(ObsidianMinedDataSyncS2CPacket::handle)
 				.add();
         net.messageBuilder(QuartzMinedDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
 				.decoder(QuartzMinedDataSyncS2CPacket::new)

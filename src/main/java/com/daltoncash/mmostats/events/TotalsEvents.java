@@ -42,20 +42,26 @@ public class TotalsEvents {
 		
 		@SubscribeEvent
 		public static void onCritalHitGiveTotalsBuff(CriticalHitEvent event) {
-			event.setDamageModifier(ModStats.getCritMultiplier());
+			if(event.getEntity().getName().getString().equals(MmoStatsMod.USER.getName())) {
+				event.setDamageModifier(ModStats.getCritMultiplier());
+			}
 		}
 		@SubscribeEvent
 		public static void onGainingExpGiveTotalsBuff(PickupXp event) {
-			carryExperience += event.getOrb().getValue() * ModStats.getExpModifier();
-			if(carryExperience >= 1) {
-				event.getEntity().giveExperiencePoints((int)carryExperience);
-				carryExperience -= (int)carryExperience;
+			if(event.getEntity().getName().getString().equals(MmoStatsMod.USER.getName())) {
+				carryExperience += event.getOrb().getValue() * ModStats.getExpModifier();
+				if(carryExperience >= 1) {
+					event.getEntity().giveExperiencePoints((int)carryExperience);
+					carryExperience -= (int)carryExperience;
+				}
 			}
 		}
 		@SubscribeEvent
 		public static void onTakingFallDamageReduceDamage(LivingFallEvent event) {
 			if(event.getEntity().getType().equals(EntityType.PLAYER)) {
-				event.setDamageMultiplier(event.getDamageMultiplier() - ModStats.getFallDamageModifier());
+				if(event.getEntity().getName().getString().equals(MmoStatsMod.USER.getName())) {
+					event.setDamageMultiplier(event.getDamageMultiplier() - ModStats.getFallDamageModifier());
+				}
 			}
 		}
 	}

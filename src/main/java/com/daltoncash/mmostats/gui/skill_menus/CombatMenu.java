@@ -8,11 +8,11 @@ import com.daltoncash.mmostats.MmoStatsMod;
 import com.daltoncash.mmostats.capabilities.ClientCapabilityData;
 import com.daltoncash.mmostats.gui.UpgradeMenu;
 import com.daltoncash.mmostats.networking.ModMessages;
-import com.daltoncash.mmostats.networking.packets.c2s.combatUpgrades.DodgeRollUpgradeC2SPacket;
-import com.daltoncash.mmostats.networking.packets.c2s.combatUpgrades.FreeArrowsUpgradeC2SPacket;
-import com.daltoncash.mmostats.networking.packets.c2s.combatUpgrades.OvercomeUpgradeC2SPacket;
-import com.daltoncash.mmostats.networking.packets.c2s.combatUpgrades.RagnorokUpgradeC2SPacket;
-import com.daltoncash.mmostats.networking.packets.c2s.combatUpgrades.TakeStanceUpgradeC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.combat.combatUpgrades.DodgeRollUpgradeC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.combat.combatUpgrades.FreeArrowsUpgradeC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.combat.combatUpgrades.OvercomeUpgradeC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.combat.combatUpgrades.RagnorokUpgradeC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.combat.combatUpgrades.TakeStanceUpgradeC2SPacket;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
@@ -226,19 +226,19 @@ public class CombatMenu extends Screen {
 		if(upgradePoints > 0) {
 			switch (upgradeString) {
 			case dodgeRoll:
-				ModMessages.sendToServer(new DodgeRollUpgradeC2SPacket());
+				if(ClientCapabilityData.isUpgradedDodgeRoll() < 1) ModMessages.sendToServer(new DodgeRollUpgradeC2SPacket());
 				break;
 			case freeArrows:
-				ModMessages.sendToServer(new FreeArrowsUpgradeC2SPacket());
+				if(ClientCapabilityData.isUpgradedFreeArrows() < 3) ModMessages.sendToServer(new FreeArrowsUpgradeC2SPacket());
 				break;
 			case overcome:
-				ModMessages.sendToServer(new OvercomeUpgradeC2SPacket());
+				if(ClientCapabilityData.isUpgradedOvercome() < 3) ModMessages.sendToServer(new OvercomeUpgradeC2SPacket());
 				break;
 			case ragnorok:
-				ModMessages.sendToServer(new RagnorokUpgradeC2SPacket());
+				if(ClientCapabilityData.isUpgradedRagnorok() < 3) ModMessages.sendToServer(new RagnorokUpgradeC2SPacket());
 				break;
 			case takeStance:
-				ModMessages.sendToServer(new TakeStanceUpgradeC2SPacket());
+				if(ClientCapabilityData.isUpgradedTakeStance() < 3) ModMessages.sendToServer(new TakeStanceUpgradeC2SPacket());
 				break;
 			}
 		}

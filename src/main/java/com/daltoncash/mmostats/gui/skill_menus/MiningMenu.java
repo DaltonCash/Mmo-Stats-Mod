@@ -205,16 +205,16 @@ public class MiningMenu extends Screen {
 		if(ClientCapabilityData.getPlayerUpgradePoints() > 0) {
 			switch (upgradeString) {
 			case experienced:
-				ModMessages.sendToServer(new UpgradeJunkBlocksDropExpC2SPacket());
+				if(ClientCapabilityData.isUpgradedJunkBlocksDropExp() < 3) ModMessages.sendToServer(new UpgradeJunkBlocksDropExpC2SPacket());
 				break;
 			case nightVision:
-				ModMessages.sendToServer(new UpgradeNightVisionC2SPacket());
+				if(ClientCapabilityData.isUpgradedNightVision() < 3) ModMessages.sendToServer(new UpgradeNightVisionC2SPacket());
 				break;
 			case noJunkBlocks:
-				ModMessages.sendToServer(new UpgradeNoJunkBlocksC2SPacket());
+				if(ClientCapabilityData.isUpgradedNoJunkBlocks() < 1) ModMessages.sendToServer(new UpgradeNoJunkBlocksC2SPacket());
 				break;
 			case cryingObsidian:
-				ModMessages.sendToServer(new UpgradeObsidianBreakerC2SPacket());
+				if(ClientCapabilityData.isUpgradedObsidianBreaker() < 3) ModMessages.sendToServer(new UpgradeObsidianBreakerC2SPacket());
 				break;
 			}
 		}

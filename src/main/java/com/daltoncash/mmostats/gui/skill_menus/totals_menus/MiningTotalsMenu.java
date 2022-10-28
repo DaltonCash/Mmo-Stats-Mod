@@ -150,35 +150,45 @@ public class MiningTotalsMenu extends Screen {
 	     				MiningTotalsMenu.this.renderTooltip(p_169459_, MiningTotalsMenu.this.minecraft.font.split(component, Math.max(MiningTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
+		
+		addRenderableWidget(new Button(5, this.height / 16 * 13, 120, 20, 
+				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getObsidianMined()) + " Obsidian"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("Increases Max Health by 1 per level.");
+	     				MiningTotalsMenu.this.renderTooltip(p_169459_, MiningTotalsMenu.this.minecraft.font.split(component, Math.max(MiningTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
 				
 		DescriptionPanel foodPanel = new DescriptionPanel(this.minecraft, (this.width * 1) / 4 ,
 				(this.height * 9) / 10, 25, (this.width * 1) / 4);
 		List<String> foodList = List.of("Ore","====", 
 				"Coal", "Copper", "Iron", "------------------",
 				"Gold", "Lapis","Redstone", "------------------", 
-				"Diamond", "Obsidian", "Emerald", "------------------", 
-				"Glowstone", "Quartz", "Ancient Debris");
+				"Diamond", "Nether Gold", "Emerald", "------------------", 
+				"Glowstone", "Quartz", "Ancient Debris", "Obsidian");
 		
-		DescriptionPanel eatenPanel = new DescriptionPanel(this.minecraft, (this.width * 1) / 4 ,
+		DescriptionPanel minedPanel = new DescriptionPanel(this.minecraft, (this.width * 1) / 4 ,
 				(this.height * 9) / 10, 25, (this.width * 2) / 4);
-		List<String> eatenList = new ArrayList<>();
-		eatenList.add("Mined");
-		eatenList.add("=====");
-		eatenList.add(ClientCapabilityData.getCoalMined() + "");
-		eatenList.add(ClientCapabilityData.getCopperMined() + "");
-		eatenList.add(ClientCapabilityData.getIronMined() + "");
-		eatenList.add("------------------");
-		eatenList.add(ClientCapabilityData.getGoldMined() + "");
-		eatenList.add(ClientCapabilityData.getLapisMined() + "");
-		eatenList.add(ClientCapabilityData.getRedstoneMined() + "");
-		eatenList.add("------------------");
-		eatenList.add(ClientCapabilityData.getDiamondMined() + "");
-		eatenList.add(ClientCapabilityData.getNetherGoldMined() + "");
-		eatenList.add(ClientCapabilityData.getEmeraldMined() + "");
-		eatenList.add("------------------");
-		eatenList.add(ClientCapabilityData.getGlowstoneMined() + "");
-		eatenList.add(ClientCapabilityData.getQuartzMined() + "");
-		eatenList.add(ClientCapabilityData.getAncientDebrisMined() + "");
+		List<String> minedList = new ArrayList<>();
+		minedList.add("Mined");
+		minedList.add("=====");
+		minedList.add(ClientCapabilityData.getCoalMined() + "");
+		minedList.add(ClientCapabilityData.getCopperMined() + "");
+		minedList.add(ClientCapabilityData.getIronMined() + "");
+		minedList.add("------------------");
+		minedList.add(ClientCapabilityData.getGoldMined() + "");
+		minedList.add(ClientCapabilityData.getLapisMined() + "");
+		minedList.add(ClientCapabilityData.getRedstoneMined() + "");
+		minedList.add("------------------");
+		minedList.add(ClientCapabilityData.getDiamondMined() + "");
+		minedList.add(ClientCapabilityData.getNetherGoldMined() + "");
+		minedList.add(ClientCapabilityData.getEmeraldMined() + "");
+		minedList.add("------------------");
+		minedList.add(ClientCapabilityData.getGlowstoneMined() + "");
+		minedList.add(ClientCapabilityData.getQuartzMined() + "");
+		minedList.add(ClientCapabilityData.getAncientDebrisMined() + "");
+		minedList.add(ClientCapabilityData.getObsidianMined() + "");
 		
 		DescriptionPanel toLevelPanel = new DescriptionPanel(this.minecraft, (this.width * 1) / 4 ,
 				(this.height * 9) / 10, 25, (this.width * 15) / 20);
@@ -186,24 +196,24 @@ public class MiningTotalsMenu extends Screen {
 		toLevelList.add("To Level");
 		toLevelList.add("========");
 		
-		for(String eaten : eatenList) {
+		for(String mined : minedList) {
 			int i = 64;
-			if(eaten != eatenList.get(0) && eaten != eatenList.get(1) && eaten != eatenList.get(5)) {
-				while(Integer.parseInt(eaten) >= i) {
+			if(mined != minedList.get(0) && mined != minedList.get(1) && mined != minedList.get(5)) {
+				while(Integer.parseInt(mined) >= i) {
 					i *= 2;
 				}
 				toLevelList.add(i + "");
-			}else if(eaten == eatenList.get(5)){
-				toLevelList.add(eaten);
+			}else if(mined == minedList.get(5)){
+				toLevelList.add(mined);
 			}
 		}
 		
 		this.addRenderableWidget(foodPanel);
-		this.addRenderableWidget(eatenPanel);
+		this.addRenderableWidget(minedPanel);
 		this.addRenderableWidget(toLevelPanel);
 		
 		foodPanel.setInfo(foodList, null, null);	
-		eatenPanel.setInfo(eatenList, null, null);
+		minedPanel.setInfo(minedList, null, null);
 		toLevelPanel.setInfo(toLevelList, null, null);
 	}
 	protected List<String> addLines(List<String> list){

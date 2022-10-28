@@ -1,4 +1,4 @@
-package com.daltoncash.mmostats.networking.packets.c2s.combatUpgrades;
+package com.daltoncash.mmostats.networking.packets.c2s.combat.combatUpgrades;
 
 import java.util.function.Supplier;
 

@@ -220,16 +220,16 @@ public class FarmingMenu extends Screen {
 		if(upgradePoints > 0) {
 			switch (upgradeString) {
 			case carnivore:
-				ModMessages.sendToServer(new CarnivoreUpgradeC2SPacket());
+				if(ClientCapabilityData.isUpgradedCarnivore() < 3) ModMessages.sendToServer(new CarnivoreUpgradeC2SPacket());
 				break;
 			case egger:
-				ModMessages.sendToServer(new EggerUpgradeC2SPacket());
+				if(ClientCapabilityData.isUpgradedEgger() < 3) ModMessages.sendToServer(new EggerUpgradeC2SPacket());
 				break;
 			case sugarRush:
-				ModMessages.sendToServer(new SugarRushUpgradeC2SPacket());
+				if(ClientCapabilityData.isUpgradedSugarRush() < 3) ModMessages.sendToServer(new SugarRushUpgradeC2SPacket());
 				break;
 			case wellFed:
-				ModMessages.sendToServer(new WellFedUpgradeC2SPacket());
+				if(ClientCapabilityData.isUpgradedWellFed() < 3) ModMessages.sendToServer(new WellFedUpgradeC2SPacket());
 				break;
 			}
 		}	

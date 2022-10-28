@@ -175,13 +175,13 @@ public class ChoppingMenu extends Screen {
 		if(upgradePoints > 0) {
 			switch (upgradeString) {
 			case grannySmith:
-				ModMessages.sendToServer(new GrannySmithUpgradeC2SPacket());
+				if(ClientCapabilityData.isUpgradedGrannySmith() < 3) ModMessages.sendToServer(new GrannySmithUpgradeC2SPacket());
 				break;
 			case hardWood:
-				ModMessages.sendToServer(new HardwoodUpgradeC2SPacket());
+				if(ClientCapabilityData.isUpgradedHardWood() < 3) ModMessages.sendToServer(new HardwoodUpgradeC2SPacket());
 				break;
 			case strongArms:
-				ModMessages.sendToServer(new StrongArmsUpgradeC2SPacket());
+				if(ClientCapabilityData.isUpgradedStrongArms() < 3) ModMessages.sendToServer(new StrongArmsUpgradeC2SPacket());
 				break;
 			}
 			

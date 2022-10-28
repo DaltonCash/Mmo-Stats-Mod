@@ -33,10 +33,13 @@ public class Krok extends Monster implements IAnimatable {
 	}
 
 	public static AttributeSupplier setAttributes() {
-		return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 200.0D).add(Attributes.ATTACK_DAMAGE, 3.0f)
-				.add(Attributes.ATTACK_SPEED, 50.0f).add(Attributes.ATTACK_KNOCKBACK, 3f).add(Attributes.ARMOR, 10)
-				.add(Attributes.ARMOR_TOUGHNESS, 2)
-				.add(Attributes.MOVEMENT_SPEED, 0.6f).build();
+		return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 40.0D)
+				.add(Attributes.ATTACK_DAMAGE, 7.0f)
+				.add(Attributes.ATTACK_SPEED, 50.0f)
+				.add(Attributes.ATTACK_KNOCKBACK, 3f)
+				.add(Attributes.ARMOR, 4)
+				.add(Attributes.FOLLOW_RANGE, 35)
+				.add(Attributes.MOVEMENT_SPEED, 0.4f).build();
 	}
 
 	protected void registerGoals() {

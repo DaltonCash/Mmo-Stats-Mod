@@ -24,6 +24,7 @@ import com.daltoncash.mmostats.networking.ModMessages;
 import com.mojang.logging.LogUtils;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.User;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.SpawnPlacements;
@@ -45,13 +46,9 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.NewRegistryEvent;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.Locale;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 import org.slf4j.Logger;
 import software.bernie.geckolib3.GeckoLib;
@@ -59,6 +56,7 @@ import software.bernie.geckolib3.GeckoLib;
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(MmoStatsMod.MODID)
 public class MmoStatsMod {
+	public static final User USER = Minecraft.getInstance().getUser();
 	// Define mod id in a common place for everything to reference
 	public static final String MODID = "mmostats";
 	// Directly reference a slf4j logger
@@ -175,7 +173,7 @@ public class MmoStatsMod {
 			EntityRenderers.register(ModEntityTypes.RAT.get(), RatRenderer::new);
 			EntityRenderers.register(ModEntityTypes.REDSTONERUNNER.get(), RedstoneRunnerRenderer::new);
 			LOGGER.info("HELLO FROM CLIENT SETUP");
-			LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+			LOGGER.info("MINECRAFT NAME >> {}", USER.getName());
 		}
 	}
 	

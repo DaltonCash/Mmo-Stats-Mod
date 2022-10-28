@@ -110,7 +110,7 @@ public class FarmingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getCookiesEaten()) + " Cookies"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("WIP");
+	     				Component component = Component.literal("Increases the duration of the Farming upgrade, 'Sugar Rush', by 2 seconds per level.");
 	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -237,7 +237,7 @@ public class FarmingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getRabbitEaten()) + " Rabbit"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("WIP");
+	     				Component component = Component.literal("Upon reaching level 1 Rabbit, gain jump boost for 3 minutes on eating food. Strength of jump boost increases by 2 per level. Can go above vanilla values...");
 	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));
@@ -274,7 +274,7 @@ public class FarmingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getSpiderEyeEaten()) + " Spider Eyes"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("WIP");
+	     				Component component = Component.literal("Upon reaching level 1 Spider Eye, apply poison on-hit for 2 seconds. Each level increases poison duration by 2 seconds.");
 	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));

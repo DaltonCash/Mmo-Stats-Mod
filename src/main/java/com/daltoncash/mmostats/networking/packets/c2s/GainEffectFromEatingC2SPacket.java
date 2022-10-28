@@ -32,7 +32,7 @@ public class GainEffectFromEatingC2SPacket {
 		NetworkEvent.Context context = supplier.get();
 		context.enqueueWork(() -> {
 			ServerPlayer player = context.getSender();
-			int speedDuration = 10 * (1 + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getCookiesEaten()));
+			int speedDuration = 40 * (1 + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getCookiesEaten()));
 			int regenDuration = 3;
 			
 			int regenStrength = 1;
@@ -69,6 +69,11 @@ public class GainEffectFromEatingC2SPacket {
 			}
 			
 			//if player has upgrade
+			if(ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getRabbitEaten()) > 0) {
+				player.addEffect(new MobEffectInstance(MobEffects.JUMP, 3600,
+						(ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getRabbitEaten()) - 1) * 2));
+			}
+			
 			player.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 180, foodInHand.getFoodProperties(new ItemStack(foodInHand), player).getNutrition()/4 - 1));
 		});
 		return true;

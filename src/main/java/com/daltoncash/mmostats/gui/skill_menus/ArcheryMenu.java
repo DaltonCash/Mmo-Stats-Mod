@@ -292,28 +292,28 @@ public class ArcheryMenu extends Screen {
 		if(upgradePoints > 0) {
 			switch (upgradeString) {
 			case efficientMarksman:
-				ModMessages.sendToServer(new EfficientMarksmanUpgradeC2SPacket());
+				if(ClientCapabilityData.isUpgradedEfficientMarksman() < 3) ModMessages.sendToServer(new EfficientMarksmanUpgradeC2SPacket());
 				break;
 			case hunter:
-				ModMessages.sendToServer(new HunterUpgradeC2SPacket());
+				if(ClientCapabilityData.isUpgradedHunter() < 3) ModMessages.sendToServer(new HunterUpgradeC2SPacket());
 				break;
 			case insecurity:
-				ModMessages.sendToServer(new InsecurityUpgradeC2SPacket());
+				if(ClientCapabilityData.isUpgradedInsecurity() < 3) ModMessages.sendToServer(new InsecurityUpgradeC2SPacket());
 				break;
 			case leftClick:
-				ModMessages.sendToServer(new LeftClickUpgradeC2SPacket());
+				if(ClientCapabilityData.isUpgradedLeftClick() < 1) ModMessages.sendToServer(new LeftClickUpgradeC2SPacket());
 				break;
 			case quickshot:
-				ModMessages.sendToServer(new QuickshotUpgradeC2SPacket());
+				if(ClientCapabilityData.isUpgradedQuickshot() < 3) ModMessages.sendToServer(new QuickshotUpgradeC2SPacket());
 				break;
 			case sniper:
-				ModMessages.sendToServer(new SniperUpgradeC2SPacket());
+				if(ClientCapabilityData.isUpgradedSniper() < 3) ModMessages.sendToServer(new SniperUpgradeC2SPacket());
 				break;
 			case sweetSpot:
-				ModMessages.sendToServer(new SweetSpotArcheryUpgradeC2SPacket());
+				if(ClientCapabilityData.isUpgradedSweetSpotArchery() < 3) ModMessages.sendToServer(new SweetSpotArcheryUpgradeC2SPacket());
 				break;
 			case unabated:
-				ModMessages.sendToServer(new UnabatedUpgradeC2SPacket());
+				if(ClientCapabilityData.isUpgradedUnabated() < 3) ModMessages.sendToServer(new UnabatedUpgradeC2SPacket());
 				break;
 			}
 		}

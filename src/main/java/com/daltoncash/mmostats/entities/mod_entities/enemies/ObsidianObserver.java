@@ -33,9 +33,13 @@ public class ObsidianObserver extends Monster implements IAnimatable {
 	}
 
 	public static AttributeSupplier setAttributes() {
-		return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 200.0D).add(Attributes.ATTACK_DAMAGE, 3.0f)
-				.add(Attributes.ATTACK_SPEED, 50.0f).add(Attributes.ATTACK_KNOCKBACK, 3f).add(Attributes.ARMOR, 10)
-				.add(Attributes.ARMOR_TOUGHNESS, 2)
+		return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 200.0D).
+				add(Attributes.ATTACK_DAMAGE, 10.0f)
+				.add(Attributes.ATTACK_SPEED, 0.2f)
+				.add(Attributes.ATTACK_KNOCKBACK, 10f)
+				.add(Attributes.ARMOR, 20)
+				.add(Attributes.ARMOR_TOUGHNESS, 10)
+				.add(Attributes.FOLLOW_RANGE, 10)
 				.add(Attributes.MOVEMENT_SPEED, 0.6f).build();
 	}
 

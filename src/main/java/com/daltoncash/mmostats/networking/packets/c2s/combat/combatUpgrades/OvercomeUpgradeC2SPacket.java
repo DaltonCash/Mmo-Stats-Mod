@@ -1,23 +1,23 @@
-package com.daltoncash.mmostats.networking.packets.c2s.combatUpgrades;
+package com.daltoncash.mmostats.networking.packets.c2s.combat.combatUpgrades;
 
 import java.util.function.Supplier;
 
-import com.daltoncash.mmostats.capabilities.combat.upgrades.RagnorokUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.combat.upgrades.OvercomeUpgradeProvider;
 import com.daltoncash.mmostats.capabilities.playerlevel.PlayerUpgradePointsProvider;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.PlayerUpgradePointsDataSyncS2CPacket;
-import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.RagnorokUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.OvercomeUpgradeDataSyncS2CPacket;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 
-public class RagnorokUpgradeC2SPacket {
-	public RagnorokUpgradeC2SPacket() {
+public class OvercomeUpgradeC2SPacket {
+	public OvercomeUpgradeC2SPacket() {
 
 	}
 
-	public RagnorokUpgradeC2SPacket(FriendlyByteBuf buf) {
+	public OvercomeUpgradeC2SPacket(FriendlyByteBuf buf) {
 
 	}
 
@@ -29,9 +29,9 @@ public class RagnorokUpgradeC2SPacket {
 		NetworkEvent.Context context = supplier.get();
 		context.enqueueWork(() -> {
 			ServerPlayer player = context.getSender();
-			player.getCapability(RagnorokUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+			player.getCapability(OvercomeUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
 				isUpgraded.setUpgradeLevel(isUpgraded.getUpgradeLevel() + 1);
-				ModMessages.sendToPlayer(new RagnorokUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
+				ModMessages.sendToPlayer(new OvercomeUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 			});
 			player.getCapability(PlayerUpgradePointsProvider.PLAYER_UPGRADE_POINTS).ifPresent(upgradePoints -> {
 				upgradePoints.subPlayerUpgradePoints(1);

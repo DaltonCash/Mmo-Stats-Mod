@@ -173,6 +173,8 @@ import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.LapisMin
 import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.LapisMinedProvider;
 import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.NetherGoldMined;
 import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.NetherGoldMinedProvider;
+import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.ObsidianMined;
+import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.ObsidianMinedProvider;
 import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.QuartzMined;
 import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.QuartzMinedProvider;
 import com.daltoncash.mmostats.capabilities.mining.upgrades.blocksMined.RedstoneMined;
@@ -303,6 +305,7 @@ import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.bl
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.IronMinedDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.LapisMinedDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.NetherGoldMinedDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.ObsidianMinedDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.QuartzMinedDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.blocksmined.RedstoneMinedDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.swordsUpgrades.CritasticUpgradeDataSyncS2CPacket;
@@ -659,6 +662,10 @@ public class ModEvents {
 			if (!event.getObject().getCapability(NetherGoldMinedProvider.NETHER_GOLD_MINED).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "nethergoldmined"),
 						new NetherGoldMinedProvider());
+			}
+			if (!event.getObject().getCapability(ObsidianMinedProvider.OBSIDIAN_MINED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "obsidianmined"),
+						new ObsidianMinedProvider());
 			}
 			if (!event.getObject().getCapability(QuartzMinedProvider.QUARTZ_MINED).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "quartzmined"),
@@ -1177,6 +1184,11 @@ public class ModEvents {
 					newStore.copyFrom(oldStore);
 				});
 			});
+			event.getOriginal().getCapability(ObsidianMinedProvider.OBSIDIAN_MINED).ifPresent(oldStore -> {
+				event.getEntity().getCapability(ObsidianMinedProvider.OBSIDIAN_MINED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
 			event.getOriginal().getCapability(QuartzMinedProvider.QUARTZ_MINED).ifPresent(oldStore -> {
 				event.getEntity().getCapability(QuartzMinedProvider.QUARTZ_MINED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
@@ -1454,6 +1466,7 @@ public class ModEvents {
 		event.register(IronMined.class);
 		event.register(LapisMined.class);
 		event.register(NetherGoldMined.class);
+		event.register(ObsidianMined.class);
 		event.register(QuartzMined.class);
 		event.register(RedstoneMined.class);
 		
@@ -1714,6 +1727,9 @@ public class ModEvents {
 				});
 				player.getCapability(NetherGoldMinedProvider.NETHER_GOLD_MINED).ifPresent(total -> {
 					ModMessages.sendToPlayer(new NetherGoldMinedDataSyncS2CPacket(total.getBlocksMined()), player);
+				});
+				player.getCapability(ObsidianMinedProvider.OBSIDIAN_MINED).ifPresent(total -> {
+					ModMessages.sendToPlayer(new ObsidianMinedDataSyncS2CPacket(total.getBlocksMined()), player);
 				});
 				player.getCapability(QuartzMinedProvider.QUARTZ_MINED).ifPresent(total -> {
 					ModMessages.sendToPlayer(new QuartzMinedDataSyncS2CPacket(total.getBlocksMined()), player);

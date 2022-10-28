@@ -78,6 +78,7 @@ public class ClientCapabilityData {
 	private static int ironMined;
 	private static int lapisMined;
 	private static int netherGoldMined;
+	private static int obsidianMined;
 	private static int quartzMined;
 	private static int redstoneMined;
 	//Foods Eaten
@@ -971,6 +972,14 @@ public class ClientCapabilityData {
 
 	public static void setPlayerAttributePoints(int playerAttributePoints) {
 		ClientCapabilityData.playerAttributePoints = playerAttributePoints;
+	}
+
+	public static int getObsidianMined() {
+		return obsidianMined;
+	}
+
+	public static void setObsidianMined(int obsidianMined) {
+		ClientCapabilityData.obsidianMined = obsidianMined;
 	}
 
 }
