@@ -2,15 +2,23 @@ package com.daltoncash.mmostats.entities;
 
 import com.daltoncash.mmostats.MmoStatsMod;
 import com.daltoncash.mmostats.entities.mod_entities.enemies.Beetle;
+import com.daltoncash.mmostats.entities.mod_entities.enemies.Carrot;
 import com.daltoncash.mmostats.entities.mod_entities.enemies.Crab;
+import com.daltoncash.mmostats.entities.mod_entities.enemies.DiamondDefender;
 import com.daltoncash.mmostats.entities.mod_entities.enemies.DivineTrader;
+import com.daltoncash.mmostats.entities.mod_entities.enemies.GoldGolem;
 import com.daltoncash.mmostats.entities.mod_entities.enemies.KingCoal;
 import com.daltoncash.mmostats.entities.mod_entities.enemies.Krok;
 import com.daltoncash.mmostats.entities.mod_entities.enemies.LordOfTheLandfill;
+import com.daltoncash.mmostats.entities.mod_entities.enemies.MelonMan;
 import com.daltoncash.mmostats.entities.mod_entities.enemies.Mole;
+import com.daltoncash.mmostats.entities.mod_entities.enemies.MushroomMan;
+import com.daltoncash.mmostats.entities.mod_entities.enemies.NightBat;
 import com.daltoncash.mmostats.entities.mod_entities.enemies.ObsidianObserver;
 import com.daltoncash.mmostats.entities.mod_entities.enemies.Rat;
 import com.daltoncash.mmostats.entities.mod_entities.enemies.RedstoneRunner;
+import com.daltoncash.mmostats.entities.mod_entities.enemies.Skull;
+import com.daltoncash.mmostats.entities.mod_entities.enemies.Urchin;
 import com.daltoncash.mmostats.entities.mod_entities.taming.Companion;
 import com.daltoncash.mmostats.entities.mod_entities.taming.TamedBee;
 import com.daltoncash.mmostats.entities.mod_entities.taming.TamedFrog;
@@ -60,13 +68,25 @@ public class ModEntityTypes {
 			() -> EntityType.Builder.of(Beetle::new, MobCategory.MONSTER).sized(1f, 0.6f)
 					.build(new ResourceLocation(MmoStatsMod.MODID, "beetle").toString()));
 	
+	public static final RegistryObject<EntityType<Carrot>> CARROT = Entities.register("carrot",
+			() -> EntityType.Builder.of(Carrot::new, MobCategory.MONSTER).sized(1f, 0.6f)
+					.build(new ResourceLocation(MmoStatsMod.MODID, "carrot").toString()));
+	
 	public static final RegistryObject<EntityType<Crab>> CRAB = Entities.register("crab",
 			() -> EntityType.Builder.of(Crab::new, MobCategory.MONSTER).sized(0.8f, 0.4f)
 					.build(new ResourceLocation(MmoStatsMod.MODID, "crab").toString()));
 	
+	public static final RegistryObject<EntityType<DiamondDefender>> DIAMONDDEFENDER = Entities.register("diamonddefender",
+			() -> EntityType.Builder.of(DiamondDefender::new, MobCategory.MONSTER).sized(0.8f, 0.4f)
+					.build(new ResourceLocation(MmoStatsMod.MODID, "diamonddefender").toString()));
+	
 	public static final RegistryObject<EntityType<DivineTrader>> DIVINETRADER = Entities.register("divinetrader",
 			() -> EntityType.Builder.of(DivineTrader::new, MobCategory.MONSTER).sized(1.4f, 5f)
 					.build(new ResourceLocation(MmoStatsMod.MODID, "divinetrader").toString()));
+	
+	public static final RegistryObject<EntityType<GoldGolem>> GOLDGOLEM = Entities.register("goldgolem",
+			() -> EntityType.Builder.of(GoldGolem::new, MobCategory.MONSTER).sized(1.4f, 5f)
+					.build(new ResourceLocation(MmoStatsMod.MODID, "goldgolem").toString()));
 	
 	public static final RegistryObject<EntityType<KingCoal>> KINGCOAL = Entities.register("kingcoal",
 			() -> EntityType.Builder.of(KingCoal::new, MobCategory.MONSTER).sized(2.2f, 4.2f)
@@ -80,9 +100,21 @@ public class ModEntityTypes {
 			() -> EntityType.Builder.of(LordOfTheLandfill::new, MobCategory.MONSTER).sized(0.8f, 1.2f)
 					.build(new ResourceLocation(MmoStatsMod.MODID, "lordofthelandfill").toString()));
 	
+	public static final RegistryObject<EntityType<MelonMan>> MELONMAN = Entities.register("melonman",
+			() -> EntityType.Builder.of(MelonMan::new, MobCategory.MONSTER).sized(0.8f, 1.2f)
+					.build(new ResourceLocation(MmoStatsMod.MODID, "melonman").toString()));
+	
 	public static final RegistryObject<EntityType<Mole>> MOLE = Entities.register("mole",
 			() -> EntityType.Builder.of(Mole::new, MobCategory.MONSTER).sized(0.5f, 0.6f)
 					.build(new ResourceLocation(MmoStatsMod.MODID, "mole").toString()));
+	
+	public static final RegistryObject<EntityType<MushroomMan>> MUSHROOMMAN = Entities.register("mushroomman",
+			() -> EntityType.Builder.of(MushroomMan::new, MobCategory.MONSTER).sized(0.5f, 0.6f)
+					.build(new ResourceLocation(MmoStatsMod.MODID, "mushroomman").toString()));
+	
+	public static final RegistryObject<EntityType<NightBat>> NIGHTBAT = Entities.register("nightbat",
+			() -> EntityType.Builder.of(NightBat::new, MobCategory.MONSTER).sized(0.5f, 0.6f)
+					.build(new ResourceLocation(MmoStatsMod.MODID, "nightbat").toString()));
 	
 	public static final RegistryObject<EntityType<ObsidianObserver>> OBSIDIANOBSERVER = Entities.register("obsidianobserver",
 			() -> EntityType.Builder.of(ObsidianObserver::new, MobCategory.MONSTER).sized(5f, 4f)
@@ -95,6 +127,14 @@ public class ModEntityTypes {
 	public static final RegistryObject<EntityType<RedstoneRunner>> REDSTONERUNNER = Entities.register("redstonerunner",
 			() -> EntityType.Builder.of(RedstoneRunner::new, MobCategory.MONSTER).sized(1.8f, 3f)
 					.build(new ResourceLocation(MmoStatsMod.MODID, "redstonerunner").toString()));
+	
+	public static final RegistryObject<EntityType<Skull>> SKULL = Entities.register("skull",
+			() -> EntityType.Builder.of(Skull::new, MobCategory.MONSTER).sized(1.8f, 3f)
+					.build(new ResourceLocation(MmoStatsMod.MODID, "skull").toString()));
+	
+	public static final RegistryObject<EntityType<Urchin>> URCHIN = Entities.register("urchin",
+			() -> EntityType.Builder.of(Urchin::new, MobCategory.MONSTER).sized(1.8f, 3f)
+					.build(new ResourceLocation(MmoStatsMod.MODID, "urchin").toString()));
 	
 	public static void register(IEventBus eventBus) {
 		Entities.register(eventBus);

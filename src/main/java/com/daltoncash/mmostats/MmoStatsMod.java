@@ -4,15 +4,23 @@ package com.daltoncash.mmostats;
 import com.daltoncash.mmostats.common.handler.Sounds;
 import com.daltoncash.mmostats.entities.ModEntityTypes;
 import com.daltoncash.mmostats.entities.client.enemies.beetle.BeetleRenderer;
+import com.daltoncash.mmostats.entities.client.enemies.carrot.CarrotRenderer;
 import com.daltoncash.mmostats.entities.client.enemies.crab.CrabRenderer;
+import com.daltoncash.mmostats.entities.client.enemies.diamonddefender.DiamondDefenderRenderer;
 import com.daltoncash.mmostats.entities.client.enemies.divinetrader.DivineTraderRenderer;
+import com.daltoncash.mmostats.entities.client.enemies.goldgolem.GoldGolemRenderer;
 import com.daltoncash.mmostats.entities.client.enemies.kingCoal.KingCoalRenderer;
 import com.daltoncash.mmostats.entities.client.enemies.krok.KrokRenderer;
 import com.daltoncash.mmostats.entities.client.enemies.lordOfTheLandfill.LordOfTheLandfillRenderer;
+import com.daltoncash.mmostats.entities.client.enemies.melonman.MelonManRenderer;
 import com.daltoncash.mmostats.entities.client.enemies.mole.MoleRenderer;
+import com.daltoncash.mmostats.entities.client.enemies.mushroomman.MushroomManRenderer;
+import com.daltoncash.mmostats.entities.client.enemies.nightbat.NightBatRenderer;
 import com.daltoncash.mmostats.entities.client.enemies.obsidianobserver.ObsidianObserverRenderer;
 import com.daltoncash.mmostats.entities.client.enemies.rat.RatRenderer;
 import com.daltoncash.mmostats.entities.client.enemies.redstoneRunner.RedstoneRunnerRenderer;
+import com.daltoncash.mmostats.entities.client.enemies.skull.SkullRenderer;
+import com.daltoncash.mmostats.entities.client.enemies.urchin.UrchinRenderer;
 import com.daltoncash.mmostats.entities.client.taming.bee.TamedBeeRenderer;
 import com.daltoncash.mmostats.entities.client.taming.companion.CompanionRenderer;
 import com.daltoncash.mmostats.entities.client.taming.frog.TamedFrogRenderer;
@@ -109,10 +117,19 @@ public class MmoStatsMod {
 			SpawnPlacements.register(ModEntityTypes.BEETLE.get(), 
 					SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 					Monster::checkMonsterSpawnRules);
+			SpawnPlacements.register(ModEntityTypes.CARROT.get(), 
+					SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+					Monster::checkMonsterSpawnRules);
 			SpawnPlacements.register(ModEntityTypes.CRAB.get(), 
 					SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 					Monster::checkMonsterSpawnRules);
+			SpawnPlacements.register(ModEntityTypes.DIAMONDDEFENDER.get(), 
+					SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+					Monster::checkMonsterSpawnRules);
 			SpawnPlacements.register(ModEntityTypes.DIVINETRADER.get(), 
+					SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+					Monster::checkMonsterSpawnRules);
+			SpawnPlacements.register(ModEntityTypes.GOLDGOLEM.get(), 
 					SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 					Monster::checkMonsterSpawnRules);
 			SpawnPlacements.register(ModEntityTypes.KINGCOAL.get(), 
@@ -124,7 +141,16 @@ public class MmoStatsMod {
 			SpawnPlacements.register(ModEntityTypes.LORDOFTHELANDFILL.get(), 
 					SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 					Monster::checkMonsterSpawnRules);
+			SpawnPlacements.register(ModEntityTypes.MELONMAN.get(), 
+					SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+					Monster::checkMonsterSpawnRules);
 			SpawnPlacements.register(ModEntityTypes.MOLE.get(), 
+					SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+					Monster::checkMonsterSpawnRules);
+			SpawnPlacements.register(ModEntityTypes.MUSHROOMMAN.get(), 
+					SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+					Monster::checkMonsterSpawnRules);
+			SpawnPlacements.register(ModEntityTypes.NIGHTBAT.get(), 
 					SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 					Monster::checkMonsterSpawnRules);
 			SpawnPlacements.register(ModEntityTypes.OBSIDIANOBSERVER.get(), 
@@ -134,6 +160,12 @@ public class MmoStatsMod {
 					SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 					Monster::checkMonsterSpawnRules);
 			SpawnPlacements.register(ModEntityTypes.REDSTONERUNNER.get(), 
+					SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+					Monster::checkMonsterSpawnRules);
+			SpawnPlacements.register(ModEntityTypes.SKULL.get(), 
+					SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+					Monster::checkMonsterSpawnRules);
+			SpawnPlacements.register(ModEntityTypes.URCHIN.get(), 
 					SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 					Monster::checkMonsterSpawnRules);
 			
@@ -163,15 +195,24 @@ public class MmoStatsMod {
 			EntityRenderers.register(ModEntityTypes.BEE.get(), TamedBeeRenderer::new);
 			
 			EntityRenderers.register(ModEntityTypes.BEETLE.get(), BeetleRenderer::new);
+			EntityRenderers.register(ModEntityTypes.CARROT.get(), CarrotRenderer::new);
 			EntityRenderers.register(ModEntityTypes.CRAB.get(), CrabRenderer::new);
+			EntityRenderers.register(ModEntityTypes.DIAMONDDEFENDER.get(), DiamondDefenderRenderer::new);
 			EntityRenderers.register(ModEntityTypes.DIVINETRADER.get(), DivineTraderRenderer::new);
+			EntityRenderers.register(ModEntityTypes.GOLDGOLEM.get(), GoldGolemRenderer::new);
 			EntityRenderers.register(ModEntityTypes.KINGCOAL.get(), KingCoalRenderer::new);
 			EntityRenderers.register(ModEntityTypes.KROK.get(), KrokRenderer::new);
 			EntityRenderers.register(ModEntityTypes.LORDOFTHELANDFILL.get(), LordOfTheLandfillRenderer::new);
+			EntityRenderers.register(ModEntityTypes.MELONMAN.get(), MelonManRenderer::new);
 			EntityRenderers.register(ModEntityTypes.MOLE.get(), MoleRenderer::new);
+			EntityRenderers.register(ModEntityTypes.MUSHROOMMAN.get(), MushroomManRenderer::new);
+			EntityRenderers.register(ModEntityTypes.NIGHTBAT.get(), NightBatRenderer::new);
 			EntityRenderers.register(ModEntityTypes.OBSIDIANOBSERVER.get(), ObsidianObserverRenderer::new);
 			EntityRenderers.register(ModEntityTypes.RAT.get(), RatRenderer::new);
 			EntityRenderers.register(ModEntityTypes.REDSTONERUNNER.get(), RedstoneRunnerRenderer::new);
+			EntityRenderers.register(ModEntityTypes.SKULL.get(), SkullRenderer::new);
+			EntityRenderers.register(ModEntityTypes.URCHIN.get(), UrchinRenderer::new);
+			
 			LOGGER.info("HELLO FROM CLIENT SETUP");
 			LOGGER.info("MINECRAFT NAME >> {}", USER.getName());
 		}
