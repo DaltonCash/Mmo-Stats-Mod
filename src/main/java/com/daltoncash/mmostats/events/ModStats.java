@@ -12,7 +12,7 @@ public class ModStats {
 		int oakChoppedLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getOakChopped());
 		int obsidianMinedLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getObsidianMined());
 		int healthUpgrade = ClientCapabilityData.getPlayerHealth();
-		return (20 + healthUpgrade + obsidianMinedLevel) * (1 + ((1 + goldApplesEatenLevel) * (1 + oakChoppedLevel)) / 100.0d);
+		return (20 + healthUpgrade + obsidianMinedLevel) * (0.99 + ((1 + goldApplesEatenLevel) * (1 + oakChoppedLevel)) / 100.0d);
 	}
 
 	public static int getHealthRegenModifier() {
@@ -38,7 +38,7 @@ public class ModStats {
 	
 	public static float getPercentIncreaseDamage() {
 			
-		return 1 + ClientCapabilityData.getPlayerCombatLevel()  / 500;
+		return 1 + ClientCapabilityData.getPlayerCombatLevel()  / 500.0f;
 	}
 	
 	
@@ -73,32 +73,32 @@ public class ModStats {
 	public static float getMiningModifier() {
 		int coalMinedLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getCoalMined());
 		int glowBerriesEaten = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getGlowBerriesEaten());
-		return 1 + ((coalMinedLevel * glowBerriesEaten) / 100f);
+		return 0.99f + (((coalMinedLevel + 1) * (glowBerriesEaten + 1)) / 100f);
 	}
 	
 	public static float getFarmingModifier() {
 		int copperMinedLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getCopperMined());
 		int breadEatenLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getBreadEaten());
 		int birchChoppedLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getBirchChopped());
-		return 1 + ((copperMinedLevel * breadEatenLevel * birchChoppedLevel) / 100f);
+		return 0.99f + (((copperMinedLevel + 1) * (breadEatenLevel + 1) * (birchChoppedLevel + 1)) / 100f);
 	}
 	
 	public static float getCombatModifier() {
 		int ironMinedLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getIronMined());
 		int rawFoodsEatenLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getRawFoodEaten());
-		return 1 + ((ironMinedLevel * rawFoodsEatenLevel) / 100f);
+		return 0.99f + (((ironMinedLevel + 1) * (rawFoodsEatenLevel + 1)) / 100f);
 	}
 
 	public static float getArcheryModifier() {
 		int quartzMinedLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getQuartzMined());
 		int goldenCarrotEatenLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getGoldenCarrotsEaten());
-		return 1 + ((quartzMinedLevel * goldenCarrotEatenLevel) / 100f);
+		return 0.99f + (((quartzMinedLevel + 1) * (goldenCarrotEatenLevel + 1)) / 100f);
 	}
 
 	public static float getChoppingModifier() {
 		int applesEatenLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getApplesEaten());
 		int jungleWoodChopped = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getJungleChopped());
-		return 1 + ((applesEatenLevel * jungleWoodChopped) / 100f);
+		return 0.99f + (((applesEatenLevel + 1) * (jungleWoodChopped+ 1)) / 100f);
 	}
 	//WIP
 	public static double getTamingModifier() {
@@ -147,6 +147,9 @@ public class ModStats {
 	public static float getKnockbackCalculation(float amount) {
 		int potatoesEatenLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getPotatoEaten());
 		return (amount * 4) / (4 + potatoesEatenLevel);
-		
+	}
+	
+	public static int toNextLevelExp(int level) {
+		return (level * 40) + 400;
 	}
 }

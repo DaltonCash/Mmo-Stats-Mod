@@ -45,15 +45,15 @@ public class UpgradeMenu extends Screen {
 	private final ResourceLocation bgtexture = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/cobble_bg-2.png");
 	private final ResourceLocation MINING_TEXTURE = new ResourceLocation(MmoStatsMod.MODID,
-			"textures/gui/test_images/test_mining_image_3.png");
+			"textures/gui/buttons/main_buttons/mining_button.png");
 	private final ResourceLocation ARCHERY_TEXTURE = new ResourceLocation(MmoStatsMod.MODID,
-			"textures/gui/test_buttons/archery.png");
+			"textures/gui/buttons/main_buttons/archery_button.png");
 	private final ResourceLocation CHOPPING_TEXTURE = new ResourceLocation(MmoStatsMod.MODID,
-			"textures/gui/test_buttons/chopping.png");
+			"textures/gui/buttons/main_buttons/chopping_button.png");
 	private final ResourceLocation COMBAT_TEXTURE = new ResourceLocation(MmoStatsMod.MODID,
-			"textures/gui/test_buttons/combat.png");
+			"textures/gui/buttons/main_buttons/combat_button.png");
 	private final ResourceLocation FARMING_TEXTURE = new ResourceLocation(MmoStatsMod.MODID,
-			"textures/gui/test_buttons/farming.png");
+			"textures/gui/buttons/main_buttons/farming_button.png");
 	private final ResourceLocation SKILL_BUBBLE = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/skill_exp_bubble.png");
 	private final ResourceLocation SKILL_EXP = new ResourceLocation(MmoStatsMod.MODID,
@@ -62,9 +62,8 @@ public class UpgradeMenu extends Screen {
 	private final ResourceLocation descriptionBanner = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/background/descstuff3.png");
 	
-	public UpgradeMenu(Component p_96550_) {
-		super(p_96550_);
-	}
+	private static int attributePoints = ClientCapabilityData.getPlayerAttributePoints();
+	
 	private int buttonW = this.width / 8;
 	private int buttonH = this.height / 5;
 	private Button miningButton;
@@ -72,44 +71,101 @@ public class UpgradeMenu extends Screen {
 	private Button choppingButton;
 	private Button combatButton;
 	private Button farmingButton;
+	private Button health;
+	private Button agility;
+	private Button upgradesAndAttributes;
+	
+	public UpgradeMenu(Component p_96550_) {
+		super(p_96550_);
+	}
+	
 	@Override
 	public final void init() {
 		addWidgets();
 	}
 
 	private void addWidgets() {
-		buttonW = this.width / 8;
-		buttonH = this.height / 5;
+		buttonW = this.width / 10;
+		buttonH = this.width / 10;
+		removeWidget(upgradesAndAttributes);
+		removeWidget(health);
+		removeWidget(agility);
 		
-		addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
-				Component.literal("Upgrades Unspent: " + ClientCapabilityData.getPlayerUpgradePoints()),
-				UpgradeMenu::onPressDoNothing));
+		upgradesAndAttributes = addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
+				Component.literal("Upgrades Unspent: " + ClientCapabilityData.getPlayerUpgradePoints()
+								+ " ==== Attributes Unspent: " + attributePoints),
+				UpgradeMenu::onPressDoNothing) );
 		
-		addRenderableWidget(new Button(20, 200, 100, 100,
+		addRenderableWidget(new Button(0, 0, 20, 20,
 				Component.literal("reset capabilities: " + ClientCapabilityData.getPlayerMiningLevel()),
 				UpgradeMenu::onPressReset));
 		
-		addRenderableWidget(new Button((this.width * 1) / 5, ((this.height * 39) / 40) - 20, 100, 20,
+		health = addRenderableWidget(new Button((this.width * 1) / 5, ((this.height * 39) / 40) - 20, 100, 20,
 				Component.literal("Health: " + ClientCapabilityData.getPlayerHealth()),
 				UpgradeMenu::onPressUpgradeHealth));
-		addRenderableWidget(new Button((this.width * 2) / 5, ((this.height * 39) / 40) - 20, 100, 20,
+		
+		agility = addRenderableWidget(new Button((this.width * 2) / 5, ((this.height * 39) / 40) - 20, 100, 20,
 				Component.literal("Agility: " + ClientCapabilityData.getPlayerAgility()),
 				UpgradeMenu::onPressUpgradeAgility));
 		
-		miningButton = addRenderableWidget(new ImageButton((this.width * 1) / 7, (this.height * 1) / 6, buttonW, buttonH, 0, 0, buttonH - 1,
-				MINING_TEXTURE, buttonW, buttonH, UpgradeMenu::onPressMining));
+		miningButton = addRenderableWidget(new ImageButton((this.width * 1) / 10, (this.height * 1) / 6, buttonW, buttonH, 0, 0, buttonH - 1,
+				MINING_TEXTURE, buttonW, buttonH, UpgradeMenu::onPressMining, new Button.OnTooltip() {
+ 			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+ 				Component component = Component.literal("Mining Level: " + ClientCapabilityData.getPlayerMiningLevel()
+ 				+ " \nMining Exp: " + ClientCapabilityData.getPlayerMiningExp() + "/" 
+ 				+ ModStats.toNextLevelExp(ClientCapabilityData.getPlayerMiningLevel())
+ 				+ "\n(" + String.format("%2.2f",(ClientCapabilityData.getPlayerMiningExp() * 100.0) / 
+ 						ModStats.toNextLevelExp(ClientCapabilityData.getPlayerMiningLevel())) + "%)");
+ 				UpgradeMenu.this.renderTooltip(p_169459_, UpgradeMenu.this.minecraft.font.split(component, Math.max(UpgradeMenu.this.width / 2 - 43, 170)), int1, int2);
+ 			}
+		}, Component.empty()));
 		
-		archeryButton = addRenderableWidget(new ImageButton((this.width * 2) / 7, (this.height * 3) / 6, buttonW, buttonH, 0, 0, buttonH - 1,
-				ARCHERY_TEXTURE, buttonW, buttonH, UpgradeMenu::onPressArchery));
+		archeryButton = addRenderableWidget(new ImageButton((this.width * 2) / 10, (this.height * 3) / 6, buttonW, buttonH, 0, 0, buttonH - 1,
+				ARCHERY_TEXTURE, buttonW, buttonH, UpgradeMenu::onPressArchery, new Button.OnTooltip() {
+ 			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+ 				Component component = Component.literal("Archery Level: " + ClientCapabilityData.getPlayerArcheryLevel()
+ 				+ " \nArchery Exp: " + ClientCapabilityData.getPlayerArcheryExp() + "/" 
+ 				+ ModStats.toNextLevelExp(ClientCapabilityData.getPlayerArcheryLevel())
+ 				+ "\n(" + String.format("%2.2f",(ClientCapabilityData.getPlayerArcheryExp() * 100.0) / 
+ 						ModStats.toNextLevelExp(ClientCapabilityData.getPlayerArcheryLevel())) + "%)");
+ 				UpgradeMenu.this.renderTooltip(p_169459_, UpgradeMenu.this.minecraft.font.split(component, Math.max(UpgradeMenu.this.width / 2 - 43, 170)), int1, int2);
+ 			}
+		}, Component.empty()));
 		
-		choppingButton = addRenderableWidget(new ImageButton((this.width * 3) / 7, (this.height * 1) / 6, buttonW, buttonH, 0, 0, buttonH - 1,
-				CHOPPING_TEXTURE, buttonW, buttonH, UpgradeMenu::onPressChopping));
+		choppingButton = addRenderableWidget(new ImageButton((this.width * 3) / 10, (this.height * 1) / 6, buttonW, buttonH, 0, 0, buttonH - 1,
+				CHOPPING_TEXTURE, buttonW, buttonH, UpgradeMenu::onPressChopping, new Button.OnTooltip() {
+ 			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+ 				Component component = Component.literal("Chopping Level: " + ClientCapabilityData.getPlayerChoppingLevel()
+ 				+ " \nChopping Exp: " + ClientCapabilityData.getPlayerChoppingExp() + "/" 
+ 				+ ModStats.toNextLevelExp(ClientCapabilityData.getPlayerChoppingLevel())
+ 				+ "\n(" + String.format("%2.2f",(ClientCapabilityData.getPlayerChoppingExp() * 100.0) / 
+ 						ModStats.toNextLevelExp(ClientCapabilityData.getPlayerChoppingLevel())) + "%)");
+ 				UpgradeMenu.this.renderTooltip(p_169459_, UpgradeMenu.this.minecraft.font.split(component, Math.max(UpgradeMenu.this.width / 2 - 43, 170)), int1, int2);
+ 			}
+		}, Component.empty()));
+		combatButton = addRenderableWidget(new ImageButton((this.width * 4) / 10, (this.height * 3) / 6, buttonW, buttonH, 0, 0, buttonH - 1,
+				COMBAT_TEXTURE, buttonW, buttonH, UpgradeMenu::onPressCombat, new Button.OnTooltip() {
+ 			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+ 				Component component = Component.literal("Combat Level: " + ClientCapabilityData.getPlayerCombatLevel()
+ 				+ " \nCombat Exp: " + ClientCapabilityData.getPlayerCombatExp() + "/" 
+ 				+ ModStats.toNextLevelExp(ClientCapabilityData.getPlayerCombatLevel())
+ 				+ "\n(" + String.format("%2.2f",(ClientCapabilityData.getPlayerCombatExp() * 100.0) / 
+ 						ModStats.toNextLevelExp(ClientCapabilityData.getPlayerCombatLevel())) + "%)");
+ 				UpgradeMenu.this.renderTooltip(p_169459_, UpgradeMenu.this.minecraft.font.split(component, Math.max(UpgradeMenu.this.width / 2 - 43, 170)), int1, int2);
+ 			}
+		}, Component.empty()));
 		
-		combatButton = addRenderableWidget(new ImageButton((this.width * 4) / 7, (this.height * 3) / 6, buttonW, buttonH, 0, 0, buttonH - 1,
-				COMBAT_TEXTURE, buttonW, buttonH, UpgradeMenu::onPressCombat));
-		
-		farmingButton = addRenderableWidget(new ImageButton((this.width * 5) / 7, (this.height * 1) / 6, buttonW, buttonH, 0, 0, buttonH - 1,
-				FARMING_TEXTURE, buttonW, buttonH, UpgradeMenu::onPressFarming));
+		farmingButton = addRenderableWidget(new ImageButton((this.width * 5) / 10, (this.height * 1) / 6, buttonW, buttonH, 0, 0, buttonH - 1,
+				FARMING_TEXTURE, buttonW, buttonH, UpgradeMenu::onPressFarming, new Button.OnTooltip() {
+ 			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+ 				Component component = Component.literal("Farming Level: " + ClientCapabilityData.getPlayerFarmingLevel()
+ 				+ " \nFarming Exp: " + ClientCapabilityData.getPlayerFarmingExp() + "/" 
+ 				+ ModStats.toNextLevelExp(ClientCapabilityData.getPlayerFarmingLevel())
+ 				+ "\n(" + String.format("%2.2f",(ClientCapabilityData.getPlayerFarmingExp() * 100.0) / 
+ 						ModStats.toNextLevelExp(ClientCapabilityData.getPlayerFarmingLevel())) + "%)");
+ 				UpgradeMenu.this.renderTooltip(p_169459_, UpgradeMenu.this.minecraft.font.split(component, Math.max(UpgradeMenu.this.width / 2 - 43, 170)), int1, int2);
+ 			}
+		}, Component.empty()));
 		
 		addRenderableWidget(new ImageButton((this.width * 27) / 42, 0, (this.width * 91) / 256, this.height, 0, 0, 0,
 				descriptionBanner, (this.width * 20) / 56, (this.height * 50) / 49,
@@ -128,41 +184,47 @@ public class UpgradeMenu extends Screen {
 		lines.add(" ");
 		lines.add("Flat Damage Reduction: " + ModStats.getFlatArmorModifier());
 		lines.add(" ");
-		lines.add("Percent Damage Reduc: " + (ModStats.getArmorModifier() * 100));
+		lines.add("Percent Damage Reduc: " + String.format("%2.2f",(ModStats.getArmorModifier() * 100)) + "%");
 		lines.add(" ");
 		lines.add("Additional Melee Damage: " + (ModStats.getFlatDamage() - 1));
 		lines.add(" ");
-		lines.add("Percent Melee Damage: " + (ModStats.getPercentIncreaseDamage()) + "%");
+		lines.add("Percent Melee Damage: " + String.format("%2.1f",((ModStats.getPercentIncreaseDamage() - 1) * 100.0)) + "%");
 		lines.add(" ");
-		lines.add("Critical Strike Multiplier: 1.5 + " + (ModStats.getCritMultiplier() - 1.5 + "%"));
+		lines.add("Critical Strike Multiplier: 1.5 + " + (ModStats.getCritMultiplier() - 1.5));
 		lines.add(" ");
-		lines.add("Additional Movespeed: " + (int)((ModStats.getMoveSpeed() - .1) * 1000) + "%");
+		lines.add("Additional Movespeed: " + String.format("%2.2f",(ModStats.getMoveSpeed() - .1) * 1000) + "%");
 		lines.add(" ");
-		lines.add("Lucky Modifier: " + ModStats.getLuckyModifier());
+		lines.add("Lucky Modifier: " + ModStats.getLuckyModifier() + "x");
 		lines.add(" ");
-		lines.add("Fall Damage Reduc: " + ModStats.getFallDamageModifier());
+		lines.add("Fall Damage Reduc: " + String.format("%2.2f",ModStats.getFallDamageModifier() * 100) + "%");
 		lines.add(" ");
-		lines.add("Knockback Reduc: " + ModStats.getKnockbackModifier());
+		lines.add("Knockback Reduc: " + String.format("%2.2f",ModStats.getKnockbackModifier() * 100) + "%");
 		lines.add(" ");
-		lines.add("Experience Orb Boost: " + ModStats.getExpModifier() * 100 + "%");
+		lines.add("Experience Orb Boost: " + String.format("%2.2f",ModStats.getExpModifier() * 100) + "%");
 		lines.add(" ");
-		lines.add("    ");
-		lines.add("Mining Exp Boost: " + (ModStats.getMiningModifier() - 1) * 100 + "%");
+		lines.add("Mining Exp Boost: " + String.format("%2.2f",(ModStats.getMiningModifier() - 1) * 100.0) + "%");
 		lines.add(" ");
-		lines.add("Chopping Exp Boost: " + (ModStats.getChoppingModifier() - 1) * 100 + "%");
+		lines.add("Chopping Exp Boost: " + String.format("%2.2f",(ModStats.getChoppingModifier() - 1) * 100.0) + "%");
 		lines.add(" ");
-		lines.add("Farming Exp Boost: " + (ModStats.getFarmingModifier() - 1) * 100 + "%");
+		lines.add("Farming Exp Boost: " + String.format("%2.2f",(ModStats.getFarmingModifier() - 1) * 100.0) + "%");
 		lines.add(" ");
-		lines.add("Combat Exp Boost: " + (ModStats.getCombatModifier() - 1) * 100 + "%");
+		lines.add("Combat Exp Boost: " + String.format("%2.2f",(ModStats.getCombatModifier() - 1) * 100.0) + "%");
 		lines.add(" ");
-		lines.add("Archery Exp Boost: " + (ModStats.getArcheryModifier() - 1) * 100 + "%");
+		lines.add("Archery Exp Boost: " + String.format("%2.2f",(ModStats.getArcheryModifier() - 1) * 100.0) + "%");
 		lines.add(" ");
-		lines.add("Taming Exp Boost: " + (ModStats.getTamingModifier() - 1) * 100 + "%");
+		//lines.add("Taming Exp Boost: " + (ModStats.getTamingModifier() - 1) * 100.0 + "%");
+		//lines.add(" ");
+		lines.add("Chopping Double Drops: " + String.format("%2.2f",(ModStats.getChoppingFortuneCalculation()) * 100) + "%");
 		lines.add(" ");
-		lines.add("Chopping Double Drops: " + (ModStats.getChoppingFortuneCalculation()) * 100 + "%");
-		lines.add(" ");
-		lines.add("Mining Double Drops: " + (ModStats.getMiningFortuneCalculation()) * 100 + "%");
+		lines.add("Mining Double Drops: " + String.format("%2.2f",(ModStats.getMiningFortuneCalculation()) * 100) + "%");
 		statlist.setInfo(lines, null, null);
+	}
+	
+	public void tick() {
+		if(attributePoints != ClientCapabilityData.getPlayerAttributePoints()) {
+			attributePoints = ClientCapabilityData.getPlayerAttributePoints();
+			init();
+		}
 	}
 
 	private static void onPressDoNothing(Button button) {
@@ -202,7 +264,6 @@ public class UpgradeMenu extends Screen {
 	
 	private static void onPressUpgradeAgility(Button button) {
 		if(ClientCapabilityData.getPlayerAttributePoints() > 0) {
-			System.out.println(ClientCapabilityData.getPlayerAttributePoints());
 			ModMessages.sendToServer(new SpendPlayerAttributePointsC2SPacket());
 			ModMessages.sendToServer(new GainPlayerAgilityAttributeC2SPacket());
 		}
@@ -259,8 +320,8 @@ public class UpgradeMenu extends Screen {
 	private void renderExpBubble(PoseStack poseStack, int p1, int p2, float p3,
 			int skillExp, int skillLevel, int x, int y) {
 		
-		int w = this.width / 45;
-		int h = this.height / 30;
+		int w = this.width / 50;
+		int h = this.width / 50;
 		int a = (skillExp * 30) / ((skillLevel * 40) + 400);
 		if(a > 30) a = 30;
 		

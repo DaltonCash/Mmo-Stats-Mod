@@ -17,6 +17,11 @@ import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.totals.Ma
 import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.totals.OakChoppedC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.totals.SpruceChoppedC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.totals.WarpedStemChoppedC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.combat.DiamondDefenderSlainC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.combat.DivineTraderSlainC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.combat.KingCoalSlainC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.combat.ObsidianObserverSlainC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.combat.RedstoneRunnerSlainC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.AncientDebrisMinedC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.CoalMinedC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined.CopperMinedC2SPacket;
@@ -142,7 +147,7 @@ public class SkillEvents {
 
 			if (event.getSource().getEntity() != null) {
 				if (event.getSource().getEntity().getType().equals(EntityType.PLAYER)) {
-					if(event.getEntity().getName().getString().equals(MmoStatsMod.USER.getName())) {
+					if(event.getSource().getEntity().getName().getString().equals(MmoStatsMod.USER.getName())) {
 						if (event.getSource().getDirectEntity().getType().equals(EntityType.ARROW)) {
 							if (bowCooldown >= 30) {
 								int archeryExp = ClientCapabilityData.getPlayerArcheryExp();
@@ -151,7 +156,7 @@ public class SkillEvents {
 								bowCooldown = 0;
 	
 								// level up if player has sufficient archeryExp
-								if (archeryExp > (archeryLevel * 40) + 400) {
+								if (archeryExp + (50 * ModStats.getArcheryModifier()) > ModStats.toNextLevelExp(archeryLevel)) {
 									LOGGER.info("{} leveled up to {} in Archery",
 											event.getSource().getEntity().getScoreboardName(), archeryLevel + 1);
 									expToSub = (archeryLevel * 40) + 400;
@@ -204,7 +209,7 @@ public class SkillEvents {
 					}
 					ModMessages.sendToServer(new GainChoppingExpC2SPacket());
 					// level up if player has sufficient choppingExp
-					if (choppingExp > (choppingLevel * 40) + 400) {
+					if (choppingExp + (expToAdd * ModStats.getChoppingModifier()) > ModStats.toNextLevelExp(choppingLevel)) {
 						LOGGER.info("{} leveled up to {} in Chopping", event.getPlayer().getScoreboardName(),
 								choppingLevel + 1);
 						expToSub = (choppingLevel * 40) + 400;
@@ -255,10 +260,11 @@ public class SkillEvents {
 		// This method gives the player exp for combat when they kill an entity.
 		@SubscribeEvent
 		public static void onkill(LivingDeathEvent event) {
-
+			
 			if (event.getSource().getEntity() != null) {
 				if (event.getSource().getEntity().getType().equals(EntityType.PLAYER)) {
-					if(event.getEntity().getName().getString().equals(MmoStatsMod.USER.getName())) {
+					if(event.getSource().getEntity().getName().getString().equals(MmoStatsMod.USER.getName())) {
+						System.out.println();
 						EntityType<?> type = event.getEntity().getType();
 						if (ExpYieldList.getCombatEntities().contains(type)) {
 							int combatExp = ClientCapabilityData.getPlayerCombatExp();
@@ -304,25 +310,31 @@ public class SkillEvents {
 							} else if (type.equals(EntityType.ELDER_GUARDIAN) || type.equals(ModEntityTypes.DIVINETRADER.get())
 									|| type.equals(ModEntityTypes.KINGCOAL.get()) || type.equals(ModEntityTypes.REDSTONERUNNER.get())
 									|| type.equals(ModEntityTypes.OBSIDIANOBSERVER.get())) {
+								
 								expToAdd = 750;
 								if(type.equals(ModEntityTypes.DIVINETRADER.get())) {
-									
+									ModMessages.sendToServer(new DivineTraderSlainC2SPacket());
+								
 								}else if(type.equals(ModEntityTypes.KINGCOAL.get())) {
-									
+									ModMessages.sendToServer(new KingCoalSlainC2SPacket());
 								}else if(type.equals(ModEntityTypes.REDSTONERUNNER.get())) {
-									
+									ModMessages.sendToServer(new RedstoneRunnerSlainC2SPacket());
 								}else if(type.equals(ModEntityTypes.OBSIDIANOBSERVER.get())) {
-									
+									ModMessages.sendToServer(new ObsidianObserverSlainC2SPacket());
 								}
-							} else if (type.equals(EntityType.WARDEN) || type.equals(EntityType.WITHER)) {
+							} else if (type.equals(EntityType.WARDEN) || type.equals(EntityType.WITHER)
+									|| type.equals(ModEntityTypes.DIAMONDDEFENDER.get())) {
 								expToAdd = 1500;
+								if(type.equals(ModEntityTypes.DIAMONDDEFENDER.get())) {
+									ModMessages.sendToServer(new DiamondDefenderSlainC2SPacket());
+								}
 							} else if (type.equals(EntityType.ENDER_DRAGON)) {
 								expToAdd = 5000;
 							}
 							ModMessages.sendToServer(new GainCombatExpC2SPacket());
 	
 							// level up if player has sufficient combatExp
-							if (combatExp > (combatLevel * 40) + 400) {
+							if (combatExp + (expToAdd * ModStats.getCombatModifier()) > ModStats.toNextLevelExp(combatLevel)) {
 								LOGGER.info("{} leveled up to {} in Combat",
 										event.getSource().getEntity().getScoreboardName(), combatLevel + 1);
 								expToSub = (combatLevel * 40) + 400;
@@ -392,7 +404,7 @@ public class SkillEvents {
 							event.getState().getBlock().asItem(), farmingExp + expToAdd);
 	
 					// Checks if the player has enough farmingExp to LevelUp
-					if (farmingExp > (farmingLevel * 40) + 400) {
+					if (farmingExp + (expToAdd * ModStats.getFarmingModifier()) > ModStats.toNextLevelExp(farmingLevel)) {
 						LOGGER.info("{} leveled up to {} in Farming", event.getPlayer().getScoreboardName(),
 								farmingLevel + 1);
 						expToSub = (farmingLevel * 40) + 400;
@@ -491,7 +503,7 @@ public class SkillEvents {
 							event.getState().getBlock().asItem(), (miningExp + expToAdd));
 	
 					// level up if player has sufficient miningExp
-					if (miningExp > (miningLevel * 40) + 400) {
+					if (miningExp + (expToAdd * ModStats.getMiningModifier()) > ModStats.toNextLevelExp(miningLevel)) {
 						LOGGER.info("{} leveled up to {} in Mining", event.getPlayer().getScoreboardName(),
 								miningLevel + 1);
 						expToSub = (miningLevel * 40) + 400;

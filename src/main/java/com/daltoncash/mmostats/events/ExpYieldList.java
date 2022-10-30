@@ -178,15 +178,23 @@ public class ExpYieldList {
 		list.add(EntityType.ZOMBIFIED_PIGLIN);
 		//Modded entities
 		list.add(ModEntityTypes.BEETLE.get());
+		list.add(ModEntityTypes.CARROT.get());
 		list.add(ModEntityTypes.CRAB.get());
+		list.add(ModEntityTypes.DIAMONDDEFENDER.get());
 		list.add(ModEntityTypes.DIVINETRADER.get());
+		list.add(ModEntityTypes.GOLDGOLEM.get());
 		list.add(ModEntityTypes.KINGCOAL.get());
 		list.add(ModEntityTypes.KROK.get());
 		list.add(ModEntityTypes.LORDOFTHELANDFILL.get());
+		list.add(ModEntityTypes.MELONMAN.get());
 		list.add(ModEntityTypes.MOLE.get());
+		list.add(ModEntityTypes.MUSHROOMMAN.get());
+		list.add(ModEntityTypes.NIGHTBAT.get());
 		list.add(ModEntityTypes.OBSIDIANOBSERVER.get());
 		list.add(ModEntityTypes.RAT.get());
 		list.add(ModEntityTypes.REDSTONERUNNER.get());
+		list.add(ModEntityTypes.SKULL.get());
+		list.add(ModEntityTypes.URCHIN.get());
 		return list;
 	}
 }

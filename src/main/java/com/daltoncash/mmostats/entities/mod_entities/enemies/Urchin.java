@@ -33,7 +33,7 @@ public class Urchin extends Monster implements IAnimatable {
 		return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 100.0D)
 				.add(Attributes.ATTACK_DAMAGE, 5.0f)
 				.add(Attributes.ATTACK_SPEED, 1.0f)
-				.add(Attributes.ATTACK_KNOCKBACK, 0f)
+				.add(Attributes.ATTACK_KNOCKBACK, 0.0f)
 				.add(Attributes.FOLLOW_RANGE, 35.0d)
 				.add(Attributes.ARMOR, 10)
 				.add(Attributes.MOVEMENT_SPEED, 0f).build();

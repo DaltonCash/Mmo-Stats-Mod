@@ -88,6 +88,7 @@ import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.totals.Ma
 import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.totals.OakChoppedC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.totals.SpruceChoppedC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.totals.WarpedStemChoppedC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.combat.DiamondDefenderSlainC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.combat.DivineTraderSlainC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.combat.KingCoalSlainC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.combat.ObsidianObserverSlainC2SPacket;
@@ -970,6 +971,11 @@ public class ModMessages {
 				.decoder(DiamondMinedC2SPacket::new)
 				.encoder(DiamondMinedC2SPacket::toBytes)
 				.consumerMainThread(DiamondMinedC2SPacket::handle)
+				.add();
+        net.messageBuilder(DiamondDefenderSlainC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+				.decoder(DiamondDefenderSlainC2SPacket::new)
+				.encoder(DiamondDefenderSlainC2SPacket::toBytes)
+				.consumerMainThread(DiamondDefenderSlainC2SPacket::handle)
 				.add();
         net.messageBuilder(EmeraldMinedC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
 				.decoder(EmeraldMinedC2SPacket::new)

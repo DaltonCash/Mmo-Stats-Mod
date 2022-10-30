@@ -33,7 +33,7 @@ public class MushroomMan extends Monster implements IAnimatable {
 		return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 30.0D)
 				.add(Attributes.ATTACK_DAMAGE, 5.0f)
 				.add(Attributes.ATTACK_SPEED, 1.0f)
-				.add(Attributes.ATTACK_KNOCKBACK, 5.0f)
+				.add(Attributes.ATTACK_KNOCKBACK, 0.3f)
 				.add(Attributes.FOLLOW_RANGE, 35.0d)
 				.add(Attributes.ARMOR, 3)
 				.add(Attributes.MOVEMENT_SPEED, 0.22f).build();

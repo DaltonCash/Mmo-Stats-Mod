@@ -69,7 +69,7 @@ public class ModEntityTypes {
 					.build(new ResourceLocation(MmoStatsMod.MODID, "beetle").toString()));
 	
 	public static final RegistryObject<EntityType<Carrot>> CARROT = Entities.register("carrot",
-			() -> EntityType.Builder.of(Carrot::new, MobCategory.MONSTER).sized(1f, 0.6f)
+			() -> EntityType.Builder.of(Carrot::new, MobCategory.MONSTER).sized(2.2f, 4f)
 					.build(new ResourceLocation(MmoStatsMod.MODID, "carrot").toString()));
 	
 	public static final RegistryObject<EntityType<Crab>> CRAB = Entities.register("crab",
@@ -77,7 +77,7 @@ public class ModEntityTypes {
 					.build(new ResourceLocation(MmoStatsMod.MODID, "crab").toString()));
 	
 	public static final RegistryObject<EntityType<DiamondDefender>> DIAMONDDEFENDER = Entities.register("diamonddefender",
-			() -> EntityType.Builder.of(DiamondDefender::new, MobCategory.MONSTER).sized(0.8f, 0.4f)
+			() -> EntityType.Builder.of(DiamondDefender::new, MobCategory.MONSTER).sized(2f, 4.5f)
 					.build(new ResourceLocation(MmoStatsMod.MODID, "diamonddefender").toString()));
 	
 	public static final RegistryObject<EntityType<DivineTrader>> DIVINETRADER = Entities.register("divinetrader",
@@ -101,7 +101,7 @@ public class ModEntityTypes {
 					.build(new ResourceLocation(MmoStatsMod.MODID, "lordofthelandfill").toString()));
 	
 	public static final RegistryObject<EntityType<MelonMan>> MELONMAN = Entities.register("melonman",
-			() -> EntityType.Builder.of(MelonMan::new, MobCategory.MONSTER).sized(0.8f, 1.2f)
+			() -> EntityType.Builder.of(MelonMan::new, MobCategory.MONSTER).sized(1f, 1.8f)
 					.build(new ResourceLocation(MmoStatsMod.MODID, "melonman").toString()));
 	
 	public static final RegistryObject<EntityType<Mole>> MOLE = Entities.register("mole",
@@ -109,7 +109,7 @@ public class ModEntityTypes {
 					.build(new ResourceLocation(MmoStatsMod.MODID, "mole").toString()));
 	
 	public static final RegistryObject<EntityType<MushroomMan>> MUSHROOMMAN = Entities.register("mushroomman",
-			() -> EntityType.Builder.of(MushroomMan::new, MobCategory.MONSTER).sized(0.5f, 0.6f)
+			() -> EntityType.Builder.of(MushroomMan::new, MobCategory.MONSTER).sized(0.5f, 1.2f)
 					.build(new ResourceLocation(MmoStatsMod.MODID, "mushroomman").toString()));
 	
 	public static final RegistryObject<EntityType<NightBat>> NIGHTBAT = Entities.register("nightbat",
@@ -129,11 +129,11 @@ public class ModEntityTypes {
 					.build(new ResourceLocation(MmoStatsMod.MODID, "redstonerunner").toString()));
 	
 	public static final RegistryObject<EntityType<Skull>> SKULL = Entities.register("skull",
-			() -> EntityType.Builder.of(Skull::new, MobCategory.MONSTER).sized(1.8f, 3f)
+			() -> EntityType.Builder.of(Skull::new, MobCategory.MONSTER).sized(0.6f, 0.8f)
 					.build(new ResourceLocation(MmoStatsMod.MODID, "skull").toString()));
 	
 	public static final RegistryObject<EntityType<Urchin>> URCHIN = Entities.register("urchin",
-			() -> EntityType.Builder.of(Urchin::new, MobCategory.MONSTER).sized(1.8f, 3f)
+			() -> EntityType.Builder.of(Urchin::new, MobCategory.MONSTER).sized(1f, 1.2f)
 					.build(new ResourceLocation(MmoStatsMod.MODID, "urchin").toString()));
 	
 	public static void register(IEventBus eventBus) {

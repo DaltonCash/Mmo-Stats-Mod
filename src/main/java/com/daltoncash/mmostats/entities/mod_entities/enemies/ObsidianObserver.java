@@ -40,7 +40,7 @@ public class ObsidianObserver extends Monster implements IAnimatable {
 				.add(Attributes.ARMOR, 20)
 				.add(Attributes.ARMOR_TOUGHNESS, 10)
 				.add(Attributes.FOLLOW_RANGE, 10)
-				.add(Attributes.MOVEMENT_SPEED, 0.6f).build();
+				.add(Attributes.MOVEMENT_SPEED, 0.14f).build();
 	}
 
 	protected void registerGoals() {

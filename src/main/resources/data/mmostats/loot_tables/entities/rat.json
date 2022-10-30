@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:coal",
+          "name": "minecraft:seeds",
           "functions": [
             {
               "function": "minecraft:set_count",
