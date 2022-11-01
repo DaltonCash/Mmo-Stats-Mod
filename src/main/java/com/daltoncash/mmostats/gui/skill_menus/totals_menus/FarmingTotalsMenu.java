@@ -164,8 +164,8 @@ public class FarmingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getKelpEaten()) + " Kelp"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("Reduces % damage taken by entities in an equation as follows: \"\r\n"
-	     						+ "	     						+ \"\\n\\n     (Diamond * Kelp * Dark Oak) \" + \"\\n   -------------------------  \"+ \" ((Diamond * Kelp * Dark Oak) + 100)");
+	     				Component component = Component.literal("Reduces % damage taken by entities in an equation as follows: "
+	     							     						+ "\n\n     (Diamond * Kelp * Dark Oak)  "+"\n   -------------------------  \"+ \" ((Diamond * Kelp * Dark Oak) + 100)");
 	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(175, 170)), int1, int2);
 	     			}
 				}));
@@ -341,7 +341,7 @@ public class FarmingTotalsMenu extends Screen {
 		toLevelList.add("========");
 		
 		for(String eaten : eatenList) {
-			int i = 64;
+			int i = 32;
 			if(eaten != eatenList.get(0) && eaten != eatenList.get(1) && eaten != eatenList.get(5)) {
 				while(Integer.parseInt(eaten) >= i) {
 					i *= 2;

@@ -3,7 +3,7 @@
   "biomes": "#minecraft:is_overworld",
   "spawners": {
     "type": "mmostats:goldgolem",
-    "weight": 1,
+    "weight": 3,
     "minCount": 1,
     "maxCount": 1
   }

@@ -92,7 +92,7 @@ public class ClientEvents {
 		public static final Logger LOGGER = LogUtils.getLogger();
 		public static Entity clientEntity;
 		public static BlockEvent.BreakEvent blockevent = null;
-		
+		public static boolean noJunkBlocksToggle;
 		
 		public static int dodgeCooldown = 80;
 		public static int eatCooldown = 128/ModStats.getEatCooldownReduction();
@@ -139,8 +139,6 @@ public class ClientEvents {
 			
 			if(extendediframes > 0) extendediframes--;
 			
-			if(ragnorokCooldown == 1) System.out.println("ragnorok ready");
-			
 			if (ragnorokCooldown > 0) ragnorokCooldown--;
 			
 			if (ragnorokDuration > 0) ragnorokDuration--;
@@ -184,7 +182,7 @@ public class ClientEvents {
 					
 						if(event.getSource().getDirectEntity().getType().equals(EntityType.ARROW)) {
 							//Archery Passive:
-							float damageFromArcheryLevel = ClientCapabilityData.getPlayerArcheryLevel() / 500.0f;
+							float damageFromArcheryLevel = ClientCapabilityData.getPlayerArcheryLevel() / 100.0f;
 							float moddedDamageToAdd = event.getAmount() * damageFromArcheryLevel;
 							
 							
@@ -242,7 +240,7 @@ public class ClientEvents {
 						event.setCanceled(true);
 					}
 				}
-					
+				//Hardwood	
 				if(ClientCapabilityData.isUpgradedHardWood() > 0) {
 					if(healAtHalfHealth == 24000) {
 						if(event.getEntity().getHealth() <= event.getEntity().getMaxHealth() / 4) {
@@ -252,7 +250,7 @@ public class ClientEvents {
 					}
 				}
 					
-				//Extend IFrames
+				//Dodge Roll
 				if(ClientCapabilityData.isUpgradedOvercome() > 0) {
 					if(extendediframes > 0) {
 						event.setCanceled(true);
@@ -276,6 +274,7 @@ public class ClientEvents {
 					}
 				}
 			}
+			//SpiderEyeTotals
 			if(event.getSource().getEntity() != null) {
 				if(event.getSource().getEntity().getType().equals(EntityType.PLAYER)) {
 					if(event.getSource().getEntity().getName().getString().equals(MmoStatsMod.USER.getName())) {
@@ -288,6 +287,7 @@ public class ClientEvents {
 								
 							}
 						}
+						//Ragnorok
 						if(ragnorokDuration > 0) {
 							if(event.getSource().getEntity().isAlive()) {
 								LivingEntity entity = (LivingEntity) event.getSource().getEntity();
@@ -296,13 +296,13 @@ public class ClientEvents {
 						}
 					}
 				}
-				//WIP - Chopping upgrade to increase damage with axes
+				//StrongArms/LumberJacked
 				if(event.getSource().getDirectEntity().getType().equals(EntityType.PLAYER)) {
 					if(event.getSource().getEntity().getName().getString().equals(MmoStatsMod.USER.getName())) {
 						List<Item> axes = List.of(Items.NETHERITE_AXE, Items.DIAMOND_AXE, Items.GOLDEN_AXE,
 								Items.IRON_AXE, Items.STONE_AXE, Items.WOODEN_AXE);
 						if(axes.contains(((LivingEntity) event.getSource().getDirectEntity()).getItemInHand(InteractionHand.MAIN_HAND).getItem())){
-							event.setAmount(event.getAmount() + ((event.getAmount() * 1) / 3));
+							event.setAmount(event.getAmount() + ((event.getAmount() * ClientCapabilityData.isUpgradedStrongArms()) / 3));
 						}
 						//Final calculation for damage dealt.
 						event.setAmount(ModStats.getDamageDealtCalculation(event.getAmount()));
@@ -324,14 +324,14 @@ public class ClientEvents {
 			}
 		}
 		
-		//insatiable-WIP
+		//insatiable
 		@SubscribeEvent
 		public static void onEatingFoodWhenFull(RightClickItem event) {
 			
 			if(event.getItemStack().isEdible()) {
 				if(event.getEntity().getName().getString().equals(MmoStatsMod.USER.getName())) {
 					if(event.getEntity().getFoodData().getFoodLevel() >= 20) {
-						if(eatCooldown >= 128/(ModStats.getEatCooldownReduction())) {
+						if(ClientCapabilityData.getIsUpgradedFastFood() > 0 && eatCooldown >= 128/(ModStats.getEatCooldownReduction())) {
 							event.getEntity().eat(event.getLevel(), event.getItemStack());
 							ModMessages.sendToServer(new EatFoodWhileFullC2SPacket());
 							Item item = event.getItemStack().getItem();
@@ -561,7 +561,9 @@ public class ClientEvents {
 			if(event.getEntity().getName().getString().equals(MmoStatsMod.USER.getName())) {
 				//Fast Food-WIP
 				if(event.getItem().getItem().isEdible()) {
-					event.setDuration(ModStats.getEatDuration());
+					if(ClientCapabilityData.getIsUpgradedFastFood() > 0) {
+						event.setDuration(ModStats.getEatDuration());
+					}
 				}
 				
 				//Arrow: Quickshot
@@ -582,7 +584,7 @@ public class ClientEvents {
 		@SubscribeEvent
 		public static void onHarvest(HarvestCheck event) {
 			if(event.getEntity().getName().getString().equals(MmoStatsMod.USER.getName())) {
-				if(ClientCapabilityData.isUpgradedNoJunkBlocks() > 0) {
+				if(ClientCapabilityData.isUpgradedNoJunkBlocks() > 0 && noJunkBlocksToggle) {
 					if (event.getTargetBlock().getBlock().equals(Blocks.STONE)
 							|| event.getTargetBlock().getBlock().equals(Blocks.COBBLESTONE)
 							|| event.getTargetBlock().getBlock().equals(Blocks.DIORITE)
@@ -601,6 +603,7 @@ public class ClientEvents {
 		//This method doubles the speed of mining deepslate and obsidian
 		@SubscribeEvent
 		public static void onBreaking(BreakSpeed event) {
+			
 			if(event.getEntity().getName().getString().equals(MmoStatsMod.USER.getName())) {
 				if(ClientCapabilityData.isUpgradedObsidianBreaker() > 0) {
 					if (event.getState().getBlock().equals(Blocks.OBSIDIAN)
@@ -612,6 +615,7 @@ public class ClientEvents {
 					event.setNewSpeed((float) (event.getOriginalSpeed() * 2));
 				}
 				if(ClientCapabilityData.isUpgradedWellFed() > 0) {
+					
 					if(event.getEntity().getFoodData().getFoodLevel() == 20) {
 						event.setNewSpeed((float) (event.getNewSpeed() * 1.1));
 					}
@@ -678,6 +682,7 @@ public class ClientEvents {
 						Component.literal(getDisplayName(event.getEntity().getType().toShortString().toLowerCase()))
 						.withStyle(ChatFormatting.GOLD).append(getDisplayHealth(event.getEntity())));
 				event.getEntity().setCustomNameVisible(true);
+				event.getEntity().shouldShowName();
 			
 		}
 		
@@ -729,10 +734,8 @@ public class ClientEvents {
 		@SubscribeEvent
 		public static void onKeyInput(InputEvent.Key event) {
 			//Dodge Roll
-			if (KeyBinding.NIGHT_VISION_KEY.consumeClick()) {
+			if (KeyBinding.DODGE_ROLL_KEY.consumeClick()) {
 				if (ClientCapabilityData.isUpgradedNightVision() > 0 && dodgeCooldown >= 80) {
-					Minecraft.getInstance().player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 1200));
-					ModMessages.sendToServer(new GainNightVisionC2SPacket());
 					Player player = Minecraft.getInstance().player;
 					double x = player.getDeltaMovement().x;
 					double y = player.getDeltaMovement().y;
@@ -756,14 +759,29 @@ public class ClientEvents {
 			if (KeyBinding.OPEN_UPGRADE_GUI_KEY.consumeClick()) {
 				Minecraft.getInstance().setScreen(new UpgradeMenu(Component.literal("Test from events!")));
 			}
-			if(KeyBinding.X_PLOSIVE_MINER_KEY.consumeClick()) {
-				ModMessages.sendToServer(new SpawnTntC2SPacket());
+			if (KeyBinding.TOGGLE_JUNK_KEY.consumeClick()) {
+				if(ClientCapabilityData.isUpgradedNoJunkBlocks() > 0) {
+					if(noJunkBlocksToggle) {
+						noJunkBlocksToggle = false;
+						Minecraft.getInstance().player.sendSystemMessage(Component.literal("No Junk Blocks: Off"));
+					}else {
+						noJunkBlocksToggle = true;
+						Minecraft.getInstance().player.sendSystemMessage(Component.literal("No Junk Blocks: On"));
+					}
+				}
 			}
+			if(KeyBinding.NIGHT_VISION_KEY.consumeClick()) {
+				Minecraft.getInstance().player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 1200));
+				ModMessages.sendToServer(new GainNightVisionC2SPacket());
+			}
+			//if(KeyBinding.X_PLOSIVE_MINER_KEY.consumeClick()) {
+			//	ModMessages.sendToServer(new SpawnTntC2SPacket());
+			//}
 
 			//testing nature's magnet
-			if(KeyBinding.NATURE_MAGNET_KEY.consumeClick()){
-				ModMessages.sendToServer(new SpawnNatureMagnetItemC2SPacket());
-			}
+			//if(KeyBinding.NATURE_MAGNET_KEY.consumeClick()){
+			//	ModMessages.sendToServer(new SpawnNatureMagnetItemC2SPacket());
+			//}
 		}
 		
 		//This class registers keybindings and gui overlays to the mod bus.
@@ -774,7 +792,8 @@ public class ClientEvents {
 			public static void onKeyRegister(RegisterKeyMappingsEvent event) {
 				event.register(KeyBinding.NIGHT_VISION_KEY);
 				event.register(KeyBinding.OPEN_UPGRADE_GUI_KEY);
-				event.register(KeyBinding.X_PLOSIVE_MINER_KEY);
+				event.register(KeyBinding.TOGGLE_JUNK_KEY);
+				event.register(KeyBinding.DODGE_ROLL_KEY);
 			}
 
 			@SubscribeEvent

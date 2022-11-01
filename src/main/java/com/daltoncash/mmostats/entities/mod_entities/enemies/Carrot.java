@@ -30,12 +30,12 @@ public class Carrot extends Monster implements IAnimatable {
 	}
 
 	public static AttributeSupplier setAttributes() {
-		return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 100.0D)
+		return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 80.0D)
 				.add(Attributes.ATTACK_DAMAGE, 6.0f)
 				.add(Attributes.ATTACK_SPEED, 1.0f)
 				.add(Attributes.ATTACK_KNOCKBACK, 0.5f)
 				.add(Attributes.FOLLOW_RANGE, 35.0d)
-				.add(Attributes.ARMOR, 3)
+				.add(Attributes.ARMOR, 1)
 				.add(Attributes.MOVEMENT_SPEED, 0.22f).build();
 	}
 

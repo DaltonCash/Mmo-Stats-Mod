@@ -3,7 +3,7 @@
   "biomes": "#minecraft:is_overworld",
   "spawners": {
     "type": "mmostats:melonman",
-    "weight": 50,
+    "weight": 42,
     "minCount": 1,
     "maxCount": 3
   }

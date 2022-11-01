@@ -197,7 +197,7 @@ public class MiningTotalsMenu extends Screen {
 		toLevelList.add("========");
 		
 		for(String mined : minedList) {
-			int i = 64;
+			int i = 32;
 			if(mined != minedList.get(0) && mined != minedList.get(1) && mined != minedList.get(5)) {
 				while(Integer.parseInt(mined) >= i) {
 					i *= 2;

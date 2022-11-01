@@ -3,8 +3,8 @@
   "biomes": "#minecraft:is_overworld",
   "spawners": {
     "type": "mmostats:divinetrader",
-    "weight": 1,
+    "weight": 3,
     "minCount": 1,
-    "maxCount": 3
+    "maxCount": 1
   }
 }

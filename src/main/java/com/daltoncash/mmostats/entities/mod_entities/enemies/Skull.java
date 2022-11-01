@@ -36,7 +36,7 @@ public class Skull extends Monster implements IAnimatable {
 				.add(Attributes.ATTACK_KNOCKBACK, 0.1f)
 				.add(Attributes.FOLLOW_RANGE, 35.0d)
 				.add(Attributes.ARMOR, 3)
-				.add(Attributes.MOVEMENT_SPEED, 0.37f).build();
+				.add(Attributes.MOVEMENT_SPEED, 0.32f).build();
 	}
 
 	protected void registerGoals() {

@@ -147,7 +147,7 @@ public class ChoppingTotalsMenu extends Screen {
 		toLevelList.add("========");
 		
 		for(String eaten : eatenList) {
-			int i = 64;
+			int i = 32;
 			if(eaten != eatenList.get(0) && eaten != eatenList.get(1) && eaten != eatenList.get(5)) {
 				while(Integer.parseInt(eaten) >= i) {
 					i *= 2;

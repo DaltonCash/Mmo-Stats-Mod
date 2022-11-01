@@ -3,8 +3,8 @@
   "biomes": "#minecraft:is_overworld",
   "spawners": {
     "type": "mmostats:skull",
-    "weight": 100,
-    "minCount": 4,
-    "maxCount": 4
+    "weight": 80,
+    "minCount": 1,
+    "maxCount": 1
   }
 }

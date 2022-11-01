@@ -5,6 +5,8 @@
 	"key.mmostats.open_upgrade_gui": "Open Gui",
 	"key.mmostats.night_vision": "Use Night Vision(if upgraded)",
 	"key.mmostats.xplosive_miner": "Plant bomb(if upgraded)",
+	"key.mmostats.toggle_junk": "Toggle No Junk Blocks Upgrade (if upgraded)",
+	"key.mmostats.dodge_roll": "Dodge Roll(if upgraded)",
 
 	//Presi's items
 	"item.mmostats.bonk_stick": "Bonk Stick",
@@ -14,9 +16,9 @@
 
 	"itemGroup.mmostatsmodtab": "MMO Items Tab",
 	
-	//retard mans stuff
+	//Karson's stuff
 	"entity.mmostatsmod.Companion": "Companion",
 	
-	//dalnot mans stuff
+	//Dalton's stuff
 	"entity.mmostatsmod.TamedFrog": "Frog"
 }

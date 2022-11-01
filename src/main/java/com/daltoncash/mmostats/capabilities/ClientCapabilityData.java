@@ -120,7 +120,7 @@ public class ClientCapabilityData {
 	private static int WarpedStemChopped;
 	
 	public static int getTotalsLevel(int total) {
-		int i = 64;
+		int i = 32;
 		int j = 0;
 		while(total >= i) {
 			i *= 2;

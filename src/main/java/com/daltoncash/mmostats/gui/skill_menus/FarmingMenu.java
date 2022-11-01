@@ -11,6 +11,8 @@ import com.daltoncash.mmostats.gui.skill_menus.totals_menus.FarmingTotalsMenu;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.CarnivoreUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.EggerUpgradeC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.FastFoodUpgradeC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.InsatiableUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.SugarRushUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.WellFedUpgradeC2SPacket;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -46,12 +48,11 @@ public class FarmingMenu extends Screen {
 			"textures/gui/buttons/farming_buttons/sugar_rush_button.png");
 	private final ResourceLocation upgradeTexture4 = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/buttons/farming_buttons/well_fed_button.png");
-	/*
 	private final ResourceLocation upgradeTexture5 = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/buttons/farming_buttons/insatiable_button.png");
 	private final ResourceLocation upgradeTexture6 = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/buttons/farming_buttons/fast_food_button.png");
-			*/
+	
 	//Textures to appear dark if not upgraded:
 	private final ResourceLocation upgradeTexture1Dark = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/buttons/farming_buttons/carnivore_button_dark.png");
@@ -61,30 +62,31 @@ public class FarmingMenu extends Screen {
 			"textures/gui/buttons/farming_buttons/sugar_rush_button_dark.png");
 	private final ResourceLocation upgradeTexture4Dark = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/buttons/farming_buttons/well_fed_button_dark.png");
-	/*
 	private final ResourceLocation upgradeTexture5Dark = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/buttons/farming_buttons/insatiable_button_dark.png");
 	private final ResourceLocation upgradeTexture6Dark = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/buttons/farming_buttons/fast_food_button_dark.png");
-	*/
 	private final ResourceLocation descriptionBanner = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/background/descstuff3.png");
 
 	private static String upgradeString = "";
 	private static final String carnivore = "Carnivore: \n\nWhen eating meat, gain regeneration effect 2/4/6 for 3 seconds."
-			+ "\nOtherwise, gain regeneration effect 1/2/3.";
+			+ "\nOtherwise, gain regeneration effect 1/2/3 for 3 seconds.";
 	private static final String egger = "Eggsplosions: \n\nEggs explode on contact with an entity, dealing damage to all entities around."
 			+ "\n Explosion radius: 1/2/3 meters.";
 	private static final String sugarRush = "Sugar Rush: \n\nWhen eating sweets, gain swiftness effect 3/4/5 for 10 seconds."
 			+ "\nOtherwise, gain swiftness effect 1/2/3.";
 	private static final String wellFed = "Well Fed: \n\nHaving a full hunger bar grants 10% / 15% / 20% breaking speed.";
-	
+	private static final String insatiable = "Insatiable: \n\nFull hunger and health no longer prevent you from eating.";
+	private static final String fastFood = "Fast Food: \n\nEat Foods 2x / 5x as quickly.";
 	private static DescriptionPanel upgradeDescription;
 	
 	private static int carnivoreLVL = ClientCapabilityData.isUpgradedCarnivore();
 	private static int eggerLVL = ClientCapabilityData.isUpgradedEgger();
 	private static int sugarRushLVL = ClientCapabilityData.isUpgradedSugarRush();
 	private static int wellFedLVL = ClientCapabilityData.isUpgradedWellFed();
+	private static int insatiableLVL = ClientCapabilityData.getIsUpgradedInsatiable();
+	private static int fastFoodLVL = ClientCapabilityData.getIsUpgradedFastFood();
 	private static int upgradePoints = ClientCapabilityData.getPlayerUpgradePoints();
 	
 	private static Button upgradePointsButton;
@@ -108,7 +110,7 @@ public class FarmingMenu extends Screen {
 				button -> {}));
 		
 		
-		addRenderableWidget(new ImageButton((this.width / 18) * 1, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+		addRenderableWidget(new ImageButton((this.width / 18) * 2, (this.height / 6) * 2, 50, 50, 0, 0, 99,
 				carnivoreLVL > 0 ? upgradeTexture1 : upgradeTexture1Dark, 50, 50, FarmingMenu::onPressUpgradeCarnivore,
 						new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
@@ -121,7 +123,7 @@ public class FarmingMenu extends Screen {
 		
 		
 		
-		addRenderableWidget(new ImageButton((this.width / 18) * 3, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+		addRenderableWidget(new ImageButton((this.width / 18) * 4, (this.height / 6) * 2, 50, 50, 0, 0, 99,
 				eggerLVL > 0 ? upgradeTexture2 : upgradeTexture2Dark, 50, 50, FarmingMenu::onPressUpgradeEgger,
 						new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
@@ -134,7 +136,7 @@ public class FarmingMenu extends Screen {
 		
 		
 		
-		addRenderableWidget(new ImageButton((this.width / 18) * 5, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+		addRenderableWidget(new ImageButton((this.width / 18) * 6, (this.height / 6) * 2, 50, 50, 0, 0, 99,
 				sugarRushLVL > 0 ? upgradeTexture3 : upgradeTexture3Dark, 50, 50, FarmingMenu::onPressUpgradeSugarRush,
 						new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
@@ -142,12 +144,12 @@ public class FarmingMenu extends Screen {
 	     				FarmingMenu.this.renderTooltip(p_169459_, FarmingMenu.this.minecraft.font.split(component, Math.max(FarmingMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				},
-				Component.empty()));		
+				Component.empty()));	
 		
 		
 		
-	
-		addRenderableWidget(new ImageButton((this.width / 18) * 7, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+		
+		addRenderableWidget(new ImageButton((this.width / 18) * 8, (this.height / 6) * 2, 50, 50, 0, 0, 99,
 				wellFedLVL > 0 ? upgradeTexture4 : upgradeTexture4Dark, 50, 50, FarmingMenu::onPressUpgradeWellFed,
 						new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
@@ -158,7 +160,34 @@ public class FarmingMenu extends Screen {
 				Component.empty()));		
 		
 		
+		
 
+		addRenderableWidget(new ImageButton((this.width / 18) * 3, (this.height / 6) * 3, 50, 50, 0, 0, 99,
+				insatiableLVL > 0 ? upgradeTexture5 : upgradeTexture5Dark, 50, 50, FarmingMenu::onPressUpgradeInsatiable,
+						new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("Current Upgrade Level: " + insatiableLVL);
+	     				FarmingMenu.this.renderTooltip(p_169459_, FarmingMenu.this.minecraft.font.split(component, Math.max(FarmingMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				},
+				Component.empty()));
+		
+		
+		
+		
+		addRenderableWidget(new ImageButton((this.width / 18) * 7, (this.height / 6) * 3, 50, 50, 0, 0, 99,
+				fastFoodLVL > 0 ? upgradeTexture6 : upgradeTexture6Dark, 50, 50, FarmingMenu::onPressUpgradeFastFood,
+						new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("Current Upgrade Level: " + fastFoodLVL);
+	     				FarmingMenu.this.renderTooltip(p_169459_, FarmingMenu.this.minecraft.font.split(component, Math.max(FarmingMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				},
+				Component.empty()));
+		
+		
+	
+		
 		addRenderableWidget(new ImageButton((this.width * 27) / 42, 0, (this.width * 91) / 256, this.height, 0, 0, 0,
 				descriptionBanner, (this.width * 20) / 56, (this.height * 50) / 49,
 				button -> {})).active = false;
@@ -180,12 +209,16 @@ public class FarmingMenu extends Screen {
 				eggerLVL != ClientCapabilityData.isUpgradedEgger()||
 				sugarRushLVL != ClientCapabilityData.isUpgradedSugarRush()  ||
 				wellFedLVL != ClientCapabilityData.isUpgradedWellFed()   ||
+				insatiableLVL != ClientCapabilityData.getIsUpgradedInsatiable()  ||
+				fastFoodLVL != ClientCapabilityData.getIsUpgradedFastFood()   ||
 				upgradePoints != ClientCapabilityData.getPlayerUpgradePoints()) {
 				
 					carnivoreLVL = ClientCapabilityData.isUpgradedCarnivore();
 					eggerLVL = ClientCapabilityData.isUpgradedEgger();
 					sugarRushLVL = ClientCapabilityData.isUpgradedSugarRush();
 					wellFedLVL = ClientCapabilityData.isUpgradedWellFed();
+					insatiableLVL = ClientCapabilityData.getIsUpgradedInsatiable();
+					fastFoodLVL = ClientCapabilityData.getIsUpgradedFastFood();
 					upgradePoints = ClientCapabilityData.getPlayerUpgradePoints();
 					
 					init();
@@ -215,6 +248,16 @@ public class FarmingMenu extends Screen {
 		upgradeString = wellFed;
 		updateCache();
 	}
+	
+	private static void onPressUpgradeInsatiable(Button button) {
+		upgradeString = insatiable;
+		updateCache();
+	}
+
+	private static void onPressUpgradeFastFood(Button button) {
+		upgradeString = fastFood;
+		updateCache();
+	}
 
 	private static void onPressDoUpgrade(Button button) {
 		if(upgradePoints > 0) {
@@ -230,6 +273,12 @@ public class FarmingMenu extends Screen {
 				break;
 			case wellFed:
 				if(ClientCapabilityData.isUpgradedWellFed() < 3) ModMessages.sendToServer(new WellFedUpgradeC2SPacket());
+				break;
+			case insatiable:
+				if(ClientCapabilityData.getIsUpgradedInsatiable() < 3) ModMessages.sendToServer(new InsatiableUpgradeC2SPacket());
+				break;
+			case fastFood:
+				if(ClientCapabilityData.getIsUpgradedFastFood() < 3) ModMessages.sendToServer(new FastFoodUpgradeC2SPacket());
 				break;
 			}
 		}	

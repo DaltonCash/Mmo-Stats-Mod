@@ -38,7 +38,7 @@ public class ModStats {
 	
 	public static float getPercentIncreaseDamage() {
 			
-		return 1 + ClientCapabilityData.getPlayerCombatLevel()  / 500.0f;
+		return 1 + ClientCapabilityData.getPlayerCombatLevel()  / 100.0f;
 	}
 	
 	
@@ -114,7 +114,8 @@ public class ModStats {
 	
 	//Below is not for display on the UpgradeMenu screen.
 	public static int getEatCooldownReduction() {
-		return 1 + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getMelonEaten());
+		int fastFoodUpgradeAddition = ClientCapabilityData.getIsUpgradedFastFood() == 1 ? 2 : 5;
+		return 1 + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getMelonEaten()) + fastFoodUpgradeAddition;
 	}
 	
 	public static int getRagnorokDuration() {
@@ -129,11 +130,11 @@ public class ModStats {
 	
 	public static double getMiningFortuneCalculation() {
 		
-		return (ClientCapabilityData.getPlayerMiningLevel() / 500f) * getLuckyModifier();
+		return (ClientCapabilityData.getPlayerMiningLevel() / 100f) * getLuckyModifier();
 	}
 	
 	public static double getChoppingFortuneCalculation() {
-		return (ClientCapabilityData.getPlayerChoppingLevel() / 500f) * getLuckyModifier();
+		return (ClientCapabilityData.getPlayerChoppingLevel() / 100f) * getLuckyModifier();
 	}
 	
 	public static float getDamageTakenCalculation(float damage) {
