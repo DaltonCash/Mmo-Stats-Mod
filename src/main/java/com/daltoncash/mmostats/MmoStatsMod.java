@@ -119,7 +119,7 @@ public class MmoStatsMod {
 					Monster::checkMonsterSpawnRules);
 			SpawnPlacements.register(ModEntityTypes.CARROT.get(), 
 					SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-					Monster::checkMonsterSpawnRules);
+					Monster::checkAnyLightMonsterSpawnRules);
 			SpawnPlacements.register(ModEntityTypes.CRAB.get(), 
 					SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 					Monster::checkMonsterSpawnRules);
