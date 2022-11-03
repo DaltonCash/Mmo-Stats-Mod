@@ -1,6 +1,6 @@
 package com.daltoncash.mmostats.entities.client.enemies.carrot;
 
-import com.daltoncash.mmostats.entities.mod_entities.enemies.Carrot;
+import com.daltoncash.mmostats.entities.mod_entities.enemies.minibosses.Carrot;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 

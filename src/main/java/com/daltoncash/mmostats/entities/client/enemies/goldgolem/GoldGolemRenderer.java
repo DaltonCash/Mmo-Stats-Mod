@@ -1,6 +1,6 @@
 package com.daltoncash.mmostats.entities.client.enemies.goldgolem;
 
-import com.daltoncash.mmostats.entities.mod_entities.enemies.GoldGolem;
+import com.daltoncash.mmostats.entities.mod_entities.enemies.minibosses.GoldGolem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 

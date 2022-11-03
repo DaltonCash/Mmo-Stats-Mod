@@ -1,8 +1,5 @@
-package com.daltoncash.mmostats.entities.mod_entities.enemies;
+package com.daltoncash.mmostats.entities.mod_entities.enemies.minibosses;
 
-import com.daltoncash.mmostats.common.handler.Sounds;
-
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -24,24 +21,25 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class KingCoal extends Monster implements IAnimatable {
+public class DiamondDefender extends Monster implements IAnimatable {
 	private AnimationFactory factory = new AnimationFactory(this);
 	
 	
-	public KingCoal(EntityType<? extends Monster> p_33002_, Level p_33003_) {
+	public DiamondDefender(EntityType<? extends Monster> p_33002_, Level p_33003_) {
 		super(p_33002_, p_33003_);
 	}
 
 	public static AttributeSupplier setAttributes() {
 		return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 200.0D)
-				.add(Attributes.ATTACK_DAMAGE, 6.0f)
-				.add(Attributes.ATTACK_SPEED, 50.0f)
-				.add(Attributes.ATTACK_KNOCKBACK, 3f)
-				.add(Attributes.ARMOR, 10)
-				.add(Attributes.ARMOR_TOUGHNESS, 2)
-				.add(Attributes.MOVEMENT_SPEED, 0.42f).build();
+				.add(Attributes.ATTACK_DAMAGE, 15.0f)
+				.add(Attributes.ATTACK_SPEED, 2.0f)
+				.add(Attributes.ATTACK_KNOCKBACK, 1.0f)
+				.add(Attributes.FOLLOW_RANGE, 35.0d)
+				.add(Attributes.ARMOR, 20)
+				.add(Attributes.ARMOR_TOUGHNESS, 5)
+				.add(Attributes.MOVEMENT_SPEED, 0.35f).build();
 	}
-	
+
 	protected void registerGoals() {
 	    this.goalSelector.addGoal(1, new FloatGoal(this));
 	   	this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, true));
@@ -50,19 +48,14 @@ public class KingCoal extends Monster implements IAnimatable {
 	   	this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
 	   	this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
 	}
-
-	public SoundEvent getAmbientSound() {
-		return Sounds.kingcoal.get();
-	}
 	
-	public int getExperienceReward() {
-		return super.getExperienceReward() * 10;
+	protected float getSoundVolume() {
+	      return 0.25F;
 	}
 	
 	@Override
 	public void registerControllers(AnimationData data) {
-		data.addAnimationController(new AnimationController<KingCoal>(this, "moving", 0, this::movingAnimation));
-		data.addAnimationController(new AnimationController<KingCoal>(this, "idling", 0, this::angryAnimation));
+		data.addAnimationController(new AnimationController<DiamondDefender>(this, "moving", 0, this::movingAnimation));
 	}
 
 	@Override
@@ -70,17 +63,20 @@ public class KingCoal extends Monster implements IAnimatable {
 		return this.factory;
 	}
 	
-	private <E extends IAnimatable> PlayState angryAnimation(AnimationEvent<E> event) {
-		event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.kingcoal.angry", true));
-		return PlayState.CONTINUE;	
-	} 
-	
 	private <E extends IAnimatable> PlayState movingAnimation(AnimationEvent<E> event) {
 		if (event.isMoving()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.kingcoal.walk", true));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.diamonddefender.walk", true));
 			return PlayState.CONTINUE;
 		}
-		event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.kingcoal.idle", true));
+		event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.diamonddefender.idle", true));
 		return PlayState.CONTINUE;	
+	}
+	 
+	protected boolean shouldDespawnInPeaceful() {
+		return false;
 	} 
+	
+	public boolean removeWhenFarAway(double p_21542_) {
+	      return false;
+	}
 }

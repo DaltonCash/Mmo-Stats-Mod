@@ -1,4 +1,4 @@
-package com.daltoncash.mmostats.entities.mod_entities.enemies;
+package com.daltoncash.mmostats.entities.mod_entities.enemies.minibosses;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -63,12 +63,21 @@ public class Carrot extends Monster implements IAnimatable {
 		return this.factory;
 	}
 	
-	 private <E extends IAnimatable> PlayState movingAnimation(AnimationEvent<E> event) {
+	private <E extends IAnimatable> PlayState movingAnimation(AnimationEvent<E> event) {
 		if (event.isMoving()) {
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.carrot.walk", true));
+			
 			return PlayState.CONTINUE;
 		}
 		event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.carrot.idle", true));
 		return PlayState.CONTINUE;	
-	 } 
+	} 
+	 
+	protected boolean shouldDespawnInPeaceful() {
+		return false;
+	}
+	 
+	public boolean removeWhenFarAway(double p_21542_) {
+	      return false;
+	}
 }

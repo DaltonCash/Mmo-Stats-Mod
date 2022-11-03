@@ -1,7 +1,7 @@
 package com.daltoncash.mmostats.entities.client.enemies.divinetrader;
 
 import com.daltoncash.mmostats.MmoStatsMod;
-import com.daltoncash.mmostats.entities.mod_entities.enemies.DivineTrader;
+import com.daltoncash.mmostats.entities.mod_entities.enemies.minibosses.DivineTrader;
 
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib3.model.AnimatedGeoModel;

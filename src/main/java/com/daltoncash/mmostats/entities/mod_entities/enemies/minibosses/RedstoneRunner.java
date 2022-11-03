@@ -1,5 +1,8 @@
-package com.daltoncash.mmostats.entities.mod_entities.enemies;
+package com.daltoncash.mmostats.entities.mod_entities.enemies.minibosses;
 
+import com.daltoncash.mmostats.common.handler.Sounds;
+
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -21,23 +24,21 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class DiamondDefender extends Monster implements IAnimatable {
+public class RedstoneRunner extends Monster implements IAnimatable {
 	private AnimationFactory factory = new AnimationFactory(this);
 	
 	
-	public DiamondDefender(EntityType<? extends Monster> p_33002_, Level p_33003_) {
+	public RedstoneRunner(EntityType<? extends Monster> p_33002_, Level p_33003_) {
 		super(p_33002_, p_33003_);
 	}
 
 	public static AttributeSupplier setAttributes() {
-		return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 200.0D)
-				.add(Attributes.ATTACK_DAMAGE, 15.0f)
-				.add(Attributes.ATTACK_SPEED, 2.0f)
-				.add(Attributes.ATTACK_KNOCKBACK, 1.0f)
-				.add(Attributes.FOLLOW_RANGE, 35.0d)
-				.add(Attributes.ARMOR, 20)
-				.add(Attributes.ARMOR_TOUGHNESS, 5)
-				.add(Attributes.MOVEMENT_SPEED, 0.35f).build();
+		return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 150.0D)
+				.add(Attributes.ATTACK_DAMAGE, 3.0f)
+				.add(Attributes.ATTACK_SPEED, 50.0f)
+				.add(Attributes.ATTACK_KNOCKBACK, 10f)
+				.add(Attributes.FOLLOW_RANGE, 50f)
+				.add(Attributes.MOVEMENT_SPEED, 2f).build();
 	}
 
 	protected void registerGoals() {
@@ -48,14 +49,14 @@ public class DiamondDefender extends Monster implements IAnimatable {
 	   	this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
 	   	this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
 	}
-	
-	protected float getSoundVolume() {
-	      return 0.25F;
+
+	public SoundEvent getAmbientSound() {
+		return Sounds.redstonerunner.get();
 	}
 	
 	@Override
 	public void registerControllers(AnimationData data) {
-		data.addAnimationController(new AnimationController<DiamondDefender>(this, "moving", 0, this::movingAnimation));
+		data.addAnimationController(new AnimationController<RedstoneRunner>(this, "moving", 0, this::movingAnimation));
 	}
 
 	@Override
@@ -63,12 +64,21 @@ public class DiamondDefender extends Monster implements IAnimatable {
 		return this.factory;
 	}
 	
-	 private <E extends IAnimatable> PlayState movingAnimation(AnimationEvent<E> event) {
+	private <E extends IAnimatable> PlayState movingAnimation(AnimationEvent<E> event) {
 		if (event.isMoving()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.diamonddefender.walk", true));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.redstonerunner.walk", true));
 			return PlayState.CONTINUE;
+		}else {
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.redstonerunner.alternate", true));
+			return PlayState.CONTINUE;	
 		}
-		event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.diamonddefender.idle", true));
-		return PlayState.CONTINUE;	
-	 } 
+	} 
+	
+	protected boolean shouldDespawnInPeaceful() {
+		return false;
+	} 
+	
+	public boolean removeWhenFarAway(double p_21542_) {
+	      return false;
+	}
 }

@@ -1,7 +1,7 @@
 package com.daltoncash.mmostats.entities.client.enemies.diamonddefender;
 
 import com.daltoncash.mmostats.MmoStatsMod;
-import com.daltoncash.mmostats.entities.mod_entities.enemies.DiamondDefender;
+import com.daltoncash.mmostats.entities.mod_entities.enemies.minibosses.DiamondDefender;
 
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib3.model.AnimatedGeoModel;

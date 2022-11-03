@@ -1,6 +1,6 @@
 package com.daltoncash.mmostats.entities.client.enemies.redstoneRunner;
 
-import com.daltoncash.mmostats.entities.mod_entities.enemies.RedstoneRunner;
+import com.daltoncash.mmostats.entities.mod_entities.enemies.minibosses.RedstoneRunner;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 

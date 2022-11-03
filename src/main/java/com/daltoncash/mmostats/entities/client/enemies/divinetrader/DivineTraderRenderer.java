@@ -1,6 +1,6 @@
 package com.daltoncash.mmostats.entities.client.enemies.divinetrader;
 
-import com.daltoncash.mmostats.entities.mod_entities.enemies.DivineTrader;
+import com.daltoncash.mmostats.entities.mod_entities.enemies.minibosses.DivineTrader;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 

@@ -1,6 +1,6 @@
 package com.daltoncash.mmostats.entities.client.enemies.obsidianobserver;
 
-import com.daltoncash.mmostats.entities.mod_entities.enemies.ObsidianObserver;
+import com.daltoncash.mmostats.entities.mod_entities.enemies.minibosses.ObsidianObserver;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 

@@ -1,6 +1,6 @@
 package com.daltoncash.mmostats.entities.client.enemies.kingCoal;
  
-import com.daltoncash.mmostats.entities.mod_entities.enemies.KingCoal;
+import com.daltoncash.mmostats.entities.mod_entities.enemies.minibosses.KingCoal;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 

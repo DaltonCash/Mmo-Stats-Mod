@@ -682,7 +682,7 @@ public class ClientEvents {
 						Component.literal(getDisplayName(event.getEntity().getType().toShortString().toLowerCase()))
 						.withStyle(ChatFormatting.GOLD).append(getDisplayHealth(event.getEntity())));
 				event.getEntity().setCustomNameVisible(true);
-				event.getEntity().shouldShowName();
+				
 			
 		}
 		

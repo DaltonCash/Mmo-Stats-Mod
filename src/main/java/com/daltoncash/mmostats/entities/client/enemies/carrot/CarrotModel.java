@@ -1,7 +1,7 @@
 package com.daltoncash.mmostats.entities.client.enemies.carrot;
 
 import com.daltoncash.mmostats.MmoStatsMod;
-import com.daltoncash.mmostats.entities.mod_entities.enemies.Carrot;
+import com.daltoncash.mmostats.entities.mod_entities.enemies.minibosses.Carrot;
 
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib3.model.AnimatedGeoModel;

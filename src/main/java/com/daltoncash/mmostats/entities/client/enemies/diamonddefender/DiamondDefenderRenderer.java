@@ -1,6 +1,6 @@
 package com.daltoncash.mmostats.entities.client.enemies.diamonddefender;
 
-import com.daltoncash.mmostats.entities.mod_entities.enemies.DiamondDefender;
+import com.daltoncash.mmostats.entities.mod_entities.enemies.minibosses.DiamondDefender;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 

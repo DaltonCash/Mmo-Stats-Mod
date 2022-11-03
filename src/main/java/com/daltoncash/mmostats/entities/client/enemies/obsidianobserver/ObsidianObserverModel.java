@@ -1,7 +1,7 @@
 package com.daltoncash.mmostats.entities.client.enemies.obsidianobserver;
 
 import com.daltoncash.mmostats.MmoStatsMod;
-import com.daltoncash.mmostats.entities.mod_entities.enemies.ObsidianObserver;
+import com.daltoncash.mmostats.entities.mod_entities.enemies.minibosses.ObsidianObserver;
 
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
