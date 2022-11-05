@@ -4,24 +4,28 @@
   "structures": [
     {
       "structure": "mmostats:barn",
-      "weight": 100
+      "weight": 10
     },
     {
       "structure": "mmostats:coal",
-      "weight": 80
+      "weight": 8
     },
     {
       "structure": "mmostats:obsidian",
-      "weight": 75
+      "weight": 7
     },
     {
       "structure": "mmostats:redstone",
-      "weight": 70
+      "weight": 7
+    },
+    {
+      "structure": "mmostats:diamond",
+      "weight": 200
     }
   ],
   "placement": {
     // Make sure this is unique and does not match any other structure set's salt
-    "salt": 1131111111,
+    "salt": 1131111811,
 
     // The average distance apart in chunks for spawn attempts
     "spacing": 8,
