@@ -84,7 +84,16 @@
       }
     },
     {
-      "weight": 5,
+      "weight": 50,
+      "element": {
+        "location": "mmostats:coal",
+        "processors": "minecraft:empty",
+		"projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 50,
       "element": {
         "location": "mmostats:nether",
         "processors": "minecraft:empty",
@@ -96,6 +105,33 @@
       "weight": 50,
       "element": {
         "location": "mmostats:cave",
+        "processors": "minecraft:empty",
+		"projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 50,
+      "element": {
+        "location": "mmostats:maze",
+        "processors": "minecraft:empty",
+		"projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 50,
+      "element": {
+        "location": "mmostats:jail",
+        "processors": "minecraft:empty",
+		"projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 50,
+      "element": {
+        "location": "mmostats:mush",
         "processors": "minecraft:empty",
 		"projection": "rigid",
         "element_type": "minecraft:single_pool_element"

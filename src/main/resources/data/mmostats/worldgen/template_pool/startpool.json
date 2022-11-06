@@ -1,5 +1,5 @@
 {
-  "name": "mmostats:startpool",
+  "name": "mmostats:pool",
   "fallback": "minecraft:empty",
   "elements": [
     {
