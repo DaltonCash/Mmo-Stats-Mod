@@ -118,10 +118,8 @@ public class SkillEvents {
 			int playerLevelExp = ClientCapabilityData.getPlayerExp() + playerLevelExpBeingAdded;
 			if (playerLevelExp > 25) {
 				playerLevelExpToSub = 25;
-				if(playerLevel % 2 == 1) {
-					LOGGER.info("Gained Attribute Point! Current: " + (ClientCapabilityData.getPlayerAttributePoints() + 1));
-					ModMessages.sendToServer(new GainPlayerAttributePointsC2SPacket());
-				}
+				LOGGER.info("Gained Attribute Point! Current: " + (ClientCapabilityData.getPlayerAttributePoints() + 1));
+				ModMessages.sendToServer(new GainPlayerAttributePointsC2SPacket());
 				player.playSound(Sounds.levelUp.get(), 1.0f, 1.0f);
 				LOGGER.info("Level up! Current Level: " + (playerLevel + 1));
 				ModMessages.sendToServer(new GainPlayerLevelC2SPacket());

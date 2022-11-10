@@ -11,6 +11,7 @@ public class ClientCapabilityData {
 	private static int playerAgility;
 	private static int playerAgilityExp;
 	private static int playerMana;
+	private static int playerCurrentMana;
 	private static int playerMiningLevel;
 	private static int playerMiningExp;
 	private static int playerArcheryLevel;
@@ -177,13 +178,20 @@ public class ClientCapabilityData {
 		ClientCapabilityData.playerAgilityExp = playerAgilityExp;
 	}
 
-	// Mana
 	public static int getPlayerMana() {
 		return playerMana;
 	}
 
 	public static void setPlayerMana(int playerMana) {
 		ClientCapabilityData.playerMana = playerMana;
+	}
+	
+	public static int getPlayerCurrentMana() {
+		return playerCurrentMana;
+	}
+
+	public static void setPlayerCurrentMana(int playerCurrentMana) {
+		ClientCapabilityData.playerCurrentMana = playerCurrentMana;
 	}
 
 	// Mining Level

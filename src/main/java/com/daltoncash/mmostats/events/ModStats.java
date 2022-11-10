@@ -153,4 +153,11 @@ public class ModStats {
 	public static int toNextLevelExp(int level) {
 		return (level * 40) + 400;
 	}
+
+	public static int getMaxMana() {
+		int beetrootEatenLevel = ClientCapabilityData.getBeetrootEaten() * 5;
+		int manaAttributeLevel = ClientCapabilityData.getPlayerMana() * 5;
+		
+		return 30 + beetrootEatenLevel + manaAttributeLevel;
+	}
 }

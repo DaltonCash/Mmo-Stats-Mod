@@ -1,11 +1,13 @@
 package com.daltoncash.mmostats.capabilities.playerlevel.stats.mana;
 
+import com.daltoncash.mmostats.events.ModStats;
+
 import net.minecraft.nbt.CompoundTag;
 
 public class PlayerMana {
 	private int mana;
 	private final int MIN_MANA = 0;
-	private final static int MAX_MANA = 10;
+	private final static int MAX_MANA = ModStats.getMaxMana();
 
 	public int getMana() {
 		return mana;

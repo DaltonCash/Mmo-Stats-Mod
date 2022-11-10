@@ -3,13 +3,12 @@ package com.daltoncash.mmostats.events;
 import com.daltoncash.mmostats.MmoStatsMod;
 import com.daltoncash.mmostats.capabilities.ClientCapabilityData;
 import com.daltoncash.mmostats.gui.LevelUpOverlay;
+import com.daltoncash.mmostats.gui.ManaOverlay;
 import com.daltoncash.mmostats.gui.UpgradeMenu;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.c2s.AdditionalFortuneProcC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.EatFoodWhileFullC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainEffectFromEatingC2SPacket;
-import com.daltoncash.mmostats.networking.packets.c2s.magicAbilities.SpawnNatureMagnetItemC2SPacket;
-import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.SpawnTntC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.taming.SpawnTamedBeeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.taming.SpawnTamedFrogC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainNightVisionC2SPacket;
@@ -798,7 +797,7 @@ public class ClientEvents {
 
 			@SubscribeEvent
 			public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
-				//event.registerAboveAll("mana", ManaOverlay.HUD_MANA);
+				event.registerAboveAll("mana", ManaOverlay.HUD_MANA);
 				event.registerAboveAll("level", LevelUpOverlay.LEVEL_UP_OVERLAY);
 				event.registerAboveAll("skills", LevelUpOverlay.SKILL_OVERLAY);
 			}

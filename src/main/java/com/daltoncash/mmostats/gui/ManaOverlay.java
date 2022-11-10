@@ -2,6 +2,7 @@ package com.daltoncash.mmostats.gui;
 
 import com.daltoncash.mmostats.MmoStatsMod;
 import com.daltoncash.mmostats.capabilities.ClientCapabilityData;
+import com.daltoncash.mmostats.events.ModStats;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.gui.GuiComponent;
@@ -10,28 +11,25 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 
 public class ManaOverlay {
-	private static final ResourceLocation FILLED_MANA = new ResourceLocation(MmoStatsMod.MODID,
-			"textures/gui/test_images/test_image_2.png");
-	private static final ResourceLocation EMPTY_MANA = new ResourceLocation(MmoStatsMod.MODID,
-			"textures/gui/mana_1.png");
+	private static final ResourceLocation MANA = new ResourceLocation(MmoStatsMod.MODID,
+			"textures/overlay/mana_bottles_4.png");
 
 	public static final IGuiOverlay HUD_MANA = ((gui, poseStack, partialTick, width, height) -> {
-		int x = width / 2;
+		int x = width;
 		int y = height;
-
+		
+		int mana = ClientCapabilityData.getPlayerCurrentMana();
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-		RenderSystem.setShaderTexture(0, EMPTY_MANA);
-		for (int i = 0; i < 10; i++) {
-			GuiComponent.blit(poseStack, x - 94 + (i * 9), y - 54, 0, 0, 12, 12, 12, 12);
+		RenderSystem.setShaderTexture(0, MANA);
+		for (int i = 0; i < 9 + 1; i++) {
+			GuiComponent.blit(poseStack, (x * 265) / 512 + (i * 8), y - 50, mana >= 10 ? 110 : mana * 10, 0, 10, 10, 120, 10);
+			mana = Math.max(mana - 10, 0);
 		}
-
-		RenderSystem.setShaderTexture(0, FILLED_MANA);
-		for (int i = 0; i < 10; i++) {
-			if (ClientCapabilityData.getPlayerMana() > i) {
-				GuiComponent.blit(poseStack, x - 94 + (i * 9), y - 54, 0, 0, 12, 12, 12, 12);
-			} else {
-				break;
+		int maxManaLevel = ModStats.getMaxMana();
+		for (int i = 0; i < 9 + 1; i++) {
+			if((maxManaLevel % 10 == 0 ? maxManaLevel / 10 : maxManaLevel / 10 + 1) > i) {
+				GuiComponent.blit(poseStack, (x * 265) / 512 + (i * 8), y - 50, 10, 0, 10, 10, 120, 10);
 			}
 		}
 	});

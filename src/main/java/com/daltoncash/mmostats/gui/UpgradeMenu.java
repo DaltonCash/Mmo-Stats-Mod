@@ -15,6 +15,7 @@ import com.daltoncash.mmostats.gui.skill_menus.MiningMenu;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainPlayerAgilityAttributeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainPlayerHealthAttributeC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.GainPlayerManaAttributeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainPlayerUpgradePointsC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetCapabilityDataC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.SpendPlayerAttributePointsC2SPacket;
@@ -58,6 +59,10 @@ public class UpgradeMenu extends Screen {
 			"textures/gui/skill_exp_bubble.png");
 	private final ResourceLocation SKILL_EXP = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/skill_exp_exp.png");
+	private final ResourceLocation PLAYER_LEVEL_BOX = new ResourceLocation(MmoStatsMod.MODID,
+			"textures/gui/upgrade_menu_box.png");
+	private final ResourceLocation PLAYER_LEVEL_BIT = new ResourceLocation(MmoStatsMod.MODID,
+			"textures/gui/upgrade_menu_bit.png");
 	
 	private final ResourceLocation descriptionBanner = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/background/descstuff3.png");
@@ -73,6 +78,7 @@ public class UpgradeMenu extends Screen {
 	private Button farmingButton;
 	private Button health;
 	private Button agility;
+	private Button mana;
 	private Button upgradesAndAttributes;
 	
 	public UpgradeMenu(Component p_96550_) {
@@ -90,6 +96,7 @@ public class UpgradeMenu extends Screen {
 		removeWidget(upgradesAndAttributes);
 		removeWidget(health);
 		removeWidget(agility);
+		removeWidget(mana);
 		
 		upgradesAndAttributes = addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
 				Component.literal("Upgrades Unspent: " + ClientCapabilityData.getPlayerUpgradePoints()
@@ -100,13 +107,21 @@ public class UpgradeMenu extends Screen {
 				Component.literal("reset capabilities: " + ClientCapabilityData.getPlayerMiningLevel()),
 				UpgradeMenu::onPressReset));
 		
-		health = addRenderableWidget(new Button((this.width * 1) / 5, ((this.height * 39) / 40) - 20, 100, 20,
+		health = addRenderableWidget(new Button((this.width * 1) / 10, ((this.height * 39) / 40) - 20, 100, 20,
 				Component.literal("Health: " + ClientCapabilityData.getPlayerHealth()),
 				UpgradeMenu::onPressUpgradeHealth));
 		
-		agility = addRenderableWidget(new Button((this.width * 2) / 5, ((this.height * 39) / 40) - 20, 100, 20,
+		agility = addRenderableWidget(new Button((this.width * 5) / 10, ((this.height * 39) / 40) - 20, 100, 20,
 				Component.literal("Agility: " + ClientCapabilityData.getPlayerAgility()),
 				UpgradeMenu::onPressUpgradeAgility));
+		
+		mana = addRenderableWidget(new Button((this.width * 3) / 10, ((this.height * 39) / 40) - 20, 100, 20,
+				Component.literal("Mana: " + ClientCapabilityData.getPlayerMana()),
+				UpgradeMenu::onPressUpgradeMana));
+		
+		addRenderableWidget(new Button((this.width * 3) / 10, ((this.height * 69) / 80) - 40, 100, 20,
+				Component.literal("Player Level: " + ClientCapabilityData.getPlayerLevel()),
+				UpgradeMenu::onPressUpgradeMana));
 		
 		miningButton = addRenderableWidget(new ImageButton((this.width * 1) / 10, (this.height * 1) / 6, buttonW, buttonH, 0, 0, buttonH - 1,
 				MINING_TEXTURE, buttonW, buttonH, UpgradeMenu::onPressMining, new Button.OnTooltip() {
@@ -194,7 +209,7 @@ public class UpgradeMenu extends Screen {
 		lines.add(" ");
 		lines.add("Additional Movespeed: " + String.format("%2.2f",(ModStats.getMoveSpeed() - .1) * 1000) + "%");
 		lines.add(" ");
-		lines.add("Lucky Modifier: " + ModStats.getLuckyModifier() + "x");
+		lines.add("Lucky Modifier: " + String.format("%2.2f",ModStats.getLuckyModifier()) + "x");
 		lines.add(" ");
 		lines.add("Fall Damage Reduc: " + String.format("%2.2f",ModStats.getFallDamageModifier() * 100) + "%");
 		lines.add(" ");
@@ -268,6 +283,13 @@ public class UpgradeMenu extends Screen {
 			ModMessages.sendToServer(new GainPlayerAgilityAttributeC2SPacket());
 		}
 	}
+	
+	private static void onPressUpgradeMana(Button button) {
+		if(ClientCapabilityData.getPlayerAttributePoints() > 0) {
+			ModMessages.sendToServer(new SpendPlayerAttributePointsC2SPacket());
+			ModMessages.sendToServer(new GainPlayerManaAttributeC2SPacket());
+		}
+	}
 
 	protected void renderBackground(PoseStack poseStack, float pPartialTick, int mouseX, int mouseY) {
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
@@ -283,6 +305,9 @@ public class UpgradeMenu extends Screen {
 		}
 		int bubbleOffsetW = (buttonW * 3) / 4;
 		int bubbleOffsetH = (buttonH * 3) / 4;
+		
+		//Player Level Bar
+				renderPlayerLevel(poseStack, p1, p2, p3, ClientCapabilityData.getPlayerExp());
 		//Mining Exp Bubble
 				renderExpBubble(poseStack, p1, p2, p3, 
 				ClientCapabilityData.getPlayerMiningExp(), 
@@ -317,6 +342,24 @@ public class UpgradeMenu extends Screen {
 		
 	}
 	
+	private void renderPlayerLevel(PoseStack poseStack, int p1, int p2, float p3, int playerExp) {
+		
+		int w = ((this.width * 4) / 10 + 100) / 25;
+		int h = this.height / 30;
+		int x = ((this.width * 1) / 10) + (w % 25) / 2;
+		int y = ((this.height * 39) / 40) - h - 40;
+		
+		RenderSystem.setShader(GameRenderer::getPositionTexShader);
+		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+		RenderSystem.setShaderTexture(0, PLAYER_LEVEL_BIT);
+		GuiComponent.blit(new PoseStack(), x, y, 0, 0,  w * playerExp, h, w, h);
+		
+		RenderSystem.setShader(GameRenderer::getPositionTexShader);
+		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+		RenderSystem.setShaderTexture(0, PLAYER_LEVEL_BOX);
+		GuiComponent.blit(new PoseStack(), x, y, 0, 0,  w * 25, h, w, h);
+	}
+
 	private void renderExpBubble(PoseStack poseStack, int p1, int p2, float p3,
 			int skillExp, int skillLevel, int x, int y) {
 		

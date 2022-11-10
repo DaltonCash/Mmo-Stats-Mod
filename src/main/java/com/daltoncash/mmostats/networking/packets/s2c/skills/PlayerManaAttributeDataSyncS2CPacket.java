@@ -1,4 +1,4 @@
-package com.daltoncash.mmostats.networking.packets.s2c;
+package com.daltoncash.mmostats.networking.packets.s2c.skills;
 
 import java.util.function.Supplier;
 
@@ -7,14 +7,14 @@ import com.daltoncash.mmostats.capabilities.ClientCapabilityData;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
-public class ManaDataSyncS2CPacket {
+public class PlayerManaAttributeDataSyncS2CPacket {
 	private final int mana;
 
-	public ManaDataSyncS2CPacket(int mana) {
+	public PlayerManaAttributeDataSyncS2CPacket(int mana) {
 		this.mana = mana;
 	}
 
-	public ManaDataSyncS2CPacket(FriendlyByteBuf buf) {
+	public PlayerManaAttributeDataSyncS2CPacket(FriendlyByteBuf buf) {
 		this.mana = buf.readInt();
 	}
 
@@ -25,7 +25,7 @@ public class ManaDataSyncS2CPacket {
 	public boolean handle(Supplier<NetworkEvent.Context> supplier) {
 		NetworkEvent.Context context = supplier.get();
 		context.enqueueWork(() -> {
-			ClientCapabilityData.setPlayerCurrentMana(mana);
+			ClientCapabilityData.setPlayerMana(mana);
 		});
 		return true;
 	}

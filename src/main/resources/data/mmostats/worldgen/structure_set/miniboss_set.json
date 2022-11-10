@@ -4,23 +4,23 @@
   "structures": [
     {
       "structure": "mmostats:barn",
-      "weight": 1
+      "weight": 100
     },
     {
       "structure": "mmostats:coal",
-      "weight": 8
+      "weight": 80
     },
     {
       "structure": "mmostats:obsidian",
-      "weight": 7
+      "weight": 60
     },
     {
       "structure": "mmostats:redstone",
-      "weight": 7
+      "weight": 50
     },
     {
       "structure": "mmostats:diamond",
-      "weight": 200
+      "weight": 30
     }
   ],
   "placement": {

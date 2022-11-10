@@ -192,6 +192,8 @@ import com.daltoncash.mmostats.capabilities.playerlevel.stats.agility.PlayerAgil
 import com.daltoncash.mmostats.capabilities.playerlevel.stats.health.PlayerHealthAttribute;
 import com.daltoncash.mmostats.capabilities.playerlevel.stats.health.PlayerHealthAttributeProvider;
 import com.daltoncash.mmostats.capabilities.playerlevel.stats.mana.PlayerMana;
+import com.daltoncash.mmostats.capabilities.playerlevel.stats.mana.PlayerManaAttribute;
+import com.daltoncash.mmostats.capabilities.playerlevel.stats.mana.PlayerManaAttributeProvider;
 import com.daltoncash.mmostats.capabilities.playerlevel.stats.mana.PlayerManaProvider;
 import com.daltoncash.mmostats.capabilities.swords.PlayerSwordsExp;
 import com.daltoncash.mmostats.capabilities.swords.PlayerSwordsExpProvider;
@@ -226,6 +228,7 @@ import com.daltoncash.mmostats.networking.packets.s2c.skills.PlayerAttributePoin
 import com.daltoncash.mmostats.networking.packets.s2c.skills.PlayerHealthAttributeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.PlayerLevelDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.PlayerLevelExpDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.skills.PlayerManaAttributeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.PlayerUpgradePointsDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.SwordsExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.SwordsLevelDataSyncS2CPacket;
@@ -333,17 +336,21 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = MmoStatsMod.MODID)
 public class ModEvents {
 	
+	private static int ticksForMana = 0;
+	
 	// Adds Mana to the Player over time.
 	@SubscribeEvent
 	public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-		if (event.side == LogicalSide.SERVER) {
+		if(ticksForMana < 150) {
+			ticksForMana++;
+		}else if (event.side == LogicalSide.SERVER) {
 			event.player.getCapability(PlayerManaProvider.PLAYER_MANA).ifPresent(mana -> {
-				if (mana.getMana() < 10 && event.player.getRandom().nextFloat() < 0.05f) {
-																						
+				if (mana.getMana() < 100) {															
 					mana.addMana(1);
 					ModMessages.sendToPlayer(new ManaDataSyncS2CPacket(mana.getMana()), ((ServerPlayer) event.player));
 				}
 			});
+			ticksForMana = 0;
 		}
 	}
 	//Changes attributes to the modded values on spawn
@@ -401,6 +408,10 @@ public class ModEvents {
 			if (!event.getObject().getCapability(PlayerAgilityAttributeProvider.AGILITY_LEVEL).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "playeragilityattributeproperties"),
 						new PlayerAgilityAttributeProvider());
+			}
+			if (!event.getObject().getCapability(PlayerManaAttributeProvider.MANA_LEVEL).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "playermanaattributeproperties"),
+						new PlayerManaAttributeProvider());
 			}
 			if (!event.getObject().getCapability(PlayerManaProvider.PLAYER_MANA).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "manaproperties"),
@@ -860,6 +871,11 @@ public class ModEvents {
 			});
 			event.getOriginal().getCapability(PlayerAgilityAttributeProvider.AGILITY_LEVEL).ifPresent(oldStore -> {
 				event.getEntity().getCapability(PlayerAgilityAttributeProvider.AGILITY_LEVEL).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
+			event.getOriginal().getCapability(PlayerManaAttributeProvider.MANA_LEVEL).ifPresent(oldStore -> {
+				event.getEntity().getCapability(PlayerManaAttributeProvider.MANA_LEVEL).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
 				});
 			});
@@ -1392,6 +1408,7 @@ public class ModEvents {
 		event.register(PlayerAttributePoints.class);
 		event.register(PlayerHealthAttribute.class);
 		event.register(PlayerAgilityAttribute.class);
+		event.register(PlayerManaAttribute.class);
 		event.register(PlayerMana.class);
 		event.register(PlayerMiningLevel.class);
 		event.register(PlayerMiningExp.class);
@@ -1533,6 +1550,9 @@ public class ModEvents {
 				});
 				player.getCapability(PlayerAgilityAttributeProvider.AGILITY_LEVEL).ifPresent(playerAgilityAttribute -> {
 					ModMessages.sendToPlayer(new PlayerAgilityAttributeDataSyncS2CPacket(playerAgilityAttribute.getPlayerAgilityAttribute()), player);
+				});
+				player.getCapability(PlayerManaAttributeProvider.MANA_LEVEL).ifPresent(playerManaAttribute -> {
+					ModMessages.sendToPlayer(new PlayerManaAttributeDataSyncS2CPacket(playerManaAttribute.getPlayerManaAttribute()), player);
 				});
 				player.getCapability(PlayerManaProvider.PLAYER_MANA).ifPresent(mana -> {
 					ModMessages.sendToPlayer(new ManaDataSyncS2CPacket(mana.getMana()), player);
