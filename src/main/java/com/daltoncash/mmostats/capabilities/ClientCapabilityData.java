@@ -41,6 +41,7 @@ public class ClientCapabilityData {
 	private static int isUpgradedGrannySmith;
 	private static int isUpgradedHardWood;
 	private static int isUpgradedHighGround;
+	private static int isUpgradedSplinteringStrikes;
 	private static int isUpgradedStrongArms;
 	//combat
 	private static int isUpgradedDodgeRoll;
@@ -531,6 +532,14 @@ public class ClientCapabilityData {
 
 	public static void setUpgradedStrongArms(int isUpgradedStrongArms) {
 		ClientCapabilityData.isUpgradedStrongArms = isUpgradedStrongArms;
+	}
+
+	public static int getIsUpgradedSplinteringStrikes() {
+		return isUpgradedSplinteringStrikes;
+	}
+
+	public static void setIsUpgradedSplinteringStrikes(int isUpgradedSplinteringStrikes) {
+		ClientCapabilityData.isUpgradedSplinteringStrikes = isUpgradedSplinteringStrikes;
 	}
 
 	public static int isUpgradedDodgeRoll() {

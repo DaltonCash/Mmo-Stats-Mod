@@ -81,6 +81,21 @@ public class ExpYieldList {
 		list.add(Blocks.NETHER_WART_BLOCK);
 		return list;
 	}
+	
+	public static List<Block> getChoppingLogs(){
+		List<Block> list = new ArrayList<>();
+		list.add(Blocks.OAK_LOG);
+		list.add(Blocks.BIRCH_LOG);
+		list.add(Blocks.SPRUCE_LOG);
+		list.add(Blocks.JUNGLE_LOG);
+		list.add(Blocks.DARK_OAK_LOG);
+		list.add(Blocks.MANGROVE_LOG);
+		list.add(Blocks.ACACIA_LOG);
+
+		list.add(Blocks.CRIMSON_STEM);
+		list.add(Blocks.WARPED_STEM);
+		return list;
+	}
 	public static List<Block> getFarmingBlocks(){
 		List<Block> list = new ArrayList<>();
 		list.add(Blocks.GRASS);

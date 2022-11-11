@@ -40,6 +40,7 @@ import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainArcheryExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainArcheryLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainChoppingExpC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.GainChoppingExpFromMultiblockC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainChoppingLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainCombatExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainCombatLevelC2SPacket;
@@ -188,52 +189,70 @@ public class SkillEvents {
 			}
 		}
 
+		
+		
 		// Gaining Exp for Farming
 		@SubscribeEvent
 		public static void gainChoppingExpOnBreakingBlock(BlockEvent.BreakEvent event) {
 			Block block = event.getState().getBlock();
 			if(event.getPlayer().getName().getString().equals(MmoStatsMod.USER.getName())) {
 				if (ExpYieldList.getChoppingBlocks().contains(block)) {
-					int choppingExp = ClientCapabilityData.getPlayerChoppingExp();
-					int choppingLevel = ClientCapabilityData.getPlayerChoppingLevel();
-					expToSub = 0;
-					expToAdd = 0;
 					blockevent = event;
-					if (block.equals(Blocks.OAK_LOG) || block.equals(Blocks.BIRCH_LOG) || block.equals(Blocks.SPRUCE_LOG)
-							|| block.equals(Blocks.JUNGLE_LOG) || block.equals(Blocks.ACACIA_LOG)
-							|| block.equals(Blocks.MANGROVE_LOG) || block.equals(Blocks.DARK_OAK_LOG)
-							|| block.equals(Blocks.CRIMSON_STEM) || block.equals(Blocks.WARPED_STEM)) {
-						expToAdd = 50;
-						addToChoppingTotal(block);
-					} else if (block.equals(Blocks.OAK_LEAVES) || block.equals(Blocks.BIRCH_LEAVES)
-							|| block.equals(Blocks.SPRUCE_LEAVES) || block.equals(Blocks.JUNGLE_LEAVES)
-							|| block.equals(Blocks.ACACIA_LEAVES) || block.equals(Blocks.MANGROVE_LEAVES)
-							|| block.equals(Blocks.DARK_OAK_LEAVES) || block.equals(Blocks.NETHER_WART_BLOCK)
-							|| block.equals(Blocks.WARPED_WART_BLOCK)) {
-						expToAdd = 5;
-					}
-					ModMessages.sendToServer(new GainChoppingExpC2SPacket());
-					// level up if player has sufficient choppingExp
-					if (choppingExp + (expToAdd * ModStats.getChoppingModifier()) > ModStats.toNextLevelExp(choppingLevel)) {
-						LOGGER.info("{} leveled up to {} in Chopping", event.getPlayer().getScoreboardName(),
-								choppingLevel + 1);
-						expToSub = (choppingLevel * 40) + 400;
-						ModMessages.sendToServer(new GainChoppingLevelC2SPacket());
-						ModMessages.sendToServer(new ResetChoppingExpC2SPacket());
-	
-						playerLevelExpToAdd = (choppingLevel % 25 == 24) ? (((choppingLevel + 1) / 100) + 1) * 5
-								: ((choppingLevel + 1) / 100) + 1;
-						ModMessages.sendToServer(new GainPlayerLevelExpC2SPacket());
-						PlayerLevelCheck(playerLevelExpToAdd);
-					}
-	
-					// Makes skill overlay appear on screen.
-					skillOverlay("Chopping");
-	
-					LOGGER.info("{} has chopped {}(Player ChoppingExp: {})", event.getPlayer().getScoreboardName(),
-							event.getState().getBlock().asItem(), choppingExp + expToAdd);
+					giveChoppingExp(block);
 				}
 			}
+		}
+		
+		public static void giveChoppingExp(Block block) {
+			int choppingExp = ClientCapabilityData.getPlayerChoppingExp();
+			int choppingLevel = ClientCapabilityData.getPlayerChoppingLevel();
+			expToSub = 0;
+			expToAdd = 0;
+			
+			if (block.equals(Blocks.OAK_LOG) || block.equals(Blocks.BIRCH_LOG) || block.equals(Blocks.SPRUCE_LOG)
+					|| block.equals(Blocks.JUNGLE_LOG) || block.equals(Blocks.ACACIA_LOG)
+					|| block.equals(Blocks.MANGROVE_LOG) || block.equals(Blocks.DARK_OAK_LOG)
+					|| block.equals(Blocks.CRIMSON_STEM) || block.equals(Blocks.WARPED_STEM)) {
+				expToAdd = 50;
+				addToChoppingTotal(block);
+			} else if (block.equals(Blocks.OAK_LEAVES) || block.equals(Blocks.BIRCH_LEAVES)
+					|| block.equals(Blocks.SPRUCE_LEAVES) || block.equals(Blocks.JUNGLE_LEAVES)
+					|| block.equals(Blocks.ACACIA_LEAVES) || block.equals(Blocks.MANGROVE_LEAVES)
+					|| block.equals(Blocks.DARK_OAK_LEAVES) || block.equals(Blocks.NETHER_WART_BLOCK)
+					|| block.equals(Blocks.WARPED_WART_BLOCK)) {
+				expToAdd = 5;
+			}
+			ModMessages.sendToServer(new GainChoppingExpC2SPacket());
+			// level up if player has sufficient choppingExp
+			if (choppingExp + (expToAdd * ModStats.getChoppingModifier()) > ModStats.toNextLevelExp(choppingLevel)) {
+				LOGGER.info("{} leveled up to {} in Chopping", MmoStatsMod.USER.getName(),
+						choppingLevel + 1);
+				expToSub = (choppingLevel * 40) + 400;
+				ModMessages.sendToServer(new GainChoppingLevelC2SPacket());
+				ModMessages.sendToServer(new ResetChoppingExpC2SPacket());
+
+				playerLevelExpToAdd = (choppingLevel % 25 == 24) ? (((choppingLevel + 1) / 100) + 1) * 5
+						: ((choppingLevel + 1) / 100) + 1;
+				ModMessages.sendToServer(new GainPlayerLevelExpC2SPacket());
+				PlayerLevelCheck(playerLevelExpToAdd);
+			}
+
+			// Makes skill overlay appear on screen.
+			skillOverlay("Chopping");
+
+			LOGGER.info("{} has chopped {}(Player ChoppingExp: {})", MmoStatsMod.USER.getName(),
+					block.asItem(), choppingExp + expToAdd);
+		}
+		
+		public static void giveChoppingExpMultiblock(List<Block> blocks) {
+			
+			expToAddMultiblock = 0;
+			for(Block block : blocks) {
+				expToAddMultiblock += 50;
+				addToChoppingTotal(block);
+			}
+			ModMessages.sendToServer(new GainChoppingExpFromMultiblockC2SPacket());
+			skillOverlay("Chopping");
 		}
 		
 		private static void addToChoppingTotal(Block block) {
@@ -257,8 +276,7 @@ public class SkillEvents {
 				ModMessages.sendToServer(new WarpedStemChoppedC2SPacket());
 			}else {
 				LOGGER.info("Unexpected call to addToChoppingTotal method");
-			}
-				
+			}	
 		}
 
 		// LivingDeathEvent is an event that triggers when an entity dies.
@@ -532,8 +550,6 @@ public class SkillEvents {
 		}
 		
 		public static void giveMiningExpMultiBlock(List<Block> blocks) {
-			
-			expToSub = 0;
 			expToAddMultiblock = 0;
 			for(Block block : blocks) {
 				// Mining ore gives miningExp according to this table:

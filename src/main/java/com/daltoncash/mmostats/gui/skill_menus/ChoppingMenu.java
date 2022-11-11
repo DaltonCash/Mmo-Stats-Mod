@@ -11,6 +11,7 @@ import com.daltoncash.mmostats.gui.skill_menus.totals_menus.ChoppingTotalsMenu;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.GrannySmithUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.HardwoodUpgradeC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.SplinteringStrikesUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.StrongArmsUpgradeC2SPacket;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -43,6 +44,8 @@ public class ChoppingMenu extends Screen {
 			"textures/gui/buttons/chopping_buttons/hardwood_button.png");
 	private final ResourceLocation upgradeTexture3 = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/buttons/chopping_buttons/strong_arms_button.png");
+	private final ResourceLocation upgradeTexture4 = new ResourceLocation(MmoStatsMod.MODID,
+			"textures/gui/buttons/chopping_buttons/splintering_strikes_button.png");
 	
 	
 	//Textures to appear dark if not upgraded:
@@ -52,6 +55,8 @@ public class ChoppingMenu extends Screen {
 			"textures/gui/buttons/chopping_buttons/hardwood_button_dark.png");
 	private final ResourceLocation upgradeTexture3Dark = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/buttons/chopping_buttons/strong_arms_button_dark.png");
+	private final ResourceLocation upgradeTexture4Dark = new ResourceLocation(MmoStatsMod.MODID,
+			"textures/gui/buttons/chopping_buttons/splintering_strikes_button.png");
 	
 	private final ResourceLocation descriptionBanner = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/background/descstuff3.png");
@@ -60,6 +65,8 @@ public class ChoppingMenu extends Screen {
 	private static final String grannySmith = "GrannySmith: \n\nGain Swiftness(2/3/4) effect for 60 seconds when eating an apple.";
 	private static final String hardWood = "Hardwood: \n\nWhen an attack would make you have less than 25% max hp, gain 20%/ 40%/ 60% max hp.";
 	private static final String strongArms = "Lumber Jacked: \n\nDeal 10%/ 20%/ 30% more damage with axes.";
+	private static final String splinteringStrikes = "Splintering Strike: \n\nCut down trees with one swing! Cost 1 mana per log broken."
+			+ "Can be toggled by right-clicking";
 	
 	private static DescriptionPanel upgradeDescription;
 	
@@ -67,7 +74,9 @@ public class ChoppingMenu extends Screen {
 
 	private static int grannySmithLVL = ClientCapabilityData.isUpgradedGrannySmith();
 	private static int hardWoodLVL = ClientCapabilityData.isUpgradedHardWood();
+	private static int splinteringStrikesLVL = ClientCapabilityData.isUpgradedStrongArms();
 	private static int strongArmsLVL = ClientCapabilityData.isUpgradedStrongArms();
+	
 	private static int upgradePoints = ClientCapabilityData.getPlayerUpgradePoints();
 	
 	public ChoppingMenu(Component p_96550_) {
@@ -107,10 +116,21 @@ public class ChoppingMenu extends Screen {
 		     				ChoppingMenu.this.renderTooltip(p_169459_, ChoppingMenu.this.minecraft.font.split(component, Math.max(ChoppingMenu.this.width / 2 - 43, 170)), int1, int2);
 		     			}
 					},
-					Component.empty()));			
-		
-		
+					Component.empty()));	
+			
+			
 			addRenderableWidget(new ImageButton((this.width / 18) * 5, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+					splinteringStrikesLVL > 0 ? upgradeTexture4 : upgradeTexture4Dark, 50, 50, ChoppingMenu::onPressUpgradeSplinteringStrikes,
+							new Button.OnTooltip() {
+		     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+		     				Component component = Component.literal("Current Upgrade Level: " + splinteringStrikesLVL);
+		     				ChoppingMenu.this.renderTooltip(p_169459_, ChoppingMenu.this.minecraft.font.split(component, Math.max(ChoppingMenu.this.width / 2 - 43, 170)), int1, int2);
+		     			}
+					},
+					Component.empty()));		
+		
+		
+			addRenderableWidget(new ImageButton((this.width / 18) * 7, (this.height / 6) * 2, 50, 50, 0, 0, 99,
 					strongArmsLVL > 0 ? upgradeTexture3 : upgradeTexture3Dark, 50, 50, ChoppingMenu::onPressUpgradeStrongArms,
 							new Button.OnTooltip() {
 		     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
@@ -138,13 +158,15 @@ public class ChoppingMenu extends Screen {
 	}
 	
 	public void tick() {
-		if(grannySmithLVL != ClientCapabilityData.isUpgradedGrannySmith()   ||
-				hardWoodLVL != ClientCapabilityData.isUpgradedHardWood()||
-				strongArmsLVL != ClientCapabilityData.isUpgradedStrongArms()  ||
+		if(grannySmithLVL != ClientCapabilityData.isUpgradedGrannySmith()                      ||
+				hardWoodLVL != ClientCapabilityData.isUpgradedHardWood()      		           ||
+				splinteringStrikesLVL != ClientCapabilityData.getIsUpgradedSplinteringStrikes()||
+				strongArmsLVL != ClientCapabilityData.isUpgradedStrongArms()                   ||
 				upgradePoints != ClientCapabilityData.getPlayerUpgradePoints()) {
 				
 					grannySmithLVL = ClientCapabilityData.isUpgradedGrannySmith();
 					hardWoodLVL = ClientCapabilityData.isUpgradedHardWood();
+					splinteringStrikesLVL = ClientCapabilityData.getIsUpgradedSplinteringStrikes();
 					strongArmsLVL = ClientCapabilityData.isUpgradedStrongArms();
 					upgradePoints = ClientCapabilityData.getPlayerUpgradePoints();
 					
@@ -165,6 +187,11 @@ public class ChoppingMenu extends Screen {
 		upgradeString = hardWood;
 		updateCache();
 	}
+	
+	private static void onPressUpgradeSplinteringStrikes(Button button) {
+		upgradeString = splinteringStrikes;
+		updateCache();
+	}
 
 	private static void onPressUpgradeStrongArms(Button button) {
 		upgradeString = strongArms;
@@ -179,6 +206,9 @@ public class ChoppingMenu extends Screen {
 				break;
 			case hardWood:
 				if(ClientCapabilityData.isUpgradedHardWood() < 3) ModMessages.sendToServer(new HardwoodUpgradeC2SPacket());
+				break;
+			case splinteringStrikes:
+				if(ClientCapabilityData.getIsUpgradedSplinteringStrikes() < 1) ModMessages.sendToServer(new SplinteringStrikesUpgradeC2SPacket());
 				break;
 			case strongArms:
 				if(ClientCapabilityData.isUpgradedStrongArms() < 3) ModMessages.sendToServer(new StrongArmsUpgradeC2SPacket());

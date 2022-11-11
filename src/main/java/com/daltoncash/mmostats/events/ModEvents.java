@@ -33,6 +33,8 @@ import com.daltoncash.mmostats.capabilities.chopping.upgrades.HardwoodUpgrade;
 import com.daltoncash.mmostats.capabilities.chopping.upgrades.HardwoodUpgradeProvider;
 import com.daltoncash.mmostats.capabilities.chopping.upgrades.HighGroundUpgrade;
 import com.daltoncash.mmostats.capabilities.chopping.upgrades.HighGroundUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.chopping.upgrades.SplinteringStrikesUpgrade;
+import com.daltoncash.mmostats.capabilities.chopping.upgrades.SplinteringStrikesUpgradeProvider;
 import com.daltoncash.mmostats.capabilities.chopping.upgrades.StrongArmsUpgrade;
 import com.daltoncash.mmostats.capabilities.chopping.upgrades.StrongArmsUpgradeProvider;
 import com.daltoncash.mmostats.capabilities.chopping.upgrades.logsChopped.AcaciaChopped;
@@ -248,6 +250,7 @@ import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.U
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.GrannySmithUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.HardwoodUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.HighGroundUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.SplinteringStrikesUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.StrongArmsUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.totals.AcaciaChoppedDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.totals.BirchChoppedDataSyncS2CPacket;
@@ -529,6 +532,10 @@ public class ModEvents {
 			if (!event.getObject().getCapability(HighGroundUpgradeProvider.IS_UPGRADED).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "highgroundupgradeproperties"),
 						new HighGroundUpgradeProvider());
+			}
+			if (!event.getObject().getCapability(SplinteringStrikesUpgradeProvider.IS_UPGRADED).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "splinteringstrikesupgradeproperties"),
+						new SplinteringStrikesUpgradeProvider());
 			}
 			if (!event.getObject().getCapability(StrongArmsUpgradeProvider.IS_UPGRADED).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "strongarmsupgradeproperties"),
@@ -1027,6 +1034,11 @@ public class ModEvents {
 					newStore.copyFrom(oldStore);
 				});
 			});
+			event.getOriginal().getCapability(SplinteringStrikesUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
+				event.getEntity().getCapability(SplinteringStrikesUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
 			event.getOriginal().getCapability(StrongArmsUpgradeProvider.IS_UPGRADED).ifPresent(oldStore -> {
 				event.getEntity().getCapability(StrongArmsUpgradeProvider.IS_UPGRADED).ifPresent(newStore -> {
 					newStore.copyFrom(oldStore);
@@ -1452,6 +1464,7 @@ public class ModEvents {
 		event.register(GrannySmithUpgrade.class);
 		event.register(HardwoodUpgrade.class);
 		event.register(HighGroundUpgrade.class);
+		event.register(SplinteringStrikesUpgrade.class);
 		event.register(StrongArmsUpgrade.class);
 		
 		//Combat Upgrades
@@ -1651,6 +1664,9 @@ public class ModEvents {
 				});
 				player.getCapability(HighGroundUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
 					ModMessages.sendToPlayer(new HighGroundUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
+				});
+				player.getCapability(SplinteringStrikesUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+					ModMessages.sendToPlayer(new SplinteringStrikesUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 				});
 				player.getCapability(StrongArmsUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
 					ModMessages.sendToPlayer(new StrongArmsUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);

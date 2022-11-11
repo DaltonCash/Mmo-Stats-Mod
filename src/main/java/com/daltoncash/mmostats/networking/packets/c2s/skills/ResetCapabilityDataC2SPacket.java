@@ -39,6 +39,7 @@ import com.daltoncash.mmostats.capabilities.playerlevel.PlayerLevelProvider;
 import com.daltoncash.mmostats.capabilities.playerlevel.PlayerUpgradePointsProvider;
 import com.daltoncash.mmostats.capabilities.playerlevel.stats.agility.PlayerAgilityAttributeProvider;
 import com.daltoncash.mmostats.capabilities.playerlevel.stats.health.PlayerHealthAttributeProvider;
+import com.daltoncash.mmostats.capabilities.playerlevel.stats.mana.PlayerManaAttributeProvider;
 import com.daltoncash.mmostats.capabilities.swords.PlayerSwordsLevelProvider;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.s2c.skills.ArcheryLevelDataSyncS2CPacket;
@@ -127,6 +128,10 @@ public class ResetCapabilityDataC2SPacket {
 			player.getCapability(PlayerAgilityAttributeProvider.AGILITY_LEVEL).ifPresent(playerAgilityAttribute -> {
 				playerAgilityAttribute.subPlayerAgilityAttribute(1000);
 				ModMessages.sendToPlayer(new PlayerAgilityAttributeDataSyncS2CPacket(playerAgilityAttribute.getPlayerAgilityAttribute()), player);
+			});
+			player.getCapability(PlayerManaAttributeProvider.MANA_LEVEL).ifPresent(playerManaAttribute -> {
+				playerManaAttribute.subPlayerManaAttribute(1000);
+				ModMessages.sendToPlayer(new PlayerAgilityAttributeDataSyncS2CPacket(playerManaAttribute.getPlayerManaAttribute()), player);
 			});
 			player.getCapability(PlayerMiningExpProvider.PLAYER_MINING_EXP).ifPresent(miningExp -> {
 				miningExp.subMiningExp(100000);

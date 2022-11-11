@@ -6,6 +6,7 @@ import com.daltoncash.mmostats.capabilities.playerlevel.stats.mana.PlayerManaPro
 import com.daltoncash.mmostats.events.SkillEvents.SkillForgeEvents;
 import com.daltoncash.mmostats.gui.LevelUpOverlay;
 import com.daltoncash.mmostats.gui.ManaOverlay;
+import com.daltoncash.mmostats.gui.PlayerMenu;
 import com.daltoncash.mmostats.gui.UpgradeMenu;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.c2s.AdditionalFortuneProcC2SPacket;
@@ -70,6 +71,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.ExplosionDamageCalculator;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
@@ -117,6 +120,8 @@ public class ClientEvents {
 		public static BlockPos tamedPosition;
 		public static Entity animalToBeTamedAndKilled;
 
+		public static List<Block> logList = new ArrayList<>();
+		public static boolean splinteringStrikesToggle = false;
 		public static final String miningConfigurationNone = "none";
 		public static final String miningConfiguration1x2 = "1x2";
 		public static final String miningConfiguration3x3 = "3x3";
@@ -464,6 +469,18 @@ public class ClientEvents {
 						}
 					}
 				}
+			} else if (event.getItemStack().getItem() instanceof AxeItem) {
+				if(event.getLevel().isClientSide) {
+					if(ClientCapabilityData.getIsUpgradedSplinteringStrikes() > 0) {
+						if(splinteringStrikesToggle) {
+							splinteringStrikesToggle = false;
+							Minecraft.getInstance().player.sendSystemMessage(Component.literal("SplinteringStrikes: Off."));
+						}else {
+							splinteringStrikesToggle = true;
+							Minecraft.getInstance().player.sendSystemMessage(Component.literal("SplinteringStrikes: On."));
+						}
+					}
+				}
 			} else if (event.getItemStack().getItem() instanceof PickaxeItem) {
 				if(event.getLevel().isClientSide) {
 					int lvl = ClientCapabilityData.getIsUpgradedBigSwings();
@@ -678,9 +695,49 @@ public class ClientEvents {
 			}
 		}
 
+		//Break a tree with Splintering Strikes ability
+		@SubscribeEvent
+		public static void onBreakBlockuseWIPTreeAbility(BlockEvent.BreakEvent event) {
+			if (event.getPlayer().getName().getString().equals(MmoStatsMod.USER.getName())) {
+				if (ExpYieldList.getChoppingLogs().contains(event.getState().getBlock())) {
+					if(splinteringStrikesToggle) {
+						logList = new ArrayList<>();
+						
+						int manaToSubtract = (WIPTreeAbilityhelper(event.getPos().above(), 0, 
+								ClientCapabilityData.getPlayerCurrentMana(),
+								event.getLevel()));
+						System.out.println(manaToSubtract);
+						event.getPlayer().getCapability(PlayerManaProvider.PLAYER_MANA).ifPresent(mana -> {															
+							mana.subMana(manaToSubtract);
+							ModMessages.sendToPlayer(new ManaDataSyncS2CPacket(mana.getMana()), ((ServerPlayer) event.getPlayer()));
+							
+						});
+						SkillForgeEvents.giveChoppingExpMultiblock(logList);
+					}
+				}
+			}	
+		}
+		
+		
+		public static int WIPTreeAbilityhelper(BlockPos blockPos, int manaCost, int currentMana, LevelAccessor level){
+			if(ExpYieldList.getChoppingLogs().contains(level.getBlockState(blockPos).getBlock())) {
+				logList.add(level.getBlockState(blockPos).getBlock());
+				if(currentMana > manaCost + 1) {
+					level.destroyBlock(blockPos, true);
+					manaCost++;
+					return 1 + WIPTreeAbilityhelper(blockPos.above(), manaCost, currentMana, level)
+							 + WIPTreeAbilityhelper(blockPos.east(), manaCost, currentMana, level)
+							 + WIPTreeAbilityhelper(blockPos.west(), manaCost, currentMana, level)
+							 + WIPTreeAbilityhelper(blockPos.north(), manaCost, currentMana, level)
+							 + WIPTreeAbilityhelper(blockPos.south(), manaCost, currentMana, level);
+				}
+			}	
+			return 0;
+		}
+		
 		// Break multiple blocks with WIP ability
 		@SubscribeEvent
-		public static void onBreakBlockUseWIPAbility(BlockEvent.BreakEvent event) {
+		public static void onBreakBlockUseBigSwingsAbility(BlockEvent.BreakEvent event) {
 			if (event.getPlayer().getName().getString().equals(MmoStatsMod.USER.getName())) {
 				if (ExpYieldList.getMiningBlocks().contains(event.getState().getBlock())) {
 					ItemStack pick = event.getPlayer().getMainHandItem();
@@ -902,7 +959,7 @@ public class ClientEvents {
 				}
 			}
 			if (KeyBinding.OPEN_UPGRADE_GUI_KEY.consumeClick()) {
-				Minecraft.getInstance().setScreen(new UpgradeMenu(Component.literal("Test from events!")));
+				Minecraft.getInstance().setScreen(new UpgradeMenu(Component.literal("Upgrade Menu")));
 			}
 			if (KeyBinding.TOGGLE_JUNK_KEY.consumeClick()) {
 				if (ClientCapabilityData.isUpgradedNoJunkBlocks() > 0) {

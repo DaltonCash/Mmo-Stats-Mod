@@ -26,6 +26,7 @@ import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.blocksmined
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainArcheryExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainArcheryLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainChoppingExpC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.GainChoppingExpFromMultiblockC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainChoppingLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainCombatExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainCombatLevelC2SPacket;
@@ -81,6 +82,7 @@ import com.daltoncash.mmostats.networking.packets.c2s.archeryUpgrades.UnabatedUp
 import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.GrannySmithUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.HardwoodUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.HighGroundUpgradeC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.SplinteringStrikesUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.StrongArmsUpgradeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.totals.AcaciaChoppedC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.choppingUpgrades.totals.BirchChoppedC2SPacket;
@@ -168,6 +170,7 @@ import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.U
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.GrannySmithUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.HardwoodUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.HighGroundUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.SplinteringStrikesUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.StrongArmsUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.totals.AcaciaChoppedDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.totals.BirchChoppedDataSyncS2CPacket;
@@ -434,6 +437,11 @@ public class ModMessages {
 				.encoder(GainChoppingExpC2SPacket::toBytes)
 				.consumerMainThread(GainChoppingExpC2SPacket::handle)
 				.add();
+        net.messageBuilder(GainChoppingExpFromMultiblockC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+				.decoder(GainChoppingExpFromMultiblockC2SPacket::new)
+				.encoder(GainChoppingExpFromMultiblockC2SPacket::toBytes)
+				.consumerMainThread(GainChoppingExpFromMultiblockC2SPacket::handle)
+				.add();
         net.messageBuilder(GainCombatLevelC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
 				.decoder(GainCombatLevelC2SPacket::new)
 				.encoder(GainCombatLevelC2SPacket::toBytes)
@@ -660,6 +668,11 @@ public class ModMessages {
 				.encoder(HighGroundUpgradeC2SPacket::toBytes)
 				.consumerMainThread(HighGroundUpgradeC2SPacket::handle)
 				.add();
+        net.messageBuilder(SplinteringStrikesUpgradeC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+				.decoder(SplinteringStrikesUpgradeC2SPacket::new)
+				.encoder(SplinteringStrikesUpgradeC2SPacket::toBytes)
+				.consumerMainThread(SplinteringStrikesUpgradeC2SPacket::handle)
+				.add();
         net.messageBuilder(StrongArmsUpgradeC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
 				.decoder(StrongArmsUpgradeC2SPacket::new)
 				.encoder(StrongArmsUpgradeC2SPacket::toBytes)
@@ -851,6 +864,11 @@ public class ModMessages {
 				.decoder(HighGroundUpgradeDataSyncS2CPacket::new)
 				.encoder(HighGroundUpgradeDataSyncS2CPacket::toBytes)
 				.consumerMainThread(HighGroundUpgradeDataSyncS2CPacket::handle)
+				.add();
+        net.messageBuilder(SplinteringStrikesUpgradeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+				.decoder(SplinteringStrikesUpgradeDataSyncS2CPacket::new)
+				.encoder(SplinteringStrikesUpgradeDataSyncS2CPacket::toBytes)
+				.consumerMainThread(SplinteringStrikesUpgradeDataSyncS2CPacket::handle)
 				.add();
         net.messageBuilder(StrongArmsUpgradeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
 				.decoder(StrongArmsUpgradeDataSyncS2CPacket::new)
