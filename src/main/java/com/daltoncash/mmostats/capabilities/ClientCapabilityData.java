@@ -68,6 +68,7 @@ public class ClientCapabilityData {
 	private static int isUpgradedNoJunkBlocks;
 	private static int isUpgradedJunkBlocksDropExp;
 	private static int isUpgradedObsidianBreaker;
+	private static int isUpgradedBigSwings;
 	//Blocks Mined
 	private static int ancientDebrisMined;
 	private static int coalMined;
@@ -242,6 +243,14 @@ public class ClientCapabilityData {
 
 	public static void setUpgradedObsidianBreaker(int isUpgradedObsidianBreaker) {
 		ClientCapabilityData.isUpgradedObsidianBreaker = isUpgradedObsidianBreaker;
+	}
+
+	public static int getIsUpgradedBigSwings() {
+		return isUpgradedBigSwings;
+	}
+
+	public static void setIsUpgradedBigSwings(int isUpgradedBigSwings) {
+		ClientCapabilityData.isUpgradedBigSwings = isUpgradedBigSwings;
 	}
 
 	public static int getAncientDebrisMined() {

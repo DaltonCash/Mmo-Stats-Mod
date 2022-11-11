@@ -19,18 +19,21 @@ public class ManaOverlay {
 		int y = height;
 		
 		int mana = ClientCapabilityData.getPlayerCurrentMana();
+		int maxManaLevel = ModStats.getMaxMana();
+		int manaToDisplay = (maxManaLevel % 10 == 0 ? maxManaLevel / 10 : maxManaLevel / 10 + 1);
+		
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		RenderSystem.setShaderTexture(0, MANA);
-		for (int i = 0; i < 9 + 1; i++) {
-			GuiComponent.blit(poseStack, (x * 265) / 512 + (i * 8), y - 50, mana >= 10 ? 110 : mana * 10, 0, 10, 10, 120, 10);
+		
+		for (int i = 0; i < manaToDisplay; i++) {
+			GuiComponent.blit(poseStack, ((x * 265) / 512) + (i * 8), y - 50, mana >= 10 ? 110 : mana * 10, 0, 10, 10, 120, 10);
 			mana = Math.max(mana - 10, 0);
 		}
-		int maxManaLevel = ModStats.getMaxMana();
-		for (int i = 0; i < 9 + 1; i++) {
-			if((maxManaLevel % 10 == 0 ? maxManaLevel / 10 : maxManaLevel / 10 + 1) > i) {
-				GuiComponent.blit(poseStack, (x * 265) / 512 + (i * 8), y - 50, 10, 0, 10, 10, 120, 10);
-			}
+		
+		
+		for (int i = 0; i < manaToDisplay; i++) {
+			GuiComponent.blit(poseStack, (x * 265) / 512 + (i * 8), y - 50, 10, 0, 10, 10, 120, 10);
 		}
 	});
 	

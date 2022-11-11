@@ -1,5 +1,7 @@
 package com.daltoncash.mmostats.events;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 
 import com.daltoncash.mmostats.MmoStatsMod;
@@ -45,6 +47,7 @@ import com.daltoncash.mmostats.networking.packets.c2s.skills.GainFarmingExpFromS
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainFarmingExpFromUnseededCropsC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainFarmingLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainMiningExpC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.GainMiningExpFromMultiblockC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainMiningLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainPlayerAttributePointsC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainPlayerLevelC2SPacket;
@@ -58,8 +61,10 @@ import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetMiningExpC2SPa
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetPlayerLevelExpC2SPacket;
 import com.mojang.logging.LogUtils;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
@@ -69,6 +74,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.level.BlockEvent;
+import net.minecraftforge.event.level.BlockEvent.BreakEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -86,6 +92,7 @@ public class SkillEvents {
 
 		public static int expToSub = 0;
 		public static int expToAdd = 0;
+		public static int expToAddMultiblock = 0;
 		public static int playerLevelExpToSub = 0;
 		public static int playerLevelExpToAdd = 0;
 		public static int bowCooldown = 30;
@@ -262,7 +269,6 @@ public class SkillEvents {
 			if (event.getSource().getEntity() != null) {
 				if (event.getSource().getEntity().getType().equals(EntityType.PLAYER)) {
 					if(event.getSource().getEntity().getName().getString().equals(MmoStatsMod.USER.getName())) {
-						System.out.println();
 						EntityType<?> type = event.getEntity().getType();
 						if (ExpYieldList.getCombatEntities().contains(type)) {
 							int combatExp = ClientCapabilityData.getPlayerCombatExp();
@@ -425,98 +431,173 @@ public class SkillEvents {
 			Block block = event.getState().getBlock();
 			if (ExpYieldList.getMiningBlocks().contains(block)) {
 				if(event.getPlayer().getName().getString().equals(MmoStatsMod.USER.getName())) {
-					int miningExp = ClientCapabilityData.getPlayerMiningExp();
-					int miningLevel = ClientCapabilityData.getPlayerMiningLevel();
-					expToSub = 0;
-					expToAdd = 0;
 					blockevent = event;
-					// Mining ore gives miningExp according to this table:
-					if (block.equals(Blocks.STONE) || block.equals(Blocks.DIORITE) || block.equals(Blocks.ANDESITE)
-							|| block.equals(Blocks.GRANITE) || block.equals(Blocks.DEEPSLATE)
-							|| block.equals(Blocks.NETHERRACK)) {
+					if (ExpYieldList.getStones().contains(block)) {
 						if (ClientCapabilityData.isUpgradedJunkBlocksDropExp() > 0) {
-							event.setExpToDrop(event.getExpToDrop() + 1);
+							event.setExpToDrop(1);
 						}
-						expToAdd = 4;
 					}
-	
-					// overworld ores
-					else if (block.equals(Blocks.COAL_ORE) || block.equals(Blocks.DEEPSLATE_COAL_ORE)) {
-						expToAdd = 10;
-						ModMessages.sendToServer(new CoalMinedC2SPacket());
-					} else if (block.equals(Blocks.COPPER_ORE) || block.equals(Blocks.DEEPSLATE_COPPER_ORE)) {
-						expToAdd = 50;
-						ModMessages.sendToServer(new CopperMinedC2SPacket());
-					} else if (block.equals(Blocks.IRON_ORE) || block.equals(Blocks.DEEPSLATE_IRON_ORE)) {
-						expToAdd = 50;
-						ModMessages.sendToServer(new IronMinedC2SPacket());
-					} else if (block.equals(Blocks.GOLD_ORE) || block.equals(Blocks.DEEPSLATE_GOLD_ORE)) {
-						expToAdd = 200;
-						ModMessages.sendToServer(new GoldMinedC2SPacket());
-					} else if (block.equals(Blocks.REDSTONE_ORE) || block.equals(Blocks.DEEPSLATE_REDSTONE_ORE)) {
-						expToAdd = 20;
-						ModMessages.sendToServer(new RedstoneMinedC2SPacket());
-					} else if (block.equals(Blocks.LAPIS_ORE) || block.equals(Blocks.DEEPSLATE_LAPIS_ORE)) {
-						expToAdd = 100;
-						ModMessages.sendToServer(new LapisMinedC2SPacket());
-					} else if (block.equals(Blocks.EMERALD_ORE) || block.equals(Blocks.DEEPSLATE_EMERALD_ORE)) {
-						expToAdd = 500;
-						ModMessages.sendToServer(new EmeraldMinedC2SPacket());
-					} else if (block.equals(Blocks.DIAMOND_ORE) || block.equals(Blocks.DEEPSLATE_DIAMOND_ORE)) {
-						expToAdd = 400;
-						ModMessages.sendToServer(new DiamondMinedC2SPacket());
-					} else if (block.equals(Blocks.ANCIENT_DEBRIS)) {
-						expToAdd = 2800;
-						ModMessages.sendToServer(new AncientDebrisMinedC2SPacket());
-					}
-	
-					// end ores/stones
-					else if (block.equals(Blocks.OBSIDIAN) || block.equals(Blocks.CRYING_OBSIDIAN)) {
-						expToAdd = 20;
-						ModMessages.sendToServer(new ObsidianMinedC2SPacket());
-					} else if (block.equals(Blocks.END_STONE)) {
-						expToAdd = 4;
-					} else if (block.equals(Blocks.END_STONE_BRICKS)) {
-						expToAdd = 5;
-					}
-	
-					// nether ores/stones
-					else if (block.equals(Blocks.NETHER_GOLD_ORE)) {
-						expToAdd = 100;
-						ModMessages.sendToServer(new NetherGoldMinedC2SPacket());
-					} else if (block.equals(Blocks.NETHER_QUARTZ_ORE)) {
-						expToAdd = 25;
-						ModMessages.sendToServer(new QuartzMinedC2SPacket());
-					} else if (block.equals(Blocks.NETHERRACK)) {
-						expToAdd = 1;
-					} else if (block.equals(Blocks.NETHER_BRICKS)) {
-						expToAdd = 4;
-					} else if (block.equals(Blocks.GLOWSTONE)) {
-						expToAdd = 10;
-						ModMessages.sendToServer(new GlowstoneMinedC2SPacket());
-					}
-					//Sends the expToAdd to ModMessages
-					ModMessages.sendToServer(new GainMiningExpC2SPacket());
-					LOGGER.info("{} has mined {}(Player miningExp: {})", event.getPlayer().getScoreboardName(),
-							event.getState().getBlock().asItem(), (miningExp + expToAdd));
-	
-					// level up if player has sufficient miningExp
-					if (miningExp + (expToAdd * ModStats.getMiningModifier()) > ModStats.toNextLevelExp(miningLevel)) {
-						LOGGER.info("{} leveled up to {} in Mining", event.getPlayer().getScoreboardName(),
-								miningLevel + 1);
-						expToSub = (miningLevel * 40) + 400;
-						ModMessages.sendToServer(new GainMiningLevelC2SPacket());
-						ModMessages.sendToServer(new ResetMiningExpC2SPacket());
-	
-						playerLevelExpToAdd = (miningLevel % 25 == 24) ? (((miningLevel + 1) / 100) + 1) * 5
-								: ((miningLevel + 1) / 100) + 1;
-						ModMessages.sendToServer(new GainPlayerLevelExpC2SPacket());
-						PlayerLevelCheck(playerLevelExpToAdd);
-					}
-					// Makes skill overlay appear on screen.
-					skillOverlay("Mining");
+					giveMiningExp(block);
 				}
 			}
+		}
+		
+		public static void giveMiningExp(Block block) {
+			
+			expToSub = 0;
+			expToAdd = 0;
+			
+			// Mining ore gives miningExp according to this table:
+			if (ExpYieldList.getStones().contains(block)) {
+				expToAdd = 4;
+			}
+
+			// overworld ores
+			else if (block.equals(Blocks.COAL_ORE) || block.equals(Blocks.DEEPSLATE_COAL_ORE)) {
+				expToAdd = 10;
+				ModMessages.sendToServer(new CoalMinedC2SPacket());
+			} else if (block.equals(Blocks.COPPER_ORE) || block.equals(Blocks.DEEPSLATE_COPPER_ORE)) {
+				expToAdd = 50;
+				ModMessages.sendToServer(new CopperMinedC2SPacket());
+			} else if (block.equals(Blocks.IRON_ORE) || block.equals(Blocks.DEEPSLATE_IRON_ORE)) {
+				expToAdd = 50;
+				ModMessages.sendToServer(new IronMinedC2SPacket());
+			} else if (block.equals(Blocks.GOLD_ORE) || block.equals(Blocks.DEEPSLATE_GOLD_ORE)) {
+				expToAdd = 200;
+				ModMessages.sendToServer(new GoldMinedC2SPacket());
+			} else if (block.equals(Blocks.REDSTONE_ORE) || block.equals(Blocks.DEEPSLATE_REDSTONE_ORE)) {
+				expToAdd = 20;
+				ModMessages.sendToServer(new RedstoneMinedC2SPacket());
+			} else if (block.equals(Blocks.LAPIS_ORE) || block.equals(Blocks.DEEPSLATE_LAPIS_ORE)) {
+				expToAdd = 100;
+				ModMessages.sendToServer(new LapisMinedC2SPacket());
+			} else if (block.equals(Blocks.EMERALD_ORE) || block.equals(Blocks.DEEPSLATE_EMERALD_ORE)) {
+				expToAdd = 500;
+				ModMessages.sendToServer(new EmeraldMinedC2SPacket());
+			} else if (block.equals(Blocks.DIAMOND_ORE) || block.equals(Blocks.DEEPSLATE_DIAMOND_ORE)) {
+				expToAdd = 400;
+				ModMessages.sendToServer(new DiamondMinedC2SPacket());
+			} else if (block.equals(Blocks.ANCIENT_DEBRIS)) {
+				expToAdd = 2800;
+				ModMessages.sendToServer(new AncientDebrisMinedC2SPacket());
+			}
+
+			// end ores/stones
+			else if (block.equals(Blocks.OBSIDIAN) || block.equals(Blocks.CRYING_OBSIDIAN)) {
+				expToAdd = 20;
+				ModMessages.sendToServer(new ObsidianMinedC2SPacket());
+			} else if (block.equals(Blocks.END_STONE)) {
+				expToAdd = 4;
+			} else if (block.equals(Blocks.END_STONE_BRICKS)) {
+				expToAdd = 5;
+			}
+
+			// nether ores/stones
+			else if (block.equals(Blocks.NETHER_GOLD_ORE)) {
+				expToAdd = 100;
+				ModMessages.sendToServer(new NetherGoldMinedC2SPacket());
+			} else if (block.equals(Blocks.NETHER_QUARTZ_ORE)) {
+				expToAdd = 25;
+				ModMessages.sendToServer(new QuartzMinedC2SPacket());
+			} else if (block.equals(Blocks.NETHERRACK)) {
+				expToAdd = 1;
+			} else if (block.equals(Blocks.NETHER_BRICKS)) {
+				expToAdd = 4;
+			} else if (block.equals(Blocks.GLOWSTONE)) {
+				expToAdd = 10;
+				ModMessages.sendToServer(new GlowstoneMinedC2SPacket());
+			}
+			ModMessages.sendToServer(new GainMiningExpC2SPacket());
+			int miningExp = ClientCapabilityData.getPlayerMiningExp();
+			int miningLevel = ClientCapabilityData.getPlayerMiningLevel();
+			
+			LOGGER.info("{} has mined {}(Player miningExp: {})", MmoStatsMod.USER.getName(),
+					block.asItem(), (miningExp + expToAdd));
+
+			// level up if player has sufficient miningExp
+			if (miningExp + (expToAdd * ModStats.getMiningModifier()) > ModStats.toNextLevelExp(miningLevel)) {
+				LOGGER.info("{} leveled up to {} in Mining", MmoStatsMod.USER.getName(),
+						miningLevel + 1);
+				expToSub = (miningLevel * 40) + 400;
+				ModMessages.sendToServer(new GainMiningLevelC2SPacket());
+				ModMessages.sendToServer(new ResetMiningExpC2SPacket());
+
+				playerLevelExpToAdd = (miningLevel % 25 == 24) ? (((miningLevel + 1) / 100) + 1) * 5
+						: ((miningLevel + 1) / 100) + 1;
+				ModMessages.sendToServer(new GainPlayerLevelExpC2SPacket());
+				PlayerLevelCheck(playerLevelExpToAdd);
+			}
+			// Makes skill overlay appear on screen.
+			skillOverlay("Mining");
+		}
+		
+		public static void giveMiningExpMultiBlock(List<Block> blocks) {
+			
+			expToSub = 0;
+			expToAddMultiblock = 0;
+			for(Block block : blocks) {
+				// Mining ore gives miningExp according to this table:
+				if (ExpYieldList.getStones().contains(block)) {
+					expToAddMultiblock += 4;
+				}
+				
+				// overworld ores
+				else if (block.equals(Blocks.COAL_ORE) || block.equals(Blocks.DEEPSLATE_COAL_ORE)) {
+					expToAddMultiblock += 10;
+					ModMessages.sendToServer(new CoalMinedC2SPacket());
+				} else if (block.equals(Blocks.COPPER_ORE) || block.equals(Blocks.DEEPSLATE_COPPER_ORE)) {
+					expToAddMultiblock += 50;
+					ModMessages.sendToServer(new CopperMinedC2SPacket());
+				} else if (block.equals(Blocks.IRON_ORE) || block.equals(Blocks.DEEPSLATE_IRON_ORE)) {
+					expToAddMultiblock += 50;
+					ModMessages.sendToServer(new IronMinedC2SPacket());
+				} else if (block.equals(Blocks.GOLD_ORE) || block.equals(Blocks.DEEPSLATE_GOLD_ORE)) {
+					expToAddMultiblock += 200;
+					ModMessages.sendToServer(new GoldMinedC2SPacket());
+				} else if (block.equals(Blocks.REDSTONE_ORE) || block.equals(Blocks.DEEPSLATE_REDSTONE_ORE)) {
+					expToAddMultiblock += 20;
+					ModMessages.sendToServer(new RedstoneMinedC2SPacket());
+				} else if (block.equals(Blocks.LAPIS_ORE) || block.equals(Blocks.DEEPSLATE_LAPIS_ORE)) {
+					expToAddMultiblock += 100;
+					ModMessages.sendToServer(new LapisMinedC2SPacket());
+				} else if (block.equals(Blocks.EMERALD_ORE) || block.equals(Blocks.DEEPSLATE_EMERALD_ORE)) {
+					expToAddMultiblock += 500;
+					ModMessages.sendToServer(new EmeraldMinedC2SPacket());
+				} else if (block.equals(Blocks.DIAMOND_ORE) || block.equals(Blocks.DEEPSLATE_DIAMOND_ORE)) {
+					expToAddMultiblock += 400;
+					ModMessages.sendToServer(new DiamondMinedC2SPacket());
+				} else if (block.equals(Blocks.ANCIENT_DEBRIS)) {
+					expToAddMultiblock += 2800;
+					ModMessages.sendToServer(new AncientDebrisMinedC2SPacket());
+				}
+				
+				// end ores/stones
+				else if (block.equals(Blocks.OBSIDIAN) || block.equals(Blocks.CRYING_OBSIDIAN)) {
+					expToAddMultiblock += 20;
+					ModMessages.sendToServer(new ObsidianMinedC2SPacket());
+				} else if (block.equals(Blocks.END_STONE)) {
+					expToAddMultiblock += 4;
+				} else if (block.equals(Blocks.END_STONE_BRICKS)) {
+					expToAddMultiblock += 5;
+				}
+				
+				// nether ores/stones
+				else if (block.equals(Blocks.NETHER_GOLD_ORE)) {
+					expToAddMultiblock += 100;
+					ModMessages.sendToServer(new NetherGoldMinedC2SPacket());
+				} else if (block.equals(Blocks.NETHER_QUARTZ_ORE)) {
+					expToAddMultiblock += 25;
+					ModMessages.sendToServer(new QuartzMinedC2SPacket());
+				} else if (block.equals(Blocks.NETHERRACK)) {
+					expToAddMultiblock += 1;
+				} else if (block.equals(Blocks.NETHER_BRICKS)) {
+					expToAddMultiblock += 4;
+				} else if (block.equals(Blocks.GLOWSTONE)) {
+					expToAddMultiblock += 10;
+					ModMessages.sendToServer(new GlowstoneMinedC2SPacket());
+				}
+			}
+			ModMessages.sendToServer(new GainMiningExpFromMultiblockC2SPacket());
 		}
 	}
 }

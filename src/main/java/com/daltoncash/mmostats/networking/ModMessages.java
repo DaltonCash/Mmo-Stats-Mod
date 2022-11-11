@@ -5,6 +5,7 @@ import com.daltoncash.mmostats.networking.packets.c2s.AdditionalFortuneProcC2SPa
 import com.daltoncash.mmostats.networking.packets.c2s.EatFoodWhileFullC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.magicAbilities.SpawnNatureMagnetItemC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.SpawnTntC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.UpgradeBigSwingsC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.UpgradeJunkBlocksDropExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.UpgradeNightVisionC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.UpgradeNoJunkBlocksC2SPacket;
@@ -32,6 +33,7 @@ import com.daltoncash.mmostats.networking.packets.c2s.skills.GainFarmingExpFromU
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainFarmingExpFromSeededCropsC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainFarmingLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainMiningExpC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.skills.GainMiningExpFromMultiblockC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainMiningLevelC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainPlayerAgilityAttributeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainPlayerAttributePointsC2SPacket;
@@ -214,6 +216,7 @@ import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.f
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.RawFoodEatenDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.RottenFleshEatenDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.SpiderEyeEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.BigSwingsDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.JunkBlocksDropExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.NightVisionDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.NoJunkBlocksDataSyncS2CPacket;
@@ -406,6 +409,11 @@ public class ModMessages {
         		.encoder(GainMiningExpC2SPacket::toBytes)
         		.consumerMainThread(GainMiningExpC2SPacket::handle)
         		.add();
+        net.messageBuilder(GainMiningExpFromMultiblockC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+				.decoder(GainMiningExpFromMultiblockC2SPacket::new)
+				.encoder(GainMiningExpFromMultiblockC2SPacket::toBytes)
+				.consumerMainThread(GainMiningExpFromMultiblockC2SPacket::handle)
+				.add();
         net.messageBuilder(GainArcheryLevelC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
 				.decoder(GainArcheryLevelC2SPacket::new)
 				.encoder(GainArcheryLevelC2SPacket::toBytes)
@@ -742,6 +750,11 @@ public class ModMessages {
 				.encoder(UpgradeObsidianBreakerC2SPacket::toBytes)
 				.consumerMainThread(UpgradeObsidianBreakerC2SPacket::handle)
 				.add();
+        net.messageBuilder(UpgradeBigSwingsC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+				.decoder(UpgradeBigSwingsC2SPacket::new)
+				.encoder(UpgradeBigSwingsC2SPacket::toBytes)
+				.consumerMainThread(UpgradeBigSwingsC2SPacket::handle)
+				.add();
         
         //Swords
         net.messageBuilder(CritasticUpgradeC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
@@ -926,6 +939,11 @@ public class ModMessages {
 				.decoder(ObsidianBreakerDataSyncS2CPacket::new)
 				.encoder(ObsidianBreakerDataSyncS2CPacket::toBytes)
 				.consumerMainThread(ObsidianBreakerDataSyncS2CPacket::handle)
+				.add();
+        net.messageBuilder(BigSwingsDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+				.decoder(BigSwingsDataSyncS2CPacket::new)
+				.encoder(BigSwingsDataSyncS2CPacket::toBytes)
+				.consumerMainThread(BigSwingsDataSyncS2CPacket::handle)
 				.add();
         //Swords
         net.messageBuilder(CritasticUpgradeDataSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)

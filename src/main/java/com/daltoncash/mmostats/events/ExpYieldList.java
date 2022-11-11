@@ -14,7 +14,6 @@ import net.minecraft.world.level.block.Blocks;
 public class ExpYieldList {
 	public static List<Block> getMiningBlocks() {
 		List<Block> list = new ArrayList<>();
-		list.add(Blocks.SAND);
 		list.add(Blocks.SANDSTONE);
 		list.add(Blocks.STONE);
 		list.add(Blocks.DIORITE);
@@ -47,6 +46,16 @@ public class ExpYieldList {
 		list.add(Blocks.NETHERRACK);
 		list.add(Blocks.NETHER_BRICKS);
 		list.add(Blocks.GLOWSTONE);
+		return list;
+	}
+	public static List<Block> getStones() {
+		List<Block> list = new ArrayList<>();
+		list.add(Blocks.STONE);
+		list.add(Blocks.DIORITE);
+		list.add(Blocks.ANDESITE);
+		list.add(Blocks.GRANITE);
+		list.add(Blocks.DEEPSLATE);
+		list.add(Blocks.NETHERRACK);
 		return list;
 	}
 	public static List<Block> getChoppingBlocks(){

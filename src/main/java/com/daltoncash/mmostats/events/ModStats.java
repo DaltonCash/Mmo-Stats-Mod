@@ -155,9 +155,21 @@ public class ModStats {
 	}
 
 	public static int getMaxMana() {
-		int beetrootEatenLevel = ClientCapabilityData.getBeetrootEaten() * 5;
+		int beetrootEatenLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getBeetrootEaten());
 		int manaAttributeLevel = ClientCapabilityData.getPlayerMana() * 5;
 		
-		return 30 + beetrootEatenLevel + manaAttributeLevel;
+		return (int)((30 + manaAttributeLevel) * (1 + (beetrootEatenLevel * 0.1)));
+	}
+	
+	public static int getManaRegen() {
+		int muttonEatenLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getMuttonEaten());
+		
+		return (int)(120 / (getMaxMana() * (1 + (muttonEatenLevel * 0.1))));
+	}
+	
+	public static double getCastCostReduction() {
+		int honeyEatenLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getHoneyEaten());
+		
+		return 1 - (honeyEatenLevel * 0.05);
 	}
 }

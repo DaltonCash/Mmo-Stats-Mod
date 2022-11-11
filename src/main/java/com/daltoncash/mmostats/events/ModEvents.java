@@ -145,6 +145,8 @@ import com.daltoncash.mmostats.capabilities.mining.PlayerMiningExp;
 import com.daltoncash.mmostats.capabilities.mining.PlayerMiningExpProvider;
 import com.daltoncash.mmostats.capabilities.mining.PlayerMiningLevel;
 import com.daltoncash.mmostats.capabilities.mining.PlayerMiningLevelProvider;
+import com.daltoncash.mmostats.capabilities.mining.upgrades.BigSwingsUpgrade;
+import com.daltoncash.mmostats.capabilities.mining.upgrades.BigSwingsUpgradeProvider;
 import com.daltoncash.mmostats.capabilities.mining.upgrades.JunkBlocksDropExpUpgrade;
 import com.daltoncash.mmostats.capabilities.mining.upgrades.JunkBlocksDropExpUpgradeProvider;
 import com.daltoncash.mmostats.capabilities.mining.upgrades.NightVisionUpgrade;
@@ -294,6 +296,7 @@ import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.f
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.RawFoodEatenDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.RottenFleshEatenDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.farmingUpgrades.foodEaten.SpiderEyeEatenDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.BigSwingsDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.JunkBlocksDropExpDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.NightVisionDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.miningUpgrades.NoJunkBlocksDataSyncS2CPacket;
@@ -341,11 +344,11 @@ public class ModEvents {
 	// Adds Mana to the Player over time.
 	@SubscribeEvent
 	public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-		if(ticksForMana < 150) {
+		if(ticksForMana < ModStats.getManaRegen() * 80) {
 			ticksForMana++;
 		}else if (event.side == LogicalSide.SERVER) {
 			event.player.getCapability(PlayerManaProvider.PLAYER_MANA).ifPresent(mana -> {
-				if (mana.getMana() < 100) {															
+				if (mana.getMana() < ModStats.getMaxMana()) {															
 					mana.addMana(1);
 					ModMessages.sendToPlayer(new ManaDataSyncS2CPacket(mana.getMana()), ((ServerPlayer) event.player));
 				}
@@ -603,6 +606,10 @@ public class ModEvents {
 			if (!event.getObject().getCapability(ObsidianBreakerUpgradeProvider.OBSIDIAN_BREAKER).isPresent()) {
 				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "obsidianbreakerupgradeproperties"),
 						new ObsidianBreakerUpgradeProvider());
+			}
+			if (!event.getObject().getCapability(BigSwingsUpgradeProvider.BIG_SWINGS).isPresent()) {
+				event.addCapability(new ResourceLocation(MmoStatsMod.MODID, "bigswingsupgradeproperties"),
+						new BigSwingsUpgradeProvider());
 			}
 			
 			//Swords Upgrades
@@ -1114,6 +1121,11 @@ public class ModEvents {
 					newStore.copyFrom(oldStore);
 				});
 			});
+			event.getOriginal().getCapability(BigSwingsUpgradeProvider.BIG_SWINGS).ifPresent(oldStore -> {
+				event.getEntity().getCapability(BigSwingsUpgradeProvider.BIG_SWINGS).ifPresent(newStore -> {
+					newStore.copyFrom(oldStore);
+				});
+			});
 			
 			//-------------------------Swords----Upgrades-----------------------
 			
@@ -1463,6 +1475,7 @@ public class ModEvents {
 		event.register(NightVisionUpgrade.class);
 		event.register(NoJunkBlocksUpgrade.class);
 		event.register(ObsidianBreakerUpgrade.class);
+		event.register(BigSwingsUpgrade.class);
 		
 		//Swords Upgrades
 		event.register(CritasticUpgrade.class);
@@ -1695,6 +1708,9 @@ public class ModEvents {
 				});
 				player.getCapability(ObsidianBreakerUpgradeProvider.OBSIDIAN_BREAKER).ifPresent(isUpgraded -> {
 					ModMessages.sendToPlayer(new ObsidianBreakerDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
+				});
+				player.getCapability(BigSwingsUpgradeProvider.BIG_SWINGS).ifPresent(isUpgraded -> {
+					ModMessages.sendToPlayer(new BigSwingsDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 				});
 				
 				//----Swords--Upgrades------

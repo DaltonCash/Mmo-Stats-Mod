@@ -10,6 +10,7 @@ import com.daltoncash.mmostats.capabilities.ClientCapabilityData;
 import com.daltoncash.mmostats.gui.UpgradeMenu;
 import com.daltoncash.mmostats.gui.skill_menus.totals_menus.MiningTotalsMenu;
 import com.daltoncash.mmostats.networking.ModMessages;
+import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.UpgradeBigSwingsC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.UpgradeJunkBlocksDropExpC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.UpgradeNightVisionC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.UpgradeNoJunkBlocksC2SPacket;
@@ -47,6 +48,8 @@ public class MiningMenu extends Screen {
 			"textures/gui/buttons/mining_buttons/night_vision_button_texture.png");
 	private final ResourceLocation upgradeTexture4 = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/buttons/mining_buttons/no_junk_blocks_button.png");
+	private final ResourceLocation upgradeTexture5 = new ResourceLocation(MmoStatsMod.MODID,
+			"textures/gui/buttons/mining_buttons/big_swings_button.png");
 	
 	//Textures to appear dark if not upgraded:
 	private final ResourceLocation upgradeTexture1Dark = new ResourceLocation(MmoStatsMod.MODID,
@@ -57,6 +60,8 @@ public class MiningMenu extends Screen {
 			"textures/gui/buttons/mining_buttons/night_vision_button_texture_dark.png");
 	private final ResourceLocation upgradeTexture4Dark = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/buttons/mining_buttons/no_junk_blocks_button_dark.png");
+	private final ResourceLocation upgradeTexture5Dark = new ResourceLocation(MmoStatsMod.MODID,
+			"textures/gui/buttons/mining_buttons/big_swings_button_dark.png");
 	
 	private final ResourceLocation descriptionBanner = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/background/descstuff3.png");
@@ -66,7 +71,12 @@ public class MiningMenu extends Screen {
 	private static final String experienced = "Experienced: \n\nGain 1/2/3 experience orbs when breaking 'junk blocks'"
 			+ "\n\nAlways works, even if No Junk Blocks is upgraded";
 	private static final String nightVision = "Night vision: \n\nGrants night vision effect for 60/120/180 seconds upon activation.";
-	private static final String noJunkBlocks = "No Junk Blocks: \n\nToggled by WIP, cobblestone, andesite, diorite, granite, basalt, and netherrack no longer drop.";
+	private static final String noJunkBlocks = "No Junk Blocks: \n\nToggled by pressing 'B', cobblestone, andesite, diorite, granite, basalt, and netherrack no longer drop.";
+	private static final String bigSwings = "Big Swings: \n\nLevel 1 Upgrade: Mine blocks in a 1x2 area."
+													  + "\n\nLevel 2 Upgrade: Mine blocks in a 3x3 area."
+													  + "\n\nLevel 3 Upgrade: Mine blocks in a 3x3x3 area."
+													  + "\n\nCycle through configurations by right-clicking a pickaxe."
+													  + " Costs 1 mana per block broken by this upgrade.";
 	
 	private static DescriptionPanel upgradeDescription;
 	
@@ -74,6 +84,7 @@ public class MiningMenu extends Screen {
 	private static int experiencedLVL = ClientCapabilityData.isUpgradedJunkBlocksDropExp();
 	private static int nightVisionLVL = ClientCapabilityData.isUpgradedNightVision();
 	private static int noJunkBlocksLVL = ClientCapabilityData.isUpgradedNoJunkBlocks();
+	private static int bigSwingsLVL = ClientCapabilityData.getIsUpgradedBigSwings();
 	private static int upgradePoints = ClientCapabilityData.getPlayerUpgradePoints();
 	
 	private static Button upgradePointButton;
@@ -138,6 +149,16 @@ public class MiningMenu extends Screen {
 			},
 			Component.empty()));		
 		
+		
+		addRenderableWidget(new ImageButton((this.width / 18) * 9, (this.height / 6) * 2, 50, 50, 0, 0, 99,
+				bigSwingsLVL > 0 ? upgradeTexture5 : upgradeTexture5Dark, 50, 50, MiningMenu::onPressUpgradeBigSwings,
+				new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("Current Upgrade Level: " + bigSwingsLVL);
+	     				MiningMenu.this.renderTooltip(p_169459_, MiningMenu.this.minecraft.font.split(component, Math.max(MiningMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				},
+				Component.empty()));	
 
 		addRenderableWidget(new ImageButton((this.width * 27) / 42, 0, (this.width * 91) / 256, this.height, 0, 0, 0,
 				descriptionBanner, (this.width * 20) / 56, (this.height * 50) / 49,
@@ -163,12 +184,14 @@ public class MiningMenu extends Screen {
 			experiencedLVL != ClientCapabilityData.isUpgradedJunkBlocksDropExp()  ||
 			nightVisionLVL != ClientCapabilityData.isUpgradedNightVision()        ||
 			noJunkBlocksLVL != ClientCapabilityData.isUpgradedNoJunkBlocks()      ||
+			bigSwingsLVL != ClientCapabilityData.getIsUpgradedBigSwings()         ||
 			upgradePoints != ClientCapabilityData.getPlayerUpgradePoints()) {
 			
 				obsidianBreakerLVL = ClientCapabilityData.isUpgradedObsidianBreaker();
 				experiencedLVL = ClientCapabilityData.isUpgradedJunkBlocksDropExp();
 				nightVisionLVL = ClientCapabilityData.isUpgradedNightVision();
 				noJunkBlocksLVL = ClientCapabilityData.isUpgradedNoJunkBlocks();
+				bigSwingsLVL = ClientCapabilityData.getIsUpgradedBigSwings();
 				upgradePoints = ClientCapabilityData.getPlayerUpgradePoints();
 				
 				init();
@@ -198,6 +221,11 @@ public class MiningMenu extends Screen {
 		upgradeString = cryingObsidian;
 		updateCache();
 	}
+	
+	private static void onPressUpgradeBigSwings(Button button) {
+		upgradeString = bigSwings;
+		updateCache();
+	}
 
 	
 
@@ -215,6 +243,9 @@ public class MiningMenu extends Screen {
 				break;
 			case cryingObsidian:
 				if(ClientCapabilityData.isUpgradedObsidianBreaker() < 3) ModMessages.sendToServer(new UpgradeObsidianBreakerC2SPacket());
+				break;
+			case bigSwings:
+				if(ClientCapabilityData.getIsUpgradedBigSwings() < 3) ModMessages.sendToServer(new UpgradeBigSwingsC2SPacket());
 				break;
 			}
 		}
