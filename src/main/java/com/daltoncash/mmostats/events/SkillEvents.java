@@ -62,10 +62,8 @@ import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetMiningExpC2SPa
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetPlayerLevelExpC2SPacket;
 import com.mojang.logging.LogUtils;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
@@ -75,7 +73,6 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.level.BlockEvent;
-import net.minecraftforge.event.level.BlockEvent.BreakEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -110,6 +107,9 @@ public class SkillEvents {
 			if(counter == 0) {
 				event.player.getAttribute(Attributes.MAX_HEALTH).setBaseValue(ModStats.getHealth());
 				event.player.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(ModStats.getMoveSpeed());
+				if(event.player.getHealth() > event.player.getMaxHealth()) {
+					event.player.setHealth(event.player.getMaxHealth());
+				}
 			}
 			
 			if (levelUpOverlayDuration > 0) levelUpOverlayDuration--;
@@ -275,7 +275,7 @@ public class SkillEvents {
 			}else if(block.equals(Blocks.WARPED_STEM)) {
 				ModMessages.sendToServer(new WarpedStemChoppedC2SPacket());
 			}else {
-				LOGGER.info("Unexpected call to addToChoppingTotal method");
+				LOGGER.info("Unexpected call to addToChoppingTotal method: {}." + block.getName());
 			}	
 		}
 

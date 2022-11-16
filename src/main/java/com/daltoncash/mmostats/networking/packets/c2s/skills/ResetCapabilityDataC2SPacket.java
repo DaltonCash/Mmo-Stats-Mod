@@ -15,6 +15,7 @@ import com.daltoncash.mmostats.capabilities.archery.upgrades.UnabatedUpgradeProv
 import com.daltoncash.mmostats.capabilities.chopping.PlayerChoppingLevelProvider;
 import com.daltoncash.mmostats.capabilities.chopping.upgrades.GrannySmithUpgradeProvider;
 import com.daltoncash.mmostats.capabilities.chopping.upgrades.HardwoodUpgradeProvider;
+import com.daltoncash.mmostats.capabilities.chopping.upgrades.SplinteringStrikesUpgradeProvider;
 import com.daltoncash.mmostats.capabilities.chopping.upgrades.StrongArmsUpgradeProvider;
 import com.daltoncash.mmostats.capabilities.combat.PlayerCombatLevelProvider;
 import com.daltoncash.mmostats.capabilities.combat.upgrades.DodgeRollUpgradeProvider;
@@ -66,6 +67,7 @@ import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.S
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.archeryUpgrades.UnabatedUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.GrannySmithUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.HardwoodUpgradeDataSyncS2CPacket;
+import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.SplinteringStrikesUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.choppingUpgrades.StrongArmsUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.DodgeRollUpgradeDataSyncS2CPacket;
 import com.daltoncash.mmostats.networking.packets.s2c.upgrades.combatUpgrades.FreeArrowsUpgradeDataSyncS2CPacket;
@@ -229,6 +231,10 @@ public class ResetCapabilityDataC2SPacket {
 			player.getCapability(StrongArmsUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
 				isUpgraded.setUpgradeLevel(0);
 				ModMessages.sendToPlayer(new StrongArmsUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
+			});
+			player.getCapability(SplinteringStrikesUpgradeProvider.IS_UPGRADED).ifPresent(isUpgraded -> {
+				isUpgraded.setUpgradeLevel(0);
+				ModMessages.sendToPlayer(new SplinteringStrikesUpgradeDataSyncS2CPacket(isUpgraded.getUpgradeLevel()), player);
 			});
 			
 			//Combat Upgrades

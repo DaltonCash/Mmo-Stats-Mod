@@ -354,6 +354,9 @@ public class ModEvents {
 				if (mana.getMana() < ModStats.getMaxMana()) {															
 					mana.addMana(1);
 					ModMessages.sendToPlayer(new ManaDataSyncS2CPacket(mana.getMana()), ((ServerPlayer) event.player));
+				}else if(mana.getMana() > ModStats.getMaxMana()) {
+					mana.subMana(mana.getMana() - ModStats.getMaxMana());
+					ModMessages.sendToPlayer(new ManaDataSyncS2CPacket(mana.getMana()), ((ServerPlayer) event.player));
 				}
 			});
 			ticksForMana = 0;

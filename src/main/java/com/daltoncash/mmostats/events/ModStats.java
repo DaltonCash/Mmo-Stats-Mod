@@ -114,7 +114,10 @@ public class ModStats {
 	
 	//Below is not for display on the UpgradeMenu screen.
 	public static int getEatCooldownReduction() {
-		int fastFoodUpgradeAddition = ClientCapabilityData.getIsUpgradedFastFood() == 1 ? 2 : 5;
+		int fastFoodUpgradeAddition = ClientCapabilityData.getIsUpgradedFastFood() == 0 ? 0 : 2;
+		if(ClientCapabilityData.getIsUpgradedFastFood() == 2) {
+			fastFoodUpgradeAddition += 3;
+		}
 		return 1 + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getMelonEaten()) + fastFoodUpgradeAddition;
 	}
 	

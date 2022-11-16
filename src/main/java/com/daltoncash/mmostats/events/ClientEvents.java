@@ -6,7 +6,6 @@ import com.daltoncash.mmostats.capabilities.playerlevel.stats.mana.PlayerManaPro
 import com.daltoncash.mmostats.events.SkillEvents.SkillForgeEvents;
 import com.daltoncash.mmostats.gui.LevelUpOverlay;
 import com.daltoncash.mmostats.gui.ManaOverlay;
-import com.daltoncash.mmostats.gui.PlayerMenu;
 import com.daltoncash.mmostats.gui.UpgradeMenu;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.c2s.AdditionalFortuneProcC2SPacket;
@@ -42,13 +41,11 @@ import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.
 import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.RawFoodEatenC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.RottenFleshEatenC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.farmingUpgrades.foodEaten.SpiderEyeEatenC2SPacket;
-import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.SpawnTntC2SPacket;
 import com.daltoncash.mmostats.util.KeyBinding;
 import com.mojang.logging.LogUtils;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -61,7 +58,6 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.AxeItem;
@@ -71,7 +67,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.ExplosionDamageCalculator;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -363,7 +358,7 @@ public class ClientEvents {
 			if (event.getItemStack().isEdible()) {
 				if (event.getEntity().getName().getString().equals(MmoStatsMod.USER.getName())) {
 					if (event.getEntity().getFoodData().getFoodLevel() >= 20) {
-						if (ClientCapabilityData.getIsUpgradedFastFood() > 0
+						if (ClientCapabilityData.getIsUpgradedInsatiable() > 0
 								&& eatCooldown >= 128 / (ModStats.getEatCooldownReduction())) {
 							event.getEntity().eat(event.getLevel(), event.getItemStack());
 							ModMessages.sendToServer(new EatFoodWhileFullC2SPacket());
@@ -699,40 +694,69 @@ public class ClientEvents {
 		@SubscribeEvent
 		public static void onBreakBlockuseWIPTreeAbility(BlockEvent.BreakEvent event) {
 			if (event.getPlayer().getName().getString().equals(MmoStatsMod.USER.getName())) {
-				if (ExpYieldList.getChoppingLogs().contains(event.getState().getBlock())) {
-					if(splinteringStrikesToggle) {
+				int upgradeLVL = ClientCapabilityData.getIsUpgradedSplinteringStrikes();
+				if (upgradeLVL > 0 && ExpYieldList.getChoppingLogs().contains(event.getState().getBlock())) {
+					
+					ItemStack axe = event.getPlayer().getMainHandItem();
+					if(splinteringStrikesToggle && (axe.getItem() instanceof AxeItem)) {
 						logList = new ArrayList<>();
 						
-						int manaToSubtract = (WIPTreeAbilityhelper(event.getPos().above(), 0, 
+						int logsChopped = (SplinteringStrikesAbilityhelper(event.getPos(), 0, 
 								ClientCapabilityData.getPlayerCurrentMana(),
 								event.getLevel()));
-						System.out.println(manaToSubtract);
+						
 						event.getPlayer().getCapability(PlayerManaProvider.PLAYER_MANA).ifPresent(mana -> {															
-							mana.subMana(manaToSubtract);
+							mana.subMana((int)(logsChopped * ModStats.getCastCostReduction()));
 							ModMessages.sendToPlayer(new ManaDataSyncS2CPacket(mana.getMana()), ((ServerPlayer) event.getPlayer()));
 							
 						});
+						
 						SkillForgeEvents.giveChoppingExpMultiblock(logList);
+						
+						
+						axe.setDamageValue
+						(axe.getDamageValue() + logsChopped * (upgradeLVL == 1 ?  8 : upgradeLVL == 2 ? 4 : 2));
 					}
 				}
 			}	
 		}
 		
 		
-		public static int WIPTreeAbilityhelper(BlockPos blockPos, int manaCost, int currentMana, LevelAccessor level){
-			if(ExpYieldList.getChoppingLogs().contains(level.getBlockState(blockPos).getBlock())) {
+		public static int SplinteringStrikesAbilityhelper(BlockPos blockPos, int manaCost, int currentMana, LevelAccessor level){
+			if(manaCost > 0) {
 				logList.add(level.getBlockState(blockPos).getBlock());
-				if(currentMana > manaCost + 1) {
-					level.destroyBlock(blockPos, true);
-					manaCost++;
-					return 1 + WIPTreeAbilityhelper(blockPos.above(), manaCost, currentMana, level)
-							 + WIPTreeAbilityhelper(blockPos.east(), manaCost, currentMana, level)
-							 + WIPTreeAbilityhelper(blockPos.west(), manaCost, currentMana, level)
-							 + WIPTreeAbilityhelper(blockPos.north(), manaCost, currentMana, level)
-							 + WIPTreeAbilityhelper(blockPos.south(), manaCost, currentMana, level);
+				level.destroyBlock(blockPos, true);
+			}
+				
+				
+				
+				if(ExpYieldList.getChoppingLogs().contains(level.getBlockState(blockPos.east()).getBlock())) {
+					if(currentMana > manaCost) {
+						manaCost = SplinteringStrikesAbilityhelper(blockPos.east(), ++manaCost, currentMana, level);
+					}
 				}
-			}	
-			return 0;
+				if(ExpYieldList.getChoppingLogs().contains(level.getBlockState(blockPos.north()).getBlock())) {
+					if(currentMana > manaCost) {
+						manaCost = SplinteringStrikesAbilityhelper(blockPos.north(), ++manaCost, currentMana, level);
+					}
+				}
+				if(ExpYieldList.getChoppingLogs().contains(level.getBlockState(blockPos.west()).getBlock())) {
+					if(currentMana > manaCost) {
+						manaCost = SplinteringStrikesAbilityhelper(blockPos.west(), ++manaCost, currentMana, level);
+					}
+				}
+				if(ExpYieldList.getChoppingLogs().contains(level.getBlockState(blockPos.south()).getBlock())) {
+					if(currentMana > manaCost) {
+						manaCost = SplinteringStrikesAbilityhelper(blockPos.south(), ++manaCost, currentMana, level);
+					}
+				}
+				if(ExpYieldList.getChoppingLogs().contains(level.getBlockState(blockPos.above()).getBlock())) {
+					if(currentMana > manaCost) {
+						manaCost = SplinteringStrikesAbilityhelper(blockPos.above(), ++manaCost, currentMana, level);
+					}
+				}
+				
+			return manaCost;
 		}
 		
 		// Break multiple blocks with WIP ability

@@ -65,8 +65,8 @@ public class ChoppingMenu extends Screen {
 	private static final String grannySmith = "GrannySmith: \n\nGain Swiftness(2/3/4) effect for 60 seconds when eating an apple.";
 	private static final String hardWood = "Hardwood: \n\nWhen an attack would make you have less than 25% max hp, gain 20%/ 40%/ 60% max hp.";
 	private static final String strongArms = "Lumber Jacked: \n\nDeal 10%/ 20%/ 30% more damage with axes.";
-	private static final String splinteringStrikes = "Splintering Strike: \n\nCut down trees with one swing! Cost 1 mana per log broken."
-			+ "Can be toggled by right-clicking";
+	private static final String splinteringStrikes = "Splintering Strike: \n\nCut down trees with one swing! Cost 1 mana per log broken and equipped axe takes 8/4/2 durability per log broken."
+			+ " Can be toggled by right-clicking.";
 	
 	private static DescriptionPanel upgradeDescription;
 	
@@ -208,7 +208,7 @@ public class ChoppingMenu extends Screen {
 				if(ClientCapabilityData.isUpgradedHardWood() < 3) ModMessages.sendToServer(new HardwoodUpgradeC2SPacket());
 				break;
 			case splinteringStrikes:
-				if(ClientCapabilityData.getIsUpgradedSplinteringStrikes() < 1) ModMessages.sendToServer(new SplinteringStrikesUpgradeC2SPacket());
+				if(ClientCapabilityData.getIsUpgradedSplinteringStrikes() < 3) ModMessages.sendToServer(new SplinteringStrikesUpgradeC2SPacket());
 				break;
 			case strongArms:
 				if(ClientCapabilityData.isUpgradedStrongArms() < 3) ModMessages.sendToServer(new StrongArmsUpgradeC2SPacket());
