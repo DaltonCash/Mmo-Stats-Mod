@@ -89,7 +89,7 @@ public class ModEntityTypes {
 					.build(new ResourceLocation(MmoStatsMod.MODID, "goldgolem").toString()));
 	
 	public static final RegistryObject<EntityType<KingCoal>> KINGCOAL = Entities.register("kingcoal",
-			() -> EntityType.Builder.of(KingCoal::new, MobCategory.MONSTER).sized(2.2f, 4.2f)
+			() -> EntityType.Builder.of(KingCoal::new, MobCategory.MONSTER).sized(2f, 4.2f).fireImmune()
 					.build(new ResourceLocation(MmoStatsMod.MODID, "kingcoal").toString()));
 	
 	public static final RegistryObject<EntityType<Krok>> KROK = Entities.register("krok",
@@ -117,7 +117,7 @@ public class ModEntityTypes {
 					.build(new ResourceLocation(MmoStatsMod.MODID, "nightbat").toString()));
 	
 	public static final RegistryObject<EntityType<ObsidianObserver>> OBSIDIANOBSERVER = Entities.register("obsidianobserver",
-			() -> EntityType.Builder.of(ObsidianObserver::new, MobCategory.MONSTER).sized(5f, 4f)
+			() -> EntityType.Builder.of(ObsidianObserver::new, MobCategory.MONSTER).sized(4f, 4f).fireImmune()
 					.build(new ResourceLocation(MmoStatsMod.MODID, "obsidianobserver").toString()));
 	
 	public static final RegistryObject<EntityType<Rat>> RAT = Entities.register("rat",

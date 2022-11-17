@@ -25,9 +25,9 @@ public class ModStats {
 
 	public static float getArmorModifier() {
 		int diamondMinedLevel = 1 + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getDiamondMined());
-		int kelpEatenLevel = 1 + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getKelpEaten());
+		int potatoEatenLevel = 1 + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getPotatoEaten());
 		int darkOakChoppedLevel = 1 + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getDarkOakChopped());
-		return (diamondMinedLevel * kelpEatenLevel * darkOakChoppedLevel) / ((diamondMinedLevel * kelpEatenLevel * darkOakChoppedLevel) + 100f);
+		return (diamondMinedLevel * potatoEatenLevel * darkOakChoppedLevel) / ((diamondMinedLevel * potatoEatenLevel * darkOakChoppedLevel) + 100f);
 	}
 	
 	public static int getFlatDamage() {
@@ -65,8 +65,8 @@ public class ModStats {
 	}
 	
 	public static double getKnockbackModifier() {
-		int potatoesEatenLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getPotatoEaten());
-		return 1 - (4 / (4 + potatoesEatenLevel));
+		int beetrootEatenLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getBeetrootEaten());
+		return 1 - (4 / (4 + beetrootEatenLevel));
 	}
 	
 	
@@ -158,10 +158,10 @@ public class ModStats {
 	}
 
 	public static int getMaxMana() {
-		int beetrootEatenLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getBeetrootEaten());
+		int kelpEatenLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getKelpEaten());
 		int manaAttributeLevel = ClientCapabilityData.getPlayerMana() * 5;
 		
-		return (int)((30 + manaAttributeLevel) * (1 + (beetrootEatenLevel * 0.1)));
+		return (int)((30 + manaAttributeLevel) * (1 + (kelpEatenLevel * 0.1)));
 	}
 	
 	public static int getManaRegen() {
@@ -173,6 +173,6 @@ public class ModStats {
 	public static double getCastCostReduction() {
 		int honeyEatenLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getHoneyEaten());
 		
-		return 1 - (honeyEatenLevel * 0.05);
+		return 1 - (honeyEatenLevel * 0.1);
 	}
 }

@@ -773,7 +773,7 @@ public class ClientEvents {
 								
 								if(ClientCapabilityData.getPlayerCurrentMana() >= 1 && ExpYieldList.getMiningBlocks().contains(event.getLevel().getBlockState(event.getPos().below()).getBlock())) {
 									blocks.add(event.getLevel().getBlockState(event.getPos().below()).getBlock());
-									event.getLevel().destroyBlock(event.getPos().below(), false);
+									event.getLevel().destroyBlock(event.getPos().below(), true);
 									
 									manaSpent++;
 									pick.setDamageValue(pick.getDamageValue() + 1);

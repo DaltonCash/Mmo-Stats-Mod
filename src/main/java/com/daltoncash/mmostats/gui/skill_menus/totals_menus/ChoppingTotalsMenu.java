@@ -85,8 +85,8 @@ public class ChoppingTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getDarkOakChopped()) + " Dark Oak"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("Reduces % damage taken by entities in an equation as follows: \"\r\n"
-	     						+ "	     						+ \"\\n\\n     (Diamond * Kelp * Dark Oak) \" + \"\\n   -------------------------  \"+ \" ((Diamond * Kelp * Dark Oak) + 100)");
+	     				Component component = Component.literal("Reduces % damage taken by entities in an equation as follows: "
+	     						+ "\n\n     (Diamond * Potato * Dark Oak) " + "\n   -------------------------  \n" + " ((Diamond * Potato * Dark Oak) + 100)");
 	     				ChoppingTotalsMenu.this.renderTooltip(p_169459_, ChoppingTotalsMenu.this.minecraft.font.split(component, Math.max(175, 170)), int1, int2);
 	     			}
 				}));

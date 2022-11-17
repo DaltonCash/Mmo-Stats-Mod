@@ -4,6 +4,7 @@ import com.daltoncash.mmostats.common.handler.Sounds;
 
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -33,8 +34,7 @@ public class ObsidianObserver extends Monster implements IAnimatable {
 
 	public static AttributeSupplier setAttributes() {
 		return Animal.createMobAttributes().add(Attributes.MAX_HEALTH, 200.0D).
-				add(Attributes.ATTACK_DAMAGE, 8.0f)
-				.add(Attributes.ATTACK_SPEED, 0.1f)
+				add(Attributes.ATTACK_DAMAGE, 4.0f)
 				.add(Attributes.ATTACK_KNOCKBACK, 50f)
 				.add(Attributes.ARMOR, 20)
 				.add(Attributes.ARMOR_TOUGHNESS, 10)
@@ -44,7 +44,7 @@ public class ObsidianObserver extends Monster implements IAnimatable {
 
 	protected void registerGoals() {
 	    this.goalSelector.addGoal(1, new FloatGoal(this));
-	   	this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, true));
+	   	this.goalSelector.addGoal(2, new ObsidianObserver.ObsidianObserverAttackGoal(this));
 	   	this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
 	   	this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
 	   	this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
@@ -79,5 +79,18 @@ public class ObsidianObserver extends Monster implements IAnimatable {
 	
 	public boolean removeWhenFarAway(double p_21542_) {
 	      return false;
+	}
+	static class ObsidianObserverAttackGoal extends MeleeAttackGoal {
+	      public ObsidianObserverAttackGoal(ObsidianObserver p_33822_) {
+	         super(p_33822_, 1.0D, true);
+	      }
+
+	      public boolean canUse() {
+	         return super.canUse();
+	      }
+
+	      protected double getAttackReachSqr(LivingEntity p_33825_) {
+	         return (double)(15.0F + p_33825_.getBbWidth());
+	      }
 	}
 }

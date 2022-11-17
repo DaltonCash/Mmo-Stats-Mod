@@ -74,7 +74,7 @@ public class MiningTotalsMenu extends Screen {
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
 	     				Component component = Component.literal("Reduces % damage taken by entities in an equation as follows: "
-	     						+ "\n\n     (Diamond * Kelp * Dark Oak) " + "\n   -------------------------  "+ " ((Diamond * Kelp * Dark Oak) + 100)");
+	     						+ "\n\n     (Diamond * Potato * Dark Oak) " + "\n   -------------------------  \n"+ " ((Diamond * Potato * Dark Oak) + 100)");
 	     				MiningTotalsMenu.this.renderTooltip(p_169459_, MiningTotalsMenu.this.minecraft.font.split(component, Math.max(175, 170)), int1, int2);
 	     			}
 				}));
