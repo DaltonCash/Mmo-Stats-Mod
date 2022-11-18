@@ -33,7 +33,7 @@ public class ModStats {
 	public static int getFlatDamage() {
 		int beefEatenLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getBeefEaten());
 		int ancientDebrisMinedLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getAncientDebrisMined());
-		return 1 + beefEatenLevel + ancientDebrisMinedLevel;
+		return 1 + beefEatenLevel * (1 + ancientDebrisMinedLevel);
 	}
 	
 	public static float getPercentIncreaseDamage() {

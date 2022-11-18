@@ -10,6 +10,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -46,56 +47,56 @@ public class AdditionalFortuneProcC2SPacket {
 			// player's inventory.
 			if (map.containsKey(Enchantments.BLOCK_FORTUNE)) {
 				double rand = Math.random();
-
+	
 				if (map.get(Enchantments.BLOCK_FORTUNE).equals(1)) {
 					if (rand <= (double) 1 / 3) {
 						for (ItemStack item : drops) {
 							item.setCount(item.getCount() * 2);
-							player.addItem(item);
+							level.addFreshEntity(new ItemEntity(level, player.getX(), player.getY(), player.getZ(), item));
 						}
 					} else {
 						for (ItemStack item : drops) {
 							item.setCount(item.getCount() * 1);
-							player.addItem(item);
+							level.addFreshEntity(new ItemEntity(level, player.getX(), player.getY(), player.getZ(), item));
 						}
 					}
 				} else if (map.get(Enchantments.BLOCK_FORTUNE).equals(2)) {
 					if (rand <= .25) {
 						for (ItemStack item : drops) {
 							item.setCount(item.getCount() * 2);
-							player.addItem(item);
+							level.addFreshEntity(new ItemEntity(level, player.getX(), player.getY(), player.getZ(), item));
 						}
 					} else if (rand <= .50 && rand > .25) {
 						for (ItemStack item : drops) {
 							item.setCount(item.getCount() * 3);
-							player.addItem(item);
+							level.addFreshEntity(new ItemEntity(level, player.getX(), player.getY(), player.getZ(), item));
 						}
 					} else {
 						for (ItemStack item : drops) {
 							item.setCount(item.getCount() * 1);
-							player.addItem(item);
+							level.addFreshEntity(new ItemEntity(level, player.getX(), player.getY(), player.getZ(), item));
 						}
 					}
 				} else if (map.get(Enchantments.BLOCK_FORTUNE).equals(3)) {
 					if (rand <= .20) {
 						for (ItemStack item : drops) {
 							item.setCount(item.getCount() * 2);
-							player.addItem(item);
+							level.addFreshEntity(new ItemEntity(level, player.getX(), player.getY(), player.getZ(), item));
 						}
 					} else if (rand <= .40 && rand > .20) {
 						for (ItemStack item : drops) {
 							item.setCount(item.getCount() * 3);
-							player.addItem(item);
+							level.addFreshEntity(new ItemEntity(level, player.getX(), player.getY(), player.getZ(), item));
 						}
 					} else if (rand <= .60 && rand > .40) {
 						for (ItemStack item : drops) {
 							item.setCount(item.getCount() * 4);
-							player.addItem(item);
+							level.addFreshEntity(new ItemEntity(level, player.getX(), player.getY(), player.getZ(), item));
 						}
 					} else {
 						for (ItemStack item : drops) {
 							item.setCount(item.getCount() * 1);
-							player.addItem(item);
+							level.addFreshEntity(new ItemEntity(level, player.getX(), player.getY(), player.getZ(), item));
 						}
 					}
 				}
@@ -104,7 +105,7 @@ public class AdditionalFortuneProcC2SPacket {
 			} else {
 				for (ItemStack item : drops) {
 					item.setCount(item.getCount() * 1);
-					player.addItem(item);
+					level.addFreshEntity(new ItemEntity(level, player.getX(), player.getY(), player.getZ(), item));
 				}
 			}
 		});

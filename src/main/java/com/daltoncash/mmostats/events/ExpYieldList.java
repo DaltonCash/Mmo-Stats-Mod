@@ -46,6 +46,9 @@ public class ExpYieldList {
 		list.add(Blocks.NETHERRACK);
 		list.add(Blocks.NETHER_BRICKS);
 		list.add(Blocks.GLOWSTONE);
+		list.add(Blocks.TUFF);
+		list.add(Blocks.SMOOTH_BASALT);
+		list.add(Blocks.CALCITE);
 		return list;
 	}
 	public static List<Block> getStones() {
@@ -56,6 +59,9 @@ public class ExpYieldList {
 		list.add(Blocks.GRANITE);
 		list.add(Blocks.DEEPSLATE);
 		list.add(Blocks.NETHERRACK);
+		list.add(Blocks.TUFF);
+		list.add(Blocks.SMOOTH_BASALT);
+		list.add(Blocks.CALCITE);
 		return list;
 	}
 	public static List<Block> getChoppingBlocks(){

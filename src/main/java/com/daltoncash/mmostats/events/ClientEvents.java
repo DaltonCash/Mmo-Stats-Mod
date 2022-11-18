@@ -9,6 +9,7 @@ import com.daltoncash.mmostats.gui.ManaOverlay;
 import com.daltoncash.mmostats.gui.UpgradeMenu;
 import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.c2s.AdditionalFortuneProcC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.AdditionalFortuneProcForMultiblockC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.EatFoodWhileFullC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.GainEffectFromEatingC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.taming.SpawnTamedBeeC2SPacket;
@@ -115,7 +116,7 @@ public class ClientEvents {
 		public static BlockPos tamedPosition;
 		public static Entity animalToBeTamedAndKilled;
 
-		public static List<Block> logList = new ArrayList<>();
+		public static List<Block> multiblockBlockList = new ArrayList<>();
 		public static boolean splinteringStrikesToggle = false;
 		public static final String miningConfigurationNone = "none";
 		public static final String miningConfiguration1x2 = "1x2";
@@ -699,7 +700,7 @@ public class ClientEvents {
 					
 					ItemStack axe = event.getPlayer().getMainHandItem();
 					if(splinteringStrikesToggle && (axe.getItem() instanceof AxeItem)) {
-						logList = new ArrayList<>();
+						multiblockBlockList = new ArrayList<>();
 						
 						int logsChopped = (SplinteringStrikesAbilityhelper(event.getPos(), 0, 
 								ClientCapabilityData.getPlayerCurrentMana(),
@@ -711,7 +712,7 @@ public class ClientEvents {
 							
 						});
 						
-						SkillForgeEvents.giveChoppingExpMultiblock(logList);
+						SkillForgeEvents.giveChoppingExpMultiblock(multiblockBlockList);
 						
 						
 						axe.setDamageValue
@@ -724,7 +725,7 @@ public class ClientEvents {
 		
 		public static int SplinteringStrikesAbilityhelper(BlockPos blockPos, int manaCost, int currentMana, LevelAccessor level){
 			if(manaCost > 0) {
-				logList.add(level.getBlockState(blockPos).getBlock());
+				multiblockBlockList.add(level.getBlockState(blockPos).getBlock());
 				level.destroyBlock(blockPos, true);
 			}
 				
@@ -849,6 +850,7 @@ public class ClientEvents {
 									ModMessages.sendToPlayer(new ManaDataSyncS2CPacket(mana.getMana()), ((ServerPlayer) event.getPlayer()));
 									
 								});
+								onBreakBlockRollForFortuneMultiblock(blocks);
 								break;
 						}
 					}
@@ -883,6 +885,35 @@ public class ClientEvents {
 				}
 			}
 		}
+		
+		
+		// Check for Passive Ability Double Drops on multiblocks
+				public static void onBreakBlockRollForFortuneMultiblock(List<Block> blocks) {
+					multiblockBlockList = new ArrayList<>();
+					List<Block> newBlocks = new ArrayList<>();
+					
+					for(Block block : blocks) {
+						if (ExpYieldList.getMiningBlocks().contains(block)) {
+							double rand = Math.random();
+
+							while (ModStats.getMiningFortuneCalculation() >= rand) {
+								newBlocks.add(block);
+								rand++;
+							}
+						}else if (ExpYieldList.getChoppingBlocks().contains(block)) {
+
+							
+							double rand = Math.random();
+
+							while (ModStats.getChoppingFortuneCalculation() >= rand) {
+								newBlocks.add(block);
+								rand++;
+							}
+						}
+					}
+					multiblockBlockList = newBlocks;
+					ModMessages.sendToServer(new AdditionalFortuneProcForMultiblockC2SPacket());
+				}
 
 		// WIP BELOW----------------------------------------------------------------
 		@SubscribeEvent

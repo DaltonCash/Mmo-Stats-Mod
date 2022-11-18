@@ -2,6 +2,7 @@ package com.daltoncash.mmostats.networking;
 
 import com.daltoncash.mmostats.MmoStatsMod;
 import com.daltoncash.mmostats.networking.packets.c2s.AdditionalFortuneProcC2SPacket;
+import com.daltoncash.mmostats.networking.packets.c2s.AdditionalFortuneProcForMultiblockC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.EatFoodWhileFullC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.magicAbilities.SpawnNatureMagnetItemC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.miningUpgrades.SpawnTntC2SPacket;
@@ -274,6 +275,11 @@ public class ModMessages {
 				.decoder(AdditionalFortuneProcC2SPacket::new)
 				.encoder(AdditionalFortuneProcC2SPacket::toBytes)
 				.consumerMainThread(AdditionalFortuneProcC2SPacket::handle)
+				.add();
+        net.messageBuilder(AdditionalFortuneProcForMultiblockC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+				.decoder(AdditionalFortuneProcForMultiblockC2SPacket::new)
+				.encoder(AdditionalFortuneProcForMultiblockC2SPacket::toBytes)
+				.consumerMainThread(AdditionalFortuneProcForMultiblockC2SPacket::handle)
 				.add();
         net.messageBuilder(EatFoodWhileFullC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
 				.decoder(EatFoodWhileFullC2SPacket::new)

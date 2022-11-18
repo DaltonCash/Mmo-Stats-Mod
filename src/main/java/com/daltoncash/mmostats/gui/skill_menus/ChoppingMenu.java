@@ -56,7 +56,7 @@ public class ChoppingMenu extends Screen {
 	private final ResourceLocation upgradeTexture3Dark = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/buttons/chopping_buttons/strong_arms_button_dark.png");
 	private final ResourceLocation upgradeTexture4Dark = new ResourceLocation(MmoStatsMod.MODID,
-			"textures/gui/buttons/chopping_buttons/splintering_strikes_button.png");
+			"textures/gui/buttons/chopping_buttons/splintering_strikes_button_dark.png");
 	
 	private final ResourceLocation descriptionBanner = new ResourceLocation(MmoStatsMod.MODID,
 			"textures/gui/background/descstuff3.png");
