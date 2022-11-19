@@ -355,17 +355,13 @@ public class ClientEvents {
 		@SuppressWarnings("resource")
 		@SubscribeEvent
 		public static void onEatingFoodWhenFull(RightClickItem event) {
-
 			if (event.getItemStack().isEdible()) {
 				if (event.getEntity().getName().getString().equals(MmoStatsMod.USER.getName())) {
 					if (event.getEntity().getFoodData().getFoodLevel() >= 20) {
 						if (ClientCapabilityData.getIsUpgradedInsatiable() > 0
 								&& eatCooldown >= 128 / (ModStats.getEatCooldownReduction())) {
-							event.getEntity().eat(event.getLevel(), event.getItemStack());
-							ModMessages.sendToServer(new EatFoodWhileFullC2SPacket());
 							Item item = event.getItemStack().getItem();
 							eatCooldown = 0;
-
 							if (item.equals(Items.APPLE)) {
 								ModMessages.sendToServer(new ApplesEatenC2SPacket());
 								if (ClientCapabilityData.isUpgradedGrannySmith() > 0) {
@@ -462,6 +458,8 @@ public class ClientEvents {
 							if (item.equals(Items.SPIDER_EYE)) {
 								ModMessages.sendToServer(new SpiderEyeEatenC2SPacket());
 							}
+							//event.getEntity().eat(event.getLevel(), event.getItemStack());
+							ModMessages.sendToServer(new EatFoodWhileFullC2SPacket());
 						}
 					}
 				}
@@ -520,13 +518,11 @@ public class ClientEvents {
 		@SuppressWarnings("resource")
 		@SubscribeEvent
 		public static void onEatingFoodGainEffectsAndAddToTotals(LivingEntityUseItemEvent.Finish event) {
-
 			if (event.getEntity().level.equals(Minecraft.getInstance().level)) {
 				if (event.getItem().getItem().isEdible()) {
 					if (event.getEntity().getName().getString().equals(MmoStatsMod.USER.getName())) {
 						Item item = event.getItem().getItem();
 						eatCooldown = 0;
-
 						if (item.equals(Items.APPLE)) {
 							ModMessages.sendToServer(new ApplesEatenC2SPacket());
 							if (ClientCapabilityData.isUpgradedGrannySmith() > 0) {
@@ -713,7 +709,7 @@ public class ClientEvents {
 						});
 						
 						SkillForgeEvents.giveChoppingExpMultiblock(multiblockBlockList);
-						
+						onBreakBlockRollForFortuneMultiblock(multiblockBlockList);
 						
 						axe.setDamageValue
 						(axe.getDamageValue() + logsChopped * (upgradeLVL == 1 ?  8 : upgradeLVL == 2 ? 4 : 2));

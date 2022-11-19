@@ -217,6 +217,12 @@ public class UpgradeMenu extends Screen {
 		lines.add(" ");
 		lines.add("Flat Damage Reduction: " + ModStats.getFlatArmorModifier());
 		lines.add(" ");
+		lines.add("Mana: 30 + " + (ModStats.getMaxMana() - 30));
+		lines.add(" ");
+		lines.add("Mana Regen: " + String.format("%2.2f", ModStats.getManaRegenPerTenSeconds()) + " / 10 Seconds.");
+		lines.add(" ");
+		lines.add("Mana Cost: " + String.format("%2.2f", (ModStats.getCastCostReduction() * 100)) + "%.");
+		lines.add(" ");
 		lines.add("Percent Damage Reduc: " + String.format("%2.2f",(ModStats.getArmorModifier() * 100)) + "%");
 		lines.add(" ");
 		lines.add("Additional Melee Damage: " + (ModStats.getFlatDamage() - 1));

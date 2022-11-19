@@ -164,10 +164,16 @@ public class ModStats {
 		return (int)((30 + manaAttributeLevel) * (1 + (kelpEatenLevel * 0.1)));
 	}
 	
-	public static int getManaRegen() {
+	public static double getManaRegen() {
 		int muttonEatenLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getMuttonEaten());
 		
-		return (int)(120 / (getMaxMana() * (1 + (muttonEatenLevel * 0.1))));
+		return (120 / (getMaxMana() * (1 + (muttonEatenLevel * 0.1))));
+	}
+	
+	public static double getManaRegenPerTenSeconds() {
+		int muttonEatenLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getMuttonEaten());
+		
+		return ((getMaxMana() * (1 + (muttonEatenLevel * 0.1))) / 12);
 	}
 	
 	public static double getCastCostReduction() {

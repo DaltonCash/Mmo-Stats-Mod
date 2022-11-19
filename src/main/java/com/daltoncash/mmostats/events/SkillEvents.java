@@ -62,7 +62,6 @@ import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetMiningExpC2SPa
 import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetPlayerLevelExpC2SPacket;
 import com.mojang.logging.LogUtils;
 
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -80,7 +79,7 @@ public class SkillEvents {
 	@Mod.EventBusSubscriber(modid = MmoStatsMod.MODID, value = Dist.CLIENT)
 	public static class SkillForgeEvents {
 		public static final Logger LOGGER = LogUtils.getLogger();
-		public static Entity clientEntity;
+		public static EntityType<?> clientEntityType;
 		public static BlockEvent.BreakEvent blockevent = null;
 		private static Player player;
 		
@@ -375,8 +374,8 @@ public class SkillEvents {
 							LOGGER.info("{} has killed {}(Player CombatExp: {})",
 									event.getSource().getEntity().getScoreboardName(), type.toShortString(),
 									combatExp + expToAdd);
-							// Archery: Efficient Marksman
-							clientEntity = event.getEntity();
+							// Archery: Hunter
+							clientEntityType = event.getEntity().getType();
 							ModMessages.sendToServer(new HunterDropsMeatC2SPacket());
 						}
 					}

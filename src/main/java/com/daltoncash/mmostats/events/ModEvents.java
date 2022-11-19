@@ -352,7 +352,7 @@ public class ModEvents {
 		}else if (event.side == LogicalSide.SERVER) {
 			event.player.getCapability(PlayerManaProvider.PLAYER_MANA).ifPresent(mana -> {
 				if (mana.getMana() < ModStats.getMaxMana()) {															
-					mana.addMana(1);
+					mana.addMana(1);	
 					ModMessages.sendToPlayer(new ManaDataSyncS2CPacket(mana.getMana()), ((ServerPlayer) event.player));
 				}else if(mana.getMana() > ModStats.getMaxMana()) {
 					mana.subMana(mana.getMana() - ModStats.getMaxMana());
