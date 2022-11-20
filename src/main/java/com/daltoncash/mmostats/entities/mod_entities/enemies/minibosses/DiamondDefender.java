@@ -1,5 +1,10 @@
 package com.daltoncash.mmostats.entities.mod_entities.enemies.minibosses;
 
+import com.daltoncash.mmostats.common.handler.Sounds;
+
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -48,8 +53,24 @@ public class DiamondDefender extends Monster implements IAnimatable {
 	   	this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
 	}
 	
+	protected SoundEvent getAmbientSound() {
+		return Sounds.diamonddefender.get();
+	}
+
+	protected SoundEvent getHurtSound(DamageSource p_34327_) {
+		return Sounds.diamonddefender_hurt.get();
+	}
+
+	protected SoundEvent getDeathSound() {
+		return Sounds.diamonddefender_death.get();
+	}
+	
+	protected SoundEvent getStepSound() {
+		return SoundEvents.ZOMBIE_STEP;
+	}
+	
 	protected float getSoundVolume() {
-	      return 0.25F;
+	    return 1F;
 	}
 	
 	@Override

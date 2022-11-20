@@ -1,5 +1,10 @@
 package com.daltoncash.mmostats.entities.mod_entities.enemies;
 
+import javax.annotation.Nullable;
+
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -48,8 +53,23 @@ public class MelonMan extends Monster implements IAnimatable {
 	   	this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
 	}
 	
-	protected float getSoundVolume() {
-	      return 0.25F;
+	@Nullable
+	protected SoundEvent getAmbientSound() {
+	    return SoundEvents.SNOW_GOLEM_AMBIENT;
+	}
+
+	@Nullable
+	protected SoundEvent getHurtSound(DamageSource p_29929_) {
+	     return SoundEvents.SNOW_GOLEM_HURT;
+	}
+
+	@Nullable
+	protected SoundEvent getDeathSound() {
+	    return SoundEvents.SNOW_GOLEM_DEATH;
+	}
+	
+	protected SoundEvent getStepSound() {
+		return SoundEvents.ZOMBIE_STEP;
 	}
 	
 	@Override

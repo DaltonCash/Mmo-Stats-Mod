@@ -181,4 +181,15 @@ public class ModStats {
 		
 		return 1 - (honeyEatenLevel * 0.1);
 	}
+	public static int getToolDamage(int enchantLevel, int potentialDamage) {
+		double rand = Math.random();
+		if(enchantLevel == 1) {
+			if(rand > 1/2) return 0;
+		}else if(enchantLevel == 2) {
+			if(rand > 1/3) return 0;
+		}else if(enchantLevel == 3) {
+			if(rand > 1/4) return 0;
+		}
+		return potentialDamage;
+	}
 }

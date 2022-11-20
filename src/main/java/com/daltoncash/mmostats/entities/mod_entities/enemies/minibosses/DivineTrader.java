@@ -4,6 +4,7 @@ import com.daltoncash.mmostats.common.handler.Sounds;
 
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -50,13 +51,19 @@ public class DivineTrader extends Monster implements IAnimatable {
 	   	this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
 	}
 	
-	protected SoundEvent getDeathSound() {
-	    return SoundEvents.ZOMBIE_DEATH;
-	}
-	
 	public SoundEvent getAmbientSound() {
 		return Sounds.divinetrader.get();
 	}
+	
+	public SoundEvent getHurtSound(DamageSource p_34327_) {
+		return SoundEvents.AMETHYST_BLOCK_CHIME;
+	}
+	
+	protected SoundEvent getDeathSound() {
+	    return SoundEvents.AMETHYST_BLOCK_BREAK;
+	}
+	
+	
 	
 	@Override
 	public void registerControllers(AnimationData data) {

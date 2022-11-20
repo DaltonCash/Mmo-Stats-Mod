@@ -40,7 +40,6 @@ public class AdditionalFortuneProcForMultiblockC2SPacket {
 			ServerLevel level = player.getLevel();
 			List<Block> blocks = ClientForgeEvents.multiblockBlockList;
 			Map<Enchantment, Integer> map = player.getItemInHand(InteractionHand.MAIN_HAND).getAllEnchantments();
-			
 			for(Block block : blocks) {
 				List<ItemStack> drops = Block.getDrops(block.defaultBlockState(), level, new BlockPos(player.position()), null);
 		

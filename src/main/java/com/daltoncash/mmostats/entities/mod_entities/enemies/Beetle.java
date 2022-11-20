@@ -3,6 +3,8 @@ package com.daltoncash.mmostats.entities.mod_entities.enemies;
 import com.daltoncash.mmostats.common.handler.Sounds;
 
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -50,8 +52,20 @@ public class Beetle extends Monster implements IAnimatable {
 	   	this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
 	}
 	
-	public SoundEvent getHurtSound() {
+	public SoundEvent getAmbientSound() {
 		return Sounds.beetle.get();
+	}
+	
+	public SoundEvent getHurtSound(DamageSource p_34327_) {
+		return Sounds.beetle_hurt.get();
+	}
+	
+	public SoundEvent getDeathSound() {
+		return Sounds.beetle_death.get();
+	}
+	
+	protected SoundEvent getStepSound() {
+		return SoundEvents.ZOMBIE_STEP;
 	}
 	
 	@Override

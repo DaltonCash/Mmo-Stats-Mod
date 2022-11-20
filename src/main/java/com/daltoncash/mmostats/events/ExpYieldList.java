@@ -49,6 +49,9 @@ public class ExpYieldList {
 		list.add(Blocks.TUFF);
 		list.add(Blocks.SMOOTH_BASALT);
 		list.add(Blocks.CALCITE);
+		list.add(Blocks.AMETHYST_BLOCK);
+		list.add(Blocks.AMETHYST_CLUSTER);
+		list.add(Blocks.BUDDING_AMETHYST);
 		return list;
 	}
 	public static List<Block> getStones() {

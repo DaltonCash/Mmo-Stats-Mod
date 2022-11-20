@@ -3,6 +3,8 @@ package com.daltoncash.mmostats.entities.mod_entities.enemies.minibosses;
 import com.daltoncash.mmostats.common.handler.Sounds;
 
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -47,9 +49,21 @@ public class RedstoneRunner extends Monster implements IAnimatable {
 	   	this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
 	   	this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
 	}
-
+	
 	public SoundEvent getAmbientSound() {
 		return Sounds.redstonerunner.get();
+	}
+	
+	public SoundEvent getHurtSound(DamageSource p_34327_) {
+		return Sounds.redstonerunner_hurt.get();
+	}
+	
+	public SoundEvent getDeathSound() {
+		return Sounds.redstonerunner_death.get();
+	}
+	
+	protected SoundEvent getStepSound() {
+		return SoundEvents.LEVER_CLICK;
 	}
 	
 	@Override

@@ -497,6 +497,9 @@ public class SkillEvents {
 			} else if (block.equals(Blocks.ANCIENT_DEBRIS)) {
 				expToAdd = 2800;
 				ModMessages.sendToServer(new AncientDebrisMinedC2SPacket());
+			}else if (block.equals(Blocks.AMETHYST_CLUSTER) || block.equals(Blocks.AMETHYST_BLOCK)
+					|| block.equals(Blocks.BUDDING_AMETHYST)) {
+				expToAdd = 10;
 			}
 
 			// end ores/stones

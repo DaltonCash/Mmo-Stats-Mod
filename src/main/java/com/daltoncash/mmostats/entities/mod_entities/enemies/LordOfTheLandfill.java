@@ -3,6 +3,7 @@ package com.daltoncash.mmostats.entities.mod_entities.enemies;
 import com.daltoncash.mmostats.common.handler.Sounds;
 
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -77,12 +78,12 @@ public class LordOfTheLandfill extends Monster implements IAnimatable {
 	      }
 	   }
 	
-	protected float getSoundVolume() {
-	      return 0.25F;
-	}
-	
 	public SoundEvent getAmbientSound() {
 		return Sounds.lordofthelandfill.get();
+	}
+	
+	protected SoundEvent getStepSound() {
+		return SoundEvents.ZOMBIE_STEP;
 	}
 	
 	@Override

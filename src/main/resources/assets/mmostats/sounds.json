@@ -7,32 +7,100 @@
     "subtitle": "mmostats.subtitle.beetle",
     "sounds": [ "mmostats:beetle1" ]
   },
+  "beetle_hurt": {
+    "subtitle": "mmostats.subtitle.beetle_hurt",
+    "sounds": [ "mmostats:beetle_hurt" ]
+  },
+  "beetle_death": {
+    "subtitle": "mmostats.subtitle.beetle_death",
+    "sounds": [ "mmostats:beetle_death" ]
+  },
+  "carrot": {
+    "subtitle": "mmostats.subtitle.carrot",
+    "sounds": [ "mmostats:carrot1", "mmostats:carrot2", "mmostats:carrot3"]
+  },
+  "carrot_hurt": {
+    "subtitle": "mmostats.subtitle.carrot_hurt",
+    "sounds": [ "mmostats:carrot_hurt" ]
+  },
+  "carrot_death": {
+    "subtitle": "mmostats.subtitle.carrot_death",
+    "sounds": [ "mmostats:carrot_death" ]
+  },
+  "crab": {
+    "subtitle": "mmostats.subtitle.crab",
+    "sounds": [ "mmostats:crab1", "mmostats:crab2", "mmostats:crab3" ]
+  },
+  "crab_hurt": {
+    "subtitle": "mmostats.subtitle.crab_hurt",
+    "sounds": [ "mmostats:crab_hurt" ]
+  },
+  "crab_death": {
+    "subtitle": "mmostats.subtitle.crab_death",
+    "sounds": [ "mmostats:crab_death" ]
+  },
+  "diamonddefender": {
+    "subtitle": "mmostats.subtitle.diamonddefender",
+    "sounds": [ "mmostats:diamonddefender1", "mmostats:diamonddefender2", "mmostats:diamonddefender3"]
+  },
+  "diamonddefender_hurt": {
+    "subtitle": "mmostats.subtitle.diamonddefender_hurt",
+    "sounds": [ "mmostats:diamonddefender_hurt1", "mmostats:diamonddefender_hurt2", "mmostats:diamonddefender_hurt3"]
+  },
+  "diamonddefender_death": {
+    "subtitle": "mmostats.subtitle.diamonddefender_death",
+    "sounds": [ "mmostats:diamonddefender_death" ]
+  },
   "kingcoal": {
     "subtitle": "mmostats.subtitle.kingcoal",
     "sounds": [ "mmostats:kingcoal" ]
+  },
+  "kingcoal_hurt": {
+    "subtitle": "mmostats.subtitle.kingcoal_hurt",
+    "sounds": [ "mmostats:kingcoal_hurt1", "mmostats:kingcoal_hurt2", "mmostats:kingcoal_hurt3"]
+  },
+  "kingcoal_death": {
+    "subtitle": "mmostats.subtitle.kingcoal_death",
+    "sounds": [ "mmostats:kingcoal_death" ]
   },
   "krok": {
     "subtitle": "mmostats.subtitle.krok",
     "sounds": [ "mmostats:krok1", "mmostats:krok2", "mmostats:krok3" ]
   },
+  "krok_hurt": {
+    "subtitle": "mmostats.subtitle.krok_hurt",
+    "sounds": [ "mmostats:krok_hurt1", "mmostats:krok_hurt2", "mmostats:krok_hurt3" ]
+  },
+  "krok_death": {
+    "subtitle": "mmostats.subtitle.krok_death",
+    "sounds": [ "mmostats:krok_death" ]
+  },
   "obsidianobserver": {
     "subtitle": "mmostats.subtitle.obsidianobserver",
     "sounds": [ "mmostats:obsidianobserver", "mmostats:obsidianobserver2" ]
+  },
+  "obsidianobserver_hurt": {
+    "subtitle": "mmostats.subtitle.obsidianobserver_hurt",
+    "sounds": [ "mmostats:obsidianobserver_hurt" ]
+  },
+  "obsidianobserver_death": {
+    "subtitle": "mmostats.subtitle.obsidianobserver_death",
+    "sounds": [ "mmostats:obsidianobserver_death" ]
   },
   "redstonerunner": {
     "subtitle": "mmostats.subtitle.redstonerunner",
     "sounds": [ "mmostats:redstonerunner" ]
   },
-  "crab": {
-    "subtitle": "mmostats.subtitle.crab",
-    "sounds": [ "mmostats:snip1", "mmostats:snip2", "mmostats:snip3" ]
+  "redstonerunner_hurt": {
+    "subtitle": "mmostats.subtitle.redstonerunner_hurt",
+    "sounds": [ "mmostats:redstonerunner_hurt" ]
+  },
+  "redstonerunner_death": {
+    "subtitle": "mmostats.subtitle.redstonerunner_death",
+    "sounds": [ "mmostats:redstonerunner_death" ]
   },
   "rat": {
     "subtitle": "mmostats.subtitle.rat",
-    "sounds": [ "mmostats:squeak" ]
-  },
-  "mole": {
-    "subtitle": "mmostats.subtitle.mole",
     "sounds": [ "mmostats:squeak" ]
   },
   "lordofthelandfill": {

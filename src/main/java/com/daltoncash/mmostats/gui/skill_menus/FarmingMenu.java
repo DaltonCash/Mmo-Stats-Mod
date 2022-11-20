@@ -278,7 +278,7 @@ public class FarmingMenu extends Screen {
 				if(ClientCapabilityData.getIsUpgradedInsatiable() < 3) ModMessages.sendToServer(new InsatiableUpgradeC2SPacket());
 				break;
 			case fastFood:
-				if(ClientCapabilityData.getIsUpgradedFastFood() < 3) ModMessages.sendToServer(new FastFoodUpgradeC2SPacket());
+				if(ClientCapabilityData.getIsUpgradedFastFood() < 2) ModMessages.sendToServer(new FastFoodUpgradeC2SPacket());
 				break;
 			}
 		}	

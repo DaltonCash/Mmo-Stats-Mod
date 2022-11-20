@@ -66,6 +66,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.PickaxeItem;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.ExplosionDamageCalculator;
 import net.minecraft.world.level.LevelAccessor;
@@ -94,6 +96,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 
@@ -120,8 +123,8 @@ public class ClientEvents {
 		public static boolean splinteringStrikesToggle = false;
 		public static final String miningConfigurationNone = "none";
 		public static final String miningConfiguration1x2 = "1x2";
+		public static final String miningConfiguration1x4 = "1x4";
 		public static final String miningConfiguration3x3 = "3x3";
-		public static final String miningConfiguration3x3x3 = "3x3x3";
 		public static String miningConfiguration = miningConfigurationNone;
 		// WIP1
 		// farming sweet berry bushes:
@@ -478,6 +481,10 @@ public class ClientEvents {
 			} else if (event.getItemStack().getItem() instanceof PickaxeItem) {
 				if(event.getLevel().isClientSide) {
 					int lvl = ClientCapabilityData.getIsUpgradedBigSwings();
+					if(lvl == 0 && miningConfiguration != miningConfigurationNone) {
+						miningConfiguration = miningConfigurationNone;
+						Minecraft.getInstance().player.sendSystemMessage(Component.literal("Mining Configuration: none."));	
+					}
 					switch (miningConfiguration) {
 					case miningConfigurationNone:
 						if (lvl >= 1) {
@@ -487,23 +494,23 @@ public class ClientEvents {
 						break;
 					case miningConfiguration1x2:
 						if (lvl >= 2) {
-							miningConfiguration = miningConfiguration3x3;
-							Minecraft.getInstance().player.sendSystemMessage(Component.literal("Mining Configuration: 3x3."));
+							miningConfiguration = miningConfiguration1x4;
+							Minecraft.getInstance().player.sendSystemMessage(Component.literal("Mining Configuration: 1x4."));
 						}else {
 							miningConfiguration = miningConfigurationNone;
 							Minecraft.getInstance().player.sendSystemMessage(Component.literal("Mining Configuration: none."));	
 						}
 						break;
-					case miningConfiguration3x3:
+					case miningConfiguration1x4:
 						if (lvl >= 3) {
-							miningConfiguration = miningConfiguration3x3x3;
-							Minecraft.getInstance().player.sendSystemMessage(Component.literal("Mining Configuration: 3x3x3."));
+							miningConfiguration = miningConfiguration3x3;
+							Minecraft.getInstance().player.sendSystemMessage(Component.literal("Mining Configuration: 3x3."));
 						}else {
 							miningConfiguration = miningConfigurationNone;
 							Minecraft.getInstance().player.sendSystemMessage(Component.literal("Mining Configuration: none."));
 						}
 						break;
-					case miningConfiguration3x3x3:
+					case miningConfiguration3x3:
 						if (dodgeCooldown == 0) {
 							miningConfiguration = miningConfigurationNone;
 							Minecraft.getInstance().player.sendSystemMessage(Component.literal("Mining Configuration: none."));
@@ -631,9 +638,7 @@ public class ClientEvents {
 			if (event.getEntity().getName().getString().equals(MmoStatsMod.USER.getName())) {
 				// Fast Food-WIP
 				if (event.getItem().getItem().isEdible()) {
-					if (ClientCapabilityData.getIsUpgradedFastFood() > 0) {
 						event.setDuration(ModStats.getEatDuration());
-					}
 				}
 
 				// Arrow: Quickshot
@@ -763,8 +768,14 @@ public class ClientEvents {
 				if (ExpYieldList.getMiningBlocks().contains(event.getState().getBlock())) {
 					ItemStack pick = event.getPlayer().getMainHandItem();
 					if(pick.getItem() instanceof PickaxeItem) {
+						int unbreakingLevel = 0;
+						Map<Enchantment, Integer> enchants = pick.getAllEnchantments();
+						if(enchants.containsKey(Enchantments.UNBREAKING)) {
+							unbreakingLevel = enchants.get(Enchantments.UNBREAKING);
+						}
 						List<Block> blocks = new ArrayList<>();
 						int manaSpent = 0;
+						
 						switch(miningConfiguration) {
 							case miningConfiguration1x2:
 								
@@ -773,12 +784,43 @@ public class ClientEvents {
 									event.getLevel().destroyBlock(event.getPos().below(), true);
 									
 									manaSpent++;
-									pick.setDamageValue(pick.getDamageValue() + 1);
+									pick.setDamageValue(pick.getDamageValue() + ModStats.getToolDamage(unbreakingLevel, 1));
 								}
 								final int manaToSubtract1x2 = manaSpent;
 								SkillForgeEvents.giveMiningExpMultiBlock(blocks);
 								event.getPlayer().getCapability(PlayerManaProvider.PLAYER_MANA).ifPresent(mana -> {															
 									mana.subMana(manaToSubtract1x2);
+									ModMessages.sendToPlayer(new ManaDataSyncS2CPacket(mana.getMana()), ((ServerPlayer) event.getPlayer()));
+								});
+								break;
+							case miningConfiguration1x4:
+								
+								if(ClientCapabilityData.getPlayerCurrentMana() >= 1 && ExpYieldList.getMiningBlocks().contains(event.getLevel().getBlockState(event.getPos().below()).getBlock())) {
+									blocks.add(event.getLevel().getBlockState(event.getPos().below()).getBlock());
+									event.getLevel().destroyBlock(event.getPos().below(), true);
+									
+									manaSpent++;
+									pick.setDamageValue(pick.getDamageValue() + ModStats.getToolDamage(unbreakingLevel, 1));
+								}
+								if(ClientCapabilityData.getPlayerCurrentMana() >= 1 && ExpYieldList.getMiningBlocks().contains(event.getLevel().getBlockState(event.getPos().above()).getBlock())) {
+									blocks.add(event.getLevel().getBlockState(event.getPos().above()).getBlock());
+									event.getLevel().destroyBlock(event.getPos().above(), true);
+									
+									manaSpent++;
+									pick.setDamageValue(pick.getDamageValue() + ModStats.getToolDamage(unbreakingLevel, 1));
+								}
+								if(ClientCapabilityData.getPlayerCurrentMana() >= 1 && ExpYieldList.getMiningBlocks().contains(event.getLevel().getBlockState(event.getPos().above().above()).getBlock())) {
+									blocks.add(event.getLevel().getBlockState(event.getPos().above().above()).getBlock());
+									event.getLevel().destroyBlock(event.getPos().above().above(), true);
+									
+									manaSpent++;
+									pick.setDamageValue(pick.getDamageValue() + ModStats.getToolDamage(unbreakingLevel, 1));
+								}
+								final int manaToSubtract1x4 = manaSpent;
+								SkillForgeEvents.giveMiningExpMultiBlock(blocks);
+								
+								event.getPlayer().getCapability(PlayerManaProvider.PLAYER_MANA).ifPresent(mana -> {															
+									mana.subMana(manaToSubtract1x4);
 									ModMessages.sendToPlayer(new ManaDataSyncS2CPacket(mana.getMana()), ((ServerPlayer) event.getPlayer()));
 								});
 								break;
@@ -788,56 +830,56 @@ public class ClientEvents {
 									event.getLevel().destroyBlock(event.getPos().below(), true);
 									
 									manaSpent++;
-									pick.setDamageValue(pick.getDamageValue() + 1);
+									pick.setDamageValue(pick.getDamageValue() + ModStats.getToolDamage(unbreakingLevel, 1));
 								}
 								if(ClientCapabilityData.getPlayerCurrentMana() >= 2 && ExpYieldList.getMiningBlocks().contains(event.getLevel().getBlockState(event.getPos().below().relative(Direction.fromYRot(event.getPlayer().yRotO).getClockWise())).getBlock())) {
 									blocks.add(event.getLevel().getBlockState(event.getPos().below().relative(Direction.fromYRot(event.getPlayer().yRotO).getClockWise())).getBlock());
 									event.getLevel().destroyBlock(event.getPos().below().relative(Direction.fromYRot(event.getPlayer().yRotO).getClockWise()), true);
 
 									manaSpent++;
-									pick.setDamageValue(pick.getDamageValue() + 1);
+									pick.setDamageValue(pick.getDamageValue() + ModStats.getToolDamage(unbreakingLevel, 1));
 								}
 								if(ClientCapabilityData.getPlayerCurrentMana() >= 3 && ExpYieldList.getMiningBlocks().contains(event.getLevel().getBlockState(event.getPos().below().relative(Direction.fromYRot(event.getPlayer().yRotO).getCounterClockWise())).getBlock())) {
 									blocks.add(event.getLevel().getBlockState(event.getPos().below().relative(Direction.fromYRot(event.getPlayer().yRotO).getCounterClockWise())).getBlock());
 									event.getLevel().destroyBlock(event.getPos().below().relative(Direction.fromYRot(event.getPlayer().yRotO).getCounterClockWise()), true);
 
 									manaSpent++;
-									pick.setDamageValue(pick.getDamageValue() + 1);
+									pick.setDamageValue(pick.getDamageValue() + ModStats.getToolDamage(unbreakingLevel, 1));
 								}
 								if(ClientCapabilityData.getPlayerCurrentMana() >= 4 && ExpYieldList.getMiningBlocks().contains(event.getLevel().getBlockState(event.getPos().above()).getBlock())) {
 									blocks.add(event.getLevel().getBlockState(event.getPos().above()).getBlock());
 									event.getLevel().destroyBlock(event.getPos().above(), true);
 
 									manaSpent++;
-									pick.setDamageValue(pick.getDamageValue() + 1);
+									pick.setDamageValue(pick.getDamageValue() + ModStats.getToolDamage(unbreakingLevel, 1));
 								}
 								if(ClientCapabilityData.getPlayerCurrentMana() >= 5 && ExpYieldList.getMiningBlocks().contains(event.getLevel().getBlockState(event.getPos().above().relative(Direction.fromYRot(event.getPlayer().yRotO).getClockWise())).getBlock())) {
 									blocks.add(event.getLevel().getBlockState(event.getPos().above().relative(Direction.fromYRot(event.getPlayer().yRotO).getClockWise())).getBlock());
 									event.getLevel().destroyBlock(event.getPos().above().relative(Direction.fromYRot(event.getPlayer().yRotO).getClockWise()), true);
 
 									manaSpent++;
-									pick.setDamageValue(pick.getDamageValue() + 1);
+									pick.setDamageValue(pick.getDamageValue() + ModStats.getToolDamage(unbreakingLevel, 1));
 								}
 								if(ClientCapabilityData.getPlayerCurrentMana() >= 6 && ExpYieldList.getMiningBlocks().contains(event.getLevel().getBlockState(event.getPos().above().relative(Direction.fromYRot(event.getPlayer().yRotO).getCounterClockWise())).getBlock())) {
 									blocks.add(event.getLevel().getBlockState(event.getPos().above().relative(Direction.fromYRot(event.getPlayer().yRotO).getCounterClockWise())).getBlock());
 									event.getLevel().destroyBlock(event.getPos().above().relative(Direction.fromYRot(event.getPlayer().yRotO).getCounterClockWise()), true);
 
 									manaSpent++;
-									pick.setDamageValue(pick.getDamageValue() + 1);
+									pick.setDamageValue(pick.getDamageValue() + ModStats.getToolDamage(unbreakingLevel, 1));
 								}
 								if(ClientCapabilityData.getPlayerCurrentMana() >= 7 && ExpYieldList.getMiningBlocks().contains(event.getLevel().getBlockState(event.getPos().relative(Direction.fromYRot(event.getPlayer().yRotO).getClockWise())).getBlock())) {
 									blocks.add(event.getLevel().getBlockState(event.getPos().relative(Direction.fromYRot(event.getPlayer().yRotO).getClockWise())).getBlock());
 									event.getLevel().destroyBlock(event.getPos().relative(Direction.fromYRot(event.getPlayer().yRotO).getClockWise()), true);
 
 									manaSpent++;
-									pick.setDamageValue(pick.getDamageValue() + 1);
+									pick.setDamageValue(pick.getDamageValue() + ModStats.getToolDamage(unbreakingLevel, 1));
 								}
 								if(ClientCapabilityData.getPlayerCurrentMana() >= 8 && ExpYieldList.getMiningBlocks().contains(event.getLevel().getBlockState(event.getPos().relative(Direction.fromYRot(event.getPlayer().yRotO).getCounterClockWise())).getBlock())) {
 									blocks.add(event.getLevel().getBlockState(event.getPos().relative(Direction.fromYRot(event.getPlayer().yRotO).getCounterClockWise())).getBlock());
 									event.getLevel().destroyBlock(event.getPos().relative(Direction.fromYRot(event.getPlayer().yRotO).getCounterClockWise()), true);
 
 									manaSpent++;
-									pick.setDamageValue(pick.getDamageValue() + 1);
+									pick.setDamageValue(pick.getDamageValue() + ModStats.getToolDamage(unbreakingLevel, 1));
 								}
 								SkillForgeEvents.giveMiningExpMultiBlock(blocks);
 								final int manaToSubtract3x3 = manaSpent;
@@ -846,9 +888,9 @@ public class ClientEvents {
 									ModMessages.sendToPlayer(new ManaDataSyncS2CPacket(mana.getMana()), ((ServerPlayer) event.getPlayer()));
 									
 								});
-								onBreakBlockRollForFortuneMultiblock(blocks);
 								break;
 						}
+						onBreakBlockRollForFortuneMultiblock(blocks);
 					}
 				}
 			}

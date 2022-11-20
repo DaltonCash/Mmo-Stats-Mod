@@ -80,6 +80,7 @@ public class UpgradeMenu extends Screen {
 	private Button agility;
 	private Button mana;
 	private Button upgradesAndAttributes;
+	private DescriptionPanel statlist;
 	
 	public UpgradeMenu(Component p_96550_) {
 		super(p_96550_);
@@ -97,6 +98,7 @@ public class UpgradeMenu extends Screen {
 		removeWidget(health);
 		removeWidget(agility);
 		removeWidget(mana);
+		removeWidget(statlist);
 		
 		upgradesAndAttributes = addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
 				Component.literal("Upgrades Unspent: " + ClientCapabilityData.getPlayerUpgradePoints()
@@ -198,13 +200,13 @@ public class UpgradeMenu extends Screen {
  						ModStats.toNextLevelExp(ClientCapabilityData.getPlayerFarmingLevel())) + "%)");
  				UpgradeMenu.this.renderTooltip(p_169459_, UpgradeMenu.this.minecraft.font.split(component, Math.max(UpgradeMenu.this.width / 2 - 43, 170)), int1, int2);
  			}
-		}, Component.literal("werubpobr")));
+		}, Component.empty()));
 		
 		addRenderableWidget(new ImageButton((this.width * 27) / 42, 0, (this.width * 91) / 256, this.height, 0, 0, 0,
 				descriptionBanner, (this.width * 20) / 56, (this.height * 50) / 49,
 				UpgradeMenu::onPressDoNothing)).active = false;
 		
-		DescriptionPanel statlist = new DescriptionPanel(this.minecraft, (this.width * 57) / 256,
+		statlist = new DescriptionPanel(this.minecraft, (this.width * 57) / 256,
 				this.height - (this.height * 27) / 64, this.height - ((this.height * 100) / 128));
 		this.addRenderableWidget(statlist);
 		List<String> lines = new ArrayList<>();
