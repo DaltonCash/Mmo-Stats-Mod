@@ -119,6 +119,15 @@ public class ArcheryMenu extends Screen {
 				Component.literal("Upgrades Unspent: " + ClientCapabilityData.getPlayerUpgradePoints()),
 				button -> {}));
 		
+		addRenderableWidget(new Button(5, this.height / 16 * 2, 120, 20, 
+				Component.literal("Archery Passive: " + ClientCapabilityData.getPlayerArcheryLevel() + "%"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("Increasing Archery Level increases damage from arrows by 1% per level.");
+	     				ArcheryMenu.this.renderTooltip(p_169459_, ArcheryMenu.this.minecraft.font.split(component, Math.max(ArcheryMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
 		
 		addRenderableWidget(new ImageButton((this.width / 18) * 1, (this.height / 6) * 2, 50, 50, 0, 0, 99,
 				efficientMarksmanLVL > 0 ? upgradeTexture1 : upgradeTexture1Dark, 50, 50, ArcheryMenu::onPressToggleEfficientMarksman,

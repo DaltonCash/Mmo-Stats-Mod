@@ -101,7 +101,7 @@ public class MiningTotalsMenu extends Screen {
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getGoldMined()) + " Gold"), 
 				button -> {}, new Button.OnTooltip() {
 	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
-	     				Component component = Component.literal("Additively increases the chance of double drops from mining and chopping by 5% per level. Any percent over 100% garuntees double drops with a chance for triple drops. Excess of 200% makes a chance for quadruple drops, etc.");
+	     				Component component = Component.literal("Multiplicatively increases the chance of double drops from mining and chopping by 5% per level.");
 	     				MiningTotalsMenu.this.renderTooltip(p_169459_, MiningTotalsMenu.this.minecraft.font.split(component, Math.max(MiningTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
 				}));

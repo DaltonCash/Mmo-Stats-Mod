@@ -81,7 +81,7 @@ public class ModEntityTypes {
 					.build(new ResourceLocation(MmoStatsMod.MODID, "diamonddefender").toString()));
 	
 	public static final RegistryObject<EntityType<DivineTrader>> DIVINETRADER = Entities.register("divinetrader",
-			() -> EntityType.Builder.of(DivineTrader::new, MobCategory.MONSTER).sized(1.4f, 5f)
+			() -> EntityType.Builder.of(DivineTrader::new, MobCategory.MONSTER).sized(1.4f, 5f).fireImmune()
 					.build(new ResourceLocation(MmoStatsMod.MODID, "divinetrader").toString()));
 	
 	public static final RegistryObject<EntityType<GoldGolem>> GOLDGOLEM = Entities.register("goldgolem",

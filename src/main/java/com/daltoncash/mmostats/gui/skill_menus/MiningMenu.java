@@ -100,6 +100,15 @@ public class MiningMenu extends Screen {
 		addRenderableWidget(new Button(this.width / 5 * 2, this.height / 40 * 35, this.width / 5, 20, 
 				Component.literal("Mining Totals"), MiningMenu::onPressShowTotals));
 		
+		addRenderableWidget(new Button(5, this.height / 16 * 2, 120, 20, 
+				Component.literal("Mining Passive: " + ClientCapabilityData.getPlayerMiningLevel() + "%"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("Increasing Mining Level increases chances of double drops from ores and stone. Any percent over 100% guarantees double drops with a chance for triple drops. Excess of 200% makes a chance for quadruple drops, etc.");
+	     				MiningMenu.this.renderTooltip(p_169459_, MiningMenu.this.minecraft.font.split(component, Math.max(MiningMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
 		removeWidget(upgradePointButton);
 		
 		upgradePointButton = addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,

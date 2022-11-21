@@ -27,7 +27,7 @@ public class ModStats {
 		int diamondMinedLevel = 1 + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getDiamondMined());
 		int potatoEatenLevel = 1 + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getPotatoEaten());
 		int darkOakChoppedLevel = 1 + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getDarkOakChopped());
-		return (diamondMinedLevel * potatoEatenLevel * darkOakChoppedLevel) / ((diamondMinedLevel * potatoEatenLevel * darkOakChoppedLevel) + 100f);
+		return (diamondMinedLevel * potatoEatenLevel * darkOakChoppedLevel) / ((diamondMinedLevel * potatoEatenLevel * darkOakChoppedLevel) + 100f) - 1f/100f;
 	}
 	
 	public static int getFlatDamage() {

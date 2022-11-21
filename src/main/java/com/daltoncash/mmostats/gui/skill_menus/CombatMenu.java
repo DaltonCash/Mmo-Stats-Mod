@@ -97,6 +97,15 @@ public class CombatMenu extends Screen {
 		//addRenderableWidget(new Button(this.width/13 * 6, this.height/13 * 6, 50, 50, 
 				//Component.literal("Combat Totals"), CombatMenu::onPressShowTotals));
 		
+		addRenderableWidget(new Button(5, this.height / 16 * 2, 120, 20, 
+				Component.literal("Combat Passive: " + ClientCapabilityData.getPlayerCombatLevel() + "%"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("Increasing Combat Level increases damage from melee attacks by 1% per level.");
+	     				CombatMenu.this.renderTooltip(p_169459_, CombatMenu.this.minecraft.font.split(component, Math.max(CombatMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
+		
 		removeWidget(upgradePointsButton);
 		
 		upgradePointsButton = addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,

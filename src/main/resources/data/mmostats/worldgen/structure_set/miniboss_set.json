@@ -15,12 +15,16 @@
       "weight": 60
     },
     {
-      "structure": "mmostats:redstone",
+      "structure": "mmostats:emerald",
       "weight": 50
     },
     {
+      "structure": "mmostats:redstone",
+      "weight": 40
+    },
+    {
       "structure": "mmostats:diamond",
-      "weight": 30
+      "weight": 10
     }
   ],
   "placement": {

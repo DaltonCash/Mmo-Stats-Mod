@@ -235,7 +235,7 @@ public class UpgradeMenu extends Screen {
 		lines.add(" ");
 		lines.add("Additional Movespeed: " + String.format("%2.2f",(ModStats.getMoveSpeed() - .1) * 1000) + "%");
 		lines.add(" ");
-		lines.add("Lucky Modifier: " + String.format("%2.2f",ModStats.getLuckyModifier()) + "x");
+		lines.add("Double Drops Modifier: " + String.format("%2.2f",ModStats.getLuckyModifier()) + "x");
 		lines.add(" ");
 		lines.add("Fall Damage Reduc: " + String.format("%2.2f",ModStats.getFallDamageModifier() * 100) + "%");
 		lines.add(" ");

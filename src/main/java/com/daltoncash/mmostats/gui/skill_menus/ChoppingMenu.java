@@ -86,8 +86,17 @@ public class ChoppingMenu extends Screen {
 	@Override
 	public final void init() {
 
-		addRenderableWidget(new Button(this.width/13 * 6, this.height/13 * 6, 50, 50, 
+		addRenderableWidget(new Button(this.width / 5 * 2, this.height / 40 * 35, this.width / 5, 20,
 				Component.literal("Chopping Totals"), ChoppingMenu::onPressShowTotals));
+		
+		addRenderableWidget(new Button(5, this.height / 16 * 2, 120, 20, 
+				Component.literal("Chopping Passive: " + ClientCapabilityData.getPlayerChoppingLevel() + "%"), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("Increasing Chopping Level increases chances of double drops from Logs. Any percent over 100% guarantees double drops with a chance for triple drops. Excess of 200% makes a chance for quadruple drops, etc.");
+	     				ChoppingMenu.this.renderTooltip(p_169459_, ChoppingMenu.this.minecraft.font.split(component, Math.max(ChoppingMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
 		
 		upgradeString = "";
 		

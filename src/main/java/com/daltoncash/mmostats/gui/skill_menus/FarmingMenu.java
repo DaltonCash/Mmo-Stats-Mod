@@ -19,6 +19,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ImageButton;
@@ -98,10 +99,19 @@ public class FarmingMenu extends Screen {
 	@Override
 	public final void init() {
 
-		addRenderableWidget(new Button(this.width/13 * 6, this.height/13 * 6, 50, 50, 
-				Component.literal("Farming Totals"), FarmingMenu::onPressShowTotals));
+		addRenderableWidget(new Button(this.width / 5 * 2, this.height / 40 * 35, this.width / 5, 20, 
+				Component.literal("Farming Totals"), FarmingMenu::onPressShowTotals));	
 		
 		upgradeString = "";
+		
+		addRenderableWidget(new Button(5, this.height / 16 * 2, 120, 20, 
+				Component.literal("Farming Passive: " ).append(Component.literal("1").withStyle(ChatFormatting.OBFUSCATED)), 
+				button -> {}, new Button.OnTooltip() {
+	     			public void onTooltip(Button p_169458_, PoseStack p_169459_, int int1, int int2) {
+	     				Component component = Component.literal("Hrmmm, doesn't seem to do anything...").withStyle(ChatFormatting.OBFUSCATED);
+	     				FarmingMenu.this.renderTooltip(p_169459_, FarmingMenu.this.minecraft.font.split(component, Math.max(FarmingMenu.this.width / 2 - 43, 170)), int1, int2);
+	     			}
+				}));
 		
 		removeWidget(upgradePointsButton);
 		
