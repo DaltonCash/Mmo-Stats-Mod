@@ -210,10 +210,10 @@ public class ClientEvents {
 
 						if (event.getSource().getDirectEntity().getType().equals(EntityType.ARROW)) {
 							// Archery Passive:
-							float damageFromArcheryLevel = ClientCapabilityData.getPlayerArcheryLevel() / 100.0f;
-							float moddedDamageToAdd = event.getAmount() * damageFromArcheryLevel;
+							
+							float moddedDamageToAdd = event.getAmount() * ModStats.getArcheryDamage();
 
-							entity.hurt(new DamageSource("Archery skill"), moddedDamageToAdd * moddedDamageToAdd);
+							entity.hurt(new DamageSource("Archery skill"), moddedDamageToAdd);
 
 							float totalDamageAfterModded = event.getAmount() + moddedDamageToAdd;
 
@@ -223,14 +223,14 @@ public class ClientEvents {
 										|| entity.getType().equals(EntityType.BLAZE)
 										|| entity.getType().equals(EntityType.STRAY)
 										|| entity.getType().equals(EntityType.GHAST)) {
-									entity.hurt(event.getSource(), totalDamageAfterModded / 3);
+									entity.hurt(event.getSource(), (totalDamageAfterModded * ClientCapabilityData.isUpgradedInsecurity()) / 3);
 								}
 							}
 
 							// Arrow: Sniper
 							if (ClientCapabilityData.isUpgradedSniper() > 0) {
-								if (player.distanceTo(entity) > 25) {
-									entity.hurt(event.getSource(), totalDamageAfterModded / 3);
+								if (player.distanceTo(entity) >= 15) {
+									entity.hurt(event.getSource(), (totalDamageAfterModded * ClientCapabilityData.isUpgradedSniper() * (player.distanceTo(entity) / 15)) / 10);
 								}
 							}
 
@@ -238,7 +238,7 @@ public class ClientEvents {
 							if (ClientCapabilityData.isUpgradedSweetSpotArchery() > 0) {
 								if (event.getSource().getSourcePosition().y >= event.getEntity().getEyePosition().y
 										- 0.2) {
-									entity.hurt(event.getSource(), totalDamageAfterModded / 3);
+									entity.hurt(event.getSource(), (totalDamageAfterModded * ClientCapabilityData.isUpgradedSweetSpotArchery()) / 5);
 								}
 							}
 						}

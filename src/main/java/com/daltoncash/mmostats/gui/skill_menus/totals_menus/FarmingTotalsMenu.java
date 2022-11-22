@@ -84,7 +84,7 @@ public class FarmingTotalsMenu extends Screen {
 	     				Component component = Component.literal("WIP");
 	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
-				}));
+				})).active = false;
 		
 		addRenderableWidget(new Button(140, this.height * 4 / 16, 120, 20, 
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getCarrotsEaten()) + " Carrots"), 
@@ -121,7 +121,7 @@ public class FarmingTotalsMenu extends Screen {
 	     				Component component = Component.literal("WIP");
 	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
-				}));
+				})).active = false;
 		
 		addRenderableWidget(new Button(140, this.height * 6 / 16, 120, 20, 
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getGlowBerriesEaten()) + " Glow Berry"), 
@@ -202,7 +202,7 @@ public class FarmingTotalsMenu extends Screen {
 	     				Component component = Component.literal("WIP");
 	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
-				}));
+				})).active = false;
 		
 		addRenderableWidget(new Button(10, this.height * 11 / 16, 120, 20, 
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getPorkEaten()) + " Pork"), 
@@ -230,7 +230,7 @@ public class FarmingTotalsMenu extends Screen {
 	     				Component component = Component.literal("WIP");
 	     				FarmingTotalsMenu.this.renderTooltip(p_169459_, FarmingTotalsMenu.this.minecraft.font.split(component, Math.max(FarmingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
-				}));
+				})).active = false;;
 		
 		addRenderableWidget(new Button(140, this.height * 12 / 16, 120, 20, 
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getRabbitEaten()) + " Rabbit"), 

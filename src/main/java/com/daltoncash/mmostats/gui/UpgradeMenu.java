@@ -16,8 +16,6 @@ import com.daltoncash.mmostats.networking.ModMessages;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainPlayerAgilityAttributeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainPlayerHealthAttributeC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.GainPlayerManaAttributeC2SPacket;
-import com.daltoncash.mmostats.networking.packets.c2s.skills.GainPlayerUpgradePointsC2SPacket;
-import com.daltoncash.mmostats.networking.packets.c2s.skills.ResetCapabilityDataC2SPacket;
 import com.daltoncash.mmostats.networking.packets.c2s.skills.SpendPlayerAttributePointsC2SPacket;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -100,14 +98,13 @@ public class UpgradeMenu extends Screen {
 		removeWidget(mana);
 		removeWidget(statlist);
 		
+		int upgradePoints = ClientCapabilityData.getPlayerUpgradePoints();
+		
 		upgradesAndAttributes = addRenderableWidget(new Button(this.width / 3, this.height / 40, this.width / 3, 20,
 				Component.literal("Upgrades Unspent: " + ClientCapabilityData.getPlayerUpgradePoints()
 								+ " ==== Attributes Unspent: " + attributePoints),
-				UpgradeMenu::onPressDoNothing) );
-		
-		addRenderableWidget(new Button(0, 0, 20, 20,
-				Component.literal("reset capabilities: " + ClientCapabilityData.getPlayerMiningLevel()),
-				UpgradeMenu::onPressReset));
+				UpgradeMenu::onPressDoNothing));
+		upgradesAndAttributes.active = attributePoints + upgradePoints > 0;
 		
 		health = addRenderableWidget(new Button((this.width * 1) / 10, ((this.height * 39) / 40) - 20, 100, 20,
 				Component.literal("Health: " + ClientCapabilityData.getPlayerHealth()),
@@ -141,7 +138,7 @@ public class UpgradeMenu extends Screen {
 		
 		addRenderableWidget(new Button((this.width * 3) / 10, ((this.height * 69) / 80) - 40, 100, 20,
 				Component.literal("Player Level: " + ClientCapabilityData.getPlayerLevel()),
-				UpgradeMenu::onPressUpgradeMana));
+				UpgradeMenu::onPressUpgradeMana)).active = false;
 		
 		miningButton = addRenderableWidget(new ImageButton((this.width * 1) / 10, (this.height * 1) / 6, buttonW, buttonH, 0, 0, buttonH - 1,
 				MINING_TEXTURE, buttonW, buttonH, UpgradeMenu::onPressMining, new Button.OnTooltip() {
@@ -269,11 +266,6 @@ public class UpgradeMenu extends Screen {
 	}
 
 	private static void onPressDoNothing(Button button) {
-		ModMessages.sendToServer(new GainPlayerUpgradePointsC2SPacket());
-	}
-	
-	private static void onPressReset(Button button) {
-		ModMessages.sendToServer(new ResetCapabilityDataC2SPacket());
 	}
 
 	private static void onPressMining(Button button) {

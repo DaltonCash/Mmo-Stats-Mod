@@ -192,4 +192,11 @@ public class ModStats {
 		}
 		return potentialDamage;
 	}
+	
+	public static float getArcheryDamage() {
+		int archeryLevel = ClientCapabilityData.getPlayerArcheryLevel();
+		int goldenCarrotLevel = ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getGoldenCarrotsEaten());
+		
+		return (archeryLevel / 100f) + (goldenCarrotLevel / 5f);
+	}
 }

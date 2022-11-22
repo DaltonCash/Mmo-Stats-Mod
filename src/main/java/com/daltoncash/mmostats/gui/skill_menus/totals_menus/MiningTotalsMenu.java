@@ -131,7 +131,7 @@ public class MiningTotalsMenu extends Screen {
 	     				Component component = Component.literal("WIP");
 	     				MiningTotalsMenu.this.renderTooltip(p_169459_, MiningTotalsMenu.this.minecraft.font.split(component, Math.max(MiningTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
-				}));
+				})).active = false;
 		
 		addRenderableWidget(new Button(5, this.height / 16 * 11, 120, 20, 
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getQuartzMined()) + " Quartz"), 

@@ -56,7 +56,7 @@ public class ChoppingTotalsMenu extends Screen {
 	     				Component component = Component.literal("WIP");
 	     				ChoppingTotalsMenu.this.renderTooltip(p_169459_, ChoppingTotalsMenu.this.minecraft.font.split(component, Math.max(ChoppingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
-				}));
+				})).active = false;
 		addRenderableWidget(new Button(10, this.height / 16 * 3, 120, 20, 
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getBirchChopped()) + " Birch"), 
 				button -> {}, new Button.OnTooltip() {
@@ -97,7 +97,7 @@ public class ChoppingTotalsMenu extends Screen {
 	     				Component component = Component.literal("WIP");
 	     				ChoppingTotalsMenu.this.renderTooltip(p_169459_, ChoppingTotalsMenu.this.minecraft.font.split(component, Math.max(ChoppingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
-				}));
+				})).active = false;
 		addRenderableWidget(new Button(10, this.height / 16 * 8, 120, 20, 
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getCrimsonStemChopped()) + " Crimson"), 
 				button -> {}, new Button.OnTooltip() {
@@ -105,7 +105,7 @@ public class ChoppingTotalsMenu extends Screen {
 	     				Component component = Component.literal("WIP");
 	     				ChoppingTotalsMenu.this.renderTooltip(p_169459_, ChoppingTotalsMenu.this.minecraft.font.split(component, Math.max(ChoppingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
-				}));
+				})).active = false;
 		addRenderableWidget(new Button(10, this.height / 16 * 9, 120, 20, 
 				Component.literal("Level " + ClientCapabilityData.getTotalsLevel(ClientCapabilityData.getWarpedStemChopped()) + " Warped"), 
 				button -> {}, new Button.OnTooltip() {
@@ -113,7 +113,7 @@ public class ChoppingTotalsMenu extends Screen {
 	     				Component component = Component.literal("WIP");
 	     				ChoppingTotalsMenu.this.renderTooltip(p_169459_, ChoppingTotalsMenu.this.minecraft.font.split(component, Math.max(ChoppingTotalsMenu.this.width / 2 - 43, 170)), int1, int2);
 	     			}
-				}));
+				})).active = false;
 		
 		
 		DescriptionPanel foodPanel = new DescriptionPanel(this.minecraft, (this.width * 1) / 4 ,
